@@ -1,10 +1,10 @@
-# Trabajo de Fin de Grado: *Título*
+# Trabajo de Fin de Grado: *Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas*
 
 **Este sería el README de tu proyecto. Consulta las [instrucciones de
 instalación](INSTALL.md)
 
-### Autor(a): Nombre
-### Tutor(a)(es): Nombre(s)
+### Autor(a): Joaquín Alejandro España Sánchez
+### Tutor(a)(es): Daniel Sánchez Fernández
 ___
 
 La documentación de este proyecto está realizada con `LaTeX`, por lo
