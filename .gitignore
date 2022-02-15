@@ -341,3 +341,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Avoid adding information from PostgreSQL 
+/code/app/data/
