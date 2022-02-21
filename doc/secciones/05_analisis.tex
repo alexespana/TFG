@@ -39,3 +39,181 @@ la aplicación web.
     \begin{itemize}
         \item 
     \end{itemize}
+
+\section{Tecnologías disponibles}
+En la elección de cualuquier herramienta en un proyecto software, se debe seguir un
+proceso de selección de herramientas entre distintas alternativas, especificando claramente
+los requisitos que deben cumplir para poder escoger aquella que mejor se adapte a las
+necesidades del proyecto (en este caso a la aplicación web).
+
+\subsection{Framework para desarrollo web}
+
+    \subsubsection{Ruby on Rails}
+    \textbf{Ruby on Rails} (también conocido como Rails) es un framework para la creación de
+    aplicaciones web escrito en Ruby. Sigue una arquitectura (Model-View-Controller) 
+    y diseño RESTfull. Está diseñado para facilitar la programación web al hacer una estimación de los
+    componentes principales que se necesitan para comenzar.
+
+    Este software asume que hay una mejor forma de hacer las cosas y está diseñado para
+    ello, por lo que es un código muy optimizado y hecho para aumentar la productividad
+    si se hace el desarrollo de la forma "The Rails Way".
+
+    \subsubsection{Django}
+    \textbf{Django} es el framework para Python más usado, está enfocado a sitios basados
+    en bases de datos. Permite un desarrollo software muy rápido y limpio. Tiene una
+    arquitectura MVT (Model-View-Template), donde el View sería el equivalente a Controller
+    en MVC.
+
+    Al igual que el anterior framework mencionado, Django ha sido diseñado por programadores
+    experimentados, y se encarga de las partes más complejas del desarrollo web, permitiendo
+    que el programador se centre en escribir la aplicación sin necesidad de preocuparse
+    por otras cuestiones.
+
+    \subsubsection{Laravel}
+    \textbf{Laravel} es el mejor framework de PHP para desarrollar aplicaciones y servicios web con
+    PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue una arquitectura MVC, por lo que es
+    sencillo realcionar las distintas componentes de la aplicación.
+
+    Es un framework moderno que ofrece muchas utilidades a los desarrolladores y permiten un
+    desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la calidad del
+    código, el mantenimiento y la escalabilidad.
+
+    \subsubsection{Angular}
+    \textbf{Angular} es un framework desarrollado en TypeScript para el desarrollo de
+    aplicaciones web. Está mantenido por Google, utilizado para crear y mantener aplicaciones
+    SPA (Single Page Application), es decir páginas web que interaccionan con el usuario
+    dinámicamente sobreescribiendo la página con información nueva.
+
+    Al contrario que los frameworks anteriormente mencionados, Angular no usa un modelo MVC
+    o MVT, sino que permite el desarrollo del front-end y el back-end de forma totalmente
+    independiente.
+
+\subsection{Framework CSS}
+
+    \subsubsection{Tailwind CSS}
+    \textbf{Tailwind CSS} es un framework CSS que funciona escaneando los archivos HTML,
+    componentes Javascript y otros templates generando los correspondientes estilos
+    y escribiéndolos en un archivo CSS estático. No tiene muchos componentes, sino clases
+    de utilidad que pueden aplicarse directamente sobre el código HTML del proyecto. Además
+    de esto, permite una gran optimización del peso del código CSS mediante unos flujos de
+    desarrollo.
+
+        
+    \subsubsection{Bootstrap}
+    \textbf{Bootstrap} es uno de los frameworks más popullares y usados para el desarrollo
+    de páginas web. Fue desarrollado por Twitter en 2010 para uso de la compañía pero
+    más tarde pasó a ser código abierto. Este framework combina CSS y Javascript. Entre
+    sus características fundamentales podemos encontrar:
+    
+    % \begin{list}{\textbullet}{ 
+        %     \addtolength{\labelsep}{1mm}    % Distancia hasta la etiqueta
+        %     \addtolength{\itemsep}{-2mm}    % Separación entre items
+        %     \setlength{\itemindent}{5mm}}   % Identación de los items
+        % \end{list}
+        
+        \begin{itemize}
+            \item \textbf{Responsive design}: adaptación automática a distintos dispositivos
+            como móviles y tablets.
+            \item \textbf{Grid System}: posicionamiento de elementos en la página
+            \item \textbf{Interface UI}: incluye formularios, botones, menús, etc.
+        \end{itemize}
+        
+        \subsubsection{Foundation}
+        \textbf{Foundation} es el principal competidor de Bootstrap, es un framework orientado Al
+        desarrollo de sitios web totalmente responsives bajo el enfoque  \textit{mobile 
+        first}, que es una metodología de desarrollo donde se tenga en cuenta en primer lugar
+        los dispositivos móbiles. Esta metodología es totalmente contraria a la que usa
+        Bootstrap ya que en él se usa   textit{Responsive Web Design} y en éste \textit{Mobile
+        First Web Design}.
+        
+        Además de su metodología de desarrollo, posee ciertas características muy interesantes:
+        
+        \begin{itemize}
+            \item \textbf{Fastclick}: eliminación del retraso al pulsar en dispositivos
+            móviles.
+            \item \textbf{Semántico}: todo es semántico, permitiendo tener un lenguaje de
+            marcado limpio sin sacrificar su funcionalidad y velocidad.
+            \item \textbf{Off Canvas}: creación de menús dinámicos
+            \item \textbf{Customizable}: permite hacer diseño completamente personalizables,
+            pudiendo eliminar elementos, definir el tamaño de las columnas, colores,
+            fondos, etc
+        \end{itemize}
+
+    \subsubsection{Materialize CSS}
+    \textbf{Materialize CSS} sigue el principio \textit{Material Design}, es decir, ofrece
+    componentes ya listos para ser utilizados, por supuesto responsive. Además, integra
+    comportamientos dinámicos mediante JavaScript y no necesita de Jquery para funcionar.
+
+    Entre sus principales caracterśiticas se encuentran:
+        
+        \begin{itemize}
+            \item Al igual que otros frameworks mencionados, permite un diseño responsive.
+            \item Permite crear menús laterales desplegables o abiertos según la resolución
+            del dispositivo.
+            \item Diseños utilizando la filosofía Material Design (colecciones, tarjetas,
+            barras de navegación, modales, toast, etc).
+            \item Añade utilidades como \textbf{Parallax} (técnica de diseño web en la que se crea
+            un efecto de profundidad al hacer scroll)
+        \end{itemize}
+
+\subsection{Base de Datos}
+Antes de pasar a la elección de la Base de Datos concreta necesitamos especificar si
+necesitamos una base de datos SQL o una base de datos noSQL. 
+\begin{itemize}
+    \item \textbf{Bases de Datos SQL}: son aquellas que utilizan el lenguaje SQL (
+    \textit{Structure Query Languaje}), un lenguaje de consulta estructurado. Este tipo de 
+    bases de datos están formadas por filas y columnas. En cada una de las filas residen
+    registros, mientras que las columnas corresponden a campos de los mismos. Son el tipo
+    de bases de datos más estándarizado y con más uso actualmente.
+    \item \textbf{Base de Datos noSQL}:  son aquellas bases de datos diseñadas para permitir
+    grandes cantidades de datos (\textit{BIG DATA}), tipos de datos complejos, más índices,
+    distintos tipos de consulta, etc. Este tipo de base de datos surgió para dar solución
+    a los problemas de escalabilidad y rendimiento de las bases de datos relacionales en las
+    que hay miles de usuarios concurrentemente y realizando millones de consultas.
+\end{itemize}
+
+En la siguiente tabla, se realiza una breve comparación entre ambos tipos: 
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{ |l|l| } \hline
+                \textbf{SQL} & \textbf{noSQL} \\ \hline
+                Tablas & Hashes, listas \\
+                Escalabilidad vertical & Escalabilidad horizontal \\
+                Consistencia & Dinamicidad \\
+                Datos estructurados & Big Data \\ \hline
+            \end{tabular}
+            \caption{tabla con la comparativa entre SQL y noSQL}
+            \label{tab:databases}
+        \end{center}
+    \end{table}
+
+Dada la naturaleza de nuestro problema, donde existe una clara jerarquización de los
+elementos con los que se trabaja: \textbf{UE, sector, año, hecho, estructura}, ordenados
+de menor a mayor complejidad, intuimos que necesitamos hacer uso de un sistema de
+almacenamiento de información que cumpla con el esquema entidad-relación, por lo tanto,
+deberemos usar una base de datos SQL. Las distintas bases de datos que podemos tantear
+son las siguientes:
+
+    \subsubsection{MySQL}
+    \textbf{MySQL} más que una base de datos, es un sistema de gestión de bases de datos
+    relacionales de código abierto (también conocido como RDBMS, Relational Database
+    Management System). Es una de las bases de datos más populares en la actualidad y usa
+    un modelo cliente-servidor.
+    
+
+    \subsubsection{SQLite}
+    Al igual que mySQL, \textbf{SQLite} es un RDBMS de tamaño reducido (aproximadamente
+    275 kiB) que a diferencia de otros RDBMS como mySQL que utilizan un modelo
+    cliente-servidor, éste no es un proceso independiente con el que el programa principal
+    se comunica, en este caso, se haría uso de llamadas a subrutinas y funciones integradas
+    en el propio código fuente.
+
+    \subsubsection{PostgreSQL}
+    \textbf{PostgreSQL} es un sistema de gestión de base de datos relacional que está
+    orientado a objetos, de código abierto y además gratuito. Este RDBMS posee tipos de
+    datos avanzados y permite optimizar de forma considerable el rendimiento, este tipo de
+    características por lo general solo se ofrecen en sistemas de bases de datos privativas.
+    Además de las características anteriormente mencionadas, permite un control de grandes
+    volúmenes de datos y tiene soporte completo para \textbf{ACID} (\textit{Atomicity,
+    Consistency, Isolation, Durability}).
