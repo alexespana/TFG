@@ -72,7 +72,7 @@ necesidades del proyecto (en este caso a la aplicación web).
     \subsubsection{Laravel}
     \textbf{Laravel} es el mejor framework de PHP para desarrollar aplicaciones y servicios web con
     PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue una arquitectura MVC, por lo que es
-    sencillo realcionar las distintas componentes de la aplicación.
+    sencillo relacionar las distintas componentes de la aplicación.
 
     Es un framework moderno que ofrece muchas utilidades a los desarrolladores y permiten un
     desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la calidad del
@@ -217,3 +217,103 @@ son las siguientes:
     Además de las características anteriormente mencionadas, permite un control de grandes
     volúmenes de datos y tiene soporte completo para \textbf{ACID} (\textit{Atomicity,
     Consistency, Isolation, Durability}).
+
+\subsection{Solución propuesta}
+Como se ha mencionado anteriormente, en cualquier elección de herramientas se debe señalar
+claramente las características que debe cumplir para así poder descartar con facilidad
+entre las disintas alternativas.
+
+    \subsubsection{Elección del Framework de Desarrollo Web}
+    El framework de Desarrollo Web debe cumplir con una serie de \textbf{requisitos} para
+    su aceptación:
+
+        \begin{enumerate}
+            \item Que haga una deducción de los elementos principales de la aplicación,
+            permitiendo centrarnos exclusivamente en el desarrollo de la misma.
+            \item Que pueda permitir la configuración del mismo con distintas bases de
+            datos.
+            \item Que posea un sistema de gestión de usuarios (\textbf{autenticación}).
+            \item Que el manejo de los modelos de la base de datos pueda abstraerse
+            independientemente de la base de datos elegida mediante un \textbf{Object
+            Relational Mapping} (ORM).
+            \item Que incluya una fácil creación de la API para la posible comunicación
+            con la App android.
+        \end{enumerate}
+
+    Tras tantear los distintos frameworks para el desarrollo de aplicaciones web disponibles
+    se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar para mí y
+    además cumple todos los requisitos anteriormente mencionados.
+
+    Dicho framework permite hacer lo siguiente:
+        
+        \begin{itemize}
+            \item Crear la aplicación sin tener que preocuparnos de elementos para que
+            ésta funcione.
+            \item Configuración con distintas bases de datos, SQLite es la base de datos
+            por defecto, pero además permite configurarlo para trabajar con mySQL y
+            postgreSQL.
+            \item Sistema de autenticación de usuarios, por lo que podremos gestionar el
+            registro e inicio de sesión de los mismos.
+            \item Contiene un ORM que permite el manejo de modelos de la base de datos
+            abstrayendo la base de datos utilizada.
+            \item A pesar de no venir incluido como tal, instalando la aplicación Django
+            REST framework, es posible realizar la configuración de la API de una forma
+            relativamente sencilla.
+            \item Tiene una documentación realmente buena, clara y sencilla.
+        \end{itemize}
+    
+    Éstas son las razones por las que se ha decidido elegir Django para el desarrollo de
+    nuestra aplicación web.
+
+    \subsubsection{Elección del Framework CSS}
+    Entre los requisitos que el framework CSS debe cumplir están los siguientes:
+
+        \begin{enumerate}
+            \item Que permita un diseño responsive de la página web.
+            \item Que siga la metodología Responsive Web Design.
+            \item Que sea fácil de usar.
+            \item Que esté actualmente mantenido por la comunidad.
+            \item Que posea una documentación simple y fácil de entender. 
+        \end{enumerate}
+
+    Siguiendo los requisitos de arriba, Foundation puede ser descartado ya que no cumple el
+    segundo requisito, ya que nuestra aplicación web principalmente va a estar diseñada para
+    utilizarse en un ordenador (también podrá usarse en un smartphone, pero no es la
+    finalidad).
+
+    Entre los tres frameworks restantes, podría utilizarse cualquiera de ellos ya que cumplen
+    con los requisitos, pero finalmente se ha decidido utilizar Bootstrap ya que es
+    probablemente el framework más popular y sencillo de usar que hay, además de seguir
+    siendo muy usado por la comunidad. 
+    
+
+    \subsubsection{Elección de la Base de Datos}
+    Para la elección de la Base de Datos que utilizará el servidor web para almacenar toda
+    la información de las excavaciones se tienen que cumplir los siguientes requisitos:
+
+        \begin{enumerate}
+            \item Que sea una base de datos relacional.
+            \item Que sea open-source y gratuita.
+            \item Que tenga soporte para la realización de transacciones seguras.
+            \item Que haga un uso eficiente de los datos.
+        \end{enumerate}
+
+    Por cuestiones de escalabilidad, utilizar SQLite se puede descartar ya que posee un
+    reducido número de tipos de datos y más bien está pensada para utilizarse en dispositivos
+    con poca capacidad de almacenamiento.
+
+    Ahora nos tocaría pensar en, ¿mySQL o postgreSQL? Realmente podría utilizarse cualquiera
+    de las dos, pero posgreSQL ofrece algunas ventajas respecto a mySQL que merece la pena
+    mencionar: 
+    
+        \begin{itemize}
+            \item MySQL es propiedad de Oracle y podría pasar a ser un producto comercial
+            (de pago), sin embargo, postgreSQL es \textbf{open source 100\%}.
+            \item PostgreSQL ofrece una mayor \textbf{integridad y fiabilidad} de los datos
+            (principio ACID).
+            \item Gracias a funciones que lectura y escritura en paralelo, postgreSQL ofrece
+            una mayor \textbf{velocidad} frente a mySQL.
+        \end{itemize}
+    
+    Por estas razones, finalmente se ha decidido usar postgreSQL como base de datos para
+    nuestro servidor web.
