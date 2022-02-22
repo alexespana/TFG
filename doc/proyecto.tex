@@ -21,6 +21,7 @@
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{appendix}
 
 \usepackage[table,xcdraw]{xcolor}
 \hypersetup{
@@ -104,6 +105,19 @@
 
 	% Trabajos futuros
 
+
+	% Anexos del proyecto
+	\renewcommand{\appendixname}{Anexo}
+	\renewcommand{\appendixtocname}{Anexos}
+	\renewcommand{\appendixpagename}{Anexos}
+
+	\appendix
+	\clearpage
+	\addappheadtotoc
+	\appendixpage
+	
+	% 1. Informe de tutorías
+	\input{anexos/anexo_i}
 
 	
 	\newpage
