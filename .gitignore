@@ -343,4 +343,4 @@ dmypy.json
 .pyre/
 
 # Avoid adding information from PostgreSQL 
-/code/app/data/
+/code/db/
