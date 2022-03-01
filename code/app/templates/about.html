@@ -1,5 +1,45 @@
 {% extends 'base.html' %}
 {% block title %}Sobre la aplicación{% endblock %}
+{% load static %}
 {% block contenido %}
+
+<div id="about" class="about-area">
+    <div class="container area-padding">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs 12">
+                <div class="section-headline text-center">
+                    <h2>Sobre MyFindings</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Information about the App -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h4>Motivación</h4>
+                <p>
+                    Hoy en día, para la toma de datos durante las excavaciones se usa
+                    un procedimiento tradicional, con lápiz y papel, lo cuál dificulta
+                    en gran medida el trabajo. Frente a este problema, surgió MyFindings,
+                    una aplicación que te permitirá realizar una toma y gestión de los
+                    datos de una manera increíblemente fácil e intuitiva. Características
+                    principales:
+                </p>
+                <ul>
+                    <li><em class="bi bi-check"></em>Gestión de excavaciones</li>
+                    <li><em class="bi bi-check"></em>Sincronización en tiempo real</li>
+                    <li><em class="bi bi-check"></em>Añade, edita, elimina excavaciones</li>
+                    <li><em class="bi bi-check"></em>Generación de informes</li>
+                    <li><em class="bi bi-check"></em>Rápido, eficiente, intuitivo</li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="about-image">
+                    <img class="border-box" src="{% static 'img/about/1.jpg'%}" alt="About image">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}

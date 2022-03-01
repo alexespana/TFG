@@ -2,7 +2,7 @@
 #  ---------------- Basic styles ----------------------
 -----------------------------------------------------*/ 
 .area-padding{
-  padding: 115px 0px 80px;
+  padding: 110px 0px 80px;
 }
 
 .section-headline h2 {
@@ -22,6 +22,16 @@
   margin: 0 auto;
   position: absolute;
   border: 1px solid chocolate;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+.border-box{
+  border: 2px chocolate solid;
+  border-radius: 10px 10px 10px 10px;
 }
 
 /* ----------------------------------------------------
@@ -255,6 +265,19 @@ header #logo h1 a, header .logo h1 a:hover{
 #carousel .btn-login:hover {
   background: #fff;
   color: chocolate;
+}
+
+/* ----------------------------------------------------
+#  ---------------- About -----------------------------
+-----------------------------------------------------*/
+.about-area ul{
+  list-style: none;
+}
+
+.about-area ul li em{
+  margin-right: 5px;
+  color: chocolate;
+  font-size: large;
 }
 
 /* ----------------------------------------------------
