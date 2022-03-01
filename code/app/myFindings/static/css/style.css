@@ -327,6 +327,57 @@ header #logo h1 a, header .logo h1 a:hover{
   text-decoration: none;
 }
 
+/* ----------------------------------------------------
+#  ---------------- Team ----------------------------
+-----------------------------------------------------*/
+.team-member {
+  overflow: hidden;
+  width: 100%;
+}
+
+.team-member:hover .team-image a:after {
+  opacity: 1;
+}
+
+.team-image {
+  position: relative;
+}
+
+.team-image > a {
+  display: flex;
+  justify-content: center;
+}
+
+.team-image > a::after {
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  transition: all 0.5s ease 0s;
+  width: 100%;
+  opacity: 0;
+}
+
+.team-image img{
+  width: 100%;
+}
+
+.team-content {
+  padding: 10px 0px;
+}
+
+.team-content > h4, .team-content > p {
+  color: #444;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 575px){
+  .team-member{
+    margin-bottom: 40px;
+  }
+}
 
 /* ----------------------------------------------------
 #  ---------------- Footer ----------------------------
