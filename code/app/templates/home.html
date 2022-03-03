@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}MyFindings{% endblock %}
+{% block contenido %}
+
+<!-- Carousel (https://getbootstrap.com/docs/5.1/components/carousel/)-->
+<section id="carousel">
+    <div class="container">
+        <div id="indicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+        <ol id="carousel-indicators" class="carousel-indicators"></ol>
+
+        <div class="carousel-inner">
+
+            <div id="carousel-1" class="carousel-item active">
+                <div class="carousel-container">
+                <div class="container">
+                    <h2>La mejor aplicación arqueológica del mundo</h2>
+                    <p>Lleva tus excavaciones a otro nivel con su total control y gestión.</p>
+                    <a href="#login" class="btn-login">Log in</a>
+                </div>
+                </div>
+            </div>
+
+            <div id="carousel-2" class="carousel-item">
+                <div class="carousel-container">
+                <div class="container">
+                    <h2>Visualiza, edita, elimina</h2>
+                    <p>Nunca había sido más fácil editar los datos de tus excavaciones. </p>
+                    <a href="#login" class="btn-login">Log in</a>
+                </div>
+                </div>
+            </div>
+
+            <div id="carousel-3" class="carousel-item">
+                <div class="carousel-container">
+                <div class="container">
+                    <h2>Crea tus croquis sin complicaciones</h2>
+                    <p>Ahora puedes modificar tus imágenes de excavaciones tan solo modificando puntos</p>
+                    <a href="#login" class="btn-login">Log in</a>
+                </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a class="carousel-control-prev" href="#indicators" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#indicators" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+        </div>
+    </div>
+</section> <!-- End sliders -->
+
+{% endblock %}

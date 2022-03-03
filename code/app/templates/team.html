@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Equipo{% endblock %}
+{% load static %}
+{% block contenido %}
+
+<div id="team" class="team-area">
+    <div class="area-padding">
+        <div class="container">
+            <!-- Headline -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="section-headline text-center">
+                        <h2>Nuestro equipo especial</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- Team Members -->
+            <div class="row">
+                <!-- Member 1 -->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="team-member border-box">
+                        <div class="team-image">
+                            <a><img src="{% static 'img/team/1.jpg' %}" alt="Member-1"></a>
+                        </div>
+                        <div class="team-content text-center">
+                            <h4>Joaquín García</h4>
+                            <p>Android Developer</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Member 2 -->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="team-member border-box">
+                        <div class="team-image">
+                            <a><img src="{% static 'img/team/2.jpg' %}" alt="Member-1"></a>
+                        </div>
+                        <div class="team-content text-center">
+                            <h4>Joaquín España</h4>
+                            <p>Web Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
