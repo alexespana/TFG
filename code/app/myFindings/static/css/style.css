@@ -91,7 +91,7 @@ header #logo h1 a, header .logo h1 a:hover{
     position: relative;
 }
 
-.navbar a, .navbar a:focus{
+.navbar a{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -109,27 +109,59 @@ header #logo h1 a, header .logo h1 a:hover{
     margin-left: 5px;
 }
  
-.navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
+.navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a,
+.phone-toggle:hover {
     color: chocolate;
 }
 
-.mobile-nav-toggle {
-    color: #fff;
-    font-size: 28px;
-    cursor: pointer;
-    display: none;
-    line-height: 0;
-    transition: 0.5s;
-  }
-  
-@media (max-width: 991px) {
-    .mobile-nav-toggle {
-        display: block;
-    }
+.phone-toggle {
+  color: #fff;
+  transition: 0.5s;
+  display: none;
+  cursor: pointer;
+  font-size: large;
+}
 
-    .navbar ul {
-        display: none;
-    }
+@media (max-width: 800px) {
+  .phone-toggle {
+      display: block;
+  }
+
+  .navbar ul {
+      display: none;
+  }
+}
+
+.phone-navbar {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(1, 2, 2, 0.9);
+  transition: 0.5s;
+}
+
+.phone-navbar .phone-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.phone-navbar ul {
+  display: block;
+  position: absolute;
+  top: 65px;
+  right: 15px;
+  left: 15px;
+  padding: 10px 0;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.phone-navbar a{
+  color: #0d2529;
 }
 
 /* ----------------------------------------------------

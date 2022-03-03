@@ -44,9 +44,7 @@ function navbarLinkActive(index){
  * Cambia el navbar activo y desactiva el anterior
  */
 function _changeNavBarItem(){
-  console.log("ejecutandose la funcioncita")
   let navbarLinks = select('.navbar .nav-link', true)
-  console.log(navbarLinks)
   navbarLinks.forEach((item, index) => {
     if (index==itemActive) {
       item.classList.add('active')
@@ -67,3 +65,16 @@ carouselItems.forEach((_, index) => {
   carouselIndicators.innerHTML += "<li data-bs-target='#indicators' data-bs-slide-to='" + index + "' class='active'></li>":
   carouselIndicators.innerHTML += "<li data-bs-target='#indicators' data-bs-slide-to='" + index + "'></li>"
 });
+
+/**
+ * Phone toggle
+ */
+function navbarPhone(){  
+  select('#navbar').classList.toggle('phone-navbar')
+  select('#navbar ul').classList.toggle('border-box')
+  this.classList.toggle('bi-list')
+  this.classList.toggle('bi-x-circle')
+}
+
+// Onclick listener
+document.getElementsByClassName('phone-toggle')[0].onclick = navbarPhone
