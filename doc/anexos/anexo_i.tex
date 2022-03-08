@@ -61,6 +61,64 @@ que hay almacenados en la base de datos y se generaría un archivo word o un arc
 que sea posteriormente modificable por el/la arqueólogo/a.
 
 
+\section{3º Reunión (01/03/22): Diseño del modelo Entidad/Relación}
+Una parte muy importante de la aplicación es la correcta modelización de la base de datos.
+Para ello, \textit{Joaquín García Venegas} y yo hicimos un diseño inicial del modelo
+E/R.
+
+    \subsection{Entidades del modelo E/R}
+
+        \begin{itemize}
+            \item \textbf{Excavación}: es una entidad simple pero importante, ya que definirá
+            la numeración (identificación) del resto de entidades del esquema 
+            \item \textbf{Estancia}: compuesto por la asociación de hechos.
+            \item \textbf{Hecho}: formado por un conjunto de unidades estratigráficas, que
+            bien podrán ser tanto unidades estratigráficas sedimentarias como construidas 
+            \item \textbf{Unidad estratigráfica}: es una de las entidades fundamentales de
+            la base de datos, ya que es el nodo hoja en el árbol de la jerarquía.
+            \item \textbf{Sedimentaria}: es una entidad que hereda de unidad estratigráfica.
+            \item \textbf{Construida}: es una entidad que hereda de unidad estratigráfica.
+            \item \textbf{Fotografía}: la poseen tanto las unidades estratigráficas como las
+            estancias, serán las fotos descriptivas de una excavación
+            \item \textbf{Inclusión}: entidad débil que surge como consecuencia de que una
+            unidad estratigráfica de tipo sedimentaria puede contener restos de distintos
+            componentes, haciendo necesaria la definición de una nueva entidad al modelo
+            para poder reflejar una relación \textbf{muchos a uno entre Inclusión y
+            Sedimentaria)}.
+            \item \textbf{Material}: al igual que en la entidad anterior, surge con la
+            necesidad de poder representar una relación \textbf{muchos a uno entre Material
+            y Sedimentaria)}, ya que una unidad estratigráfica de tipo sedimentaria puede
+            estar formada por muestras, metal, piedra, arcilla, etc.
+        \end{itemize}
+
+
+    \subsection{Dudas sobre el modelo}
+    Tras realizar el modelo, surgieron una serie de dudas acerca de las posibles relacionales
+    y los datos de las fichas(tipos de datos y significado), lo cuál es normal ya que no
+    dominamos los términos que se usan en arqueología con precisión. Las dudas que surgieron
+    fueron las siguientes:
+
+        \begin{enumerate}
+            \item ¿Es el mismo material el de la ficha reducida que el de las unidades
+            construidas?
+            \item En la ficha de las estancias, no sabemos qué es el primer recuadro para
+            dibujar.
+            \item Problema de identificación de las estancias: en el pdf de metodologías, 
+            se dice que se codifica con la palabra Estancia y tres dígitos (el primero
+            indica la zona y los dos siguientes el nº de sector). Aparece un nº de sector,
+            ¿es éste el nº de orden?
+            \item ¿Son realmente importantes los atributos Plano nº, Seccion nº, Elevacion
+            nº?
+            \item ¿Una excavación puede pertenecer a varias UE?
+            \item ¿El TPQ, TAQ y la fase en qué formato van, números, fechas, palabras, ..?
+            \item ¿La ficha completa se rellena a partir de la ficha de campo?
+            \item Las cotas, ¿van relacionadas con las pendientes?
+        \end{enumerate}
+
+    Evidentemente, estas dudas tendrán que ser resueltas por el arqueólogo Francisco Javier
+    Brao Gonzalez en una reunión que se concertará posteriormente junto con el tutor,
+    Daniel Sánchez Fernández.
+
 \section{Glosario}
 En este apartado se van a ir incorporando aquellas palabras o expresiones que son difíciles
 de comprender, junto a su significado o algún comentario.
