@@ -189,12 +189,21 @@ class UE(models.Model):
     observaciones = models.CharField(max_length=200)
     coordenadas = models.CharField(max_length=100)
 
-    # Calculated attributes - To do
-    cota_superior = models.IntegerField()
-    cota_inferior = models.IntegerField()
+    cota_superior_diff = models.IntegerField()
+    cota_inferior_diff = models.IntegerField()
 
     pendiente_superior = models.CharField(max_length=8, choices=PENDIENTE_CHOICES)
     pendiente_inferior = models.CharField(max_length=8, choices=PENDIENTE_CHOICES)
+
+    def _get_cota_superior(self):
+        return self.excavacion.punto_cero + self.cota_superior_diff
+
+    def _get_cota_inferior(self):
+        return self.excavacion.punto_cero + self.cota_inferior_diff
+
+    # Calculated fields 
+    cota_superior = property(_get_cota_superior)
+    cota_inferior = property(_get_cota_inferior)
 
 
 class Fotografia(models.Model):
@@ -309,7 +318,7 @@ class MaterialSedimentaria(models.Model):
     ]
 
     # Foreign Keys
-    ue = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
+    uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
     
     nombre = models.CharField(max_length=3, choices=NOMBRE_CHOICES)
 
@@ -329,10 +338,9 @@ class MaterialConstruida(models.Model):
     ]
 
     # Foreign Keys
-    ue = models.ForeignKey(UEConstruida, on_delete=models.CASCADE)
+    ueconstruida = models.ForeignKey(UEConstruida, on_delete=models.CASCADE)
     
     nombre = models.CharField(max_length=3, choices=NOMBRE_CHOICES)
 
     def __str__(self):
         return self.nombre
-
