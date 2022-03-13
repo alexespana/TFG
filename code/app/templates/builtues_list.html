@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Unidades construidas{% endblock %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<div id="builtues-list" class="builtues-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Lista de unidades construidas</h2>
+                    <hr>
+                    <table class="table table-striped table-hover table-responsive-sm">
+                        <caption>Listado de unidades construidas</caption>
+                        <tr>
+                            <th>Hecho</th>
+                            <th>Excavacion</th>
+                            <th>Fase</th>
+                            <th>Periodo</th>
+                            <th>S.Constructivo</th>
+                            <th>Tipo</th>
+                            <th>Opciones</th>
+                        </tr>
+                
+                        {% for u in builtues %}
+                
+                        <tr>
+                            <td>{{ u.hecho }}</td>
+                            <td>{{ u.excavacion }}</td>
+                            <td>{{ u.fase }}</td>
+                            <td>{{ u.periodo }}</td>
+                            <td>{{ u.sistema_constructivo }}</td>
+                            <td>{{ u.tipo }}</td>
+                            <td>
+                                <a href="{% url 'delete_builtue' u.id %}" class="btn btn-danger">Eliminar</a>
+                                <a href="{% url 'modify_builtues' u.id %}" class="btn btn-warning">Modificar</a>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                        
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

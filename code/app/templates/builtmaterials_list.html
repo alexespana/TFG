@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Materiales construidos{% endblock %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<div id="builtmaterials-list" class="builtmaterials-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Lista de materiales construidos</h2>
+                    <hr>
+                    <table class="table table-striped table-hover table-responsive-sm">
+                        <caption>Listado de materiales construidos</caption>
+                        <tr>
+                            <th>UE construida</th>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+                        </tr>
+                
+                        {% for m in builtmaterials %}
+                
+                        <tr>
+                            <td>{{ m.ueconstruida }}</td>
+                            <td>{{ m.nombre }}</td>
+                            <td>
+                                <a href="{% url 'delete_builtmaterial' m.id %}" class="btn btn-danger">Eliminar</a>
+                                <a href="{% url 'modify_builtmaterial' m.id %}" class="btn btn-warning">Modificar</a>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                        
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

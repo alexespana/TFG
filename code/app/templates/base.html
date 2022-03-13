@@ -38,9 +38,26 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a href="{% url 'home' %}" onclick="navbarLinkActive(0)" class="nav-link">MyFindings</a></li>
-                    <li><a href="{% url 'about' %}" onclick="navbarLinkActive(1)" class="nav-link">Sobre la aplicación</a></li>
-                    <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(2)" class="nav-link">Contacto</a></li>
-                    <li><a href="{% url 'team' %}" onclick="navbarLinkActive(3)" class="nav-link">Equipo</a></li>
+    
+                    <li class="nav-item dropdown">
+                        <a href="#" onclick="navbarLinkActive(1)" class="nav-link">Comienza <em class="bi bi-caret-down"></em></a>
+                        <ul>
+                            <li><a href="{% url 'add_excavation' %}">Añade Excavacion</a></li>
+                            <li><a href="{% url 'add_fact' %}">Añade Hecho</a></li>
+                            <li><a href="{% url 'add_room' %}">Añade Estancia</a></li>
+                            <li><a href="{% url 'add_sedimentaryue' %}">Añade UE sedimentaria</a></li>
+                            <li><a href="{% url 'add_builtue' %}">Añade UE construida</a></li>
+                            <li><a href="{% url 'add_photo' %}">Añade Fotografía</a></li>
+                            <li><a href="{% url 'add_inclusion' %}">Añade Inclusión</a></li>
+                            <li><a href="{% url 'add_sedimentarymaterial' %}">Añade Material sedimentario</a></li>
+                            <li><a href="{% url 'add_builtmaterial' %}">Añade Material construido</a></li>
+                        </ul>
+
+                    </li>
+                    
+                    <li><a href="{% url 'about' %}" onclick="navbarLinkActive(2)" class="nav-link">Sobre la aplicación</a></li>
+                    <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(3)" class="nav-link">Contacto</a></li>
+                    <li><a href="{% url 'team' %}" onclick="navbarLinkActive(4)" class="nav-link">Equipo</a></li>
                 </ul>
                 <em class="bi bi-list phone-toggle"></em>
             </nav>

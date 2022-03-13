@@ -76,7 +76,7 @@ class Estancia(models.Model):
     n_zona = models.IntegerField()
     n_sector = models.IntegerField()
     observaciones = models.CharField(max_length=200)
-    croquis_plata = models.ImageField()
+    croquis_planta = models.ImageField()
     n_planta = models.IntegerField()
     n_seccion = models.IntegerField()
     elevacion = models.IntegerField()
@@ -87,7 +87,7 @@ class Estancia(models.Model):
     autor = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.n_zona + self.n_orden
+        return self.n_estancia
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # HECHO               ~~~~~~~~
@@ -114,8 +114,6 @@ class Hecho(models.Model):
     numero = models.CharField(max_length=6)
     models.UniqueConstraint(fields=['letra', 'numero'], name='letra_numero_unico')
 
-    croquis_plan = models.ImageField()
-    croquis_seccion = models.ImageField()
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
     tpq = models.IntegerField()
     taq = models.IntegerField()
@@ -126,6 +124,8 @@ class Hecho(models.Model):
     año = models.IntegerField()
 
     estructura = models.CharField(max_length=10)    # to check
+    croquis_plan = models.ImageField()
+    croquis_seccion = models.ImageField()
 
 
     def __str__(self):
@@ -135,11 +135,11 @@ class Hecho(models.Model):
 # EXCAVACION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavacion(models.Model):
-    n_excavacion = models.IntegerField(unique=True)
+    n_excavacion = models.IntegerField(unique=True, verbose_name='Número de excavación')
     punto_cero = models.IntegerField()
 
     def __str__(self):
-        return self.n_excavacion
+        return str(self.n_excavacion)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UE                  ~~~~~~~~
@@ -205,6 +205,8 @@ class UE(models.Model):
     cota_superior = property(_get_cota_superior)
     cota_inferior = property(_get_cota_inferior)
 
+    def __str__(self):
+        return str(self.descripcion)
 
 class Fotografia(models.Model):
     # Foreign Keys
