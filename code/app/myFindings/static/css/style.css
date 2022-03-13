@@ -42,7 +42,7 @@ header{
     transition: all 0.5s;
     z-index: 997;
     transition: all 0.5s;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 header #logo h1{
@@ -162,6 +162,40 @@ header #logo h1 a, header .logo h1 a:hover{
 
 .phone-navbar a{
   color: #0d2529;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  opacity: 0; 
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  padding-right: 30px;
+}
+
+.dropdown ul a:hover, .dropdown ul .active:hover, 
+.dropdown ul li:hover > a {
+  color: chocolate;
+}
+
+.dropdown ul a{
+  text-decoration: none;
+  color: #fff;
+}
+
+ .navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+} 
+
+.dropdown a em{
+  margin-left: 5px;
+  font-size: 15px;
 }
 
 /* ----------------------------------------------------
@@ -508,4 +542,11 @@ ul {
 
 .copyright a{
   color: chocolate;
+}
+
+/* ----------------------------------------------------
+#  ---------------- Forms- ----------------------------
+-----------------------------------------------------*/
+.form-buttons{
+  margin-top: 15px;
 }
