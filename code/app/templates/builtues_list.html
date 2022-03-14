@@ -25,7 +25,11 @@
                         {% for u in builtues %}
                 
                         <tr>
-                            <td>{{ u.hecho }}</td>
+                            {% if u.hecho == None %}
+                                <td>Sin asociar</td>
+                            {% else %}
+                                <td>{{ u.hecho }}</td>
+                            {% endif %}
                             <td>{{ u.excavacion }}</td>
                             <td>{{ u.fase }}</td>
                             <td>{{ u.periodo }}</td>
@@ -33,7 +37,7 @@
                             <td>{{ u.tipo }}</td>
                             <td>
                                 <a href="{% url 'delete_builtue' u.id %}" class="btn btn-danger">Eliminar</a>
-                                <a href="{% url 'modify_builtues' u.id %}" class="btn btn-warning">Modificar</a>
+                                <a href="{% url 'modify_builtue' u.id %}" class="btn btn-warning">Modificar</a>
                             </td>
                         </tr>
                         

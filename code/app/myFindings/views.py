@@ -71,7 +71,7 @@ def add_sedimentaryue(request):
 
     if request.method == 'POST':
         # Get the data entered by the user
-        form = SedimentaryUEForm(data=request.POST)
+        form = SedimentaryUEForm(data=request.POST, files=request.FILES)
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
@@ -85,7 +85,7 @@ def add_sedimentaryue(request):
 def modify_sedimentaryue(request):
     pass
 
-def delete_sedimentaryue(request):
+def delete_sedimentaryue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
     sedimentaryue = get_object_or_404(UESedimentaria, id=id)
 
@@ -110,7 +110,7 @@ def add_builtue(request):
 
     if request.method == 'POST':
         # Get the data entered by the user
-        form = BuiltUEForm(data=request.POST)
+        form = BuiltUEForm(data=request.POST, files=request.FILES)
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
@@ -124,7 +124,7 @@ def add_builtue(request):
 def modify_builtue(request):
     pass
 
-def delete_builtue(request):
+def delete_builtue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
     builtue = get_object_or_404(UEConstruida, id=id)
 

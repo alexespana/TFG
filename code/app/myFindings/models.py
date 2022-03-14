@@ -171,7 +171,7 @@ class UE(models.Model):
     ]
 
     # Foreign Keys
-    hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE)
+    hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE, blank=True, null=True)
     excavacion = models.ForeignKey(Excavacion, on_delete=models.CASCADE)
 
     plano_n = models.IntegerField()
@@ -228,6 +228,44 @@ class Fotografia(models.Model):
     def __str__(self):
         return self.numero
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# MATERIALSEDIMENTARIA ~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class MaterialSedimentaria(models.Model):
+    NOMBRE_CHOICES = [
+        ('Muestras', 'Muestras'),
+        ('Metal', 'Metal'),
+        ('Piedra', 'Piedra'),
+        ('Arcilla', 'Arcilla'),
+        ('Material construido', 'Material construido'),
+        ('Cerámica', 'Cerámica'),
+        ('Vidrio', 'Vidrio'),
+        ('Fauna', 'Fauna'),
+        ('Otros', 'Otros'),
+    ]
+
+    nombre = models.CharField(max_length=20, choices=NOMBRE_CHOICES, primary_key=True)
+
+    def __str__(self):
+        return self.nombre
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# MATERIALCONSTRUIDA   ~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class MaterialConstruida(models.Model):
+    NOMBRE_CHOICES = [
+        ('Piedra', 'Piedra'),
+        ('Tierra cruda', 'Tierra cruda'),
+        ('Cal', 'Cal'),
+        ('Tierra cocida', 'Tierra cocida'),
+        ('Madera', 'Madera'),
+    ]
+
+    nombre = models.CharField(max_length=15, choices=NOMBRE_CHOICES, primary_key=True)
+
+    def __str__(self):
+        return self.nombre
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UESEDIMENTARIA      ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -252,6 +290,7 @@ class UESedimentaria(UE):
 
     tipo_estructura = models.CharField(max_length=15, choices=ESTRUCTURA_CHOICES)
     tipo_textura = models.CharField(max_length=10, choices=TEXTURA_CHOICES)
+    materiales_sedimentarios = models.ManyToManyField(MaterialSedimentaria)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UECONSTRUIDA        ~~~~~~~~
@@ -264,7 +303,7 @@ class UEConstruida(UE):
 
     sistema_constructivo = models.CharField(max_length=50)
     tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
-
+    materiales_construidos = models.ManyToManyField(MaterialConstruida)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # INCLUSION           ~~~~~~~~
@@ -308,40 +347,3 @@ class Inclusion(models.Model):
     def __str__(self):
         return self.tipo
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# MATERIALSEDIMENTARIA ~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialSedimentaria(models.Model):
-    NOMBRE_CHOICES = [
-        ('Muestras', 'Muestras'),
-        ('Metal', 'Metal'),
-        ('Piedra', 'Piedra'),
-        ('Arcilla', 'Arcilla'),
-        ('Material construido', 'Material construido'),
-        ('Cerámica', 'Cerámica'),
-        ('Vidrio', 'Vidrio'),
-        ('Fauna', 'Fauna'),
-        ('Otros', 'Otros'),
-    ]
-
-    nombre = models.CharField(max_length=20, choices=NOMBRE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.nombre
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# MATERIALCONSTRUIDA   ~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialConstruida(models.Model):
-    NOMBRE_CHOICES = [
-        ('Piedra', 'Piedra'),
-        ('Tierra cruda', 'Tierra cruda'),
-        ('Cal', 'Cal'),
-        ('Tierra cocida', 'Tierra cocida'),
-        ('Madera', 'Madera'),
-    ]
-
-    nombre = models.CharField(max_length=15, choices=NOMBRE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.nombre
