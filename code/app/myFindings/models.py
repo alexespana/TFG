@@ -2,42 +2,42 @@ from django.db import models
 
 FASE_CHOICES = [
     (('A: época contemporánea'), (
-            ('A1','A1'),
-            ('A2','A2'),
-            ('A3','A3'),
+            ('A1','A1: 1800/1900'),
+            ('A2','A2: 1900/2000'),
+            ('A3','A3: época actual'),
         )
     ),
     (('B: época moderna'),(
-            ('B1','B1'),
-            ('B2','B2'),
+            ('B1','B1: fase morisca'),
+            ('B2','B2: fase cristiana'),
         )
     ),
     (('C: época medieval'), (
-            ('C1','C1'),
-            ('C2','C2'),
-            ('C3','C3'),
-            ('C4','C4'),
-            ('C5','C5'),
+            ('C1','C1: fase emiral'),
+            ('C2','C2: fase califal'),
+            ('C3','C3: fase taifas'),
+            ('C4','C4: fase almorávide/almohade'),
+            ('C5','C5: fase nazarí'),
         )
     ),
     (('D: época romana'), (
-            ('D1','D1'),
-            ('D2','D2'),
-            ('D3','D3'),
-            ('D4','D4'),
+            ('D1','D1: época republicana'),
+            ('D2','D2: Alto Imperio'),
+            ('D3','D3: Bajo Imperio'),
+            ('D4','D4: Antigüedad tardía'),
         )
     ),
     (('E: época ibérica'), (
-            ('E1','E1'),
-            ('E2','E2'),
-            ('E3','E3'),
-            ('E4','E4'),
+            ('E1','E1: Protoibérico'),
+            ('E2','E2: Ibérico antiguo'),
+            ('E3','E3: Ibérico pleno'),
+            ('E4','E4: Ibérico tardío o final'),
         )
     ),
     (('F: Edad del Bronce'), (
-            ('F1','F1'),
-            ('F2','F2'),
-            ('F3','F3'),
+            ('F1','F1: Bronce Final'),
+            ('F2','F2: Bronce argárico'),
+            ('F3','F3: Bronce antiguo'),
         )
     ),
 ]
@@ -233,25 +233,25 @@ class Fotografia(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class UESedimentaria(UE):
     ESTRUCTURA_CHOICES = [
-        ('CO', 'Compacta'),
-        ('SU', 'Suelta'),
-        ('HO', 'Homogénea'),
-        ('HE', 'Heterogénea'),
+        ('Compacta', 'Compacta'),
+        ('Suelta', 'Suelta'),
+        ('Homogénea', 'Homogénea'),
+        ('Heterogénea', 'Heterogénea'),
     ]
 
     TEXTURA_CHOICES = [
-        ('ARC','Arcilla'),
-        ('LIM','Limo'),
-        ('ARE','Arena'),
-        ('GRA','Grava'),
-        ('CAN','Cantos'),
-        ('BLO','Bloques'),
-        ('CER','Cerámica'),
-        ('MOR','Mortero'),
+        ('Arcilla','Arcilla'),
+        ('Limo','Limo'),
+        ('Arena','Arena'),
+        ('Grava','Grava'),
+        ('Cantos','Cantos'),
+        ('Bloques','Bloques'),
+        ('Cerámica','Cerámica'),
+        ('Mortero','Mortero'),
     ]
 
-    tipo_estructura = models.CharField(max_length=2, choices=ESTRUCTURA_CHOICES)
-    tipo_textura = models.CharField(max_length=3, choices=TEXTURA_CHOICES)
+    tipo_estructura = models.CharField(max_length=15, choices=ESTRUCTURA_CHOICES)
+    tipo_textura = models.CharField(max_length=10, choices=TEXTURA_CHOICES)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UECONSTRUIDA        ~~~~~~~~
