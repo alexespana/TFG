@@ -22,8 +22,8 @@
                         <tr>
                             <td>{{ m.nombre }}</td>
                             <td>
-                                <a href="{% url 'delete_builtmaterial' m.id %}" class="btn btn-danger">Eliminar</a>
-                                <a href="{% url 'modify_builtmaterial' m.id %}" class="btn btn-warning">Modificar</a>
+                                <a href="{% url 'delete_builtmaterial' m.nombre %}" class="btn btn-danger">Eliminar</a>
+                                <a href="{% url 'modify_builtmaterial' m.nombre %}" class="btn btn-warning">Modificar</a>
                             </td>
                         </tr>
                         

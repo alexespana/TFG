@@ -136,7 +136,9 @@ class Hecho(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavacion(models.Model):
     n_excavacion = models.IntegerField(unique=True, verbose_name='Número de excavación')
-    punto_cero = models.IntegerField()
+    coordenada_x = models.IntegerField(default=0)
+    coordenada_y = models.IntegerField(default=0)
+    altura = models.IntegerField()
 
     def __str__(self):
         return str(self.n_excavacion)
@@ -187,7 +189,9 @@ class UE(models.Model):
     interpretacion = models.CharField(max_length=13, choices=INTERPRETACION_CHOICES)    
     sector = models.CharField(max_length=2)          
     observaciones = models.CharField(max_length=200)
-    coordenadas = models.CharField(max_length=100)
+    coordenada_x = models.IntegerField(default=0)
+    coordenada_y = models.IntegerField(default=0)
+
 
     cota_superior_diff = models.IntegerField()
     cota_inferior_diff = models.IntegerField()
@@ -196,10 +200,10 @@ class UE(models.Model):
     pendiente_inferior = models.CharField(max_length=8, choices=PENDIENTE_CHOICES)
 
     def _get_cota_superior(self):
-        return self.excavacion.punto_cero + self.cota_superior_diff
+        return self.excavacion.altura + self.cota_superior_diff
 
     def _get_cota_inferior(self):
-        return self.excavacion.punto_cero + self.cota_inferior_diff
+        return self.excavacion.altura + self.cota_inferior_diff
 
     # Calculated fields 
     cota_superior = property(_get_cota_superior)
@@ -267,38 +271,39 @@ class UEConstruida(UE):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Inclusion(models.Model):
     FRECUENCIA_CHOICES = [
-        (0, 'Ausencia'),
-        (1, 'Ocasional'),
-        (2, 'Medio'),
-        (3, 'Frecuente'),
+        ('Ausencia', 'Ausencia'),
+        ('Ocasional', 'Ocasional'),
+        ('Medio', 'Medio'),
+        ('Frecuente', 'Frecuente'),
     ]
 
     GROSOR_CHOICES = [
-        (1, '< 2 cm'),
-        (2, '2-6 cm'),
-        (3, '6-12 cm'),
-        (4, '> 12 cm'),
+        ('< 2 cm', '< 2 cm'),
+        ('2-6 cm', '2-6 cm'),
+        ('6-12 cm', '6-12 cm'),
+        ('> 12 cm', '> 12 cm'),
     ]
 
     TIPO_CHOICES = [
-        ('CEN', 'Cenizas'),
-        ('CAR', 'Carbones'),
-        ('HUE', 'Huesos'),
-        ('ADO', 'Adobe'),
-        ('CAÑ', 'Cañizo'),
-        ('TEJ', 'Tejas'),
-        ('BLO', 'Bloques'),
-        ('CAL', 'Cal'),
-        ('MOR', 'Mortero'),
-        ('ENL', 'Enlucido'),
+        ('Cenizas', 'Cenizas'),
+        ('Carbones', 'Carbones'),
+        ('Huesos', 'Huesos'),
+        ('Adobe', 'Adobe'),
+        ('Cañizo', 'Cañizo'),
+        ('Tejas', 'Tejas'),
+        ('Bloques', 'Bloques'),
+        ('Cal', 'Cal'),
+        ('Mortero', 'Mortero'),
+        ('Enlucido', 'Enlucido'),
     ]
     
+    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES, primary_key=True)
+
     # Foreign Keys
     uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
 
-    frecuencia = models.IntegerField(choices=FRECUENCIA_CHOICES)
-    grosor = models.IntegerField(choices=GROSOR_CHOICES,)
-    tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
+    frecuencia = models.CharField(max_length=10, choices=FRECUENCIA_CHOICES)
+    grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES,)
 
     def __str__(self):
         return self.tipo
@@ -308,21 +313,18 @@ class Inclusion(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class MaterialSedimentaria(models.Model):
     NOMBRE_CHOICES = [
-        ('MUE', 'Muestras'),
-        ('MET', 'Metal'),
-        ('PIE', 'Piedra'),
-        ('ARC', 'Arcilla'),
-        ('MCO', 'Material construido'),
-        ('CER', 'Cerámica'),
-        ('VID', 'Vidrio'),
-        ('FAU', 'Fauna'),
-        ('OTR', 'Otros'),
+        ('Muestras', 'Muestras'),
+        ('Metal', 'Metal'),
+        ('Piedra', 'Piedra'),
+        ('Arcilla', 'Arcilla'),
+        ('Material construido', 'Material construido'),
+        ('Cerámica', 'Cerámica'),
+        ('Vidrio', 'Vidrio'),
+        ('Fauna', 'Fauna'),
+        ('Otros', 'Otros'),
     ]
 
-    # Foreign Keys
-    uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
-    
-    nombre = models.CharField(max_length=3, choices=NOMBRE_CHOICES)
+    nombre = models.CharField(max_length=20, choices=NOMBRE_CHOICES, primary_key=True)
 
     def __str__(self):
         return self.nombre
@@ -332,17 +334,14 @@ class MaterialSedimentaria(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class MaterialConstruida(models.Model):
     NOMBRE_CHOICES = [
-        ('PIE', 'Piedra'),
-        ('TCR', 'Tierra cruda'),
-        ('CAL', 'Cal'),
-        ('TCO', 'Tierra cocida'),
-        ('MAD', 'Madera'),
+        ('Piedra', 'Piedra'),
+        ('Tierra cruda', 'Tierra cruda'),
+        ('Cal', 'Cal'),
+        ('Tierra cocida', 'Tierra cocida'),
+        ('Madera', 'Madera'),
     ]
 
-    # Foreign Keys
-    ueconstruida = models.ForeignKey(UEConstruida, on_delete=models.CASCADE)
-    
-    nombre = models.CharField(max_length=3, choices=NOMBRE_CHOICES)
+    nombre = models.CharField(max_length=15, choices=NOMBRE_CHOICES, primary_key=True)
 
     def __str__(self):
         return self.nombre

@@ -105,7 +105,7 @@ urlpatterns = [
     # Modify sedimentary material
     path('modify_sedimentarymaterial/<id>/', views.modify_sedimentarymaterial, name="modify_sedimentarymaterial"),
     # Delete sedimentary material
-    path('delete_sedimentarymaterial/<id>/', views.delete_sedimentarymaterial, name="delete_sedimentarymaterial"),
+    path('delete_sedimentarymaterial/<nombre>/', views.delete_sedimentarymaterial, name="delete_sedimentarymaterial"),
 
     # #####################
     # BUILT MATERIAL
@@ -117,6 +117,6 @@ urlpatterns = [
     # Modify built material
     path('modify_builtmaterial/<id>/', views.modify_builtmaterial, name="modify_builtmaterial"),
     # Delete built material
-    path('delete_builtmaterial/<id>/', views.delete_builtmaterial, name="delete_builtmaterial"),
+    path('delete_builtmaterial/<nombre>/', views.delete_builtmaterial, name="delete_builtmaterial"),
 
 ]

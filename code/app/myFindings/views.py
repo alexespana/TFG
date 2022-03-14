@@ -321,9 +321,9 @@ def add_sedimentarymaterial(request):
 def modify_sedimentarymaterial(request):
     pass
 
-def delete_sedimentarymaterial(request, id):
+def delete_sedimentarymaterial(request, nombre):
     # Get the sedimentary material, if it doesn't exist, get an Http404
-    sedimentarymaterial = get_object_or_404(MaterialSedimentaria, id=id)
+    sedimentarymaterial = get_object_or_404(MaterialSedimentaria, nombre=nombre)
 
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
@@ -360,9 +360,9 @@ def add_builtmaterial(request):
 def modify_builtmaterial(request):
     pass
 
-def delete_builtmaterial(request, id):
+def delete_builtmaterial(request, nombre):
     # Get the built material, if it doesn't exist, get an Http404
-    builtmaterial = get_object_or_404(MaterialConstruida, id=id)
+    builtmaterial = get_object_or_404(MaterialConstruida, nombre=nombre)
 
     # Delete the built material
     builtmaterial.delete()    
