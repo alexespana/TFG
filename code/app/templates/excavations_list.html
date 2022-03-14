@@ -14,7 +14,9 @@
                         <caption>Listado de excavaciones</caption>
                         <tr>
                             <th>Número de excavación</th>
-                            <th>Punto cero</th>
+                            <th>Coordenada x</th>
+                            <th>Coordenada y</th>
+                            <th>Altura</th>
                             <th>Opciones</th>
                         </tr>
                 
@@ -22,7 +24,9 @@
                 
                         <tr>
                             <td>{{ e.n_excavacion }}</td>
-                            <td>{{ e.punto_cero }}</td>
+                            <td>{{ e.coordenada_x }}</td>
+                            <td>{{ e.coordenada_y }}</td>
+                            <td>{{ e.altura }}</td>
                             <td>
                                 <a href="{% url 'delete_excavation' e.id %}" class="btn btn-danger">Eliminar</a>
                                 <a href="{% url 'modify_excavation' e.id %}" class="btn btn-warning">Modificar</a>
