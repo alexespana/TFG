@@ -33,6 +33,8 @@ urlpatterns = [
     path('add_sedimentaryue/', views.add_sedimentaryue, name='add_sedimentaryue'),
     # Modify sedimentaryue
     path('modify_sedimentaryue/<id>/', views.modify_sedimentaryue, name="modify_sedimentaryue"),
+  # Delete sedimentaryue
+    path('delete_sedimentaryue/<id>/', views.delete_sedimentaryue, name="delete_sedimentaryue"),
 
     # ################
     # BUILT UE
@@ -41,8 +43,10 @@ urlpatterns = [
     path('builtues_list/', views.list_builtues, name='builtues_list'),
     # Add built UE
     path('add_builtue/', views.add_builtue, name='add_builtue'),
-    # Modify sedimentaryue
+    # Modify built UE
     path('modify_builtue/<id>/', views.modify_builtue, name="modify_builtue"),
+  # Delete built UE
+    path('delete_builtue/<id>/', views.delete_builtue, name="delete_builtue"),
 
     # ################
     # FACT
