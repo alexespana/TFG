@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Unidades estratigráficas{% endblock %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<div id="sedimentaryues-list" class="sedimentaryues-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Unidades estratigráficas de la excavación {{ n_excavacion }}</h2>
+                    <hr>
+
+                    <div class="row">
+                        <!-- Information about the App -->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <table class="table table-striped table-hover table-responsive-sm caption-top">
+                                <caption>Unidades sedimentarias</caption>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Hecho</th>
+                                    <th>Opciones</th>
+                                </tr>
+                        
+                                {% for s in sedimentaryues %}
+                                <tr>
+                                    <td>{{ s.codigo }}</td>
+                                    {% if s.hecho == None %}
+                                        <td>Sin asociar</td>
+                                    {% else %}
+                                        <td>{{ s.hecho }}</td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'delete_sedimentaryue' s.id %}" class="btn btn-danger">Eliminar</a>
+                                        <a href="{% url 'modify_sedimentaryue' s.id %}" class="btn btn-warning">Modificar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>     
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <table class="table table-striped table-hover table-responsive-sm caption-top">
+                                <caption>Unidades construidas</caption>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Hecho</th>
+                                    <th>Opciones</th>
+                                </tr>
+                        
+                                {% for b in builtues %}
+                                <tr>
+                                    <td>{{ b.codigo }}</td>
+                                    {% if b.hecho == None %}
+                                        <td>Sin asociar</td>
+                                    {% else %}
+                                        <td>{{ b.hecho }}</td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'delete_builtue' b.id %}" class="btn btn-danger">Eliminar</a>
+                                        <a href="{% url 'modify_builtue' b.id %}" class="btn btn-warning">Modificar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

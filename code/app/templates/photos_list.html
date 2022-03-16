@@ -36,7 +36,7 @@
                             <td>{{ p.vista_desde }}</td>
                             <td>{{ p.dist_focal }}</td>
                             <td>{{ p.descripcion }}</td>
-                            <td><img src="/media/{{p.imagen}}" alt="Imagen" height="50"></td>
+                            <td><img src="/media/{{p.imagen}}" alt="Imagen"></td>
                             <td>
                                 <a href="{% url 'delete_photo' p.id %}" class="btn btn-danger">Eliminar</a>
                                 <a href="{% url 'modify_photo' p.id %}" class="btn btn-warning">Modificar</a>

@@ -136,8 +136,8 @@ class Hecho(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavacion(models.Model):
     n_excavacion = models.IntegerField(unique=True, verbose_name='Número de excavación')
-    coordenada_x = models.IntegerField(default=0)
-    coordenada_y = models.IntegerField(default=0)
+    latitud = models.IntegerField(default=0)
+    longitud = models.IntegerField(default=0)
     altura = models.IntegerField()
 
     def __str__(self):
@@ -170,6 +170,7 @@ class UE(models.Model):
         ('Sureste','Sureste'),
     ]
 
+    codigo = models.CharField(unique=True, max_length=6, default='000000')
     # Foreign Keys
     hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE, blank=True, null=True)
     excavacion = models.ForeignKey(Excavacion, on_delete=models.CASCADE)
@@ -189,8 +190,8 @@ class UE(models.Model):
     interpretacion = models.CharField(max_length=13, choices=INTERPRETACION_CHOICES)    
     sector = models.CharField(max_length=2)          
     observaciones = models.CharField(max_length=200)
-    coordenada_x = models.IntegerField(default=0)
-    coordenada_y = models.IntegerField(default=0)
+    latitud = models.IntegerField(default=0)
+    longitud = models.IntegerField(default=0)
 
 
     cota_superior_diff = models.IntegerField()
@@ -304,6 +305,7 @@ class UEConstruida(UE):
     sistema_constructivo = models.CharField(max_length=50)
     tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
     materiales_construidos = models.ManyToManyField(MaterialConstruida)
+    n_estructura = models.IntegerField(default=0)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # INCLUSION           ~~~~~~~~
@@ -336,13 +338,16 @@ class Inclusion(models.Model):
         ('Enlucido', 'Enlucido'),
     ]
     
-    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES, primary_key=True)
+    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
 
     # Foreign Keys
     uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
 
     frecuencia = models.CharField(max_length=10, choices=FRECUENCIA_CHOICES)
-    grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES,)
+    grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES)
+
+    class Meta:
+        unique_together = (('tipo', 'uesedimentaria'),)
 
     def __str__(self):
         return self.tipo

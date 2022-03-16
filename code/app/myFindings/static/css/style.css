@@ -551,6 +551,10 @@ ul {
   margin-top: 15px;
 }
 
-/* .asteriskField {
+.asteriskField {
   display: none;
-} */
+}
+
+table img{
+  height: 50px;
+}

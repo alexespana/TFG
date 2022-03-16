@@ -44,7 +44,7 @@
                             <td>{{ r.fase }}</td>
                             <td>{{ r.periodo }}</td>
                             <td>{{ r.autor }}</td>
-                            <td><img src="../media/{{r.croquis_planta}}" alt="Plan" height="50"></td>
+                            <td><img src="/media/{{r.croquis_planta}}" alt="Plan"></td>
                             <td>
                                 <a href="{% url 'delete_room' r.id %}" class="btn btn-danger">Eliminar</a>
                                 <a href="{% url 'modify_room' r.id %}" class="btn btn-warning">Modificar</a>
