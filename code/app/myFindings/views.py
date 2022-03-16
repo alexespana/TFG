@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, PhotoForm
-from .models import Excavacion, Fotografia, Hecho, Estancia, Inclusion, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
+from .models import UE, Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
 
 # Create your views here.
 def index(request):
@@ -18,7 +18,7 @@ def team(request):
 # ############
 # EXCAVATIONS
 # ############
-def list_excavations(request):
+def list_allexcavations(request):
     # Get all excavations
     excavations = Excavacion.objects.all()
     data = { 'excavations': excavations}
@@ -37,14 +37,28 @@ def add_excavation(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='excavations_list')
+            return redirect(to='allexcavations_list')
         else:
             data['form'] = form
 
     return render(request, 'add_excavation.html', data)
 
-def modify_excavation(request):
-    pass
+def modify_excavation(request, id):
+    excavation = get_object_or_404(Excavacion, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': ExcavationForm(instance=excavation) }
+
+    if request.method == 'POST':
+        form = ExcavationForm(data=request.POST, instance=excavation)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allexcavations_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_excavation.html', data)
 
 def delete_excavation(request, id):
     # Get the excavation, if it doesn't exist, get an Http404
@@ -53,12 +67,12 @@ def delete_excavation(request, id):
     # Delete the excavation
     excavation.delete()    
 
-    return redirect(to="excavations_list")    
+    return redirect(to="allexcavations_list")    
 
 # ################
 # SEDIMENTARY UE
 # ################
-def list_sedimentaryues(request):
+def list_allsedimentaryues(request):
     # Get all sedimentary ues
     sedimentaryues = UESedimentaria.objects.all()
     data = { 'sedimentaryues': sedimentaryues}
@@ -76,28 +90,42 @@ def add_sedimentaryue(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='sedimentaryues_list')
+            return redirect(to='allsedimentaryues_list')
         else:
             data['form'] = form
 
     return render(request, 'add_sedimentaryue.html', data)
 
-def modify_sedimentaryue(request):
-    pass
+def modify_sedimentaryue(request, id):
+    sedimentaryue = get_object_or_404(UESedimentaria, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': SedimentaryUEForm(instance=sedimentaryue) }
+
+    if request.method == 'POST':
+        form = SedimentaryUEForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allsedimentaryues_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_sedimentaryue.html', data)
 
 def delete_sedimentaryue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
     sedimentaryue = get_object_or_404(UESedimentaria, id=id)
 
-    # Delete the excavation
+    # Delete the sedimentaryue
     sedimentaryue.delete()    
 
-    return redirect(to="sedimentaryues_list")   
+    return redirect(to="allsedimentaryues_list")   
 
 # ################
 # BUILT UE
 # ################
-def list_builtues(request):
+def list_allbuiltues(request):
     # Get all built ues
     builtues = UEConstruida.objects.all()
     data = { 'builtues': builtues}
@@ -115,14 +143,28 @@ def add_builtue(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='builtues_list')
+            return redirect(to='allbuiltues_list')
         else:
             data['form'] = form
 
     return render(request, 'add_builtue.html', data)
 
-def modify_builtue(request):
-    pass
+def modify_builtue(request, id):
+    builtue = get_object_or_404(UEConstruida, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': BuiltUEForm(instance=builtue) }
+
+    if request.method == 'POST':
+        form = BuiltUEForm(data=request.POST, instance=builtue, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allbuiltues_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_builtue.html', data)
 
 def delete_builtue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
@@ -131,13 +173,13 @@ def delete_builtue(request, id):
     # Delete the excavation
     builtue.delete()    
 
-    return redirect(to="builtues_list")
+    return redirect(to="allbuiltues_list")
 
 
 # ################
 # FACT
 # ################
-def list_facts(request):
+def list_allfacts(request):
     # Get all facts
     facts = Hecho.objects.all()
     data = { 'facts': facts}
@@ -155,14 +197,28 @@ def add_fact(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='facts_list')
+            return redirect(to='allfacts_list')
         else:
             data['form'] = form
 
     return render(request, 'add_fact.html', data)
 
-def modify_fact(request):
-    pass
+def modify_fact(request, id):
+    fact = get_object_or_404(Hecho, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': FactForm(instance=fact) }
+
+    if request.method == 'POST':
+        form = FactForm(data=request.POST, instance=fact, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allfacts_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_fact.html', data)
 
 def delete_fact(request, id):
     # Get the fact, if it doesn't exist, get an Http404
@@ -171,12 +227,12 @@ def delete_fact(request, id):
     # Delete the excavation
     fact.delete()    
 
-    return redirect(to="facts_list")  
+    return redirect(to="allfacts_list")  
 
 # ################
 # ROOM
 # ################
-def list_rooms(request):
+def list_allrooms(request):
     # Get all rooms
     rooms = Estancia.objects.all()
     data = { 'rooms': rooms}
@@ -194,14 +250,28 @@ def add_room(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='rooms_list')
+            return redirect(to='allrooms_list')
         else:
             data['form'] = form
 
     return render(request, 'add_room.html', data) 
 
-def modify_room(request):
-    pass
+def modify_room(request, id):
+    room = get_object_or_404(Estancia, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': RoomForm(instance=room) }
+
+    if request.method == 'POST':
+        form = RoomForm(data=request.POST, instance=room, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allrooms_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_room.html', data)
 
 def delete_room(request, id):
     # Get the room, if it doesn't exist, get an Http404
@@ -210,12 +280,12 @@ def delete_room(request, id):
     # Delete the room
     room.delete()    
 
-    return redirect(to="rooms_list") 
+    return redirect(to="allrooms_list") 
 
 # ################
 # PHOTO
 # ################
-def list_photos(request):
+def list_allphotos(request):
     # Get all photos
     photos = Fotografia.objects.all()
     data = { 'photos': photos}
@@ -233,14 +303,28 @@ def add_photo(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='photos_list')
+            return redirect(to='allphotos_list')
         else:
             data['form'] = form
 
     return render(request, 'add_photo.html', data)
 
-def modify_photo(request):
-    pass
+def modify_photo(request, id):
+    photo = get_object_or_404(Fotografia, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': PhotoForm(instance=photo) }
+
+    if request.method == 'POST':
+        form = PhotoForm(data=request.POST, instance=photo, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allphotos_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_photo.html', data)
  
 def delete_photo(request, id):
     # Get the photo, if it doesn't exist, get an Http404
@@ -249,12 +333,12 @@ def delete_photo(request, id):
     # Delete the photo
     photo.delete()    
 
-    return redirect(to="photos_list") 
+    return redirect(to="allphotos_list") 
 
 # ################
 # INCLUSION
 # ################
-def list_inclusions(request):
+def list_allinclusions(request):
     # Get all photos
     inclusions = Inclusion.objects.all()
     data = { 'inclusions': inclusions}
@@ -272,15 +356,29 @@ def add_inclusion(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='inclusions_list')
+            return redirect(to='allinclusions_list')
         else:
             data['form'] = form
 
     return render(request, 'add_inclusion.html', data)
 
 
-def modify_inclusion(request):
-    pass
+def modify_inclusion(request, id):
+    inclusion = get_object_or_404(Inclusion, id=id)
+    
+    # Guardar el formulario con los datos del cuadro
+    data = { 'form': InclusionForm(instance=inclusion) }
+
+    if request.method == 'POST':
+        form = InclusionForm(data=request.POST, instance=inclusion, files=request.FILES)
+        if form.is_valid():       # Si es válido
+            form.save()           # Guardarlo
+
+            return redirect(to="allinclusions_list")
+
+        data["form"] = form
+
+    return render(request, 'modify_inclusion.html', data)
 
 def delete_inclusion(request, id):
     # Get the inclusion, if it doesn't exist, get an Http404
@@ -289,12 +387,12 @@ def delete_inclusion(request, id):
     # Delete the inclusion
     inclusion.delete()    
 
-    return redirect(to="inclusions_list")
+    return redirect(to="allinclusions_list")
 
 # #####################
 # SEDIMENTARY MATERIAL
 # #####################
-def list_sedimentarymaterials(request):
+def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
     sedimentarymaterials = MaterialSedimentaria.objects.all()
     data = { 'sedimentarymaterials': sedimentarymaterials}
@@ -312,7 +410,7 @@ def add_sedimentarymaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='sedimentarymaterials_list')
+            return redirect(to='allsedimentarymaterials_list')
         else:
             data['form'] = form
 
@@ -328,12 +426,12 @@ def delete_sedimentarymaterial(request, nombre):
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
 
-    return redirect(to="sedimentarymaterials_list")
+    return redirect(to="allsedimentarymaterials_list")
 
 # #####################
 # BUILT MATERIAL
 # #####################
-def list_builtmaterials(request):
+def list_allbuiltmaterials(request):
     # Get all built materials
     builtmaterials = MaterialConstruida.objects.all()
     data = { 'builtmaterials': builtmaterials}
@@ -351,7 +449,7 @@ def add_builtmaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='builtmaterials_list')
+            return redirect(to='allbuiltmaterials_list')
         else:
             data['form'] = form
 
@@ -367,4 +465,21 @@ def delete_builtmaterial(request, nombre):
     # Delete the built material
     builtmaterial.delete()    
 
-    return redirect(to="builtmaterials_list")
+    return redirect(to="allbuiltmaterials_list")
+
+# ####################
+# SPECIFIC LISTINGS  
+# ####################
+def list_excavationues(request, id):
+    # Get the excavation
+    excavation = get_object_or_404(Excavacion, id=id)
+
+    # Find all associated sedimentary stratigraphic units
+    sedimentaryues = UESedimentaria.objects.filter(excavacion__id=id)
+
+    # Find all associated built stratigraphic units
+    builtues = UEConstruida.objects.filter(excavacion__id=id)
+
+    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_excavacion': excavation.n_excavacion}
+
+    return render(request, 'excavationues.html', data)

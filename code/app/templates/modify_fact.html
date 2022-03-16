@@ -1,25 +1,21 @@
-{% extends 'base.html' %}
-{% block title %}Añadir fotografía{% endblock %}
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Modificar hecho{% endblock %}
 {% block contenido %}
 {% load crispy_forms_tags %}
 
-<div id="add-photo" class="photo-area">
+<div id="modify-fact" class="fact-area">
     <div class="area-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6 offset-md-3">
                     <div class="card">
                         <div class="card-body">
-                            <h2>Añadir nueva fotografía</h2>
-                            <hr>
+                            <h2>Modificar hecho</h2>
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form | crispy}}
-                                <div class="d-flex justify-content-end form-buttons">
-                                    <input type="reset" value="Limpiar" class="btn btn-secondary">
-                                    &nbsp;
-                                    <input type="submit" value="Guardar" class="btn btn-primary">
+                                <div class="d-flex justify-content-end">
+                                    <input type="submit" value="Modificar" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>

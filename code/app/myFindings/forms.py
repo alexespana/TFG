@@ -1,5 +1,5 @@
 from django import forms
-from .models import Estancia, Excavacion, Fotografia, Hecho, Inclusion, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
+from .models import Estancia, Excavacion, Inclusion, Fotografia, Hecho, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
 
 class ExcavationForm(forms.ModelForm):
     class Meta:

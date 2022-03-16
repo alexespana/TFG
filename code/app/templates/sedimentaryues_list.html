@@ -13,6 +13,7 @@
                     <table class="table table-striped table-hover table-responsive-sm">
                         <caption>Listado de unidades sedimentarias</caption>
                         <tr>
+                            <th>Código</th>
                             <th>Hecho</th>
                             <th>Excavacion</th>
                             <th>Fase</th>
@@ -25,7 +26,12 @@
                         {% for u in sedimentaryues %}
                 
                         <tr>
-                            <td>{{ u.hecho }}</td>
+                            <td>{{ u.codigo }}</td>
+                            {% if u.hecho == None %}
+                                <td>Sin asociar</td>
+                            {% else %}
+                                <td>{{ u.hecho }}</td>
+                            {% endif %}
                             <td>{{ u.excavacion }}</td>
                             <td>{{ u.fase }}</td>
                             <td>{{ u.periodo }}</td>
