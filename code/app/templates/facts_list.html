@@ -8,7 +8,11 @@
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <h2>Lista de hechos</h2>
+                    {% if n_room == none %}
+                        <h2>Hechos</h2>
+                    {% else %}
+                        <h2>Hechos de la estancia {{ n_room }}</h2>
+                    {% endif %}
                     <hr>
                     
                     <div class="table-responsive">
@@ -52,12 +56,13 @@
                                 <td>
                                     <a href="{% url 'delete_fact' f.id %}" class="btn btn-danger">Eliminar</a>
                                     <a href="{% url 'modify_fact' f.id %}" class="btn btn-warning">Modificar</a>
+                                    <a href="{% url 'factues_list' f.id %}" class="btn btn-warning">Listar UES</a>
                                 </td>
                             </tr>
                             
                             {% endfor %}
                         </table>
-                      </div>
+                    </div>
                 </div>
             </div>
 

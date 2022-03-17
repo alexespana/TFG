@@ -72,7 +72,7 @@ PERIODO_CHOICES = [
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Estancia(models.Model):
-    n_estancia = models.CharField(max_length=5)     # ES001, ES002, etc
+    n_estancia = models.CharField(max_length=5, unique=True)     # ES001, ES002, etc
     n_zona = models.IntegerField()
     n_sector = models.IntegerField()
     observaciones = models.CharField(max_length=200)
@@ -112,7 +112,6 @@ class Hecho(models.Model):
     # Unique key
     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
     numero = models.CharField(max_length=6)
-    models.UniqueConstraint(fields=['letra', 'numero'], name='letra_numero_unico')
 
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
     tpq = models.IntegerField()
@@ -127,6 +126,10 @@ class Hecho(models.Model):
     croquis_plan = models.ImageField()
     croquis_seccion = models.ImageField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['letra', 'numero'], name='fact_constraint')                                                  
+        ]
 
     def __str__(self):
         return self.letra + self.numero
@@ -347,7 +350,9 @@ class Inclusion(models.Model):
     grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES)
 
     class Meta:
-        unique_together = (('tipo', 'uesedimentaria'),)
+        constraints = [
+            models.UniqueConstraint(fields=['tipo', 'uesedimentaria'], name='inclusion_constraint')                                                  
+        ]
 
     def __str__(self):
         return self.tipo
