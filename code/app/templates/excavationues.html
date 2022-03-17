@@ -8,7 +8,11 @@
         <div class="container">
             <div class="card">
                 <div class="card-body">
+                {% if n_excavacion == none %}
+                    <h2>Unidades estratigráficas del hecho {{ n_hecho }}</h2>
+                {% else %}
                     <h2>Unidades estratigráficas de la excavación {{ n_excavacion }}</h2>
+                {% endif %}
                     <hr>
 
                     <div class="row">

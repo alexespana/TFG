@@ -128,6 +128,8 @@ urlpatterns = [
     # SPECIFIC LISTINGS  
     # ####################
     path('excavationues_list/<id>', views.list_excavationues, name='excavationues_list'),
+    path('roomfacts_list/<id>', views.list_roomfacts, name='roomfacts_list'),
+    path('factues_list/<id>', views.list_factues, name='factues_list'),
 
 
 

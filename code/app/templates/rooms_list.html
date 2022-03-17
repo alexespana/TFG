@@ -10,50 +10,53 @@
                 <div class="card-body">
                     <h2>Lista de estancias</h2>
                     <hr>
-                    <table class="table table-striped table-hover table-responsive-sm">
-                        <caption>Listado de estancias</caption>
-                        <tr>
-                            <th>N estancia</th>
-                            <th>N zona</th>
-                            <th>N sector</th>
-                            <th>Observaciones</th>
-                            <th>N planta</th>
-                            <th>N sección</th>
-                            <th>Elevación</th>
-                            <th>TPQ</th>
-                            <th>TAQ</th>
-                            <th>Fase</th>
-                            <th>Periodo</th>
-                            <th>Autor</th>
-                            <th>Croquis planta</th>
-                            <th>Opciones</th>
-                        </tr>
-                
-                        {% for r in rooms %}
-                
-                        <tr>
-                            <td>{{ r.n_estancia }}</td>
-                            <td>{{ r.n_zona }}</td>
-                            <td>{{ r.n_sector }}</td>
-                            <td>{{ r.observaciones }}</td>
-                            <td>{{ r.n_planta }}</td>
-                            <td>{{ r.n_seccion }}</td>
-                            <td>{{ r.elevacion }}</td>
-                            <td>{{ r.tpq }}</td>
-                            <td>{{ r.taq }}</td>
-                            <td>{{ r.fase }}</td>
-                            <td>{{ r.periodo }}</td>
-                            <td>{{ r.autor }}</td>
-                            <td><img src="/media/{{r.croquis_planta}}" alt="Plan"></td>
-                            <td>
-                                <a href="{% url 'delete_room' r.id %}" class="btn btn-danger">Eliminar</a>
-                                <a href="{% url 'modify_room' r.id %}" class="btn btn-warning">Modificar</a>
-                            </td>
-                        </tr>
-                        
-                        {% endfor %}
-                        
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <caption>Listado de estancias</caption>
+                            <tr>
+                                <th>N estancia</th>
+                                <th>N zona</th>
+                                <th>N sector</th>
+                                <th>Observaciones</th>
+                                <th>N planta</th>
+                                <th>N sección</th>
+                                <th>Elevación</th>
+                                <th>TPQ</th>
+                                <th>TAQ</th>
+                                <th>Fase</th>
+                                <th>Periodo</th>
+                                <th>Autor</th>
+                                <th>Croquis planta</th>
+                                <th>Opciones</th>
+                            </tr>
+                    
+                            {% for r in rooms %}
+                    
+                            <tr>
+                                <td>{{ r.n_estancia }}</td>
+                                <td>{{ r.n_zona }}</td>
+                                <td>{{ r.n_sector }}</td>
+                                <td>{{ r.observaciones }}</td>
+                                <td>{{ r.n_planta }}</td>
+                                <td>{{ r.n_seccion }}</td>
+                                <td>{{ r.elevacion }}</td>
+                                <td>{{ r.tpq }}</td>
+                                <td>{{ r.taq }}</td>
+                                <td>{{ r.fase }}</td>
+                                <td>{{ r.periodo }}</td>
+                                <td>{{ r.autor }}</td>
+                                <td><img src="/media/{{r.croquis_planta}}" alt="Plan"></td>
+                                <td>
+                                    <a href="{% url 'roomfacts_list' r.id %}" class="btn btn-info">Listar hechos</a>
+                                    <a href="{% url 'modify_room' r.id %}" class="btn btn-warning">Modificar</a>
+                                    <a href="{% url 'delete_room' r.id %}" class="btn btn-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                            
+                            {% endfor %}
+                            
+                        </table>
+                    </div>
                 </div>
             </div>
 

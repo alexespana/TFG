@@ -483,3 +483,29 @@ def list_excavationues(request, id):
     data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_excavacion': excavation.n_excavacion}
 
     return render(request, 'excavationues.html', data)
+
+def list_roomfacts(request, id):
+    # Get the room
+    room = get_object_or_404(Estancia, id=id)
+
+    # Find all associated facts
+    facts = Hecho.objects.filter(estancia__id=id)
+
+    data = { 'facts': facts,  'n_room': room.n_estancia}
+
+    return render(request, 'facts_list.html', data)
+
+def list_factues(request, id):
+    # Get the fact
+    fact = get_object_or_404(Hecho, id=id)
+
+    # Find all associated sedimentary stratigraphic units
+    sedimentaryues = UESedimentaria.objects.filter(hecho__id=id)
+
+    # Find all associated built stratigraphic units
+    builtues = UEConstruida.objects.filter(hecho__id=id)
+
+    nombre = fact.letra + fact.numero
+    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_hecho': nombre}
+
+    return render(request, 'excavationues.html', data)
