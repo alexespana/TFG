@@ -122,7 +122,7 @@ header #logo h1 a, header .logo h1 a:hover{
   font-size: large;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 991px) {
   .phone-toggle {
       display: block;
   }
@@ -155,12 +155,13 @@ header #logo h1 a, header .logo h1 a:hover{
   top: 65px;
   right: 15px;
   left: 15px;
+  bottom: 50px;
   padding: 10px 0;
   background-color: #fff;
   overflow-y: auto;
 }
 
-.phone-navbar a{
+.phone-navbar a, .phone-navbar .dropdown ul a{
   color: #0d2529;
 }
 
@@ -197,6 +198,28 @@ header #logo h1 a, header .logo h1 a:hover{
   margin-left: 5px;
   font-size: 15px;
 }
+
+/* Toggle with phone-navbar */
+.dropdown .dropdown:hover > ul {
+  top: 0;
+  visibility: visible;
+  left: 100%;
+}
+
+.phone-navbar .dropdown > .active-dropdown {
+  display: block;
+}
+
+.phone-navbar .dropdown ul {
+  opacity: 1;
+  position: static;
+  visibility: visible;
+  margin: 10px 15px;
+  display: none;
+  background: #fff;
+  box-shadow: 10px 10px 20px chocolate;
+}
+
 
 /* ----------------------------------------------------
 #  ---------------- Carousel --------------------------

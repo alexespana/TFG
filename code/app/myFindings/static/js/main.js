@@ -1,23 +1,43 @@
 let itemActive;
 
 /**
- * Función auxiliar para seleccionar elementos de la página web
- * que cumplan el selector
- * 
- * @param {string} selector Selector del nodo deseado
- * @param {boolean} all Indica si se deben seleccionar todos los descendientes o no
- * @returns Nodos descendientes o el primer nodo del nodo que cumple el selector 
+ * Auxiliary function to select web page elements that comply
+ * with the selector
+ *
+ * @param {string} selector Selector of the desired node
+ * @param {boolean} all Indicates whether all offspring should be selectes or not
+ * @returns Descendant nodes or the first node of the node that satisfies the selector
  */
  const select = (selector, all = false) => {
   if (all) {
-    return [...document.querySelectorAll(selector)] 
+    return [...document.querySelectorAll(selector)]
   } else {
     return document.querySelector(selector)
   }
 }
 
 /**
- * Comprueba qué item del navbar es el actual
+ * Auxiliary function to add an Event listener to a given
+ * node(s)
+ * 
+ * @param {string} typeOfEvent Type of event
+ * @param {string} selector Selector of the desired node
+ * @param {function} listener Function that will perform a certain action for the event
+ * @param {boolean} all Indicates whether all offspring should be selectes or not
+ */
+  const on = (typeOfEvent, selector, listener, all = false) => {
+  let selectedElements = select(selector, all)
+  if (selectedElements) {
+    if (all) {
+      selectedElements.forEach(e => e.addEventListener(typeOfEvent, listener))
+    } else {
+      selectedElements.addEventListener(typeOfEvent, listener)
+    }
+  }
+}
+
+/**
+ * Checks which navbar item is the current one
  */
 if(sessionStorage.getItem("itemActive")){
   itemActive = sessionStorage.getItem("itemActive")
@@ -30,10 +50,10 @@ else{
 }
 
 /**
- * Función que modifica la variable de sesión itemActive
- * para almacenar el item actual
- * 
- * @param {int} index Índice del navbar seleccionado
+ * Function that modifies the session variable itemActive to
+ * store the current item
+ *
+ * @param {int} index Index of selected navbar
  */
 function navbarLinkActive(index){
   itemActive = index;
@@ -41,7 +61,8 @@ function navbarLinkActive(index){
 }
 
 /**
- * Cambia el navbar activo y desactiva el anterior
+ * Function that changes the active navbar item and desactivates
+ * the previous one
  */
 function _changeNavBarItem(){
   let navbarLinks = select('.navbar .nav-link', true)
@@ -55,7 +76,7 @@ function _changeNavBarItem(){
 }
 
 /**
- * Indicadores del Carousel
+ * Carousel indicators
  */
 let carouselIndicators = select("#carousel-indicators")
 let carouselItems = select('.carousel-item', true)
@@ -67,9 +88,10 @@ carouselItems.forEach((_, index) => {
 });
 
 /**
- * Phone toggle
+ * Function that changes classes related to the navbar in
+ * mobile view
  */
-function navbarPhone(){  
+function navbarPhone(){
   select('#navbar').classList.toggle('phone-navbar')
   select('#navbar ul').classList.toggle('border-box')
   this.classList.toggle('bi-list')
@@ -78,3 +100,14 @@ function navbarPhone(){
 
 // Onclick listener
 document.getElementsByClassName('phone-toggle')[0].onclick = navbarPhone
+
+/**
+ * Function that adds the active-dropdown class to navbar dropdowns
+ */
+function navbarDropdown(){
+  if (select('#navbar').classList.contains('phone-navbar')) 
+    this.nextElementSibling.classList.toggle('active-dropdown')
+}
+
+// Add an event listener
+on('click', '.navbar .dropdown > a', navbarDropdown, true)
