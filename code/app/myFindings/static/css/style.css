@@ -220,7 +220,6 @@ header #logo h1 a, header .logo h1 a:hover{
   box-shadow: 10px 10px 20px chocolate;
 }
 
-
 /* ----------------------------------------------------
 #  ---------------- Carousel --------------------------
 -----------------------------------------------------*/
@@ -568,7 +567,7 @@ ul {
 }
 
 /* ----------------------------------------------------
-#  ---------------- Forms- ----------------------------
+#  ---------------- Forms -----------------------------
 -----------------------------------------------------*/
 .form-buttons{
   margin-top: 15px;
@@ -580,4 +579,42 @@ ul {
 
 table img{
   height: 50px;
+}
+
+/* ----------------------------------------------------
+#  ---------------- Tables ----------------------------
+-----------------------------------------------------*/
+.table > tbody{
+  vertical-align: middle;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ----------------------------------------------------
+#  ---------------- Buttons ----------------------------
+-----------------------------------------------------*/
+.btn{
+  display: flex;
+  color: #fff;
+  border-width: 2px;
+  align-items: center;
+}
+
+.btn-list{
+  border-color: blue;
+  background-color: cornflowerblue;
+}
+
+.btn-modify{
+  border-color: green;
+  background-color: limegreen;
+}
+
+.btn-delete{
+  border-color:red;
+  background-color: tomato;
+}
+
+.btn-list:hover, .btn-modify:hover, .btn-delete:hover{
+  background-color: #fff;
+  transition: 0.5s;
 }

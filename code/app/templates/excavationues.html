@@ -35,8 +35,8 @@
                                         <td>{{ s.hecho }}</td>
                                     {% endif %}
                                     <td>
-                                        <a href="{% url 'delete_sedimentaryue' s.id %}" class="btn btn-danger">Eliminar</a>
-                                        <a href="{% url 'modify_sedimentaryue' s.id %}" class="btn btn-warning">Modificar</a>
+                                        <a href="{% url 'delete_sedimentaryue' s.id %}" class="btn btn-delete">Eliminar</a>
+                                        <a href="{% url 'modify_sedimentaryue' s.id %}" class="btn btn-modify">Modificar</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -60,8 +60,8 @@
                                         <td>{{ b.hecho }}</td>
                                     {% endif %}
                                     <td>
-                                        <a href="{% url 'delete_builtue' b.id %}" class="btn btn-danger">Eliminar</a>
-                                        <a href="{% url 'modify_builtue' b.id %}" class="btn btn-warning">Modificar</a>
+                                        <a href="{% url 'delete_builtue' b.id %}" class="btn btn-delete">Eliminar</a>
+                                        <a href="{% url 'modify_builtue' b.id %}" class="btn btn-modify">Modificar</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

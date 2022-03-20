@@ -38,29 +38,52 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a href="{% url 'home' %}" onclick="navbarLinkActive(0)" class="nav-link">MyFindings</a></li>
-    
                     <li class="nav-item dropdown">
-                        <a href="#" onclick="navbarLinkActive(1)" class="nav-link">Comienza <em class="bi bi-caret-down"></em></a>
+                        <a href="#" onclick="navbarLinkActive(1)" class="nav-link">Listados <em class="bi bi-caret-down"></em></a>
                         <ul>
-                            <li><a href="{% url 'add_excavation' %}">Añadir excavacion</a></li>
-                            <li><a href="{% url 'add_room' %}">Añadir estancia</a></li>
-                            <li><a href="{% url 'add_fact' %}">Añadir Hecho</a></li>
+                            <li><a href="{% url 'excavations' %}">Excavaciones</a></li>
+                            <li><a href="{% url 'rooms' %}">Estancias</a></li>
+                            <li><a href="{% url 'facts' %}">Hechos</a></li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link">Añadir UE <em class="bi bi-caret-right"></em></a>
+                                <a href="#" class="nav-link">UES <em class="bi bi-caret-right"></em></a>
                                 <ul>
-                                    <li><a href="{% url 'add_sedimentaryue' %}">Añade UE sedimentaria</a></li>
-                                    <li><a href="{% url 'add_builtue' %}">Añade UE construida</a></li>
+                                    <li><a href="{% url 'sedimentaryues' %}">Sedimentarias</a></li>
+                                    <li><a href="{% url 'builtues' %}">Construidas</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{% url 'add_inclusion' %}">Añadir inclusión</a></li>
+                            <li><a href="{% url 'inclusions' %}">Inclusiones</a></li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link">Añadir material <em class="bi bi-caret-right"></em></a>
+                                <a href="#" class="nav-link">Materiales <em class="bi bi-caret-right"></em></a>
                                 <ul>
-                                    <li><a href="{% url 'add_sedimentarymaterial' %}">Añade Material sedimentario</a></li>
-                                    <li><a href="{% url 'add_builtmaterial' %}">Añade Material construido</a></li>
+                                    <li><a href="{% url 'allsedimentarymaterials_list' %}">Sedimentarios</a></li>
+                                    <li><a href="{% url 'allbuiltmaterials_list' %}">Construidos</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{% url 'add_photo' %}">Añadir fotografía</a></li>
+                            <li><a href="{% url 'photos' %}">Fotografías</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" onclick="navbarLinkActive(1)" class="nav-link">Añadir <em class="bi bi-caret-down"></em></a>
+                        <ul>
+                            <li><a href="{% url 'add_excavation' %}">Excavación</a></li>
+                            <li><a href="{% url 'add_room' %}">Estancia</a></li>
+                            <li><a href="{% url 'add_fact' %}">Hecho</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link">UE <em class="bi bi-caret-right"></em></a>
+                                <ul>
+                                    <li><a href="{% url 'add_sedimentaryue' %}">Sedimentaria</a></li>
+                                    <li><a href="{% url 'add_builtue' %}">Construida</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'add_inclusion' %}">Inclusión</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link">Material <em class="bi bi-caret-right"></em></a>
+                                <ul>
+                                    <li><a href="{% url 'add_sedimentarymaterial' %}">Sedimentario</a></li>
+                                    <li><a href="{% url 'add_builtmaterial' %}">Construido</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'add_photo' %}">Fotografía</a></li>
                         </ul>
 
                     </li>

@@ -16,7 +16,7 @@ urlpatterns = [
     # EXCAVATIONS
     # ############
     # Excavations list
-    path('allexcavations_list/', views.list_allexcavations, name="allexcavations_list"),
+    path('excavations/', views.list_allexcavations, name="excavations"),
     # Add excavacion
     path('add_excavation/', views.add_excavation, name='add_excavation'),
     # Modify excavation
@@ -28,7 +28,7 @@ urlpatterns = [
     # SEDIMENTARY UE
     # ################
     # Sedimentary UES list
-    path('allsedimentaryues_list/', views.list_allsedimentaryues, name='allsedimentaryues_list'),
+    path('sedimentaryues/', views.list_allsedimentaryues, name='sedimentaryues'),
     # Add sedimentary UE
     path('add_sedimentaryue/', views.add_sedimentaryue, name='add_sedimentaryue'),
     # Modify sedimentaryue
@@ -40,7 +40,7 @@ urlpatterns = [
     # BUILT UE
     # ################
     # Built UES list
-    path('allbuiltues_list/', views.list_allbuiltues, name='allbuiltues_list'),
+    path('builtues/', views.list_allbuiltues, name='builtues'),
     # Add built UE
     path('add_builtue/', views.add_builtue, name='add_builtue'),
     # Modify built UE
@@ -52,7 +52,7 @@ urlpatterns = [
     # FACT
     # ################
     # Built facts list
-    path('allfacts_list/', views.list_allfacts, name='allfacts_list'),
+    path('facts/', views.list_allfacts, name='facts'),
     # Add fact
     path('add_fact/', views.add_fact, name='add_fact'),
     # Modify fact
@@ -64,7 +64,7 @@ urlpatterns = [
     # ROOM
     # ################
     # Rooms list
-    path('allrooms_list/', views.list_allrooms, name='allrooms_list'),
+    path('rooms/', views.list_allrooms, name='rooms'),
     # Add room
     path('add_room/', views.add_room, name='add_room'),
     # Modify room
@@ -77,7 +77,7 @@ urlpatterns = [
     # PHOTO
     # ################
     # Photos list
-    path('allphotos_list/', views.list_allphotos, name='allphotos_list'),
+    path('photos/', views.list_allphotos, name='photos'),
     # Add photo
     path('add_photo/', views.add_photo, name='add_photo'),
     # Modify photo
@@ -91,7 +91,7 @@ urlpatterns = [
     # INCLUSION
     # ################
     # Inclusions list
-    path('allinclusions_list/', views.list_allinclusions, name='allinclusions_list'),
+    path('inclusions/', views.list_allinclusions, name='inclusions'),
     # Add inclusion
     path('add_inclusion/', views.add_inclusion, name='add_inclusion'),
     # Modify inclusion
