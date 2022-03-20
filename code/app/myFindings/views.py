@@ -37,7 +37,7 @@ def add_excavation(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='allexcavations_list')
+            return redirect(to='excavations')
         else:
             data['form'] = form
 
@@ -54,7 +54,7 @@ def modify_excavation(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allexcavations_list")
+            return redirect(to="excavations")
 
         data["form"] = form
 
@@ -67,7 +67,7 @@ def delete_excavation(request, id):
     # Delete the excavation
     excavation.delete()    
 
-    return redirect(to="allexcavations_list")    
+    return redirect(to="excavations")    
 
 # ################
 # SEDIMENTARY UE
@@ -90,7 +90,7 @@ def add_sedimentaryue(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='allsedimentaryues_list')
+            return redirect(to='sedimentaryues')
         else:
             data['form'] = form
 
@@ -107,7 +107,7 @@ def modify_sedimentaryue(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allsedimentaryues_list")
+            return redirect(to="sedimentaryues")
 
         data["form"] = form
 
@@ -120,7 +120,7 @@ def delete_sedimentaryue(request, id):
     # Delete the sedimentaryue
     sedimentaryue.delete()    
 
-    return redirect(to="allsedimentaryues_list")   
+    return redirect(to="sedimentaryues")   
 
 # ################
 # BUILT UE
@@ -143,7 +143,7 @@ def add_builtue(request):
             form.save()         # Save form
 
             # Redirect to the list of excavations
-            return redirect(to='allbuiltues_list')
+            return redirect(to='builtues')
         else:
             data['form'] = form
 
@@ -160,7 +160,7 @@ def modify_builtue(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allbuiltues_list")
+            return redirect(to="builtues")
 
         data["form"] = form
 
@@ -173,7 +173,7 @@ def delete_builtue(request, id):
     # Delete the excavation
     builtue.delete()    
 
-    return redirect(to="allbuiltues_list")
+    return redirect(to="builtues")
 
 
 # ################
@@ -197,7 +197,7 @@ def add_fact(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allfacts_list')
+            return redirect(to='facts')
         else:
             data['form'] = form
 
@@ -214,7 +214,7 @@ def modify_fact(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allfacts_list")
+            return redirect(to="facts")
 
         data["form"] = form
 
@@ -227,7 +227,7 @@ def delete_fact(request, id):
     # Delete the excavation
     fact.delete()    
 
-    return redirect(to="allfacts_list")  
+    return redirect(to="facts")  
 
 # ################
 # ROOM
@@ -250,7 +250,7 @@ def add_room(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allrooms_list')
+            return redirect(to='rooms')
         else:
             data['form'] = form
 
@@ -267,7 +267,7 @@ def modify_room(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allrooms_list")
+            return redirect(to="rooms")
 
         data["form"] = form
 
@@ -280,7 +280,7 @@ def delete_room(request, id):
     # Delete the room
     room.delete()    
 
-    return redirect(to="allrooms_list") 
+    return redirect(to="rooms") 
 
 # ################
 # PHOTO
@@ -303,7 +303,7 @@ def add_photo(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allphotos_list')
+            return redirect(to='photos')
         else:
             data['form'] = form
 
@@ -320,7 +320,7 @@ def modify_photo(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allphotos_list")
+            return redirect(to="photos")
 
         data["form"] = form
 
@@ -333,7 +333,7 @@ def delete_photo(request, id):
     # Delete the photo
     photo.delete()    
 
-    return redirect(to="allphotos_list") 
+    return redirect(to="photos") 
 
 # ################
 # INCLUSION
@@ -356,7 +356,7 @@ def add_inclusion(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allinclusions_list')
+            return redirect(to='inclusions')
         else:
             data['form'] = form
 
@@ -374,7 +374,7 @@ def modify_inclusion(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
-            return redirect(to="allinclusions_list")
+            return redirect(to="inclusions")
 
         data["form"] = form
 
@@ -387,7 +387,7 @@ def delete_inclusion(request, id):
     # Delete the inclusion
     inclusion.delete()    
 
-    return redirect(to="allinclusions_list")
+    return redirect(to="inclusions")
 
 # #####################
 # SEDIMENTARY MATERIAL

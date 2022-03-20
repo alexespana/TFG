@@ -6,46 +6,50 @@
 <div id="photos-list" class="photos-area">
     <div class="area-padding">
         <div class="container">
-            <div class="card">
+            <div class="card border-box">
                 <div class="card-body">
-                    <h2>Lista de fotografías</h2>
+                    <h2>Fotografías</h2>
                     <hr>
-                    <table class="table table-striped table-hover table-responsive-sm">
-                        <caption>Listado de fotografías</caption>
-                        <tr>
-                            <th>UE</th>
-                            <th>Estancia</th>
-                            <th>Número</th>
-                            <th>Tipo</th>
-                            <th>Fase</th>
-                            <th>Vista desde</th>
-                            <th>Dist.focal</th>
-                            <th>Descripción</th>
-                            <th>Imagen</th>
-                            <th>Opciones</th>
-                        </tr>
-                
-                        {% for p in photos %}
-                
-                        <tr>
-                            <td>{{ p.ue }}</td>
-                            <td>{{ p.estancia }}</td>
-                            <td>{{ p.numero }}</td>
-                            <td>{{ p.tipo }}</td>
-                            <td>{{ p.fase }}</td>
-                            <td>{{ p.vista_desde }}</td>
-                            <td>{{ p.dist_focal }}</td>
-                            <td>{{ p.descripcion }}</td>
-                            <td><img src="/media/{{p.imagen}}" alt="Imagen"></td>
-                            <td>
-                                <a href="{% url 'delete_photo' p.id %}" class="btn btn-danger">Eliminar</a>
-                                <a href="{% url 'modify_photo' p.id %}" class="btn btn-warning">Modificar</a>
-                            </td>
-                        </tr>
-                        
-                        {% endfor %}
-                        
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <caption>Listado de fotografías</caption>
+                            <tr>
+                                <th>UE</th>
+                                <th>Estancia</th>
+                                <th>Número</th>
+                                <th>Tipo</th>
+                                <th>Fase</th>
+                                <th>Vista desde</th>
+                                <th>Dist.focal</th>
+                                <th>Descripción</th>
+                                <th>Imagen</th>
+                                <th>Opciones</th>
+                            </tr>
+                    
+                            {% for p in photos %}
+                    
+                            <tr>
+                                <td>{{ p.ue }}</td>
+                                <td>{{ p.estancia }}</td>
+                                <td>{{ p.numero }}</td>
+                                <td>{{ p.tipo }}</td>
+                                <td>{{ p.fase }}</td>
+                                <td>{{ p.vista_desde }}</td>
+                                <td>{{ p.dist_focal }}</td>
+                                <td>{{ p.descripcion }}</td>
+                                <td><img src="/media/{{p.imagen}}" alt="Imagen"></td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="{% url 'modify_photo' p.id %}" class="btn btn-modify me-md-2">Modificar</a>
+                                        <a href="{% url 'delete_photo' p.id %}" class="btn btn-delete">Eliminar</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            {% endfor %}
+                            
+                        </table>
+                    </div>
                 </div>
             </div>
 
