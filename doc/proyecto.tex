@@ -27,7 +27,7 @@
 \hypersetup{
 	colorlinks=true,	% false: boxed links; true: colored links
 	linkcolor=black,	% color of internal links
-	urlcolor=cyan		% color of external links
+	urlcolor=blue		% color of external links
 }
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{fancyhdr} % Custom headers and footers
@@ -47,7 +47,7 @@
 \newcommand{\hsp}{\hspace{20pt}}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 \setcounter{secnumdepth}{4}
-\usepackage[Lenny]{fncychap}
+% \usepackage[Lenny]{fncychap}
 \usepackage{pdfpages}
 \usepackage{caption}
 \captionsetup{belowskip=0pt}
@@ -69,8 +69,8 @@
 	\listoffigures
 
 	% Si hay suficientes se incluirá dicho índice
-	\listoftables 
 	\newpage
+	\listoftables 
 
 	% Introducción 
 	\input{secciones/01_introduccion}
@@ -109,20 +109,22 @@
 
 
 	% Anexos del proyecto
+	\cleardoublepage
+	\appendix
 	\renewcommand{\appendixname}{Anexo}
 	\renewcommand{\appendixtocname}{Anexos}
 	\renewcommand{\appendixpagename}{Anexos}
 
-	\appendix
-	\clearpage
 	\addappheadtotoc
 	\appendixpage
-	
+	\let\cleardoublepage\clearpage
+
 	% 1. Informe de tutorías
-	\input{anexos/anexo_i}
+	\input{anexos/anexo_i.tex}
 
 	% 2. Información sobre fichas y metodología
-	\input{anexos/anexo_ii}
+	\input{anexos/anexo_ii.tex}
+
 
 	\newpage
 	\bibliography{bibliografia}
