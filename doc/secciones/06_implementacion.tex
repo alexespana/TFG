@@ -241,24 +241,24 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
     \begin{enumerate}
         \item \textbf{Excavación}: ésta tendrá un identificador interno en la base de
-        datos, que será un valor numérico, y además una clave candidata que será el
-        \textbf{número de excavación}, un entero de tres dígitos (p.ej: 001, 043, 132, etc).
-        Esta clave candidata será la visible al usuario, pudiendo introducir el número de
-        excavación deseado.
+        datos que actuará como primary key, que será un valor numérico, y además una clave
+        candidata que será el \textbf{número de excavación}, un entero de tres dígitos
+        (p.ej: 001, 043, 132, etc). Esta clave candidata será la visible al usuario, pudiendo
+        introducir el número de excavación deseado.
 
         \item \textbf{Unidad Estratigráfica}: al igual que la anterior, tendremos un
-        identificador interno en la base de datos, y además, una clave candidata que será el
-        \textbf{código} de la unidad estratigráfica, que servirá para que el usuario pueda
-        identificar dicha unidad. Dicho código debe estar formado por el \textbf{número de
-        excavación} al que pertenece la unidad más el \textbf{número de orden} de la
-        unidad en la excavación. Por ejemplo, si la unidad pertenece a la excavación
+        identificador interno que será la primary key, y además, una clave candidata que
+        será el \textbf{código} de la unidad estratigráfica, que servirá para que el usuario
+        pueda identificar dicha unidad. Dicho código debe estar formado por el
+        \textbf{número de excavación} al que pertenece la unidad más el \textbf{número de orden}
+        de la unidad en la excavación. Por ejemplo, si la unidad pertenece a la excavación
         \textbf{001} y es la unidad número 32 encontrada en la excavación (\textbf{032}), el
         código que identificaría a la unidad sería el \textbf{001032}.
 
         \item \textbf{Hecho}: la forma que tiene el usuario de identificar a cada hecho es algo
         más compleja. Al igual que las dos entidades anteriores, también se tendrá un
-        identificador interno en la base de datos, y además, se tendrá una clave candidata
-        compuesta, que estará formada por la \textbf{letra} (tipo de hecho) y un
+        identificador interno que actuará de primary key, y además, se tendrá una clave
+        candidata compuesta, que estará formada por la \textbf{letra} (tipo de hecho) y un
         \textbf{número}. Para poder darle un valor coherente a este número, se elige una
         unidad estratigráfica perteneciente al hecho y el código de dicha unidad será el
         número(\textbf{parte de la clave candidata}) de dicho hecho. Por ejemplo, si tenemos
@@ -266,16 +266,95 @@ relaciones. Todo esto, se verá en la sección siguiente.
         para identificar al hecho de tipo muro (\textbf{MR}) la clave candidata del hecho
         sería \textbf{MR001032}.
 
-        \item \textbf{Estancia}:
+        \item \textbf{Estancia}: en este caso, al igual que las entidades anteriores,
+        tendremos un identificador interno como primary key que solo se conocerá internamente
+        en el sistema, y además, tendremos un \textbf{número de estancia}, que será la clave
+        candidata de la entidad, visible y reconocible para los usuarios de la aplicación. Al
+        comienzo del diseño pensábamos que el número de estancia se formaba a partir del número
+        de sector y el número de zona, como está reflejado en el anexo \ref{subsec: doubts},
+        pero finalmente éste esta formado por las letras ES seguidas de tres dígitos. Por ejemplo
+        un posible identificador de estancia podría ser \textbf{ES001}.
+
+        \item \textbf{Fotografía}: poseeremos un primary key interno para la entidad y una
+        clave candidata que será el \textbf{número} de la fotografía. Las fotografías están
+        relacionadas tanto con las unidades estratigráficas como con las estancias, y es que 
+        ambas pueden tener fotografías concretas.
         
-        \item \textbf{Fotografía}:
+        \item \textbf{Material construido}: esta entidad surge porque una unidad estratigráfica
+        construida puede estar construida con \textbf{varios tipos de materiales} construidos,
+        de ahí el hecho de que no se pueda poner simplemente un atributo que sea material en
+        la unidad construida y se tenga que añadir una nueva entidad.
+
+        Al comienzo podría pensarse que el material es una entidad débil de la unidad
+        construida, pero esto traería problemas ya que para identificar a un material sería
+        necesario el identificador de la unidad estratigráfica y el atributo discriminador de
+        la entidad débil. Esto carecería de sentido ya que podría haber dos UE's construidas
+        con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
+        de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
+        que muchas unidades estratigráficas construidas pueden estar asociadas. Tiendo esto
+        en cuenta, esta vez no tendremos un primary key interno, sino que el \textbf{nombre}
+        del material será la primary key. Por ejemplo: el material \textbf{Piedra} pudiese
+        formar parte de 50 unidades construidas, siendo únicamente necesario el 
+        \textbf{nombre} del material para identificar a uno.
         
-        \item \textbf{Material construido}:
-        
-        \item \textbf{Material sedimentario}:
-        
+        \item \textbf{Material sedimentario}: esta entidad, al igual que la anterior, surge
+        porque una unidad estratigráfica sedimentaria puede estar construida con 
+        \textbf{varios tipos de materiales} sedimentarios, de ahí el hecho de que no se pueda
+        poner simplemente un atributo que sea material en la unidad sedimentaria y se tenga que
+        añadir una nueva entidad.
+
+        En este caso también podríamos pensar que el material es una entidad débil de la unidad
+        sedimentaria, pero esto también traería problemas ya que para identificar a un material
+        sería necesario el identificador de la unidad sedimentaria y el atributo discriminador
+        de la entidad débil, que en este caso sería el \textbf{nombre}. Como hemos mencionado
+        anteriormente, no tiene sentido ya que podría haber dos UE's sedimentarias hechas
+        con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
+        de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
+        que muchas unidades estratigráficas sedimentarias pueden estar asociadas. Igual que el
+        anterior, la primary key sería el \textbf{nombre} del material. Por ejemplo: el
+        material \textbf{Metal} pudiese formar parte de 10 unidades sedimentarias, siendo
+        únicamente necesario el \textbf{nombre} del material para identificar a uno. 
     \end{enumerate}
 
     \subsubsection{Herencia}
+    Como podemos comprobar en el modelo E/R, existen claramente dos entidades que heredan de
+    la entidad fuerte Unidad Estratigráfica, la \textbf{Sedimentaria} y la \textbf{Construida}.
+    Ambas heredarán todos los atributos de la entidad padre y además añadirán sus propios
+    atributos. En las fichas de registro de campo completo \ref{sec:registrationforms} puede
+    verse en la UE construida como existe un apartado material, sin embargo, en la sedimentaria
+    no existe una sección como tal, la pregunta sería: \textbf{¿por qué las UE sedimentarias
+    tienen un material distinto entonces?} Tras numerosas entrevistas con el arqueólogo al
+    final se dedujo que los materiales de la primera hoja de \ref{sec:registrationforms}
+    correspondian a materiales que sólo las UE's sedimentarias podían tener, por esta razón
+    se incorporaron.
+
     \subsubsection{Entidades débiles}
+    La única entidad débil del modelo E/R es la \textbf{Inclusión}. Dicha entidad surge porque
+    una inclusión posee distintos atributos como la \textbf{frecuencia}, el \textbf{grosor} y
+    el \textbf{tipo}, por lo que habría que modelarlos como una entidad que recogiese todos
+    estos datos, además de que una unidad sedimentaria podría tener varias de ellas. En este
+    caso, sí tiene sentido reflejarla como una \textbf{entidad débil} ya que las inclusiones
+    son propias de cada UE y no se comparten con otras unidades sedimentarias.\\
+
+    Por lo tanto, estaría identificada por el \textbf{identificador} de la unidad estratigráfica
+    sedimentaria y el atributo discriminador de la entidad débil que en este caso es el
+    \textbf{tipo} (que puede ser cenizas, carbones, huesos, adobe, etc).
+
     \subsubsection{Relaciones}
+    Finalizando con las relaciones, voy a enumerar las distintas relaciones identificando las
+    entidades implicadas:
+
+        \begin{enumerate}
+            \item \textbf{Compuesta por (Excavación-UE)}: relación uno a muchos (1:M). En la
+            relación se guarda el número de orden de la unidad estratigráfica.
+            \item \textbf{Pertenece a (UE-Hecho)}: relación muchos a uno (M:1).
+            \item \textbf{Identifica (UE-Hecho)}: relación uno a muchos (1:M).
+            \item \textbf{Corresponde a (Hecho-Estancia)}: relación muchos a 1 (M:1).
+            \item \textbf{Tiene (Estancia-Fotografía)}: relación uno a muchos (1:M).
+            \item \textbf{Incluye (Fotografía-UE)}: relación muchos a uno (M:1).
+            \item \textbf{Contiene (Sedimentaria-Inclusión)}: relación 1 a muchos (1:M).
+            \item \textbf{Formado por (Sedimentaria-Material sedimentaria)}: relación muchos a
+            muchos (M:N).
+            \item \textbf{Elaborado de (Construida-Material construida)}: relación muchos a
+            muchos (M:N).
+        \end{enumerate}
