@@ -73,15 +73,15 @@ PERIODO_CHOICES = [
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Estancia(models.Model):
     n_estancia = models.CharField(max_length=5, unique=True)     # ES001, ES002, etc
-    n_zona = models.IntegerField()
-    n_sector = models.IntegerField()
+    n_zona = models.PositiveSmallIntegerField()
+    n_sector = models.PositiveSmallIntegerField()
     observaciones = models.CharField(max_length=200)
     croquis_planta = models.ImageField()
-    n_planta = models.IntegerField()
-    n_seccion = models.IntegerField()
-    elevacion = models.IntegerField()
-    tpq = models.IntegerField()
-    taq = models.IntegerField()
+    n_planta = models.PositiveSmallIntegerField()
+    n_seccion = models.PositiveSmallIntegerField()
+    elevacion = models.PositiveSmallIntegerField()
+    tpq = models.PositiveSmallIntegerField()
+    taq = models.PositiveSmallIntegerField()
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES)
     autor = models.CharField(max_length=50)
@@ -111,18 +111,17 @@ class Hecho(models.Model):
 
     # Unique key
     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    numero = models.CharField(max_length=6)
+    numero = models.CharField(max_length=6)    # Number of stratigrafic unit that identifies the fact
 
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
-    tpq = models.IntegerField()
-    taq = models.IntegerField()
+    tpq = models.PositiveSmallIntegerField()
+    taq = models.PositiveSmallIntegerField()
     definicion = models.CharField(max_length=100)
     comentarios = models.CharField(max_length=100)
-    sector = models.IntegerField()
-    zona = models.IntegerField()
-    año = models.IntegerField()
-
-    estructura = models.CharField(max_length=10)    # to check
+    sector = models.PositiveSmallIntegerField()
+    zona = models.PositiveSmallIntegerField()
+    año = models.PositiveSmallIntegerField()
+    estructura = models.PositiveSmallIntegerField() 
     croquis_plan = models.ImageField()
     croquis_seccion = models.ImageField()
 
@@ -138,10 +137,10 @@ class Hecho(models.Model):
 # EXCAVACION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavacion(models.Model):
-    n_excavacion = models.IntegerField(unique=True, verbose_name='Número de excavación')
-    latitud = models.IntegerField(default=0)
-    longitud = models.IntegerField(default=0)
-    altura = models.IntegerField()
+    n_excavacion = models.PositiveIntegerField(unique=True, verbose_name='Número de excavación')
+    latitud = models.FloatField()
+    longitud = models.FloatField()
+    altura = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return str(self.n_excavacion)
@@ -178,23 +177,23 @@ class UE(models.Model):
     hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE, blank=True, null=True)
     excavacion = models.ForeignKey(Excavacion, on_delete=models.CASCADE)
 
-    plano_n = models.IntegerField()
-    seccion_n = models.IntegerField()
-    elevacion_n = models.IntegerField()
+    plano_n = models.PositiveSmallIntegerField()
+    seccion_n = models.PositiveSmallIntegerField()
+    elevacion_n = models.PositiveSmallIntegerField()
     croquis_planta = models.ImageField()
     croquis_seccion = models.ImageField()
-    tpq = models.IntegerField()
-    taq = models.IntegerField()
+    tpq = models.PositiveSmallIntegerField()
+    taq = models.PositiveSmallIntegerField()
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES)
-    descripcion = models.CharField(max_length=200)
+    descripcion = models.TextField(max_length=200)
     autor = models.CharField(max_length=30)
-    año = models.IntegerField()
+    año = models.PositiveSmallIntegerField()
     interpretacion = models.CharField(max_length=13, choices=INTERPRETACION_CHOICES)    
-    sector = models.CharField(max_length=2)          
-    observaciones = models.CharField(max_length=200)
-    latitud = models.IntegerField(default=0)
-    longitud = models.IntegerField(default=0)
+    sector = models.PositiveSmallIntegerField()          
+    observaciones = models.TextField(max_length=200)
+    latitud = models.FloatField()
+    longitud = models.FloatField()
 
 
     cota_superior_diff = models.IntegerField()
@@ -221,12 +220,12 @@ class Fotografia(models.Model):
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)
     estancia = models.ForeignKey(Estancia, on_delete=models.CASCADE)
 
-    numero = models.IntegerField(unique=True)
+    numero = models.PositiveIntegerField(unique=True)
     tipo = models.CharField(max_length=50)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES)
     vista_desde = models.CharField(max_length=50)
-    dist_focal = models.IntegerField()
-    descripcion = models.CharField(max_length=100)
+    dist_focal = models.PositiveSmallIntegerField()
+    descripcion = models.TextField(max_length=200)
     imagen = models.ImageField()
 
     def __str__(self):
@@ -308,7 +307,7 @@ class UEConstruida(UE):
     sistema_constructivo = models.CharField(max_length=50)
     tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
     materiales_construidos = models.ManyToManyField(MaterialConstruida)
-    n_estructura = models.IntegerField(default=0)
+    n_estructura = models.PositiveSmallIntegerField(default=0)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # INCLUSION           ~~~~~~~~
@@ -356,4 +355,3 @@ class Inclusion(models.Model):
 
     def __str__(self):
         return self.tipo
-
