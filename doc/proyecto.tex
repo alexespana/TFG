@@ -22,8 +22,9 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{appendix}
-
 \usepackage[table,xcdraw]{xcolor}
+\usepackage[nonumberlist]{glossaries}
+
 \hypersetup{
 	colorlinks=true,	% false: boxed links; true: colored links
 	linkcolor=black,	% color of internal links
@@ -51,6 +52,13 @@
 \usepackage{pdfpages}
 \usepackage{caption}
 \captionsetup{belowskip=0pt}
+
+\usepackage[automake]{glossaries-extra}
+\input{glosario/glosario.tex}
+
+% Uso del paquete minted para la inserción de código en
+% distintos lenguajes de programación
+\usepackage{minted}
 
 \begin{document}
 
@@ -125,6 +133,8 @@
 	% 2. Información sobre fichas y metodología
 	\input{anexos/anexo_ii.tex}
 
+	\newpage
+	\printglossaries
 
 	\newpage
 	\bibliography{bibliografia}

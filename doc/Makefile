@@ -7,7 +7,13 @@ doc: $(DOC:.tex=.pdf)
 all: proyecto.pdf
 
 %.pdf: %.tex
-	pdflatex $< && bibtex $* && pdflatex $< && pdflatex $<
+	pdflatex -shell-escape $< && bibtex $* && \
+	pdflatex -shell-escape $< && pdflatex -shell-escape $<
+
+clean:
+	rm  proyecto.pdf *.aux *.blg *.log *.bbl *.toc *.out *.glg \
+					 *.glo *.gls *.ist *.lof *.lot
+
 
 
 
