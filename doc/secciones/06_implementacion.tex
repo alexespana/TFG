@@ -358,3 +358,215 @@ relaciones. Todo esto, se verá en la sección siguiente.
             \item \textbf{Elaborado de (Construida-Material construida)}: relación muchos a
             muchos (M:N).
         \end{enumerate}
+
+    \subsection{Django ORM}
+    Ahora vamos a hablar un poco sobre la implementación \textbf{en el código}, en la forma
+    de representar el modelo E/R en nuestra aplicación \textbf{Django}.\\
+
+    \subsubsection{¿Qué es un ORM?}
+    Antes de nada, vamos a explicar qué es un \textbf{ORM (Object Relational Mapping)}, ya
+    que será un concepto clave para entender lo posteriormente explicado. Un ORM es un modelo
+    de programación que nos permite mapear las estructuras de una base de datos relacional
+    sobre unas estructuras lógicas en el código (por ejemplo objetos), es decir, nos permite
+    convertir los objetos de nuestra aplicación en un formato adecuado (SQL) para ser
+    almacenado en la base de datos. Como todo en la vida, esto tiene unas ventajas y unas
+    desventajas, comencemos por las ventajas:
+
+        \begin{enumerate}
+            \item Hacen que el proceso de desarrollo sea más rápido.
+            \item No se necesita tener \textbf{conocimiento de SQL } para usar el ORM. Esto
+            hace que la complejidad del DML se reduciese, evitando tener que hacer joins,
+            multi-inserciones, sub-selecciones, etc.
+            \item El ORM asegura la consulta para cualquier tipo de ataque.
+        \end{enumerate}
+
+    A pesar de tener cosas muy buenas, el ORM también tiene algunos aspectos que podrían
+    considerarse pequeñas desventajas:
+
+        \begin{enumerate}
+            \item Los ORMS generan una consulta y la pasan a la base de datos. En ocasiones
+            estas consultas devuelven una matriz con un formato complejo con
+            \textbf{colecciones}(objetos) que tienen información no relevante para nosotros
+            \item Cuando la lógica de negocio de la aplicación se vuelve compleja, a veces
+            no se puede representar mediante un ORM, aunque sí pueda ser manejable a nivel
+            de consulta
+        \end{enumerate}
+
+    Dicho todo esto, podemos comenzar a hablar sobre el ORM que utilizaremos para la
+    aplicación web, el \textbf{ORM de Django}. Éste nos permite diseñar nuestras tablas de 
+    base de datos sin necesidad de escribir ninguna sentencia SQL, en este caso, En
+    \textbf{PostgreSQL}. Un modelo es la fuente de información única y definitiva para los
+    datos, éste contendrá los campos y funcionalidades(comportamiento) correspondientes a
+    la naturaleza de los datos que almacena. Normalmente, cada modelo se asigna a una sola
+    tabla de base de datos, y cada uno de ellos:
+
+        \begin{itemize}
+            \item Es una clase de python que hereda de la clase \textbf{django.db.models.Model}.
+            \item Cada atributo de la clase representa un campo (columna) de la base de datos.
+            \item Al corresponderse cada entidad a una clase, Django proporciona automáticamente
+            una \textbf{API de abstracción de bases de datos} que nos permite realizar las
+            operaciones de \textbf{CRUD} básicas: crear, recuperar, actualizar y eliminar
+            objetos.
+        \end{itemize}
+
+    Cada modelo visible para el usuario tiene una función \textbf{\textit{str}} que se
+    corresponde con la identificación del objeto al mostrarlo al usuario. Digamos que se
+    trata de un método especial que devuelve una representación en forma de \textbf{string} de
+    cualquier objeto y que Python y Django utilizarán cada vez que una instancia de un 
+    modelo necesite ser mostrada como una cadena, como puede ser en el caso de la consola
+    interactiva, en la vista de administrador, en un display de una tabla, etc.\\
+
+    Pongamos un ejemplo, si la unidad estratigráfica posee un \textbf{ForeignKey} que es
+    la \textbf{excavación} a la que pertenece, dicha instancia de excavación se mostraría
+    para el usuario como el \textbf{número de excavación}, ya que en el modelo de la
+    excavación existirá un método str que devolvería el \textbf{n\_excavacion},
+    quedando el modelo de la siguiente forma:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        latitud = models.FloatField()
+        longitud = models.FloatField()
+        altura = models.PositiveSmallIntegerField()
+
+        def __str__(self):
+            return str(self.n_excavacion)
+    \end{minted}
+
+    Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
+    razón se usa la función str en el return. Además, django nos proporciona \textbf{gran
+    variedad de tipos posibles} para los campos de los modelos, por lo que nos podemos
+    ahorrar hacer algunas comprobaciones en los formularios de recogida de datos, aunque
+    algunas serán necesariamente obligatorias. Aquellos campos que necesiten ser positivos
+    utilizarán campos de tipo \textbf{PositiveSmallIntegerField}, que nos permite introducir
+    enteros desde el 0 hasta el 32767, cantidades suficientes para el contexto de nuestro
+    proyecto.\\
+
+    Lo siguiente va a ser explicar cómo representar en los modelos las \textbf{primary keys},
+    \textbf{candidate keys} y \textbf{relationships}.\\
+    
+    \subsubsection{Primary keys}
+    En los atributos de los modelos, en los tipos de campo, existe un parámetro llamado
+    \textbf{primary\underline{ }key}, si se indica a True, entonces dicho campo será la clave
+    primaria del modelo, pero si no se indica el primary key en ningún campo del modelo,
+    entonces django automáticamente añadirá un campo \textbf{id} para guardar la clave primaria.
+    Dicho atributo será un campo de tipo \textbf{models.BigAutoField}, que nos permite números
+    desde el 1 hasta el 9223372036854775807, por lo que no habrá ningún tipo de problema con
+    la generación de los id's. Por supuesto, si en algún campo se declara \textbf{explícitamente}
+    la clave primaria, django no generará el campo id y el campo que hayamos elegido pasará a
+    ser clave primaria. En nuestro modelo E/R, las claves primarias que se generarán
+    automáticamente por django en los modelos serán las de \textbf{Excavacion, UE, Hecho,
+    Estancia y Fotografia}. 
+    
+    \subsubsection{Candidate keys}
+    Para las \textbf{claves candidatas simples} únicamente hay que indicar en el campo
+    correspondiente al argumento \textbf{unique} a True. Por ejemplo, en el modelo
+    \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
+    candidate key:
+    
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        .
+        .
+    \end{minted}
+
+    ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
+    dos formas posibles:
+
+    \begin{enumerate}
+        \item Mediante la opción \textbf{unique\underline{ }together}, que incluye la lista
+        de campos que formarán la clave candidata, y que por lo tanto conjuntamente serán
+        únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
+        una clave candidata compuesta:
+        
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            unique_together = ('letra', 'numero',)
+    \end{minted}
+
+        \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
+        que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
+        ya que la opción de \verb|unique_together| ofrece menor funcionalidad y puede
+        estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
+        del modelo quedaría así:
+        
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         constraints = [
+    %             models.UniqueConstraint(fields=['letra', 'numero'], 
+    %                                     name='fact_constraint')                                                  
+    %         ]
+    % \end{minted}
+    Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
+    \end{enumerate}
+
+    \subsubsection{Relationships}
+    Django soporta las mismas tres relaciones que existen en una base de datos relacional:
+    uno a uno, uno a muchos, y muchos a muchos. Para representarlas, usa tres tipos de campos
+    para los modelos, que son:
+
+        \begin{itemize}
+            \item \textbf{OneToOneField}: en uno de los modelos implicados, recibe como
+            argumentos básicos el nombre del modelo con el que está asociado y el argumento
+            del borrado en cascada (\textbf{on\underline{ }delete}).
+            \item \textbf{ForeignKey}: en el modelo de la parte \textbf{muchos}, irá un campo
+            con el nombre del modelo asociado en minúscula y de tipo ForeignKey, recibiendo
+            como parámetros el nombre del modelo asociado (parte del uno) y el argumento del
+            borrado en cascada.
+            \item \textbf{ManyToManyField}: este tipo de relaciones son algo más complejas. Al
+            ser una relación M:N podemos pensar que en cada uno de los modelos irá un campo
+            ManyToManyField, pero esto no es así. En el modelo donde tenga más lógica que vaya
+            el campo muchos a muchos irá un campo con el nombre del otro modelo en plural(por
+            \textbf{convención}) con el dato de tipo ManyToManyField, que recibe como parámetro
+            únicamente el nombre del modelo con el que se relaciona.
+
+            Por ejemplo, tengamos los modelos Pizza y Topping, ¿qué se entiende mejor?
+            \textbf{¿que una pizza pueda tener muchos toppings?}, \textbf{¿o que un
+            topping pueda estar en muchas pizzas?} La primera de las opciones es más
+            intuitiva y por tanto el modelo Pizza tendría un campo toppings de tipo
+            ManyToManyField.
+        \end{itemize}
+
+    Explicadas las formas de representar las relaciones en Django, voy a mencionar las
+    relaciones que se dan en nuestro modelo:
+
+        \begin{enumerate}
+            \item El \textbf{Hecho} tiene una clave externa referenciando a la estancia a la
+            que está asociado.
+            \item La \textbf{UE}(unidad estratigráfica) tiene dos claves externas, una
+            referenciando a la excavación con la que está asociada y otra referenciando al
+            hecho al que pertenece.
+            \item La \textbf{Fotografia} tiene también dos claves externas, una referenciando
+            a la unidad estratigráfica asociada y otra referenciando a la estancia.
+            \item La \textbf{Inclusion} tiene una clave externa referenciando la unidad
+            estratigráfica sedimentaria a la que pertenece.
+            \item La \textbf{UESedimentaria} tiene un campo ManyToManyField referenciando a
+            los materiales sedimentarios (\textbf{MaterialSedimentaria}) por los que está
+            formada.
+            \item La \textbf{UEConstruida} tiene un campo ManyToManyField referenciando a
+            los materiales construidos (\textbf{MaterialConstruida}) por los que está
+            formada.
+        \end{enumerate}
+
+    Esta sería una visión global de la implementación utilizando el ORM que nos ofrece Django.
