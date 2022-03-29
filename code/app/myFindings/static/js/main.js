@@ -71,6 +71,20 @@ function _changeNavBarItem(){
       item.classList.add('active')
     } else {
       item.classList.remove('active')
+
+      if( (itemActive>1 && itemActive <12 && index==1) ||
+          (itemActive>13 && itemActive<24 && index==13)
+      ){
+        item.classList.add('active')
+      }
+
+      if( (itemActive>5 && itemActive<8 && index==5) ||
+           (itemActive>9 && itemActive<12 && index==9) ||
+           (itemActive>17 && itemActive<20 && index==17) ||
+           (itemActive>21 && itemActive<24 && index==21)         
+      ){
+        item.classList.add('active')
+      }
     }
   });
 }
