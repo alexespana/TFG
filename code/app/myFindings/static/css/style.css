@@ -110,7 +110,7 @@ header #logo h1 a, header .logo h1 a:hover{
 }
  
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a,
-.phone-toggle:hover {
+.phone-toggle:hover, .phone-navbar .dropdown > .active-dropdown .active {
     color: chocolate;
 }
 
@@ -218,6 +218,11 @@ header #logo h1 a, header .logo h1 a:hover{
   display: none;
   background: #fff;
   box-shadow: 10px 10px 20px chocolate;
+}
+
+#list-elements, #add-elements, #list-ues, #list-materials,
+#add-ues, #add-materials{
+  cursor: pointer;
 }
 
 /* ----------------------------------------------------
