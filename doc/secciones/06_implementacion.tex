@@ -394,7 +394,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
     Dicho todo esto, podemos comenzar a hablar sobre el ORM que utilizaremos para la
     aplicación web, el \textbf{ORM de Django}. Éste nos permite diseñar nuestras tablas de 
-    base de datos sin necesidad de escribir ninguna sentencia SQL, en este caso, En
+    base de datos sin necesidad de escribir ninguna sentencia SQL, en este caso, en
     \textbf{PostgreSQL}. Un modelo es la fuente de información única y definitiva para los
     datos, éste contendrá los campos y funcionalidades(comportamiento) correspondientes a
     la naturaleza de los datos que almacena. Normalmente, cada modelo se asigna a una sola
@@ -437,7 +437,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
-    razón se usa la función str en el return. Además, django nos proporciona \textbf{gran
+    razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
     variedad de tipos posibles} para los campos de los modelos, por lo que nos podemos
     ahorrar hacer algunas comprobaciones en los formularios de recogida de datos, aunque
     algunas serán necesariamente obligatorias. Aquellos campos que necesiten ser positivos
@@ -504,20 +504,21 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         constraints = [
-    %             models.UniqueConstraint(fields=['letra', 'numero'], 
-    %                                     name='fact_constraint')                                                  
-    %         ]
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            constraints = [
+                models.UniqueConstraint(fields=['letra', 'numero'], 
+                                        name='fact_constraint')                                                  
+            ]
+    \end{minted}
+
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
 

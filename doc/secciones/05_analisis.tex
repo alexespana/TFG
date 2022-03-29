@@ -41,7 +41,7 @@ la aplicación web.
     \end{itemize}
 
 \section{Tecnologías disponibles}
-En la elección de cualuquier herramienta en un proyecto software, se debe seguir un
+En la elección de cualquier herramienta en un proyecto software, se debe seguir un
 proceso de selección de herramientas entre distintas alternativas, especificando claramente
 los requisitos que deben cumplir para poder escoger aquella que mejor se adapte a las
 necesidades del proyecto (en este caso a la aplicación web).
@@ -100,7 +100,7 @@ necesidades del proyecto (en este caso a la aplicación web).
 
         
     \subsubsection{Bootstrap}
-    \textbf{Bootstrap} \cite{bootstrap} es uno de los frameworks más popullares y usados para
+    \textbf{Bootstrap} \cite{bootstrap} es uno de los frameworks más populares y usados para
     el desarrollo de páginas web. Fue desarrollado por Twitter en 2010 para uso de la compañía
     pero más tarde pasó a ser código abierto. Este framework combina CSS y Javascript. Entre
     sus características fundamentales podemos encontrar:
@@ -120,10 +120,10 @@ necesidades del proyecto (en este caso a la aplicación web).
         
         \subsubsection{Foundation}
         \textbf{Foundation} \cite{foundation} es el principal competidor de Bootstrap, es un
-        framework orientado Al desarrollo de sitios web totalmente responsives bajo el enfoque
-        \textit{mobile first}, que es una metodología de desarrollo donde se tenga en cuenta
-        en primer lugar los dispositivos móbiles. Esta metodología es totalmente contraria a
-        la que usa Bootstrap ya que en él se usa   textit{Responsive Web Design} y en éste
+        framework orientado al desarrollo de sitios web totalmente adaptativos bajo el enfoque
+        \textit{mobile first}, que es una metodología de desarrollo donde se tiene en cuenta
+        en primer lugar los dispositivos móviles. Esta metodología es totalmente contraria a
+        la que usa Bootstrap ya que en él se usa \textit{Responsive Web Design} y en éste
         \textit{Mobile First Web Design}.
         
         Además de su metodología de desarrollo, posee ciertas características muy interesantes:
@@ -141,14 +141,14 @@ necesidades del proyecto (en este caso a la aplicación web).
 
     \subsubsection{Materialize CSS}
     \textbf{Materialize CSS} \cite{materialize-css} sigue el principio \textit{Material Design},
-    es decir, ofrece componentes ya listos para ser utilizados, por supuesto responsive.
+    es decir, ofrece componentes ya listos para ser utilizados, por supuesto adaptativo.
     Además, integra comportamientos dinámicos mediante JavaScript y no necesita de Jquery para
     funcionar.
 
-    Entre sus principales caracterśiticas se encuentran:
+    Entre sus principales características se encuentran:
         
         \begin{itemize}
-            \item Al igual que otros frameworks mencionados, permite un diseño responsive.
+            \item Al igual que otros frameworks mencionados, permite un diseño adaptativo.
             \item Permite crear menús laterales desplegables o abiertos según la resolución
             del dispositivo.
             \item Diseños utilizando la filosofía Material Design (colecciones, tarjetas,
@@ -161,16 +161,16 @@ necesidades del proyecto (en este caso a la aplicación web).
 Antes de pasar a la elección de la Base de Datos concreta necesitamos especificar si
 necesitamos una base de datos SQL o una base de datos noSQL. 
 \begin{itemize}
-    \item \textbf{Bases de Datos SQL}: son aquellas que utilizan el lenguaje SQL (
+    \item \textbf{Bases de Datos relacionales}: son aquellas que utilizan el lenguaje SQL (
     \textit{Structure Query Languaje}), un lenguaje de consulta estructurado. Este tipo de 
     bases de datos están formadas por filas y columnas. En cada una de las filas residen
     registros, mientras que las columnas corresponden a campos de los mismos. Son el tipo
     de bases de datos más estándarizado y con más uso actualmente.
     \item \textbf{Base de Datos noSQL}:  son aquellas bases de datos diseñadas para permitir
-    grandes cantidades de datos (\textit{BIG DATA}), tipos de datos complejos, más índices,
-    distintos tipos de consulta, etc. Este tipo de base de datos surgió para dar solución
-    a los problemas de escalabilidad y rendimiento de las bases de datos relacionales en las
-    que hay miles de usuarios concurrentemente y realizando millones de consultas.
+    grandes cantidades de datos, tipos de datos complejos, más índices,distintos tipos de
+    consulta, etc. Este tipo de base de datos surgió para dar solución a los problemas de
+    escalabilidad y rendimiento de las bases de datos relacionales en las que hay miles de
+    usuarios concurrentemente y realizando millones de consultas.
 \end{itemize}
 
 En la siguiente tabla, se realiza una breve comparación entre ambos tipos: 
@@ -181,8 +181,8 @@ En la siguiente tabla, se realiza una breve comparación entre ambos tipos:
                 \textbf{SQL} & \textbf{noSQL} \\ \hline
                 Tablas & Hashes, listas \\
                 Escalabilidad vertical & Escalabilidad horizontal \\
-                Consistencia & Dinamicidad \\
-                Datos estructurados & Big Data \\ \hline
+                Datos estructurados & Datos menos estructurados \\ 
+                Consistencia & Dinamicidad \\ \hline
             \end{tabular}
             \caption{tabla con la comparativa entre SQL y noSQL}
             \label{tab:databases}
@@ -193,22 +193,23 @@ Dada la naturaleza de nuestro problema, donde existe una clara jerarquización d
 elementos con los que se trabaja: \textbf{UE, sector, año, hecho, estructura}, ordenados
 de menor a mayor complejidad, intuimos que necesitamos hacer uso de un sistema de
 almacenamiento de información que cumpla con el esquema entidad-relación, por lo tanto,
-deberemos usar una base de datos SQL. Las distintas bases de datos que podemos tantear
-son las siguientes:
+deberemos usar una base de datos SQL. Los distintos SGBD (Sistemas Gestores de Bases de
+Datos) datos que podemos encontrar son los siguientes:
 
     \subsubsection{MySQL}
-    \textbf{MySQL} \cite{mysql} más que una base de datos, es un sistema de gestión de bases
-    de datos relacionales de código abierto (también conocido como RDBMS, Relational Database
-    Management System). Es una de las bases de datos más populares en la actualidad y usa
-    un modelo cliente-servidor.
+    \textbf{MySQL} \cite{mysql} es un sistema de gestión de bases de datos relacionales de
+    código abierto (también conocido como RDBMS, Relational Database Management System). Es
+    una de las bases de datos más populares en la actualidad y usa un modelo
+    cliente-servidor.
     
 
     \subsubsection{SQLite}
-    Al igual que mySQL, \textbf{SQLite} \cite{sqlite} es un RDBMS de tamaño reducido
-    (aproximadamente 275 kiB) que a diferencia de otros RDBMS como mySQL que utilizan un
-    modelo cliente-servidor, éste no es un proceso independiente con el que el programa
-    principal se comunica, en este caso, se haría uso de llamadas a subrutinas y funciones
-    integradas en el propio código fuente.
+    \textbf{SQLite} \cite{sqlite} es un RDBMS de tamaño reducido (aproximadamente 275 kiB)
+    que a diferencia de otros RDBMS como mySQL, no usa un proceso cliente y un proceso
+    servidor(modelo cliente-servidor). En este caso, funciona como un servidor
+    propio independiente, haciendo uso de llamadas a subrutinas y funciones integradas en el
+    propio código fuente que eliminan la necesidad de hacer consultas entre procesos
+    separados.
 
     \subsubsection{PostgreSQL}
     \textbf{PostgreSQL} \cite{postgresql} es un sistema de gestión de base de datos relacional
@@ -270,7 +271,7 @@ entre las disintas alternativas.
     Entre los requisitos que el framework CSS debe cumplir están los siguientes:
 
         \begin{enumerate}
-            \item Que permita un diseño responsive de la página web.
+            \item Que permita un diseño adaptativo de la página web.
             \item Que siga la metodología Responsive Web Design.
             \item Que sea fácil de usar.
             \item Que esté actualmente mantenido por la comunidad.
