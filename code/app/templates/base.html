@@ -85,12 +85,23 @@
                             </li>
                             <li><a href="{% url 'add_photo' %}" onclick="navbarLinkActive(24)" class="nav-link">Fotografía</a></li>
                         </ul>
-
                     </li>
                     
                     <li><a href="{% url 'about' %}" onclick="navbarLinkActive(25)" class="nav-link">Sobre la aplicación</a></li>
                     <li><a href="{% url 'team' %}" onclick="navbarLinkActive(26)" class="nav-link">Equipo</a></li>
                     <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(27)" class="nav-link">Contacto</a></li>
+                    
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a id="welcome-user" class="nav-link">Bienvenido {{ user.username }} <em class="bi bi-caret-down"></em></a>
+                        <ul>
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(29)" class="nav-link">Cambiar contraseña</a></li>
+                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(30)" class="nav-link">Log out</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" onclick="navbarLinkActive(28)" class="nav-link">Log in</a></li>
+                    {% endif %}
                 </ul>
                 <em class="bi bi-list phone-toggle"></em>
             </nav>

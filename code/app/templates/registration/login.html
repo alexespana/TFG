@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% load static %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<div id="login" class="login-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-3">
+                    <div class="card border-box">
+                        <div class="card-body">
+                        <h2>Login</h2>
+                        <hr>
+                        {% if next %}
+                            <p>No puedes acceder a esta página.</p>
+                            <p>Por favor, <a href="{{ next }}">vuelve a la página anterior</a>.</p>
+                        {% endif %}
+
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                            <a href="{% url 'password_reset' %}">¿Has olvidado la contraseña?</a>
+                            <div class="d-flex justify-content-end form-buttons">
+                                <input type="submit" value="Login" class="btn btn-save">
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
