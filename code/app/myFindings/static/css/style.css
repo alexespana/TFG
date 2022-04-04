@@ -605,7 +605,7 @@ table img{
 }
 
 /* ----------------------------------------------------
-#  ---------------- Buttons ----------------------------
+#  ---------------- Buttons ---------------------------
 -----------------------------------------------------*/
 .btn{
   display: flex;
@@ -633,4 +633,25 @@ table img{
 .btn-clean:hover, .btn-save:hover{
   background-color: #fff;
   transition: 0.5s;
+}
+
+.btn-login{
+  text-decoration: none;
+}
+
+/* ----------------------------------------------------
+#  ---------------- Authentication --------------------
+-----------------------------------------------------*/
+.login-area ul{
+  list-style: none;
+}
+
+.register-area  ul{
+  list-style-position: inside;
+}
+
+#welcome-user{
+  color: brown;
+  font-size: 18px;
+  font-style: bold;
 }

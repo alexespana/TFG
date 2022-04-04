@@ -131,6 +131,10 @@ urlpatterns = [
     path('roomfacts_list/<id>', views.list_roomfacts, name='roomfacts_list'),
     path('factues_list/<id>', views.list_factues, name='factues_list'),
 
+    # ####################
+    # AUTHENTICATION
+    # ####################
+    path('register/', views.register, name='register'),
 
 
 ]

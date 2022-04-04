@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, PhotoForm
 from .models import UE, Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(request):
@@ -509,3 +511,26 @@ def list_factues(request, id):
     data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_hecho': nombre}
 
     return render(request, 'excavationues.html', data)
+
+# ######################
+# Django authentication
+# ######################
+def register(request):
+    # Get the fields of the registration form
+    data = { 'form': UserCreationForm() }
+
+    if request.method == 'POST':
+        # Get the data entered by the user
+        form = UserCreationForm(data=request.POST)
+        if(form.is_valid()):    # Check if valid
+            form.save()         # Save form
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect(to='home')
+        else:
+            data['form'] = form
+
+    return render(request, 'registration/register.html', data)
+
