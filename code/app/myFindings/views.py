@@ -3,6 +3,14 @@ from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, Inc
 from .models import UE, Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 # Create your views here.
 def index(request):
@@ -534,3 +542,41 @@ def register(request):
 
     return render(request, 'registration/register.html', data)
 
+
+def send_email(request):
+    try:
+        # Get the user
+        user = User.objects.get(email=request.POST['email']) 
+    except User.DoesNotExist:
+        return redirect(to='password_reset_done')
+    
+    # Get the fields of the reset form
+    data = { 'user': user,
+            'protocol': 'http', 
+            'domain': request.get_host(),
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+    }
+    
+    if request.method == 'POST':
+        # Get the data entered by the user
+        form = PasswordResetForm(data=request.POST)
+        if(form.is_valid()):    # Check if valid
+            template = get_template('registration/password_reset_email.html')
+            content = template.render(data)
+
+            msg2 = EmailMultiAlternatives
+
+            msg = EmailMultiAlternatives(
+                    subject='MyFindings: restablecer contraseña',
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=[user.email])
+
+            msg.attach_alternative(content, "text/html")
+            msg.send()
+
+            return redirect(to='password_reset_done')
+        else:
+            data['form'] = form
+
+    return redirect(to='password_reset', context=data)
