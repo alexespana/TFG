@@ -654,4 +654,5 @@ table img{
   color: brown;
   font-size: 18px;
   font-style: bold;
+  cursor: pointer;
 }
