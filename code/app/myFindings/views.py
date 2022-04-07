@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, PhotoForm
-from .models import UE, Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
-from django.contrib.auth.forms import UserCreationForm
+from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
+                   InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
+                   PhotoForm, CustomUserCreationForm
+from .models import Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, \
+                    MaterialSedimentaria, UEConstruida, UESedimentaria
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -11,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -28,6 +31,7 @@ def team(request):
 # ############
 # EXCAVATIONS
 # ############
+@login_required
 def list_allexcavations(request):
     # Get all excavations
     excavations = Excavacion.objects.all()
@@ -35,7 +39,7 @@ def list_allexcavations(request):
 
     return render(request, 'excavations_list.html', data)
 
-
+@login_required
 def add_excavation(request):
     # Get the fields of excavation
     data = { 'form': ExcavationForm() }
@@ -53,6 +57,7 @@ def add_excavation(request):
 
     return render(request, 'add_excavation.html', data)
 
+@login_required
 def modify_excavation(request, id):
     excavation = get_object_or_404(Excavacion, id=id)
     
@@ -70,6 +75,7 @@ def modify_excavation(request, id):
 
     return render(request, 'modify_excavation.html', data)
 
+@login_required
 def delete_excavation(request, id):
     # Get the excavation, if it doesn't exist, get an Http404
     excavation = get_object_or_404(Excavacion, id=id)
@@ -82,6 +88,7 @@ def delete_excavation(request, id):
 # ################
 # SEDIMENTARY UE
 # ################
+@login_required
 def list_allsedimentaryues(request):
     # Get all sedimentary ues
     sedimentaryues = UESedimentaria.objects.all()
@@ -89,6 +96,7 @@ def list_allsedimentaryues(request):
 
     return render(request, 'sedimentaryues_list.html', data)
 
+@login_required
 def add_sedimentaryue(request):
     # Get the fields of the sedimentary ue
     data = { 'form': SedimentaryUEForm() }
@@ -106,6 +114,7 @@ def add_sedimentaryue(request):
 
     return render(request, 'add_sedimentaryue.html', data)
 
+@login_required
 def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(UESedimentaria, id=id)
     
@@ -123,6 +132,7 @@ def modify_sedimentaryue(request, id):
 
     return render(request, 'modify_sedimentaryue.html', data)
 
+@login_required
 def delete_sedimentaryue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
     sedimentaryue = get_object_or_404(UESedimentaria, id=id)
@@ -135,6 +145,7 @@ def delete_sedimentaryue(request, id):
 # ################
 # BUILT UE
 # ################
+@login_required
 def list_allbuiltues(request):
     # Get all built ues
     builtues = UEConstruida.objects.all()
@@ -142,6 +153,7 @@ def list_allbuiltues(request):
 
     return render(request, 'builtues_list.html', data)
 
+@login_required
 def add_builtue(request):
     # Get the fields of built ue
     data = { 'form': BuiltUEForm() }
@@ -159,6 +171,7 @@ def add_builtue(request):
 
     return render(request, 'add_builtue.html', data)
 
+@login_required
 def modify_builtue(request, id):
     builtue = get_object_or_404(UEConstruida, id=id)
     
@@ -176,6 +189,7 @@ def modify_builtue(request, id):
 
     return render(request, 'modify_builtue.html', data)
 
+@login_required
 def delete_builtue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
     builtue = get_object_or_404(UEConstruida, id=id)
@@ -189,6 +203,7 @@ def delete_builtue(request, id):
 # ################
 # FACT
 # ################
+@login_required
 def list_allfacts(request):
     # Get all facts
     facts = Hecho.objects.all()
@@ -196,6 +211,7 @@ def list_allfacts(request):
 
     return render(request, 'facts_list.html', data)
 
+@login_required
 def add_fact(request):
     # Get the fields of fact
     data = { 'form': FactForm() }
@@ -213,6 +229,7 @@ def add_fact(request):
 
     return render(request, 'add_fact.html', data)
 
+@login_required
 def modify_fact(request, id):
     fact = get_object_or_404(Hecho, id=id)
     
@@ -230,6 +247,7 @@ def modify_fact(request, id):
 
     return render(request, 'modify_fact.html', data)
 
+@login_required
 def delete_fact(request, id):
     # Get the fact, if it doesn't exist, get an Http404
     fact = get_object_or_404(Hecho, id=id)
@@ -242,6 +260,7 @@ def delete_fact(request, id):
 # ################
 # ROOM
 # ################
+@login_required
 def list_allrooms(request):
     # Get all rooms
     rooms = Estancia.objects.all()
@@ -249,6 +268,7 @@ def list_allrooms(request):
 
     return render(request, 'rooms_list.html', data)
 
+@login_required
 def add_room(request):
     # Get the fields of fact
     data = { 'form': RoomForm() }
@@ -266,6 +286,7 @@ def add_room(request):
 
     return render(request, 'add_room.html', data) 
 
+@login_required
 def modify_room(request, id):
     room = get_object_or_404(Estancia, id=id)
     
@@ -283,6 +304,7 @@ def modify_room(request, id):
 
     return render(request, 'modify_room.html', data)
 
+@login_required
 def delete_room(request, id):
     # Get the room, if it doesn't exist, get an Http404
     room = get_object_or_404(Estancia, id=id)
@@ -295,6 +317,7 @@ def delete_room(request, id):
 # ################
 # PHOTO
 # ################
+@login_required
 def list_allphotos(request):
     # Get all photos
     photos = Fotografia.objects.all()
@@ -302,6 +325,7 @@ def list_allphotos(request):
 
     return render(request, 'photos_list.html', data)
 
+@login_required
 def add_photo(request):
     # Get the fields of photo
     data = { 'form': PhotoForm() }
@@ -319,6 +343,7 @@ def add_photo(request):
 
     return render(request, 'add_photo.html', data)
 
+@login_required
 def modify_photo(request, id):
     photo = get_object_or_404(Fotografia, id=id)
     
@@ -336,6 +361,7 @@ def modify_photo(request, id):
 
     return render(request, 'modify_photo.html', data)
  
+@login_required
 def delete_photo(request, id):
     # Get the photo, if it doesn't exist, get an Http404
     photo = get_object_or_404(Fotografia, id=id)
@@ -348,6 +374,7 @@ def delete_photo(request, id):
 # ################
 # INCLUSION
 # ################
+@login_required
 def list_allinclusions(request):
     # Get all photos
     inclusions = Inclusion.objects.all()
@@ -355,6 +382,7 @@ def list_allinclusions(request):
 
     return render(request, 'inclusions_list.html', data)
 
+@login_required
 def add_inclusion(request):
     # Get the fields of inclusion
     data = { 'form': InclusionForm() }
@@ -372,7 +400,7 @@ def add_inclusion(request):
 
     return render(request, 'add_inclusion.html', data)
 
-
+@login_required
 def modify_inclusion(request, id):
     inclusion = get_object_or_404(Inclusion, id=id)
     
@@ -390,6 +418,7 @@ def modify_inclusion(request, id):
 
     return render(request, 'modify_inclusion.html', data)
 
+@login_required
 def delete_inclusion(request, id):
     # Get the inclusion, if it doesn't exist, get an Http404
     inclusion = get_object_or_404(Inclusion, id=id)
@@ -402,6 +431,7 @@ def delete_inclusion(request, id):
 # #####################
 # SEDIMENTARY MATERIAL
 # #####################
+@login_required
 def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
     sedimentarymaterials = MaterialSedimentaria.objects.all()
@@ -409,6 +439,7 @@ def list_allsedimentarymaterials(request):
 
     return render(request, 'sedimentarymaterials_list.html', data)
 
+@login_required
 def add_sedimentarymaterial(request):
     # Get the fields of sedimentary materials
     data = { 'form': SedimentaryMaterialForm() }
@@ -429,6 +460,7 @@ def add_sedimentarymaterial(request):
 def modify_sedimentarymaterial(request):
     pass
 
+@login_required
 def delete_sedimentarymaterial(request, nombre):
     # Get the sedimentary material, if it doesn't exist, get an Http404
     sedimentarymaterial = get_object_or_404(MaterialSedimentaria, nombre=nombre)
@@ -441,6 +473,7 @@ def delete_sedimentarymaterial(request, nombre):
 # #####################
 # BUILT MATERIAL
 # #####################
+@login_required
 def list_allbuiltmaterials(request):
     # Get all built materials
     builtmaterials = MaterialConstruida.objects.all()
@@ -448,6 +481,7 @@ def list_allbuiltmaterials(request):
 
     return render(request, 'builtmaterials_list.html', data)
 
+@login_required
 def add_builtmaterial(request):
     # Get the fields of sedimentary materials
     data = { 'form': BuiltMaterialForm() }
@@ -468,6 +502,7 @@ def add_builtmaterial(request):
 def modify_builtmaterial(request):
     pass
 
+@login_required
 def delete_builtmaterial(request, nombre):
     # Get the built material, if it doesn't exist, get an Http404
     builtmaterial = get_object_or_404(MaterialConstruida, nombre=nombre)
@@ -480,6 +515,7 @@ def delete_builtmaterial(request, nombre):
 # ####################
 # SPECIFIC LISTINGS  
 # ####################
+@login_required
 def list_excavationues(request, id):
     # Get the excavation
     excavation = get_object_or_404(Excavacion, id=id)
@@ -494,6 +530,7 @@ def list_excavationues(request, id):
 
     return render(request, 'excavationues.html', data)
 
+@login_required
 def list_roomfacts(request, id):
     # Get the room
     room = get_object_or_404(Estancia, id=id)
@@ -505,6 +542,7 @@ def list_roomfacts(request, id):
 
     return render(request, 'facts_list.html', data)
 
+@login_required
 def list_factues(request, id):
     # Get the fact
     fact = get_object_or_404(Hecho, id=id)
@@ -525,11 +563,11 @@ def list_factues(request, id):
 # ######################
 def register(request):
     # Get the fields of the registration form
-    data = { 'form': UserCreationForm() }
+    data = { 'form': CustomUserCreationForm() }
 
     if request.method == 'POST':
         # Get the data entered by the user
-        form = UserCreationForm(data=request.POST)
+        form = CustomUserCreationForm(data=request.POST)
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
             username = form.cleaned_data.get('username')
@@ -541,7 +579,6 @@ def register(request):
             data['form'] = form
 
     return render(request, 'registration/register.html', data)
-
 
 def send_email(request):
     try:
