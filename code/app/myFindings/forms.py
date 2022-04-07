@@ -1,5 +1,7 @@
 from django import forms
 from .models import Estancia, Excavacion, Inclusion, Fotografia, Hecho, MaterialConstruida, MaterialSedimentaria, UEConstruida, UESedimentaria
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ExcavationForm(forms.ModelForm):
     class Meta:
@@ -45,3 +47,9 @@ class InclusionForm(forms.ModelForm):
     class Meta:
         model = Inclusion
         fields = '__all__'
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
