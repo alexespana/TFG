@@ -487,9 +487,6 @@ def add_sedimentarymaterial(request):
 
     return render(request, 'add_sedimentarymaterial.html', data)
 
-def modify_sedimentarymaterial(request):
-    pass
-
 @login_required
 @permission_required('myFindings.delete_materialsedimentaria', raise_exception=True)
 def delete_sedimentarymaterial(request, nombre):
@@ -531,9 +528,6 @@ def add_builtmaterial(request):
             data['form'] = form
 
     return render(request, 'add_builtmaterial.html', data)
-
-def modify_builtmaterial(request):
-    pass
 
 @login_required
 @permission_required('myFindings.delete_materialconstruida', raise_exception=True)
