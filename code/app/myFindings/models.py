@@ -217,7 +217,7 @@ class UE(models.Model):
     cota_inferior = property(_get_cota_inferior)
 
     def __str__(self):
-        return str(self.descripcion)
+        return str(self.codigo)
 
 class Fotografia(models.Model):
     numero = models.PositiveIntegerField(unique=True)

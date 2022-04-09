@@ -18,7 +18,9 @@
                                 <th>Frecuencia</th>
                                 <th>Grosor</th>
                                 <th>Tipo</th>
+                                {% if perms.myFindings.change_inclusion or perms.myFindings.delete_inclusion %}
                                 <th>Opciones</th>
+                                {% endif %}
                             </tr>
                     
                             {% for i in inclusions %}
@@ -28,12 +30,18 @@
                                 <td>{{ i.frecuencia }}</td>
                                 <td>{{ i.grosor }}</td>
                                 <td>{{ i.tipo }}</td>
+                                {% if perms.myFindings.change_inclusion or perms.myFindings.delete_inclusion %}
                                 <td>
                                     <div class="d-flex">
+                                        {% if perms.myFindings.change_inclusion %}
                                         <a href="{% url 'modify_inclusion' i.id %}" class="btn btn-modify me-md-2">Modificar</a>
+                                        {% endif %}
+                                        {% if perms.myFindings.delete_inclusion %}
                                         <a href="{% url 'delete_inclusion' i.id %}" class="btn btn-delete">Eliminar</a>
+                                        {% endif %}
                                     </div>
                                 </td>
+                                {% endif %}
                             </tr>
                             
                             {% endfor %}
