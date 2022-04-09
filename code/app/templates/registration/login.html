@@ -19,6 +19,7 @@
                             <a href="{% url 'password_reset' %}">¿Has olvidado la contraseña?</a>
                             <div class="d-flex justify-content-end form-buttons">
                                 <input type="submit" value="Login" onclick="navbarLinkActive(0)" class="btn btn-save">
+                                <input type="hidden" name="next" value="{{ next }}"/>
                             </div>
                         </form>
                         </div>
