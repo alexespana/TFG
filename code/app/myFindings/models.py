@@ -156,7 +156,7 @@ class UE(models.Model):
     INTERPRETACION_CHOICES = [
         ('Ocupación','Ocupación'),
         ('Abandono','Abandono'),
-        ('Contrucción','Construcción'),
+        ('Construcción','Construcción'),
         ('Paleosuelo','Paleosuelo'),
         ('Reinstalación','Reinstalación'),
         ('Coluvión/Aluvión','Coluvión/Aluvión'),
@@ -240,19 +240,7 @@ class Fotografia(models.Model):
 # MATERIALSEDIMENTARIA ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class MaterialSedimentaria(models.Model):
-    NOMBRE_CHOICES = [
-        ('Muestras', 'Muestras'),
-        ('Metal', 'Metal'),
-        ('Piedra', 'Piedra'),
-        ('Arcilla', 'Arcilla'),
-        ('Material construido', 'Material construido'),
-        ('Cerámica', 'Cerámica'),
-        ('Vidrio', 'Vidrio'),
-        ('Fauna', 'Fauna'),
-        ('Otros', 'Otros'),
-    ]
-
-    nombre = models.CharField(max_length=21, choices=NOMBRE_CHOICES, primary_key=True)
+    nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
         return self.nombre
@@ -261,15 +249,7 @@ class MaterialSedimentaria(models.Model):
 # MATERIALCONSTRUIDA   ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class MaterialConstruida(models.Model):
-    NOMBRE_CHOICES = [
-        ('Piedra', 'Piedra'),
-        ('Tierra cruda', 'Tierra cruda'),
-        ('Cal', 'Cal'),
-        ('Tierra cocida', 'Tierra cocida'),
-        ('Madera', 'Madera'),
-    ]
-
-    nombre = models.CharField(max_length=15, choices=NOMBRE_CHOICES, primary_key=True)
+    nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
         return self.nombre
