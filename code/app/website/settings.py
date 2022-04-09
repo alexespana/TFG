@@ -139,7 +139,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirect to login page after login
+LOGIN_URL = '/accounts/login/'
+
+# Redirect to home page after login
 # https://docs.djangoproject.com/en/4.0/topics/auth/default/#django.contrib.auth.views.LoginView
 LOGIN_REDIRECT_URL = '/'
 
