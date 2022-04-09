@@ -60,7 +60,7 @@ def add_excavation(request):
     return render(request, 'add_excavation.html', data)
 
 @login_required
-@permission_required('myFindings.modify_excavacion', raise_exception=True)
+@permission_required('myFindings.change_excavacion', raise_exception=True)
 def modify_excavation(request, id):
     excavation = get_object_or_404(Excavacion, id=id)
     
@@ -121,7 +121,7 @@ def add_sedimentaryue(request):
     return render(request, 'add_sedimentaryue.html', data)
 
 @login_required
-@permission_required('myFindings.modify_uesedimentaria', raise_exception=True)
+@permission_required('myFindings.change_uesedimentaria', raise_exception=True)
 def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(UESedimentaria, id=id)
     
@@ -182,7 +182,7 @@ def add_builtue(request):
     return render(request, 'add_builtue.html', data)
 
 @login_required
-@permission_required('myFindings.modify_ueconstruida', raise_exception=True)
+@permission_required('myFindings.change_ueconstruida', raise_exception=True)
 def modify_builtue(request, id):
     builtue = get_object_or_404(UEConstruida, id=id)
     
@@ -244,7 +244,7 @@ def add_fact(request):
     return render(request, 'add_fact.html', data)
 
 @login_required
-@permission_required('myFindings.modify_hecho', raise_exception=True)
+@permission_required('myFindings.change_hecho', raise_exception=True)
 def modify_fact(request, id):
     fact = get_object_or_404(Hecho, id=id)
     
@@ -305,7 +305,7 @@ def add_room(request):
     return render(request, 'add_room.html', data) 
 
 @login_required
-@permission_required('myFindings.modify_estancia', raise_exception=True)
+@permission_required('myFindings.change_estancia', raise_exception=True)
 def modify_room(request, id):
     room = get_object_or_404(Estancia, id=id)
     
@@ -366,7 +366,7 @@ def add_photo(request):
     return render(request, 'add_photo.html', data)
 
 @login_required
-@permission_required('myFindings.modify_fotografia', raise_exception=True)
+@permission_required('myFindings.change_fotografia', raise_exception=True)
 def modify_photo(request, id):
     photo = get_object_or_404(Fotografia, id=id)
     
@@ -427,7 +427,7 @@ def add_inclusion(request):
     return render(request, 'add_inclusion.html', data)
 
 @login_required
-@permission_required('myFindings.modify_inclusion', raise_exception=True)
+@permission_required('myFindings.change_inclusion', raise_exception=True)
 def modify_inclusion(request, id):
     inclusion = get_object_or_404(Inclusion, id=id)
     
