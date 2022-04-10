@@ -217,7 +217,7 @@ class UE(models.Model):
     cota_inferior = property(_get_cota_inferior)
 
     def __str__(self):
-        return str(self.codigo)
+        return self.codigo
 
 class Fotografia(models.Model):
     numero = models.PositiveIntegerField(unique=True)
@@ -234,7 +234,7 @@ class Fotografia(models.Model):
     imagen = models.ImageField(blank=True, null=True)
 
     def __str__(self):
-        return self.numero
+        return str(self.numero)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MATERIALSEDIMENTARIA ~~~~~~~~
@@ -339,4 +339,4 @@ class Inclusion(models.Model):
         ]
 
     def __str__(self):
-        return self.tipo
+        return self.tipo + ' - ' + self.uesedimentaria.codigo
