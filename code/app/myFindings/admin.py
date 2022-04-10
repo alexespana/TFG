@@ -59,6 +59,4 @@ class InclusionAdmin(admin.ModelAdmin):
 
 
 # Changing the header, title and description of the admin interface
-admin.site.site_header = 'Administración de MyFindings'
-admin.site.site_title = 'MyFindings'
-admin.site.index_title = 'Administración'
+admin.site.index_title = 'MyFindings'
