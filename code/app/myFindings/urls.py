@@ -131,6 +131,6 @@ urlpatterns = [
     # AUTHENTICATION
     # ####################
     path('register/', views.register, name='register'),
-    path('send_email/', views.send_email, name='send_email'),
+    path('send_email_password_reset/', views.send_email_password_reset, name='send_email_password_reset'),
 
 ]
