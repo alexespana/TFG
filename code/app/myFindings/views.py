@@ -14,6 +14,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.mail import BadHeaderError, send_mail
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -616,7 +618,26 @@ def register(request):
 
     return render(request, 'registration/register.html', data)
 
-def send_email(request):
+def send_email(subject, from_email, recipient_list, message='',
+              fail_silently=False, auth_user=None, auth_password=None,
+              connection=None, html_message=None, data=None):
+              
+    if (html_message is not None):
+        template = get_template(html_message)
+
+        if data is not None:
+            html_message = template.render(data)
+    
+    # Send the email
+    try:
+        send_mail(subject, message, from_email, recipient_list,
+                fail_silently=fail_silently, auth_user=auth_user,
+                auth_password=auth_password, connection=connection,
+                html_message=html_message)
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.')
+
+def send_email_password_reset(request):
     try:
         # Get the user
         user = User.objects.get(email=request.POST['email']) 
@@ -635,16 +656,8 @@ def send_email(request):
         # Get the data entered by the user
         form = PasswordResetForm(data=request.POST)
         if(form.is_valid()):    # Check if valid
-            template = get_template('registration/password_reset_email.html')
-            content = template.render(data)
-
-            msg = EmailMultiAlternatives(
-                    subject='MyFindings: restablecer contraseña',
-                    from_email=settings.EMAIL_HOST_USER,
-                    to=[user.email])
-
-            msg.attach_alternative(content, "text/html")
-            msg.send()
+            send_email(subject='MyFindings: restablecer contraseña', from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[user.email], html_message='registration/password_reset_email.html', data=data)
 
             return redirect(to='password_reset_done')
         else:
