@@ -118,43 +118,8 @@ necesidades del proyecto (en este caso a la aplicación web).
         \end{itemize}
 
 \subsection{Base de Datos}
-Antes de pasar a la elección de la Base de Datos concreta necesitamos especificar si
-necesitamos una base de datos SQL o una base de datos noSQL. 
-\begin{itemize}
-    \item \textbf{Bases de Datos relacionales}: son aquellas que utilizan el lenguaje SQL (
-    \textit{Structure Query Languaje}), un lenguaje de consulta estructurado. Este tipo de 
-    bases de datos están formadas por filas y columnas. En cada una de las filas residen
-    registros, mientras que las columnas corresponden a campos de los mismos. Son el tipo
-    de bases de datos más estándarizado y con más uso actualmente.
-    \item \textbf{Base de Datos noSQL}:  son aquellas bases de datos diseñadas para permitir
-    grandes cantidades de datos, tipos de datos complejos, más índices,distintos tipos de
-    consulta, etc. Este tipo de base de datos surgió para dar solución a los problemas de
-    escalabilidad y rendimiento de las bases de datos relacionales en las que hay miles de
-    usuarios concurrentemente y realizando millones de consultas.
-\end{itemize}
-
-En la siguiente tabla, se realiza una breve comparación entre ambos tipos: 
-
-    \begin{table}[H]
-        \begin{center}
-            \begin{tabular}{ |l|l| } \hline
-                \textbf{SQL} & \textbf{noSQL} \\ \hline
-                Tablas & Hashes, listas \\
-                Escalabilidad vertical & Escalabilidad horizontal \\
-                Datos estructurados & Datos menos estructurados \\ 
-                Consistencia & Dinamicidad \\ \hline
-            \end{tabular}
-            \caption{tabla con la comparativa entre SQL y noSQL}
-            \label{tab:databases}
-        \end{center}
-    \end{table}
-
-Dada la naturaleza de nuestro problema, donde existe una clara jerarquización de los
-elementos con los que se trabaja: \textbf{UE, sector, año, hecho, estructura}, ordenados
-de menor a mayor complejidad, intuimos que necesitamos hacer uso de un sistema de
-almacenamiento de información que cumpla con el esquema entidad-relación, por lo tanto,
-deberemos usar una base de datos SQL. Los distintos SGBD (Sistemas Gestores de Bases de
-Datos) datos que podemos encontrar son los siguientes:
+Los distintos SGBD (Sistemas Gestores de Bases de Datos) datos que podemos encontrar son los
+siguientes:
 
     \subsubsection{MySQL}
     \textbf{MySQL} \cite{mysql} es un sistema de gestión de bases de datos relacionales de
