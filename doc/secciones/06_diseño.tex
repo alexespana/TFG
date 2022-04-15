@@ -18,8 +18,8 @@ la actualidad y por qué usar una u otra. Se desarrollarán los siguientes punto
 \section{Lenguaje nativo o framework web} \label{sec:lenguaje-frameworkweb}
 Antes de nada, vamos a explicar brevemente qué es un framework. Un \textbf{framework} es
 un entorno o marco de trabajo que nos ofrece una estructura base con la que podemos
-comenzar a elaborar un proyecto, es una especie de plantilla que es el punto de partida
-para el comienzo y organización de un proyecto software. Éste permite agilizar mucho
+comenzar a elaborar un proyecto. Es una especie de plantilla incial con la que podremos
+comenzar y organizar nuestro proyecto software. Además, éste permite agilizar mucho
 el desarrollo, ya que se omiten tareas comunes o repetitivas.\\
 
 Normalmente, cuando se tiene cierta experiencia programando, se van guardando códigos que
@@ -45,7 +45,7 @@ las razones son sencillas:
 
 Digamos que un framework web es un lugar de trabajo común donde muchos programadores
 trabajan en conjunto. Esta es la principal razón por la que muchas empresas buscan
-programadores que estén especializados con un framework determinado, para que se
+programadores que estén especializados en un framework determinado, para que
 \textit{"hablen el mismo idioma"} y puedan resolver tareas y dudas comunes.\\
 
 Como aspectos negativos de usar un framework web hay muy pocos, aunque puede mencionarse
@@ -57,7 +57,7 @@ que pasan a caer en desuso.\\
 En la actualidad, existen multitud de patrones arquitectónicos para el desarrollo de
 software, dichos patrones definen una forma concreta en la que los componentes principales
 de una aplicación se comunican entre sí. Dado que nuestra aplicación tiene una parte de
-desarrollo destinada al usuario (\textbf{UI, User Interface}), nos centraremos en el modelo
+desarrollo destinada al usuario (\textbf{UI, User Interface}), nos centraremos en el patrón
 \textbf{Modelo-Vista-Controlador}.
 
 \subsection{Modelo-Vista-Controlador} \label{sec:mvc}
@@ -71,7 +71,7 @@ Es el patrón más común entre los frameworks, éste se divide en tres bloques:
         \item \textbf{Vista}: es la parte visible de la aplicación, es decir, la 
         \textbf{interfaz gráfica} visible al usuario y con la que éste interacciona.
         Normalmente está formada por código html, css y javascript, y se comunica con el
-        controlador a través de las peticiones que el usuario realiza.
+        controlador.
         \item \textbf{Controlador}: es el punto de unión entre el modelo y la vista. Éste
         procesa las \textbf{peticiones (requests)} que el usuario realiza a través de las
         vistas y las envía al modelo para que éste realice las operaciones necesarias y
@@ -100,7 +100,7 @@ El flujo de comunicación entre estos tres bloques es el siguiente:
     \end{figure}
 
 Dado que vamos a utilizar un framework web para el desarrollo de la aplicación, y la gran
-mayoría de ellos usan un modelo MVC, será el modelo que utilizaremos. Además, es el
+mayoría de ellos usan un \textbf{modelo MVC}, será el modelo que utilizaremos. Además, es el
 patrón con el que más familiarizado estoy.
 
 \section{Lenguaje CSS nativo o framework CSS} \label{sec:css-frameworkcss}
@@ -124,7 +124,7 @@ podemos mencionar las siguiente:
 
     \begin{itemize}
         \item Los principios de desacoplamiento entre código html y css se están perdiendo.
-        \item En la maypría de ocasiones, el framework carga gran cantidad de código CSS
+        \item En la mayoría de ocasiones, el framework carga gran cantidad de código CSS
         que no se utilizará nunca.
         \item En ocasiones, el usarlo puede llevarte a desaprender conceptos de CSS que sí
         conocías anteriormente.
@@ -132,8 +132,10 @@ podemos mencionar las siguiente:
         muy similares a la desarrollada.
     \end{itemize}
 
-Dado que en nuestra aplicación se tiene pensado hacer uso nativo de CSS, se van a
-utilizar estos dos modelos: \textbf{CSS nativo} y un \textbf{framework CSS}.
+Dadas las ventajas y desventajas que se mencionan, se propone usar código \textbf{CSS nativo}
+en combinación con un \textbf{framework CSS}, así evitamos algunos de los inconvenientes como
+que la página pueda parecerse a otras en la web o que se desaprendan conceptos de CSS,
+generando así un balance positivo de su uso.
 
 \section{Base de datos SQL o base de datos noSQL} \label{sec:sql-nosql}
 Antes de pasar a la elección de la Base de Datos concreta que vamos a utilizar, necesitamos
@@ -182,4 +184,4 @@ distinguidos en una excavación, como son las \textbf{unidades estratigráficas}
 los hallazgos,....todo ello englobado dentro de las \textbf{excavaciones} y relacionados
 unos con otros. Teniendo esto en cuenta, deberemos definir entidades y por tanto, es fácil
 deducir que necesitaremos hacer uso de un sistema de almacenamiento que cumpla con el esquema
-entidad-relación, es decir, de una \textbf{base de datos relacional o SQL}.
+\textbf{entidad-relación}, es decir, de una \textbf{base de datos relacional o SQL}.
