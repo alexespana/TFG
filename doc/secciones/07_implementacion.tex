@@ -1,18 +1,21 @@
 \chapter{Implementación}
 
 \section{Elección de herramientas} \label{sec:tools}
-En la elección de cualquier herramienta en un proyecto software, se debe seguir un
-proceso de selección de herramientas entre distintas alternativas, especificando claramente
-los requisitos que deben cumplir para poder escoger aquella que mejor se adapte a las
-necesidades del proyecto (en este caso a la aplicación web).
+Una vez realizada la elección de modelos en el apartado anterior \ref{ch:design}, la
+elección de las herramientas es un proceso mucho más sencillo, ya que hemos establecido
+los criterios que nos ayudarán a escoger aquella que se adapte mejor a las necesidades
+de nuestro proyecto (en este caso de la aplicación web).
 
 \subsection{Framework para desarrollo web}
 
     \subsubsection{Ruby on Rails}
     \textbf{Ruby on Rails} (también conocido como Rails) \cite{ruby-on-rails} es un framework
     para la creación de aplicaciones web escrito en Ruby. Sigue una arquitectura
-    (Model-View-Controller) y diseño RESTfull. Está diseñado para facilitar la programación
-    web al hacer una estimación de los componentes principales que se necesitan para comenzar.
+    (Model-View-Controller) y diseño RESTfull\footnote{Un servicio es RESTfull cuando cumple
+    con la \textbf{arquitectura REST}, es decir, facilita el acceso a recursos remotos y
+    además define las operaciones típicas por medio de URIs (listar, crear, leer, actualizar
+    y borrar).}. Está diseñado para facilitar la programación web al hacer una estimación
+    de los componentes principales que se necesitan para comenzar.\\
 
     Este software asume que hay una mejor forma de hacer las cosas y está diseñado para
     ello, por lo que es un código muy optimizado y hecho para aumentar la productividad
@@ -21,8 +24,27 @@ necesidades del proyecto (en este caso a la aplicación web).
     \subsubsection{Django}
     \textbf{Django} \cite{django} es el framework para Python más usado, está enfocado a sitios
     basados en bases de datos. Permite un desarrollo software muy rápido y limpio. Tiene una
-    arquitectura MVT (Model-View-Template), donde el View sería el equivalente a Controller
-    en MVC.
+    arquitectura MTV (Model-Template-View), donde el View sería el equivalente a Controller
+    en MVC. El esquema básico de este patrón es el siguiente:
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.22]{imagenes/mvt.png}
+            \caption[Patrón Modelo-Plantilla-Vista]{Patrón Modelo-Plantilla-Vista. Fuente \cite{mvt}}
+            \label{fig:mvt}
+        \end{figure}
+
+    Como vemos, el flujo de comunicación entre estos tres bloques sería el siguiente:
+        
+       \begin{enumerate}
+           \item El usuario interacciona con la interfaz, solicitando una url.
+           \item El framework de Django, a través de su archivo urls.py, se encarga de
+           decidir que \textbf{vista} se debe mostrar.
+           \item Si dicha vista obtiene datos de la base de datos, ésta se comunica con el 
+           \textbf{modelo}.
+           \item Finalmente, se devuelve la \textbf{plantilla} con los datos de la base de datos si
+           fuera necesario.
+       \end{enumerate}
 
     Al igual que el anterior framework mencionado, Django ha sido diseñado por programadores
     experimentados, y se encarga de las partes más complejas del desarrollo web, permitiendo
@@ -32,7 +54,7 @@ necesidades del proyecto (en este caso a la aplicación web).
     \subsubsection{Laravel}
     \textbf{Laravel} \cite{laravel} es el mejor framework de PHP para desarrollar aplicaciones
     y servicios web con PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue una arquitectura 
-    MVC, por lo que es sencillo relacionar las distintas componentes de la aplicación.
+    MVC, por lo que es sencillo relacionar las distintas componentes de la aplicación.\\
 
     Es un framework moderno que ofrece muchas utilidades a los desarrolladores y permiten un
     desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la calidad del
@@ -42,7 +64,7 @@ necesidades del proyecto (en este caso a la aplicación web).
     \textbf{Angular} \cite{angular} es un framework desarrollado en TypeScript para el
     desarrollo de aplicaciones web. Está mantenido por Google, utilizado para crear y mantener
     aplicaciones SPA (Single Page Application), es decir páginas web que interaccionan con el
-    usuario dinámicamente sobreescribiendo la página con información nueva.
+    usuario dinámicamente sobreescribiendo la página con información nueva.\\
 
     Al contrario que los frameworks anteriormente mencionados, Angular no usa un modelo MVC
     o MVT, sino que permite el desarrollo del front-end y el back-end de forma totalmente
@@ -57,7 +79,6 @@ necesidades del proyecto (en este caso a la aplicación web).
     clases de utilidad que pueden aplicarse directamente sobre el código HTML del proyecto.
     Además de esto, permite una gran optimización del peso del código CSS mediante unos flujos
     de desarrollo.
-
         
     \subsubsection{Bootstrap}
     \textbf{Bootstrap} \cite{bootstrap} es uno de los frameworks más populares y usados para
@@ -72,19 +93,21 @@ necesidades del proyecto (en este caso a la aplicación web).
         % \end{list}
         
         \begin{itemize}
-            \item \textbf{Responsive design}: adaptación automática a distintos dispositivos
-            como móviles y tablets.
-            \item \textbf{Grid System}: posicionamiento de elementos en la página
-            \item \textbf{Interface UI}: incluye formularios, botones, menús, etc.
+            \item \textbf{Responsive design (diseño adaptativo)}: adaptación automática a
+            distintos dispositivos como móviles y tablets.
+            \item \textbf{Grid System (sistema de rejilla)}: posicionamiento de elementos en
+            la página.
+            \item \textbf{Interface UI (interfaz de usuario)}: incluye formularios, botones,
+            menús, etc.
         \end{itemize}
         
         \subsubsection{Foundation}
-        \textbf{Foundation} \cite{foundation} es el principal competidor de Bootstrap, es un
-        framework orientado al desarrollo de sitios web totalmente adaptativos bajo el enfoque
-        \textit{mobile first}, que es una metodología de desarrollo donde se tiene en cuenta
-        en primer lugar los dispositivos móviles. Esta metodología es totalmente contraria a
-        la que usa Bootstrap ya que en él se usa \textit{Responsive Web Design} y en éste
-        \textit{Mobile First Web Design}.
+        \textbf{Foundation} \cite{foundation} es el principal competidor de Bootstrap, es
+        un framework orientado al desarrollo de sitios web totalmente adaptativos bajo el
+        enfoque \textit{mobile first}, que es una metodología de desarrollo donde se tiene
+        en cuenta en primer lugar los dispositivos móviles. Esta metodología es totalmente
+        contraria a la que usa Bootstrap ya que en él se usa \textit{Responsive Web Design}
+        y en éste \textit{Mobile First Web Design}.\\
         
         Además de su metodología de desarrollo, posee ciertas características muy interesantes:
         
@@ -103,7 +126,7 @@ necesidades del proyecto (en este caso a la aplicación web).
     \textbf{Materialize CSS} \cite{materialize-css} sigue el principio \textit{Material Design},
     es decir, ofrece componentes ya listos para ser utilizados, por supuesto adaptativo.
     Además, integra comportamientos dinámicos mediante JavaScript y no necesita de Jquery para
-    funcionar.
+    funcionar.\\
 
     Entre sus principales características se encuentran:
         
@@ -155,6 +178,7 @@ entre las disintas alternativas.
     su aceptación:
 
         \begin{enumerate}
+            \item Que siga un patrón Modelo-Vista-Controlador \ref{sec:mvc}.
             \item Que haga una deducción de los elementos principales de la aplicación,
             permitiendo centrarnos exclusivamente en el desarrollo de la misma.
             \item Que pueda permitir la configuración del mismo con distintas bases de
@@ -169,7 +193,7 @@ entre las disintas alternativas.
 
     Tras tantear los distintos frameworks para el desarrollo de aplicaciones web disponibles
     se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar para mí y
-    además cumple todos los requisitos anteriormente mencionados.
+    además cumple todos los requisitos anteriormente mencionados.\\
 
     Dicho framework permite hacer lo siguiente:
         
@@ -206,11 +230,11 @@ entre las disintas alternativas.
     Siguiendo los requisitos de arriba, Foundation puede ser descartado ya que no cumple el
     segundo requisito, ya que nuestra aplicación web principalmente va a estar diseñada para
     utilizarse en un ordenador (también podrá usarse en un smartphone, pero no es la
-    finalidad).
+    finalidad).\\
 
-    Entre los tres frameworks restantes, podría utilizarse cualquiera de ellos ya que cumplen
-    con los requisitos, pero finalmente se ha decidido utilizar Bootstrap ya que es
-    probablemente el framework más popular y sencillo de usar que hay, además de seguir
+    Entre los tres frameworks restantes, podría utilizarse cualquiera de ellos ya que
+    cumplen con los requisitos, pero finalmente se ha decidido utilizar Bootstrap ya que
+    es probablemente el framework más popular y sencillo de usar que hay, además de seguir
     siendo muy usado por la comunidad. 
     
 
@@ -227,7 +251,7 @@ entre las disintas alternativas.
 
     Por cuestiones de escalabilidad, utilizar SQLite se puede descartar ya que posee un
     reducido número de tipos de datos y más bien está pensada para utilizarse en dispositivos
-    con poca capacidad de almacenamiento.
+    con poca capacidad de almacenamiento.\\
 
     Ahora nos tocaría pensar en, ¿mySQL o postgreSQL? Realmente podría utilizarse cualquiera
     de las dos, pero posgreSQL ofrece algunas ventajas respecto a mySQL que merece la pena
@@ -246,53 +270,59 @@ entre las disintas alternativas.
     nuestro servidor web.
 
 \section{Desarrollo basado en sprints} \label{sec:sprints}
-Para la consecución de este proyecto, el desarrollo del software se ha dividido en una serie
-de \textbf{hitos}. Un hito, en el desarrollo de software, simboliza un logro, un aspecto
-del proyecto que se está cumpliendo conforme se planificó al comienzo del mismo, por tanto, 
-éstos son los mejores indicadores del progreso del proyecto para alcanzar los objetivos
-finales.\\
+Como mencionamos en el sub-apartado \ref{subsubsec:scrum}, se va a trabajar mediante
+\textbf{sprints}, concepto del marco de trabajo Scrum. Es por ello que el desarrollo del
+software se ha dividido en una serie de \textbf{hitos} (que en este caso serían nuestros
+sprints). Un hito, en el desarrollo de software, simboliza un logro, un aspecto del proyecto
+que se está cumpliendo conforme se planificó al comienzo del mismo, por tanto, éstos son los
+mejores indicadores del progreso del proyecto para alcanzar los objetivos finales.\\
 
-A cada hito se le asocia una serie de \textbf{issues} (problemas), los cuáles describen
-aspectos a mejorar o solucionar del software durante su desarrollo. \\
+A cada uno de estos sprints se le irán asociando \textbf{issues} (tareas) que se deben realizar
+para alcanzar el objetivo del mismo. Dichas tareas pueden ser aspectos a mejorar del software,
+errores que se han encontrado, tareas referentes a documentación, etc.\\
 
-Los hitos del proyecto son los siguientes:
+Los hitos (\textbf{milestones}) del proyecto son los siguientes:
 \begin{enumerate}
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/1}{[M1]. Website
-    creation}}: creación de la estructura principal de la aplicación web, con las
-    principales páginas y funcionalidades. Esta parte será desarrollada en un entorno
-    de desarrollo (servidor de desarrollo).
+    creation (Creación del sitio web)}}: creación de la estructura principal de la
+    aplicación web, con las principales páginas y funcionalidades. Esta parte será
+    desarrollada en un entorno de desarrollo (servidor de desarrollo).
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/8}{[M2]. Database
-    creation}}: creación de las principales tablas para modelar el problema, junto con
-    los correspondientes formularios para la recogida de datos en la aplicación web.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/2}{[M3]. Authentication}}
-    : gestión de usuarios del sitio web, signup, signout, login, logout, cambiar
-    contraseña e información de contacto para cada usuario así como third party (social)
-    account authentication. 
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/3}{[M4]. Test behavior}}:
-    realización de tests para comprobar el comportamiento de la aplicación.
+    creation (Creación de la Base de Datos)}}: creación de las principales tablas para
+    modelar el problema, junto con los correspondientes formularios para la recogida de
+    datos en la aplicación web.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/2}{[M3]. Authentication
+    (Autenticación)}}: gestión de usuarios del sitio web, signup, signout, login, logout,
+    cambiar contraseña e información de contacto para cada usuario así como third party
+    (social) account authentication. 
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/3}{[M4]. Test behavior
+    (Testear comportamiento)}}: realización de tests para comprobar el comportamiento
+    de la aplicación.
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/4}{[M5]. Continuous
-    integration}}: el software desarrollado debe integrarse con el posible software
-    ya existente en el sitio web, asegurando el correcto funcionaminto de ambos.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M6]. Log system}}: 
-    los eventos más importantes que ocurren en la aplicación deben ser grabados a través
-    del uso de un servicio de log. Es conveniente capturar errores en un nivel superior
-    de abstracción, evitando modificar código ya hecho.
+    integration (Integración Continua)}}: el software desarrollado debe integrarse con el
+    posible software ya existente en el sitio web, asegurando el correcto funcionaminto
+    de ambos.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M6]. Log system
+    (Sistema de Log)}}: los eventos más importantes que ocurren en la aplicación deben ser
+    grabados a través del uso de un servicio de log. Es conveniente capturar errores en un
+    nivel superior de abstracción, evitando modificar código ya hecho.
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/6}{[M7]. API REST}}:
     el diseño y posterior implementación de la API REST que permita gestionar los recursos
     con los que trabaja la aplicación.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8]. Deployment}}:
-    el despliegue de la aplicación web en la nube debe realizarse utilizando un dominio
-    público y un WSGI (Web Server Gateway Interface).
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8]. Deployment
+    (Despliegue)}}: el despliegue de la aplicación web en la nube debe realizarse utilizando
+    un dominio público y un WSGI (Web Server Gateway Interface).
 \end{enumerate}
 
 Si desea tener una vista más general de los milestones, issues, commits, branches, etc del
 proyecto puede visitar los siguientes enlaces:
 
 \begin{itemize}
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestones}{Milestones}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/issues}{Issues}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/branches}{Branches}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/pulls}{Pull requests}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestones}{Milestones (Hitos)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/issues}{Issues (Tareas)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/branches}{Branches (Ramas)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/pulls}{Pull requests (Solicitudes
+    de cambio)}}
 \end{itemize}
 
 
@@ -409,7 +439,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.23]{imagenes/contact.png}
+            \includegraphics[scale=0.20]{imagenes/contact.png}
             \caption{Contacto de MyFindings}
             \label{fig:contact}
         \end{figure}
@@ -468,11 +498,13 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \end{enumerate}
 
     Teniendo todo esto en cuenta, el modelo E/R resultante para nuestro proyecto es el
-    siguiente:
+    siguiente (si por cuestiones de editor o de pantalla no se puede ver correctamnete,
+    ir al siguiente enlace 
+    \url{https://drive.google.com/file/d/1CRU5W9OQKCQF8nEYkDnl53O0noaJ9DS6/view?usp=sharing}):
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.10]{imagenes/E-RModel.png}
+            \includegraphics[scale=0.15]{imagenes/E-RModel.png}
             \caption{Modelo Entidad/Relación}
             \label{fig:e-rmodel}
         \end{figure}
