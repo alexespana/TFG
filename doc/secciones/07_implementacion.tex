@@ -669,19 +669,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     latitud = models.FloatField()
-    %     longitud = models.FloatField()
-    %     altura = models.PositiveSmallIntegerField()
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        latitud = models.FloatField()
+        longitud = models.FloatField()
+        altura = models.PositiveSmallIntegerField()
 
-    %     def __str__(self):
-    %         return str(self.n_excavacion)
-    % \end{minted}
+        def __str__(self):
+            return str(self.n_excavacion)
+    \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -714,15 +714,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     .
-    %     .
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        .
+        .
+    \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -733,17 +733,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         unique_together = ('letra', 'numero',)
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            unique_together = ('letra', 'numero',)
+    \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -751,20 +751,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         constraints = [
-    %             models.UniqueConstraint(fields=['letra', 'numero'], 
-    %                                     name='fact_constraint')                                                  
-    %         ]
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            constraints = [
+                models.UniqueConstraint(fields=['letra', 'numero'], 
+                                        name='fact_constraint')                                                  
+            ]
+    \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
