@@ -1,3 +1,5 @@
+import io
+from docx import Document
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
@@ -664,3 +666,55 @@ def send_email_password_reset(request):
             data['form'] = form
 
     return redirect(to='password_reset', context=data)
+
+def generate_report(request, id):
+    excavation = get_object_or_404(Excavacion, id=id)   # Get the excavation   
+
+    # Source: https://python-docx.readthedocs.io/en/latest/ - Temporary
+    document = Document()                               # Create a new document
+
+    document.add_heading('Informe de la excavación ' + str(excavation.n_excavacion), 0)           # Add a heading
+    p = document.add_paragraph('A plain paragraph having some ')
+    p.add_run('bold').bold = True
+    p.add_run(' and some ')
+    p.add_run('italic.').italic = True
+
+    document.add_heading('Heading, level 1', level=1)
+    document.add_paragraph('Intense quote', style='Intense Quote')
+
+    document.add_paragraph(
+        'first item in unordered list', style='List Bullet'
+    )
+    document.add_paragraph(
+        'first item in ordered list', style='List Number'
+    )
+
+    records = (
+        (3, '101', 'Spam'),
+        (7, '422', 'Eggs'),
+        (4, '631', 'Spam, spam, eggs, and spam')
+    )
+
+    table = document.add_table(rows=1, cols=3)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Qty'
+    hdr_cells[1].text = 'Id'
+    hdr_cells[2].text = 'Desc'
+    for qty, id, desc in records:
+        row_cells = table.add_row().cells
+        row_cells[0].text = str(qty)
+        row_cells[1].text = id
+        row_cells[2].text = desc
+
+    document.add_page_break()
+
+    # Save document to memory and download to the user's browser 
+    document_data = io.BytesIO()
+    document.save(document_data)
+    document_data.seek(0)
+    response = HttpResponse(document_data.getvalue())
+    response["Content-Disposition"] = 'attachment; filename = "Informe de excavación.docx"'
+    response["Content-Encoding"] = "UTF-8"
+    
+    return response
+
