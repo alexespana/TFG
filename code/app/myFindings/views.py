@@ -485,7 +485,7 @@ def add_sedimentarymaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allsedimentarymaterials_list')
+            return redirect(to='sedimentarymaterials')
         else:
             data['form'] = form
 
@@ -500,7 +500,7 @@ def delete_sedimentarymaterial(request, nombre):
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
 
-    return redirect(to="allsedimentarymaterials_list")
+    return redirect(to="sedimentarymaterials")
 
 # #####################
 # BUILT MATERIAL
@@ -527,7 +527,7 @@ def add_builtmaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allbuiltmaterials_list')
+            return redirect(to='builtmaterials')
         else:
             data['form'] = form
 
@@ -542,7 +542,7 @@ def delete_builtmaterial(request, nombre):
     # Delete the built material
     builtmaterial.delete()    
 
-    return redirect(to="allbuiltmaterials_list")
+    return redirect(to="builtmaterials")
 
 # ####################
 # SPECIFIC LISTINGS  
