@@ -268,3 +268,102 @@ class TestModifierViews(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Inclusion.objects.get(pk=pk).grosor, '2-6 cm')
+
+class TestEliminatingViews(TestCase):
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        self.excavation = Excavacion.objects.create(
+            n_excavacion=1,
+            latitud=1,
+            longitud=1,
+            altura=1
+        )
+
+    def test_delete_excavation_DELETE(self):
+        response = self.client.delete(reverse('delete_excavation', kwargs={'id': self.excavation.pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Excavacion.objects.count(), 0)
+
+    def test_delete_fact_DELETE(self):
+        pk = Hecho.objects.create(
+            letra='MR',
+            numero='000001',
+            comentarios='Hecho',
+        ).pk
+        response = self.client.delete(reverse('delete_fact', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Hecho.objects.count(), 0)
+
+    def test_delete_room_DELETE(self):
+        pk = Estancia.objects.create(
+            n_estancia='ES001',
+            observaciones='This room is the largest',
+        ).pk
+        response = self.client.delete(reverse('delete_room', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Estancia.objects.count(), 0)
+
+    def test_delete_photo_DELETE(self):
+        pkroom = Estancia.objects.create(
+            n_estancia='ES001',
+        ).pk
+        pk = Fotografia.objects.create(
+            numero=1,
+            estancia=Estancia.objects.get(pk=pkroom)
+        ).pk
+        response = self.client.delete(reverse('delete_photo', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Fotografia.objects.count(), 0)
+
+    def test_delete_inclusion_DELETE(self):
+        pkue = UESedimentaria.objects.create(
+            codigo='000001',
+            excavacion=Excavacion.objects.get(pk=self.excavation.pk),
+            descripcion='Sedimento',
+        ).pk  
+        pk = Inclusion.objects.create(
+            tipo='Cenizas',
+            uesedimentaria=UESedimentaria.objects.get(pk=pkue),
+            frecuencia='Ausencia',
+            grosor='< 2 cm',
+        ).pk
+        response = self.client.delete(reverse('delete_inclusion', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Inclusion.objects.count(), 0)
+
+    def test_delete_sedimentarymaterial_DELETE(self):
+        pk = MaterialSedimentaria.objects.create(
+            nombre='New material'
+        ).pk
+        response = self.client.delete(reverse('delete_sedimentarymaterial', kwargs={'nombre': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(MaterialSedimentaria.objects.count(), 9)
+
+    def test_delete_builtmaterial_DELETE(self):
+        pk = MaterialConstruida.objects.create(
+            nombre='New material'
+        ).pk
+        response = self.client.delete(reverse('delete_builtmaterial', kwargs={'nombre': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(MaterialConstruida.objects.count(), 6)
+
+    def test_delete_sedimentaryue_DELETE(self):
+        pk = UESedimentaria.objects.create(
+            codigo='000001',
+            excavacion=Excavacion.objects.get(pk=self.excavation.pk),
+            descripcion='Sedimento',
+        ).pk
+        response = self.client.delete(reverse('delete_sedimentaryue', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(UESedimentaria.objects.count(), 0)
+    
+    def test_delete_builtue_DELETE(self):
+        pk = UEConstruida.objects.create(
+            codigo='000001',
+            excavacion=Excavacion.objects.get(pk=self.excavation.pk),
+            descripcion='Construida',
+        ).pk
+        response = self.client.delete(reverse('delete_builtue', kwargs={'id': pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(UEConstruida.objects.count(), 0)
