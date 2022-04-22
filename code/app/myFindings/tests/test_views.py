@@ -175,3 +175,96 @@ class TestAddViews(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(MaterialConstruida.objects.count(), 7)
+
+
+class TestModifierViews(TestCase):
+
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        self.excavation = Excavacion.objects.create(
+            n_excavacion=1,
+            latitud=1,
+            longitud=1,
+            altura=1
+        )
+
+    def test_modify_excavation_POST(self):
+        pkexcavation = Excavacion.objects.create(
+            n_excavacion=2,
+            latitud=2,
+            longitud=2,
+            altura=2
+        ).pk
+        response = self.client.post(reverse('modify_excavation', kwargs={'id': pkexcavation}), {
+            'n_excavacion': 3,
+            'latitud': 3,
+            'longitud': 3,
+            'altura': 3
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Excavacion.objects.get(pk=pkexcavation).n_excavacion, 3)
+
+    def test_modify_fact_POST(self):
+        pk = Hecho.objects.create(
+            letra='MR',
+            numero='000001',
+            comentarios='Hecho',
+        ).pk
+        response = self.client.post(reverse('modify_fact', kwargs={'id': pk}), {
+            'letra': 'MR',
+            'numero': '000002',
+            'comentarios': 'Hecho 2',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Hecho.objects.get(pk=pk).numero, '000002')
+
+    def test_modify_room_POST(self):
+        pk = Estancia.objects.create(
+            n_estancia='ES001',
+            observaciones='This room is the largest',
+        ).pk
+        response = self.client.post(reverse('modify_room', kwargs={'id': pk}), {
+            'n_estancia': 'ES002',
+            'observaciones': 'This room is the smallest',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Estancia.objects.get(pk=pk).n_estancia, 'ES002')
+
+    def test_modify_photo_POST(self):
+        pkroom = Estancia.objects.create(
+            n_estancia='ES001',
+            observaciones='This room is the largest',
+        ).pk
+        pk = Fotografia.objects.create(
+            numero=1,
+            estancia=Estancia.objects.get(pk=pkroom)
+        ).pk
+        response = self.client.post(reverse('modify_photo', kwargs={'id': pk}), {
+            'numero': 2,
+            'estancia': Estancia.objects.get(pk=pkroom).pk,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Fotografia.objects.get(pk=pk).numero, 2)
+
+    def test_modify_inclusion_POST(self):
+        pkue = UESedimentaria.objects.create(
+            codigo='000001',
+            excavacion=self.excavation,
+            descripcion='Sedimento',
+        ).pk
+    
+        pk = Inclusion.objects.create(
+            tipo='Cenizas',
+            uesedimentaria=UESedimentaria.objects.get(pk=pkue),
+            frecuencia='Ausencia',
+            grosor='< 2 cm',
+        ).pk
+        response = self.client.post(reverse('modify_inclusion', kwargs={'id': pk}), {
+            'tipo': 'Carbones',
+            'uesedimentaria': UESedimentaria.objects.get(pk=pkue).pk,
+            'frecuencia': 'Ocasional',
+            'grosor': '2-6 cm',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Inclusion.objects.get(pk=pk).grosor, '2-6 cm')
