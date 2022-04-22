@@ -269,6 +269,46 @@ class TestModifierViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Inclusion.objects.get(pk=pk).grosor, '2-6 cm')
 
+    def test_modify_builtue_POST(self):
+        pkexcavation = Excavacion.objects.create(
+            n_excavacion=21,
+            latitud=21,
+            longitud=21,
+            altura=21
+        ).pk
+        pk = UEConstruida.objects.create(
+            codigo='000021',
+            excavacion=Excavacion.objects.get(pk=pkexcavation),
+            descripcion='Sedimento',
+        ).pk
+        response = self.client.post(reverse('modify_builtue', kwargs={'id': pk}), {
+            'codigo': '000002',
+            'excavacion': Excavacion.objects.get(pk=pkexcavation),
+            'descripcion': 'Construida',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(UEConstruida.objects.get(pk=pk).codigo, '000002')
+
+    def test_modify_sedimentaryue_POST(self):
+        pkexcavation = Excavacion.objects.create(
+            n_excavacion=22,
+            latitud=22,
+            longitud=22,
+            altura=22
+        ).pk
+        pk = UESedimentaria.objects.create(
+            codigo='000022',
+            excavacion=Excavacion.objects.get(pk=pkexcavation),
+            descripcion='Sedimentaria',
+        ).pk
+        response = self.client.post(reverse('modify_sedimentaryue', kwargs={'id': pk}), {
+            'codigo': '000023',
+            'excavacion': Excavacion.objects.get(pk=pkexcavation),
+            'descripcion': 'Sedimento 2',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(UESedimentaria.objects.get(pk=pk).codigo, '000023')
+
 class TestEliminatingViews(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='testuser', password='12345')
