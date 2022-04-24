@@ -57,7 +57,7 @@ class TestListingViews(TestCase):
 
     def test_list_excavationues_GET(self):
         pk=Excavation.objects.create(
-            n_excavacion=1,
+            n_excavacion='1',
             latitud=1,
             longitud=1,
             altura=1,
@@ -69,7 +69,7 @@ class TestListingViews(TestCase):
 
     def test_list_roomfacts_GET(self):
         pk=Room.objects.create(
-            n_estancia=1,
+            n_estancia='1',
         ).pk
         response = self.client.get(reverse('roomfacts', kwargs={'id': pk}))
         self.assertEqual(response.status_code, 200)
@@ -89,7 +89,7 @@ class TestAddViews(TestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion=1,
+            n_excavacion='1',
             latitud=1,
             longitud=1,
             altura=1
@@ -97,7 +97,7 @@ class TestAddViews(TestCase):
 
     def test_add_excavation_POST(self):
         response = self.client.post(reverse('add_excavation'), {
-            'n_excavacion': 2,
+            'n_excavacion': '2',
             'latitud': 2,
             'longitud': 2,
             'altura': 2
@@ -107,7 +107,7 @@ class TestAddViews(TestCase):
 
     def test_add_sedimentaryue_POST(self):
         response = self.client.post(reverse('add_sedimentaryue'), {
-            'codigo': '000001',
+            'n_orden': '1',
             'excavacion': self.excavation,
             'descripcion': 'Sedimento',
         })
@@ -116,7 +116,7 @@ class TestAddViews(TestCase):
 
     def test_add_builtue_POST(self):
         response = self.client.post(reverse('add_builtue'), {
-            'codigo': '000001',
+            'n_orden': '1',
             'excavacion': self.excavation,
             'descripcion': 'Construcción',
         })
@@ -134,7 +134,7 @@ class TestAddViews(TestCase):
 
     def test_add_room_POST(self):
         response = self.client.post(reverse('add_room'), {
-            'n_estancia': 1,
+            'n_estancia': '1',
             'observaciones': 'This room is the largest',
         })
         self.assertEqual(response.status_code, 302)
@@ -149,13 +149,13 @@ class TestAddViews(TestCase):
 
     def test_add_inclusion_POST(self):
         SedimentaryUE.objects.create(
-            codigo='000001',
+            n_orden='1',
             excavacion=self.excavation,
             descripcion='Descripcion 1'
         )
         response = self.client.post(reverse('add_inclusion'), {
             'tipo': 'Cenizas',
-            'uesedimentaria': SedimentaryUE.objects.get(codigo='000001').pk,
+            'uesedimentaria': SedimentaryUE.objects.get(codigo='001001').pk,
             'frecuencia': 'Ausencia',
             'grosor': '2-6 cm',
         })
