@@ -9,10 +9,10 @@ class TestForms(TestCase):
 
     def setUp(self):
         self.excavation = Excavation.objects.create(
-            n_excavacion = 1
+            n_excavacion = '1'
         )
         self.room = Room.objects.create(
-            n_estancia = 'ES001'
+            n_estancia = '1'
         )
         self.fact = Fact.objects.create(
             estancia = self.room,
@@ -20,13 +20,13 @@ class TestForms(TestCase):
             numero = '123',
         )
         self.sedimentaryue = SedimentaryUE.objects.create(
-            codigo = '000001',
+            n_orden = '1',
             excavacion = self.excavation
         )
 
     def test_excavation_form_valid_data(self):
         form = ExcavationForm(data={
-            'n_excavacion': 2,
+            'n_excavacion': '2',
             'latitud': 1.0,
             'longitud': 1.0,
             'altura': 1200,
@@ -41,7 +41,7 @@ class TestForms(TestCase):
 
     def test_fact_form_valid_data(self):
         form = FactForm(data={
-            'estancia': self.room.pk,
+            'estancia': self.room.n_estancia,
             'letra': 'SL',
             'numero': '123',
             'fase': 'A1',
@@ -66,7 +66,7 @@ class TestForms(TestCase):
 
     def test_room_form_valid_data(self):
         form = RoomForm(data={
-            'n_estancia': 'ES002',
+            'n_estancia': '2',
             'n_zona': 1,
             'n_sector': 1,
             'observaciones': 'Observations',
@@ -147,7 +147,7 @@ class TestForms(TestCase):
 
     def test_sedimentaryue_form_valid_data(self):
         form = SedimentaryUEForm(data={
-            'codigo': '000002',
+            'n_orden': '2',
             'hecho': self.fact.pk,
             'excavacion': self.excavation.n_excavacion,
             'plano_n': 1,
@@ -183,7 +183,7 @@ class TestForms(TestCase):
 
     def test_builtue_form_valid_data(self):
         form = BuiltUEForm(data={
-            'codigo': '000002',
+            'n_orden': '2',
             'hecho': self.fact.pk,
             'excavacion': self.excavation.n_excavacion,
             'plano_n': 1,
