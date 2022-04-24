@@ -314,7 +314,7 @@ class TestEliminatingViews(TestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion=1,
+            n_excavacion='1',
             latitud=1,
             longitud=1,
             altura=1
@@ -337,7 +337,7 @@ class TestEliminatingViews(TestCase):
 
     def test_delete_room_DELETE(self):
         pk = Room.objects.create(
-            n_estancia='ES001',
+            n_estancia='1',
             observaciones='This room is the largest',
         ).pk
         response = self.client.delete(reverse('delete_room', kwargs={'id': pk}))
@@ -346,7 +346,7 @@ class TestEliminatingViews(TestCase):
 
     def test_delete_photo_DELETE(self):
         pkroom = Room.objects.create(
-            n_estancia='ES001',
+            n_estancia='1',
         ).pk
         pk = Photo.objects.create(
             numero=1,
@@ -358,7 +358,7 @@ class TestEliminatingViews(TestCase):
 
     def test_delete_inclusion_DELETE(self):
         pkue = SedimentaryUE.objects.create(
-            codigo='000001',
+            n_orden='1',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Sedimento',
         ).pk  
@@ -390,7 +390,7 @@ class TestEliminatingViews(TestCase):
 
     def test_delete_sedimentaryue_DELETE(self):
         pk = SedimentaryUE.objects.create(
-            codigo='000001',
+            n_orden='1',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Sedimento',
         ).pk
@@ -400,7 +400,7 @@ class TestEliminatingViews(TestCase):
     
     def test_delete_builtue_DELETE(self):
         pk = BuiltUE.objects.create(
-            codigo='000001',
+            n_orden='1',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Construida',
         ).pk
