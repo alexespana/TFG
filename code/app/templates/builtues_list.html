@@ -22,6 +22,8 @@
                                 <th>S.Constructivo</th>
                                 <th>Tipo</th>
                                 <th>N estructura</th>
+                                <th>Cota superior</th>
+                                <th>Cota inferior</th>
                                 {% if perms.myFindings.change_builtue or perms.myFindings.delete_builtue %}
                                 <th>Opciones</th>
                                 {% endif %}
@@ -42,6 +44,8 @@
                                 <td>{{ u.sistema_constructivo }}</td>
                                 <td>{{ u.tipo }}</td>
                                 <td>{{ u.n_estructura }}</td>
+                                <td>{{ u.cota_superior }}</td>
+                                <td>{{ u.cota_inferior }}</td>
                                 {% if perms.myFindings.change_builtue or perms.myFindings.delete_builtue %}
                                 <td>
                                     <div class="d-flex">

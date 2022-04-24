@@ -27,11 +27,13 @@ class SedimentaryUEForm(forms.ModelForm):
     class Meta:
         model = SedimentaryUE
         fields = '__all__'
+        exclude = ['codigo', 'cota_superior', 'cota_inferior']
 
 class BuiltUEForm(forms.ModelForm):
     class Meta:
         model = BuiltUE
         fields = '__all__'
+        exclude = ['codigo', 'cota_superior', 'cota_inferior']
 
 class SedimentaryMaterialForm(forms.ModelForm):
     class Meta:

@@ -21,6 +21,8 @@
                                 <th>Periodo</th>
                                 <th>Tipo estructura</th>
                                 <th>Tipo textura</th>
+                                <th>Cota superior</th>
+                                <th>Cota inferior</th>
                                 {% if perms.myFindings.change_sedimentaryue or perms.myFindings.delete_sedimentaryue %}
                                 <th>Opciones</th>
                                 {% endif %}
@@ -40,6 +42,8 @@
                                 <td>{{ u.periodo }}</td>
                                 <td>{{ u.tipo_estructura }}</td>
                                 <td>{{ u.tipo_textura }}</td>
+                                <td>{{ u.cota_superior }}</td>
+                                <td>{{ u.cota_inferior }}</td>
                                 {% if perms.myFindings.change_sedimentaryue or perms.myFindings.delete_sedimentaryue %}
                                 <td>
                                     <div class="d-flex">
