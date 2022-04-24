@@ -1,5 +1,5 @@
 from django.test import TestCase
-from myFindings.models import Estancia, Excavacion, Hecho, UESedimentaria
+from myFindings.models import Room, Excavation, Fact, SedimentaryUE
 
 from myFindings.forms import ExcavationForm, FactForm, RoomForm, PhotoForm, \
     SedimentaryUEForm, BuiltUEForm, SedimentaryMaterialForm, BuiltMaterialForm, \
@@ -8,18 +8,18 @@ from myFindings.forms import ExcavationForm, FactForm, RoomForm, PhotoForm, \
 class TestForms(TestCase):
 
     def setUp(self):
-        self.excavation = Excavacion.objects.create(
+        self.excavation = Excavation.objects.create(
             n_excavacion = 1
         )
-        self.room = Estancia.objects.create(
+        self.room = Room.objects.create(
             n_estancia = 'ES001'
         )
-        self.fact = Hecho.objects.create(
+        self.fact = Fact.objects.create(
             estancia = self.room,
             letra = 'SI',
             numero = '123',
         )
-        self.sedimentaryue = UESedimentaria.objects.create(
+        self.sedimentaryue = SedimentaryUE.objects.create(
             codigo = '000001',
             excavacion = self.excavation
         )

@@ -16,7 +16,7 @@
                             <caption>Listado de materiales sedimentarios</caption>
                             <tr>
                                 <th>Nombre</th>
-                                {% if perms.myFindings.delete_materialsedimentaria %}
+                                {% if perms.myFindings.delete_sedimentarymaterial %}
                                 <th>Opciones</th>
                                 {% endif %}
                             </tr>
@@ -25,7 +25,7 @@
                     
                             <tr>
                                 <td>{{ m.nombre }}</td>
-                                {% if perms.myFindings.delete_materialsedimentaria %}
+                                {% if perms.myFindings.delete_sedimentarymaterial %}
                                 <td>
                                     <div class="d-flex">
                                         <a href="{% url 'delete_sedimentarymaterial' m.nombre %}" class="btn btn-delete">Eliminar</a>

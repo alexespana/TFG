@@ -75,7 +75,7 @@ PERIODO_CHOICES = [
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Estancia(models.Model):
+class Room(models.Model):
     n_estancia = models.CharField(max_length=5, unique=True)     # ES001, ES002, etc
     n_zona = models.PositiveSmallIntegerField(blank=True, null=True)
     n_sector = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -96,7 +96,7 @@ class Estancia(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # HECHO               ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Hecho(models.Model):
+class Fact(models.Model):
     LETRA_CHOICES = [
         ('MR','Muro'),
         ('SL','Suelo'),
@@ -111,7 +111,7 @@ class Hecho(models.Model):
     ]
 
     # Foreign keys
-    estancia = models.ForeignKey(Estancia, on_delete=models.CASCADE, blank=True, null=True)
+    estancia = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
 
     # Unique key
     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
@@ -140,7 +140,7 @@ class Hecho(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # EXCAVACION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Excavacion(models.Model):
+class Excavation(models.Model):
     n_excavacion = models.PositiveIntegerField(unique=True, verbose_name='Número de excavación')
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
@@ -178,8 +178,8 @@ class UE(models.Model):
 
     codigo = models.CharField(unique=True, max_length=6, default='000000')
     # Foreign Keys
-    hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE, blank=True, null=True)
-    excavacion = models.ForeignKey(Excavacion, on_delete=models.CASCADE, to_field='n_excavacion')
+    hecho = models.ForeignKey(Fact, on_delete=models.CASCADE, blank=True, null=True)
+    excavacion = models.ForeignKey(Excavation, on_delete=models.CASCADE, to_field='n_excavacion')
 
     plano_n = models.PositiveSmallIntegerField(blank=True, null=True)
     seccion_n = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -219,12 +219,12 @@ class UE(models.Model):
     def __str__(self):
         return self.codigo
 
-class Fotografia(models.Model):
+class Photo(models.Model):
     numero = models.PositiveIntegerField(unique=True)
    
     # Foreign Keys
     ue = models.ForeignKey(UE, on_delete=models.CASCADE, blank=True, null=True)
-    estancia = models.ForeignKey(Estancia, on_delete=models.CASCADE, blank=True, null=True)
+    estancia = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
 
     tipo = models.CharField(max_length=50, blank=True, null=True)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
@@ -239,7 +239,7 @@ class Fotografia(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MATERIALSEDIMENTARIA ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialSedimentaria(models.Model):
+class SedimentaryMaterial(models.Model):
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -248,7 +248,7 @@ class MaterialSedimentaria(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MATERIALCONSTRUIDA   ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialConstruida(models.Model):
+class BuiltMaterial(models.Model):
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -257,7 +257,7 @@ class MaterialConstruida(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UESEDIMENTARIA      ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class UESedimentaria(UE):
+class SedimentaryUE(UE):
     ESTRUCTURA_CHOICES = [
         ('Compacta', 'Compacta'),
         ('Suelta', 'Suelta'),
@@ -278,12 +278,12 @@ class UESedimentaria(UE):
 
     tipo_estructura = models.CharField(max_length=15, choices=ESTRUCTURA_CHOICES, blank=True, null=True)
     tipo_textura = models.CharField(max_length=10, choices=TEXTURA_CHOICES, blank=True, null=True)
-    materiales = models.ManyToManyField(MaterialSedimentaria, blank=True)
+    materiales = models.ManyToManyField(SedimentaryMaterial, blank=True)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UECONSTRUIDA        ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class UEConstruida(UE):
+class BuiltUE(UE):
     TIPO_CHOICES = [
         ('Positiva', 'Positiva'),
         ('Negativa', 'Negativa'),
@@ -291,7 +291,7 @@ class UEConstruida(UE):
 
     sistema_constructivo = models.CharField(max_length=50, blank=True, null=True)
     tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, blank=True, null=True)
-    materiales = models.ManyToManyField(MaterialConstruida, blank=True)
+    materiales = models.ManyToManyField(BuiltMaterial, blank=True)
     n_estructura = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -328,7 +328,7 @@ class Inclusion(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
 
     # Foreign Keys
-    uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
+    uesedimentaria = models.ForeignKey(SedimentaryUE, on_delete=models.CASCADE)
 
     frecuencia = models.CharField(max_length=10, choices=FRECUENCIA_CHOICES, blank=True, null=True)
     grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES, blank=True, null=True)

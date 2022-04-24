@@ -21,7 +21,7 @@
                                 <th>Periodo</th>
                                 <th>Tipo estructura</th>
                                 <th>Tipo textura</th>
-                                {% if perms.myFindings.change_uesedimentaria or perms.myFindings.delete_uesedimentaria %}
+                                {% if perms.myFindings.change_sedimentaryue or perms.myFindings.delete_sedimentaryue %}
                                 <th>Opciones</th>
                                 {% endif %}
                             </tr>
@@ -40,13 +40,13 @@
                                 <td>{{ u.periodo }}</td>
                                 <td>{{ u.tipo_estructura }}</td>
                                 <td>{{ u.tipo_textura }}</td>
-                                {% if perms.myFindings.change_uesedimentaria or perms.myFindings.delete_uesedimentaria %}
+                                {% if perms.myFindings.change_sedimentaryue or perms.myFindings.delete_sedimentaryue %}
                                 <td>
                                     <div class="d-flex">
-                                        {% if perms.myFindings.change_uesedimentaria %}
+                                        {% if perms.myFindings.change_sedimentaryue %}
                                         <a href="{% url 'modify_sedimentaryue' u.id %}" class="btn btn-modify me-md-2">Modificar</a>
                                         {% endif %}
-                                        {% if perms.myFindings.delete_uesedimentaria %}
+                                        {% if perms.myFindings.delete_sedimentaryue %}
                                         <a href="{% url 'delete_sedimentaryue' u.id %}" class="btn btn-delete">Eliminar</a>
                                         {% endif %}
                                     </div>

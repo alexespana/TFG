@@ -15,7 +15,7 @@
                             <caption>Listado de materiales construidos</caption>
                             <tr>
                                 <th>Nombre</th>
-                                {% if perms.myFindings.delete_materialconstruida %}
+                                {% if perms.myFindings.delete_builtmaterial %}
                                 <th>Opciones</th>
                                 {% endif %}
                             </tr>
@@ -24,7 +24,7 @@
                     
                             <tr>
                                 <td>{{ m.nombre }}</td>
-                                {% if perms.myFindings.delete_materialconstruida %}
+                                {% if perms.myFindings.delete_builtmaterial %}
                                 <td>
                                     <div class="d-flex">
                                         <a href="{% url 'delete_builtmaterial' m.nombre %}" class="btn btn-delete">Eliminar</a>
