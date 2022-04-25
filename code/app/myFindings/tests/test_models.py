@@ -1,5 +1,6 @@
 from django.test import TestCase
 from myFindings.models import UE, Excavation, Room
+
 class TestModels(TestCase):
 
     def setUp(self):
