@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
                    PhotoForm, CustomUserCreationForm
-from .models import Excavacion, Fotografia, Hecho, Inclusion, Estancia, MaterialConstruida, \
-                    MaterialSedimentaria, UEConstruida, UESedimentaria
+from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
+                    SedimentaryMaterial, BuiltUE, SedimentaryUE
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -36,10 +36,10 @@ def team(request):
 # EXCAVATIONS
 # ############
 @login_required
-@permission_required('myFindings.view_excavacion', raise_exception=True)
+@permission_required('myFindings.view_excavation', raise_exception=True)
 def list_allexcavations(request):
     # Get all excavations
-    excavations = Excavacion.objects.all()
+    excavations = Excavation.objects.all()
     data = { 'excavations': excavations}
 
     return render(request, 'excavations_list.html', data)
@@ -64,9 +64,9 @@ def add_excavation(request):
     return render(request, 'add_excavation.html', data)
 
 @login_required
-@permission_required('myFindings.change_excavacion', raise_exception=True)
+@permission_required('myFindings.change_excavation', raise_exception=True)
 def modify_excavation(request, id):
-    excavation = get_object_or_404(Excavacion, id=id)
+    excavation = get_object_or_404(Excavation, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': ExcavationForm(instance=excavation) }
@@ -83,10 +83,10 @@ def modify_excavation(request, id):
     return render(request, 'modify_excavation.html', data)
 
 @login_required
-@permission_required('myFindings.delete_excavacion', raise_exception=True)
+@permission_required('myFindings.delete_excavation', raise_exception=True)
 def delete_excavation(request, id):
     # Get the excavation, if it doesn't exist, get an Http404
-    excavation = get_object_or_404(Excavacion, id=id)
+    excavation = get_object_or_404(Excavation, id=id)
 
     # Delete the excavation
     excavation.delete()    
@@ -97,16 +97,16 @@ def delete_excavation(request, id):
 # SEDIMENTARY UE
 # ################
 @login_required
-@permission_required('myFindings.view_uesedimentaria', raise_exception=True)
+@permission_required('myFindings.view_sedimentaryue', raise_exception=True)
 def list_allsedimentaryues(request):
     # Get all sedimentary ues
-    sedimentaryues = UESedimentaria.objects.all()
+    sedimentaryues = SedimentaryUE.objects.all()
     data = { 'sedimentaryues': sedimentaryues}
 
     return render(request, 'sedimentaryues_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_uesedimentaria', raise_exception=True)
+@permission_required('myFindings.add_sedimentaryue', raise_exception=True)
 def add_sedimentaryue(request):
     # Get the fields of the sedimentary ue
     data = { 'form': SedimentaryUEForm() }
@@ -125,9 +125,9 @@ def add_sedimentaryue(request):
     return render(request, 'add_sedimentaryue.html', data)
 
 @login_required
-@permission_required('myFindings.change_uesedimentaria', raise_exception=True)
+@permission_required('myFindings.change_sedimentaryue', raise_exception=True)
 def modify_sedimentaryue(request, id):
-    sedimentaryue = get_object_or_404(UESedimentaria, id=id)
+    sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': SedimentaryUEForm(instance=sedimentaryue) }
@@ -144,10 +144,10 @@ def modify_sedimentaryue(request, id):
     return render(request, 'modify_sedimentaryue.html', data)
 
 @login_required
-@permission_required('myFindings.delete_uesedimentaria', raise_exception=True)
+@permission_required('myFindings.delete_sedimentaryue', raise_exception=True)
 def delete_sedimentaryue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
-    sedimentaryue = get_object_or_404(UESedimentaria, id=id)
+    sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
 
     # Delete the sedimentaryue
     sedimentaryue.delete()    
@@ -158,16 +158,16 @@ def delete_sedimentaryue(request, id):
 # BUILT UE
 # ################
 @login_required
-@permission_required('myFindings.view_ueconstruida', raise_exception=True)
+@permission_required('myFindings.view_builtue', raise_exception=True)
 def list_allbuiltues(request):
     # Get all built ues
-    builtues = UEConstruida.objects.all()
+    builtues = BuiltUE.objects.all()
     data = { 'builtues': builtues}
 
     return render(request, 'builtues_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_ueconstruida', raise_exception=True)
+@permission_required('myFindings.add_builtue', raise_exception=True)
 def add_builtue(request):
     # Get the fields of built ue
     data = { 'form': BuiltUEForm() }
@@ -186,9 +186,9 @@ def add_builtue(request):
     return render(request, 'add_builtue.html', data)
 
 @login_required
-@permission_required('myFindings.change_ueconstruida', raise_exception=True)
+@permission_required('myFindings.change_builtue', raise_exception=True)
 def modify_builtue(request, id):
-    builtue = get_object_or_404(UEConstruida, id=id)
+    builtue = get_object_or_404(BuiltUE, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': BuiltUEForm(instance=builtue) }
@@ -205,10 +205,10 @@ def modify_builtue(request, id):
     return render(request, 'modify_builtue.html', data)
 
 @login_required
-@permission_required('myFindings.delete_ueconstruida', raise_exception=True)
+@permission_required('myFindings.delete_builtue', raise_exception=True)
 def delete_builtue(request, id):
     # Get the sedimentary ue, if it doesn't exist, get an Http404
-    builtue = get_object_or_404(UEConstruida, id=id)
+    builtue = get_object_or_404(BuiltUE, id=id)
 
     # Delete the excavation
     builtue.delete()    
@@ -220,16 +220,16 @@ def delete_builtue(request, id):
 # FACT
 # ################
 @login_required
-@permission_required('myFindings.view_hecho', raise_exception=True)
+@permission_required('myFindings.view_fact', raise_exception=True)
 def list_allfacts(request):
     # Get all facts
-    facts = Hecho.objects.all()
+    facts = Fact.objects.all()
     data = { 'facts': facts}
 
     return render(request, 'facts_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_hecho', raise_exception=True)
+@permission_required('myFindings.add_fact', raise_exception=True)
 def add_fact(request):
     # Get the fields of fact
     data = { 'form': FactForm() }
@@ -248,9 +248,9 @@ def add_fact(request):
     return render(request, 'add_fact.html', data)
 
 @login_required
-@permission_required('myFindings.change_hecho', raise_exception=True)
+@permission_required('myFindings.change_fact', raise_exception=True)
 def modify_fact(request, id):
-    fact = get_object_or_404(Hecho, id=id)
+    fact = get_object_or_404(Fact, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': FactForm(instance=fact) }
@@ -267,10 +267,10 @@ def modify_fact(request, id):
     return render(request, 'modify_fact.html', data)
 
 @login_required
-@permission_required('myFindings.delete_hecho', raise_exception=True)
+@permission_required('myFindings.delete_fact', raise_exception=True)
 def delete_fact(request, id):
     # Get the fact, if it doesn't exist, get an Http404
-    fact = get_object_or_404(Hecho, id=id)
+    fact = get_object_or_404(Fact, id=id)
 
     # Delete the excavation
     fact.delete()    
@@ -281,16 +281,16 @@ def delete_fact(request, id):
 # ROOM
 # ################
 @login_required
-@permission_required('myFindings.view_estancia', raise_exception=True)
+@permission_required('myFindings.view_room', raise_exception=True)
 def list_allrooms(request):
     # Get all rooms
-    rooms = Estancia.objects.all()
+    rooms = Room.objects.all()
     data = { 'rooms': rooms}
 
     return render(request, 'rooms_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_estancia', raise_exception=True)
+@permission_required('myFindings.add_room', raise_exception=True)
 def add_room(request):
     # Get the fields of fact
     data = { 'form': RoomForm() }
@@ -309,9 +309,9 @@ def add_room(request):
     return render(request, 'add_room.html', data) 
 
 @login_required
-@permission_required('myFindings.change_estancia', raise_exception=True)
+@permission_required('myFindings.change_room', raise_exception=True)
 def modify_room(request, id):
-    room = get_object_or_404(Estancia, id=id)
+    room = get_object_or_404(Room, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': RoomForm(instance=room) }
@@ -328,10 +328,10 @@ def modify_room(request, id):
     return render(request, 'modify_room.html', data)
 
 @login_required
-@permission_required('myFindings.delete_estancia', raise_exception=True)
+@permission_required('myFindings.delete_room', raise_exception=True)
 def delete_room(request, id):
     # Get the room, if it doesn't exist, get an Http404
-    room = get_object_or_404(Estancia, id=id)
+    room = get_object_or_404(Room, id=id)
 
     # Delete the room
     room.delete()    
@@ -342,16 +342,16 @@ def delete_room(request, id):
 # PHOTO
 # ################
 @login_required
-@permission_required('myFindings.view_fotografia', raise_exception=True)
+@permission_required('myFindings.view_photo', raise_exception=True)
 def list_allphotos(request):
     # Get all photos
-    photos = Fotografia.objects.all()
+    photos = Photo.objects.all()
     data = { 'photos': photos}
 
     return render(request, 'photos_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_fotografia', raise_exception=True)
+@permission_required('myFindings.add_photo', raise_exception=True)
 def add_photo(request):
     # Get the fields of photo
     data = { 'form': PhotoForm() }
@@ -372,7 +372,7 @@ def add_photo(request):
 @login_required
 @permission_required('myFindings.change_fotografia', raise_exception=True)
 def modify_photo(request, id):
-    photo = get_object_or_404(Fotografia, id=id)
+    photo = get_object_or_404(Photo, id=id)
     
     # Guardar el formulario con los datos del cuadro
     data = { 'form': PhotoForm(instance=photo) }
@@ -389,10 +389,10 @@ def modify_photo(request, id):
     return render(request, 'modify_photo.html', data)
  
 @login_required
-@permission_required('myFindings.delete_fotografia', raise_exception=True)
+@permission_required('myFindings.delete_photo', raise_exception=True)
 def delete_photo(request, id):
     # Get the photo, if it doesn't exist, get an Http404
-    photo = get_object_or_404(Fotografia, id=id)
+    photo = get_object_or_404(Photo, id=id)
 
     # Delete the photo
     photo.delete()    
@@ -464,16 +464,16 @@ def delete_inclusion(request, id):
 # SEDIMENTARY MATERIAL
 # #####################
 @login_required
-@permission_required('myFindings.view_materialsedimentaria', raise_exception=True)
+@permission_required('myFindings.view_sedimentarymaterial', raise_exception=True)
 def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
-    sedimentarymaterials = MaterialSedimentaria.objects.all()
+    sedimentarymaterials = SedimentaryMaterial.objects.all()
     data = { 'sedimentarymaterials': sedimentarymaterials}
 
     return render(request, 'sedimentarymaterials_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_materialsedimentaria', raise_exception=True)
+@permission_required('myFindings.add_sedimentarymaterial', raise_exception=True)
 def add_sedimentarymaterial(request):
     # Get the fields of sedimentary materials
     data = { 'form': SedimentaryMaterialForm() }
@@ -485,37 +485,37 @@ def add_sedimentarymaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allsedimentarymaterials_list')
+            return redirect(to='sedimentarymaterials')
         else:
             data['form'] = form
 
     return render(request, 'add_sedimentarymaterial.html', data)
 
 @login_required
-@permission_required('myFindings.delete_materialsedimentaria', raise_exception=True)
+@permission_required('myFindings.delete_sedimentarymaterial', raise_exception=True)
 def delete_sedimentarymaterial(request, nombre):
     # Get the sedimentary material, if it doesn't exist, get an Http404
-    sedimentarymaterial = get_object_or_404(MaterialSedimentaria, nombre=nombre)
+    sedimentarymaterial = get_object_or_404(SedimentaryMaterial, nombre=nombre)
 
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
 
-    return redirect(to="allsedimentarymaterials_list")
+    return redirect(to="sedimentarymaterials")
 
 # #####################
 # BUILT MATERIAL
 # #####################
 @login_required
-@permission_required('myFindings.view_materialconstruida', raise_exception=True)
+@permission_required('myFindings.view_builtmaterial', raise_exception=True)
 def list_allbuiltmaterials(request):
     # Get all built materials
-    builtmaterials = MaterialConstruida.objects.all()
+    builtmaterials = BuiltMaterial.objects.all()
     data = { 'builtmaterials': builtmaterials}
 
     return render(request, 'builtmaterials_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_materialconstruida', raise_exception=True)
+@permission_required('myFindings.add_builtmaterial', raise_exception=True)
 def add_builtmaterial(request):
     # Get the fields of sedimentary materials
     data = { 'form': BuiltMaterialForm() }
@@ -527,71 +527,71 @@ def add_builtmaterial(request):
             form.save()         # Save form
 
             # Redirect to the list of facts
-            return redirect(to='allbuiltmaterials_list')
+            return redirect(to='builtmaterials')
         else:
             data['form'] = form
 
     return render(request, 'add_builtmaterial.html', data)
 
 @login_required
-@permission_required('myFindings.delete_materialconstruida', raise_exception=True)
+@permission_required('myFindings.delete_builtmaterial', raise_exception=True)
 def delete_builtmaterial(request, nombre):
     # Get the built material, if it doesn't exist, get an Http404
-    builtmaterial = get_object_or_404(MaterialConstruida, nombre=nombre)
+    builtmaterial = get_object_or_404(BuiltMaterial, nombre=nombre)
 
     # Delete the built material
     builtmaterial.delete()    
 
-    return redirect(to="allbuiltmaterials_list")
+    return redirect(to="builtmaterials")
 
 # ####################
 # SPECIFIC LISTINGS  
 # ####################
 @login_required
-@permission_required('myFindings.view_excavacion', raise_exception=True)
-@permission_required('myFindings.view_uesedimentaria', raise_exception=True)
-@permission_required('myFindings.view_ueconstruida', raise_exception=True)
+@permission_required('myFindings.view_excavation', raise_exception=True)
+@permission_required('myFindings.view_sedimentaryue', raise_exception=True)
+@permission_required('myFindings.view_builtue', raise_exception=True)
 def list_excavationues(request, id):
     # Get the excavation
-    excavation = get_object_or_404(Excavacion, id=id)
+    excavation = get_object_or_404(Excavation, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = UESedimentaria.objects.filter(excavacion__id=id)
+    sedimentaryues = SedimentaryUE.objects.filter(excavacion__id=id)
 
     # Find all associated built stratigraphic units
-    builtues = UEConstruida.objects.filter(excavacion__id=id)
+    builtues = BuiltUE.objects.filter(excavacion__id=id)
 
     data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_excavacion': excavation.n_excavacion}
 
     return render(request, 'excavationues.html', data)
 
 @login_required
-@permission_required('myFindings.view_estancia', raise_exception=True)
-@permission_required('myFindings.view_hecho', raise_exception=True)
+@permission_required('myFindings.view_room', raise_exception=True)
+@permission_required('myFindings.view_fact', raise_exception=True)
 def list_roomfacts(request, id):
     # Get the room
-    room = get_object_or_404(Estancia, id=id)
+    room = get_object_or_404(Room, id=id)
 
     # Find all associated facts
-    facts = Hecho.objects.filter(estancia__id=id)
+    facts = Fact.objects.filter(estancia__id=id)
 
     data = { 'facts': facts,  'n_room': room.n_estancia}
 
     return render(request, 'facts_list.html', data)
 
 @login_required
-@permission_required('myFindings.view_hecho', raise_exception=True)
-@permission_required('myFindings.view_uesedimentaria', raise_exception=True)
-@permission_required('myFindings.view_ueconstruida', raise_exception=True)
+@permission_required('myFindings.view_fact', raise_exception=True)
+@permission_required('myFindings.view_sedimentaryue', raise_exception=True)
+@permission_required('myFindings.view_builtue', raise_exception=True)
 def list_factues(request, id):
     # Get the fact
-    fact = get_object_or_404(Hecho, id=id)
+    fact = get_object_or_404(Fact, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = UESedimentaria.objects.filter(hecho__id=id)
+    sedimentaryues = SedimentaryUE.objects.filter(hecho__id=id)
 
     # Find all associated built stratigraphic units
-    builtues = UEConstruida.objects.filter(hecho__id=id)
+    builtues = BuiltUE.objects.filter(hecho__id=id)
 
     nombre = fact.letra + fact.numero
     data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_hecho': nombre}
@@ -668,7 +668,7 @@ def send_email_password_reset(request):
     return redirect(to='password_reset', context=data)
 
 def generate_report(request, id):
-    excavation = get_object_or_404(Excavacion, id=id)   # Get the excavation   
+    excavation = get_object_or_404(Excavation, id=id)   # Get the excavation   
 
     # Source: https://python-docx.readthedocs.io/en/latest/ - Temporary
     document = Document()                               # Create a new document

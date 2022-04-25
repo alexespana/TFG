@@ -1,4 +1,15 @@
+from collections import UserList
 from django.db import models
+import re
+from django.core.exceptions import ValidationError
+
+def validate_number(value):
+    regex = r'^[0-9]{1,3}$'
+    if not re.match(regex, value):
+        raise ValidationError('Introduzca un formato de número positivo válido.')
+
+    if(int(value) < 1 or int(value) > 999):
+        raise ValidationError('El número debe ser mayor que 0.')
 
 FASE_CHOICES = [
     (('A: época contemporánea'), (
@@ -75,28 +86,52 @@ PERIODO_CHOICES = [
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Estancia(models.Model):
-    n_estancia = models.CharField(max_length=5, unique=True)     # ES001, ES002, etc
-    n_zona = models.PositiveSmallIntegerField(blank=True, null=True)
-    n_sector = models.PositiveSmallIntegerField(blank=True, null=True)
+class Room(models.Model):
+    # 1, 2, 3, 4, etc
+    n_estancia = models.CharField(max_length=3, verbose_name='Número de estancia', 
+                                  help_text='Ej. 1, 2, 3, etc', validators=[validate_number], unique=True)
+    n_zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
+    n_sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
     observaciones = models.CharField(max_length=200, blank=True, null=True)
-    croquis_planta = models.ImageField(blank=True, null=True)
-    n_planta = models.PositiveSmallIntegerField(blank=True, null=True)
-    n_seccion = models.PositiveSmallIntegerField(blank=True, null=True)
-    elevacion = models.PositiveSmallIntegerField(blank=True, null=True)
-    tpq = models.PositiveSmallIntegerField(blank=True, null=True)
-    taq = models.PositiveSmallIntegerField(blank=True, null=True)
+    croquis_planta = models.ImageField(verbose_name='Croquis de la planta', blank=True, null=True)
+    n_planta = models.PositiveSmallIntegerField(verbose_name='Número de planta', blank=True, null=True)
+    n_seccion = models.PositiveSmallIntegerField(verbose_name='Número de sección',blank=True, null=True)
+    elevacion = models.PositiveSmallIntegerField(verbose_name='Número de elevación',blank=True, null=True)
+    tpq = models.PositiveSmallIntegerField(verbose_name='Terminus Post Quem (TPQ)',blank=True, null=True)
+    taq = models.PositiveSmallIntegerField(verbose_name='Terminus Ante Quem (TAQ)', blank=True, null=True)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES, blank=True, null=True)
     autor = models.CharField(max_length=50, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.n_estancia = self.n_estancia.zfill(3)
+        super(Room, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.n_estancia
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# EXCAVACION          ~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Excavation(models.Model):
+    # Ej. 001, 002, 003, etc
+    n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 1, 2, 3, etc', 
+                                    validators=[validate_number], unique=True)      
+    latitud = models.FloatField(blank=True, null=True)
+    longitud = models.FloatField(blank=True, null=True)
+    altura = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.n_excavacion = self.n_excavacion.zfill(3)
+        super(Excavation, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.n_excavacion)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # HECHO               ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Hecho(models.Model):
+class Fact(models.Model):
     LETRA_CHOICES = [
         ('MR','Muro'),
         ('SL','Suelo'),
@@ -111,23 +146,23 @@ class Hecho(models.Model):
     ]
 
     # Foreign keys
-    estancia = models.ForeignKey(Estancia, on_delete=models.CASCADE, blank=True, null=True)
+    estancia = models.ForeignKey(Room, on_delete=models.CASCADE, to_field='n_estancia', blank=True, null=True)
 
     # Unique key
     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    numero = models.CharField(max_length=6)    # Number of stratigrafic unit that identifies the fact
+    numero = models.CharField(max_length=6, verbose_name='Número (UE que lo identifica)')    # Number of stratigrafic unit that identifies the fact
 
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
-    tpq = models.PositiveSmallIntegerField(blank=True, null=True)
-    taq = models.PositiveSmallIntegerField(blank=True, null=True)
+    tpq = models.PositiveSmallIntegerField(verbose_name='Terminus Post Quem (TPQ)',blank=True, null=True)
+    taq = models.PositiveSmallIntegerField(verbose_name='Terminus Ante Quem (TAQ)', blank=True, null=True)
     definicion = models.CharField(max_length=100, blank=True, null=True)
     comentarios = models.CharField(max_length=100, blank=True, null=True)
-    sector = models.PositiveSmallIntegerField(blank=True, null=True)
-    zona = models.PositiveSmallIntegerField(blank=True, null=True)
+    sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
+    zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     año = models.PositiveSmallIntegerField(blank=True, null=True)
-    estructura = models.PositiveSmallIntegerField(blank=True, null=True) 
-    croquis_plan = models.ImageField(blank=True, null=True)
-    croquis_seccion = models.ImageField(blank=True, null=True)
+    estructura = models.PositiveSmallIntegerField(verbose_name='Número de estructura', blank=True, null=True) 
+    croquis_plan = models.ImageField(verbose_name='Croquis del plan', blank=True, null=True)
+    croquis_seccion = models.ImageField(verbose_name='Croquis de la sección', blank=True, null=True)
 
     class Meta:
         constraints = [
@@ -137,17 +172,6 @@ class Hecho(models.Model):
     def __str__(self):
         return self.letra + self.numero
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# EXCAVACION          ~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class Excavacion(models.Model):
-    n_excavacion = models.PositiveIntegerField(unique=True, verbose_name='Número de excavación')
-    latitud = models.FloatField(blank=True, null=True)
-    longitud = models.FloatField(blank=True, null=True)
-    altura = models.PositiveSmallIntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return str(self.n_excavacion)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UE                  ~~~~~~~~
@@ -176,60 +200,64 @@ class UE(models.Model):
         ('Sureste','Sureste'),
     ]
 
-    codigo = models.CharField(unique=True, max_length=6, default='000000')
-    # Foreign Keys
-    hecho = models.ForeignKey(Hecho, on_delete=models.CASCADE, blank=True, null=True)
-    excavacion = models.ForeignKey(Excavacion, on_delete=models.CASCADE, to_field='n_excavacion')
+    codigo = models.CharField(unique=True, max_length=6)
+    n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
+                                help_text='Ej. 1, 2, 3, etc', validators=[validate_number]) 
 
-    plano_n = models.PositiveSmallIntegerField(blank=True, null=True)
-    seccion_n = models.PositiveSmallIntegerField(blank=True, null=True)
-    elevacion_n = models.PositiveSmallIntegerField(blank=True, null=True)
-    croquis_planta = models.ImageField(blank=True, null=True)
-    croquis_seccion = models.ImageField(blank=True, null=True)
-    tpq = models.PositiveSmallIntegerField(blank=True, null=True)
-    taq = models.PositiveSmallIntegerField(blank=True, null=True)
+    # Foreign Keys
+    hecho = models.ForeignKey(Fact, on_delete=models.CASCADE, blank=True, null=True)
+    excavacion = models.ForeignKey(Excavation, on_delete=models.CASCADE, to_field='n_excavacion')
+
+    plano_n = models.PositiveSmallIntegerField(verbose_name='Número de plano', blank=True, null=True)
+    seccion_n = models.PositiveSmallIntegerField(verbose_name='Número de sección', blank=True, null=True)
+    elevacion_n = models.PositiveSmallIntegerField(verbose_name='Número de elevación', blank=True, null=True)
+    croquis_planta = models.ImageField(verbose_name='Croquis de la planta', blank=True, null=True)
+    croquis_seccion = models.ImageField(verbose_name='Número de la sección', blank=True, null=True)
+    tpq = models.PositiveSmallIntegerField(verbose_name='Terminus Post Quem (TPQ)',blank=True, null=True)
+    taq = models.PositiveSmallIntegerField(verbose_name='Terminus Ante Quem (TAQ)', blank=True, null=True)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES, blank=True, null=True)
     descripcion = models.TextField(max_length=200, blank=True, null=True)
     autor = models.CharField(max_length=30, blank=True, null=True)
     año = models.PositiveSmallIntegerField(blank=True, null=True)
     interpretacion = models.CharField(max_length=16, choices=INTERPRETACION_CHOICES, blank=True, null=True)    
-    sector = models.PositiveSmallIntegerField(blank=True, null=True)          
+    sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)          
     observaciones = models.TextField(max_length=200, blank=True, null=True)
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
-
-
-    cota_superior_diff = models.SmallIntegerField(blank=True, null=True)
-    cota_inferior_diff = models.SmallIntegerField(blank=True, null=True)
-
+    cota_superior_diff = models.FloatField(verbose_name='Cota superior (diferencia con punto cero)', blank=True, null=True)
+    cota_inferior_diff = models.FloatField(verbose_name='Cota inferior (diferencia con punto cero)', blank=True, null=True)
     pendiente_superior = models.CharField(max_length=8, choices=PENDIENTE_CHOICES, blank=True, null=True)
     pendiente_inferior = models.CharField(max_length=8, choices=PENDIENTE_CHOICES,  blank=True, null=True)
 
-    def _get_cota_superior(self):
-        return self.excavacion.altura + self.cota_superior_diff
+    # Calculated fields
+    cota_superior = models.FloatField(blank=True, null=True)
+    cota_inferior = models.FloatField(blank=True, null=True)
 
-    def _get_cota_inferior(self):
-        return self.excavacion.altura + self.cota_inferior_diff
+    def save(self, *args, **kwargs):
+        self.n_orden = self.n_orden.zfill(3)
+        self.codigo = self.excavacion.n_excavacion + self.n_orden
 
-    # Calculated fields 
-    cota_superior = property(_get_cota_superior)
-    cota_inferior = property(_get_cota_inferior)
+        if(self.excavacion.altura and self.cota_superior_diff):
+            self.cota_superior = self.excavacion.altura + self.cota_superior_diff
+        if(self.excavacion.altura and self.cota_inferior_diff):
+            self.cota_inferior = self.excavacion.altura + self.cota_inferior_diff
+        super(UE, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.codigo
 
-class Fotografia(models.Model):
+class Photo(models.Model):
     numero = models.PositiveIntegerField(unique=True)
    
     # Foreign Keys
-    ue = models.ForeignKey(UE, on_delete=models.CASCADE, blank=True, null=True)
-    estancia = models.ForeignKey(Estancia, on_delete=models.CASCADE, blank=True, null=True)
+    ue = models.ForeignKey(UE, on_delete=models.CASCADE, verbose_name='UE (sedimentaria o construida)', blank=True, null=True)
+    estancia = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
 
     tipo = models.CharField(max_length=50, blank=True, null=True)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
     vista_desde = models.CharField(max_length=50, blank=True, null=True)
-    dist_focal = models.PositiveSmallIntegerField(blank=True, null=True)
+    dist_focal = models.PositiveSmallIntegerField(verbose_name='Distancia focal', blank=True, null=True)
     descripcion = models.TextField(max_length=200, blank=True, null=True)
     imagen = models.ImageField(blank=True, null=True)
 
@@ -239,7 +267,7 @@ class Fotografia(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MATERIALSEDIMENTARIA ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialSedimentaria(models.Model):
+class SedimentaryMaterial(models.Model):
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -248,7 +276,7 @@ class MaterialSedimentaria(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MATERIALCONSTRUIDA   ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MaterialConstruida(models.Model):
+class BuiltMaterial(models.Model):
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -257,7 +285,7 @@ class MaterialConstruida(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UESEDIMENTARIA      ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class UESedimentaria(UE):
+class SedimentaryUE(UE):
     ESTRUCTURA_CHOICES = [
         ('Compacta', 'Compacta'),
         ('Suelta', 'Suelta'),
@@ -276,14 +304,14 @@ class UESedimentaria(UE):
         ('Mortero','Mortero'),
     ]
 
-    tipo_estructura = models.CharField(max_length=15, choices=ESTRUCTURA_CHOICES, blank=True, null=True)
-    tipo_textura = models.CharField(max_length=10, choices=TEXTURA_CHOICES, blank=True, null=True)
-    materiales = models.ManyToManyField(MaterialSedimentaria, blank=True)
+    tipo_estructura = models.CharField(max_length=15, verbose_name='Tipo de estructura', choices=ESTRUCTURA_CHOICES, blank=True, null=True)
+    tipo_textura = models.CharField(max_length=10, verbose_name='Tipo de textura', choices=TEXTURA_CHOICES, blank=True, null=True)
+    materiales = models.ManyToManyField(SedimentaryMaterial, blank=True)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UECONSTRUIDA        ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class UEConstruida(UE):
+class BuiltUE(UE):
     TIPO_CHOICES = [
         ('Positiva', 'Positiva'),
         ('Negativa', 'Negativa'),
@@ -291,8 +319,8 @@ class UEConstruida(UE):
 
     sistema_constructivo = models.CharField(max_length=50, blank=True, null=True)
     tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, blank=True, null=True)
-    materiales = models.ManyToManyField(MaterialConstruida, blank=True)
-    n_estructura = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    materiales = models.ManyToManyField(BuiltMaterial, blank=True)
+    n_estructura = models.PositiveSmallIntegerField(verbose_name='Número de estructura' , blank=True, null=True)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # INCLUSION           ~~~~~~~~
@@ -328,7 +356,7 @@ class Inclusion(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
 
     # Foreign Keys
-    uesedimentaria = models.ForeignKey(UESedimentaria, on_delete=models.CASCADE)
+    uesedimentaria = models.ForeignKey(SedimentaryUE, on_delete=models.CASCADE, verbose_name='UE sedimentaria')
 
     frecuencia = models.CharField(max_length=10, choices=FRECUENCIA_CHOICES, blank=True, null=True)
     grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES, blank=True, null=True)
