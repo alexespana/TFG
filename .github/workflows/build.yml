@@ -1,8 +1,14 @@
 name: Build images
 on:
   push:
+    paths:
+      - '.github/workflows/build.yml'
+      - 'code/*'
     branches: [ main, development ]
   pull_request:
+    paths:
+      - '.github/workflows/build.yml'
+      - 'code/*'
     branches: [ main, development ]
 
 jobs:

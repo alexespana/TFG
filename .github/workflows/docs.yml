@@ -1,8 +1,14 @@
 name: Build LaTeX documentation
 on:
   push:
+    paths:
+      - '.github/workflows/docs.yml'
+      - 'doc/**/*.tex'
     branches: [ main, development ]
   pull_request:
+    paths:
+      - '.github/workflows/docs.yml'
+      - 'doc/**/*.tex'
     branches: [ main, development ]
 jobs:
   build-latex:
