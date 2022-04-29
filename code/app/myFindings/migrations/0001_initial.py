@@ -4,7 +4,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 import myFindings.models
 
-
 class Migration(migrations.Migration):
 
     initial = True
@@ -145,6 +144,7 @@ class Migration(migrations.Migration):
                 ('materiales', models.ManyToManyField(blank=True, to='myFindings.sedimentarymaterial')),
             ],
             bases=('myFindings.ue',),
+
         ),
         migrations.CreateModel(
             name='Inclusion',

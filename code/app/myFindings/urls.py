@@ -137,5 +137,4 @@ urlpatterns = [
     # REPORT GENERATION
     # ####################
     path('generate_report/<id>', views.generate_report, name='generate_report'),
-
 ]

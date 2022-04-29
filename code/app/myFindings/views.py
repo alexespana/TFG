@@ -717,4 +717,3 @@ def generate_report(request, id):
     response["Content-Encoding"] = "UTF-8"
     
     return response
-
