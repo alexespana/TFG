@@ -17,305 +17,153 @@ para:
 
 \subsection{Requisitos funcionales}
 Describen la interacción entre la Aplicación Web y su entorno (base de datos, usuarios, 
-comunicación con la App Android, etc), indicando cómo debe actuar
-frente a situaciones o entradas determinadas.
+comunicación con la App Android, etc), indicando cómo debe actuar frente a situaciones o
+entradas determinadas.
 
     \begin{itemize}
-        \item 
+        \item \textbf{RF-1}. Gestión de excavaciones.
+            \begin{itemize}
+                \item \textbf{RF-1.1}. Consultar excavación.
+                \item \textbf{RF-1.2}. Añadir excavación.
+                \item \textbf{RF-1.3}. Modificar excavación.
+                \item \textbf{RF-1.4}. Eliminar excavación.       
+                \item \textbf{RF-1.5}. Consultar unidades estratigráficas asociadas.            
+            \end{itemize}
+        \item \textbf{RF-2}. Gestión de estancias.
+            \begin{itemize}
+                \item \textbf{RF-2.1}. Consultar estancia.
+                \item \textbf{RF-2.2}. Añadir estancia.
+                \item \textbf{RF-2.3}. Modificar estancia.
+                \item \textbf{RF-2.4}. Eliminar estancia.       
+            \end{itemize}
+        \item \textbf{RF-3}. Gestión de hechos.
+            \begin{itemize}
+                \item \textbf{RF-3.1}. Consultar hecho.
+                \item \textbf{RF-3.2}. Añadir hecho.
+                \item \textbf{RF-3.3}. Modificar hecho.
+                \item \textbf{RF-3.4}. Eliminar hecho. 
+                \item \textbf{RF-3.5}. Consultar unidades estratigráficas asociadas.          
+            \end{itemize}
+        \item \textbf{RF-4}. Gestión de unidades estratigráficas.
+            \begin{itemize}
+                \item \textbf{RF-4.1}. Consultar unidad estratigráfica.
+                \item \textbf{RF-4.2}. Añadir unidad estratigráfica.
+                \item \textbf{RF-4.3}. Modificar unidad estratigráfica.
+                \item \textbf{RF-4.4}. Eliminar unidad estratigráfica.          
+            \end{itemize}
+        \item \textbf{RF-5}. Gestión de inventario fotográfico.
+            \begin{itemize}
+                \item \textbf{RF-5.1}. Consultar fotografía.
+                \item \textbf{RF-5.2}. Añadir fotografía.
+                \item \textbf{RF-5.3}. Modificar fotografía.
+                \item \textbf{RF-5.4}. Eliminar fotografía.    
+            \end{itemize}
+        \item \textbf{RF-6}. Gestión de materiales.
+            \begin{itemize}
+                \item \textbf{RF-5.1}. Consultar material.
+                \item \textbf{RF-5.2}. Añadir material.
+                \item \textbf{RF-5.3}. Añadir material.
+                \item \textbf{RF-5.4}. Eliminar material.    
+            \end{itemize}
+        \item \textbf{RF-7}. Gestión de usuarios.
+            \begin{itemize}
+                \item \textbf{RF-7.1}. Registro de usuario.
+                \item \textbf{RF-7.2}. Alta de usuario (autorizado).
+                \item \textbf{RF-7.3}. Modificar contraseña.
+                \item \textbf{RF-7.4}. Recuperación de contraseña.
+                \item \textbf{RF-7.4}. Dar de baja.
+                \item \textbf{RF-7.5}. Avisos.
+                    \begin{itemize}
+                        \item \textbf{RF-7.5.1}. Enviar aviso en petición de registro.
+                        \item \textbf{RF-7.5.2}. Enviar aviso en registro concedido.
+                        \item \textbf{RF-7.5.3}. Enviar aviso en recuperación de contraseña.
+                    \end{itemize}
+            \end{itemize}
+        \item \textbf{RF-8}. Gestión de permisos.
+            \begin{itemize}
+                \item \textbf{RF-8.1}. Consultar permiso de usuario.
+                \item \textbf{RF-8.2}. Añadir permiso de usuario.
+                \item \textbf{RF-8.3}. Modificar permiso de usuario.
+                \item \textbf{RF-8.4}. Eliminar permiso de usuario.
+                \item \textbf{RF-8.5}. Añadir grupo de permisos.
+                \item \textbf{RF-8.6}. Modificar grupo de permisos.
+                \item \textbf{RF-8.7}. Eliminar grupo de permisos.
+            \end{itemize}
+        \item \textbf{RF-9}. Generación de informes.
+            \begin{itemize}
+                \item \textbf{RF-9.1}. Informe completo de excavación.
+            \end{itemize}
     \end{itemize}
 
 \subsection{Requisitos no funcionales}
 Este tipo de requisitos describen restricciones o cualidades de nuestra aplicación web que
 no tienen una relación directa con las funcionalidades del sistema.
 
-    \begin{itemize}
-        \item 
-    \end{itemize}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l |l |} \hline
+
+            \textbf{RNF-1} 
+             & \underline{Eficiencia} \\
+             & \tabitem El sistema tiene que tener un tiempo de respuesta corto.  \\
+             & \tabitem El sistema tiene que ser capaz de almacenar gran cantidad de \\
+             & excavaciones. \\ \hline
+
+             \textbf{RNF-2} 
+             & \underline{Usabilidad} \\
+             & \tabitem Tiene que ser compatible con ordenadores, móviles y tablets.  \\
+             & \tabitem Fácil de usar, se hará un uso intuitivo de forma sencilla. \\ \hline
+
+             \textbf{RNF-3} 
+             & \underline{Seguridad} \\
+             & \tabitem Acceso al sistema con usuario y contraseña únicos.  \\
+             & \tabitem Cada usuario verá únicamente su información privada. \\ \hline
+
+             \textbf{RNF-4} 
+             & \underline{Legalidad} \\
+             & \tabitem Debe cumplir la legislación sobre la gestión de información. \\
+             & confidencial \\ \hline
+
+             \textbf{RNF-5} 
+             & \underline{Disponibilidad} \\
+             & \tabitem El sistema debe estar disponible el máximo tiempo posible. \\ \hline
+
+             \textbf{RNF-6} 
+             & \underline{Implementación} \\
+             & \tabitem Debe ser accesible desde un dispositivo móvil.  \\
+             & \tabitem Debe ser accesible desde un navegador web. \\ \hline
+
+             \textbf{RNF-7} 
+             & \underline{Operaciones} \\
+             & \tabitem Si se requiriese alguna modificación, ésta la realizará el \\
+             & administrador.  \\ \hline
+
+             \textbf{RNF-8} 
+             & \underline{Soporte} \\
+             & \tabitem Durante el mantenimiento, el sistema estará inoperativo. \\ \hline
+
+        \end{tabular}
+        \caption{Tabla de requisitos no funcionales}
+        \label{tab:rfn-table}
+    \end{table}
+
 
 \subsection{Requisitos de información}
 Este tipo de requisitos describirán necesidades de almacenamiento de información en
 la aplicación web.
 
-    \begin{itemize}
-        \item 
-    \end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l |l |} \hline
 
-\section{Tecnologías disponibles}
-En la elección de cualquier herramienta en un proyecto software, se debe seguir un
-proceso de selección de herramientas entre distintas alternativas, especificando claramente
-los requisitos que deben cumplir para poder escoger aquella que mejor se adapte a las
-necesidades del proyecto (en este caso a la aplicación web).
+        \textbf{RI-1} 
+         & \underline{Usuarios} \\
+         & \tabitem Información necesaria de los usuarios a la hora de registrarse en la \\
+         & aplicación.  \\
+         & \tabitem \textbf{Contenido}: nombre, correo electrónico, contraseña. \\ 
+         & \textbf{Requisitos asociados}: RF-7 \\ \hline
 
-\subsection{Framework para desarrollo web}
-
-    \subsubsection{Ruby on Rails}
-    \textbf{Ruby on Rails} (también conocido como Rails) \cite{ruby-on-rails} es un framework
-    para la creación de aplicaciones web escrito en Ruby. Sigue una arquitectura
-    (Model-View-Controller) y diseño RESTfull. Está diseñado para facilitar la programación
-    web al hacer una estimación de los componentes principales que se necesitan para comenzar.
-
-    Este software asume que hay una mejor forma de hacer las cosas y está diseñado para
-    ello, por lo que es un código muy optimizado y hecho para aumentar la productividad
-    si se hace el desarrollo de la forma "The Rails Way".
-
-    \subsubsection{Django}
-    \textbf{Django} \cite{django} es el framework para Python más usado, está enfocado a sitios
-    basados en bases de datos. Permite un desarrollo software muy rápido y limpio. Tiene una
-    arquitectura MVT (Model-View-Template), donde el View sería el equivalente a Controller
-    en MVC.
-
-    Al igual que el anterior framework mencionado, Django ha sido diseñado por programadores
-    experimentados, y se encarga de las partes más complejas del desarrollo web, permitiendo
-    que el programador se centre en escribir la aplicación sin necesidad de preocuparse
-    por otras cuestiones.
-
-    \subsubsection{Laravel}
-    \textbf{Laravel} \cite{laravel} es el mejor framework de PHP para desarrollar aplicaciones
-    y servicios web con PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue una arquitectura 
-    MVC, por lo que es sencillo relacionar las distintas componentes de la aplicación.
-
-    Es un framework moderno que ofrece muchas utilidades a los desarrolladores y permiten un
-    desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la calidad del
-    código, el mantenimiento y la escalabilidad.
-
-    \subsubsection{Angular}
-    \textbf{Angular} \cite{angular} es un framework desarrollado en TypeScript para el
-    desarrollo de aplicaciones web. Está mantenido por Google, utilizado para crear y mantener
-    aplicaciones SPA (Single Page Application), es decir páginas web que interaccionan con el
-    usuario dinámicamente sobreescribiendo la página con información nueva.
-
-    Al contrario que los frameworks anteriormente mencionados, Angular no usa un modelo MVC
-    o MVT, sino que permite el desarrollo del front-end y el back-end de forma totalmente
-    independiente.
-
-\subsection{Framework CSS}
-
-    \subsubsection{Tailwind CSS}
-    \textbf{Tailwind CSS} \cite{tailwind-css} es un framework CSS que funciona escaneando los
-    archivos HTML, componentes Javascript y otros templates generando los correspondientes
-    estilos y escribiéndolos en un archivo CSS estático. No tiene muchos componentes, sino
-    clases de utilidad que pueden aplicarse directamente sobre el código HTML del proyecto.
-    Además de esto, permite una gran optimización del peso del código CSS mediante unos flujos
-    de desarrollo.
-
-        
-    \subsubsection{Bootstrap}
-    \textbf{Bootstrap} \cite{bootstrap} es uno de los frameworks más populares y usados para
-    el desarrollo de páginas web. Fue desarrollado por Twitter en 2010 para uso de la compañía
-    pero más tarde pasó a ser código abierto. Este framework combina CSS y Javascript. Entre
-    sus características fundamentales podemos encontrar:
-    
-    % \begin{list}{\textbullet}{ 
-        %     \addtolength{\labelsep}{1mm}    % Distancia hasta la etiqueta
-        %     \addtolength{\itemsep}{-2mm}    % Separación entre items
-        %     \setlength{\itemindent}{5mm}}   % Identación de los items
-        % \end{list}
-        
-        \begin{itemize}
-            \item \textbf{Responsive design}: adaptación automática a distintos dispositivos
-            como móviles y tablets.
-            \item \textbf{Grid System}: posicionamiento de elementos en la página
-            \item \textbf{Interface UI}: incluye formularios, botones, menús, etc.
-        \end{itemize}
-        
-        \subsubsection{Foundation}
-        \textbf{Foundation} \cite{foundation} es el principal competidor de Bootstrap, es un
-        framework orientado al desarrollo de sitios web totalmente adaptativos bajo el enfoque
-        \textit{mobile first}, que es una metodología de desarrollo donde se tiene en cuenta
-        en primer lugar los dispositivos móviles. Esta metodología es totalmente contraria a
-        la que usa Bootstrap ya que en él se usa \textit{Responsive Web Design} y en éste
-        \textit{Mobile First Web Design}.
-        
-        Además de su metodología de desarrollo, posee ciertas características muy interesantes:
-        
-        \begin{itemize}
-            \item \textbf{Fastclick}: eliminación del retraso al pulsar en dispositivos
-            móviles.
-            \item \textbf{Semántico}: todo es semántico, permitiendo tener un lenguaje de
-            marcado limpio sin sacrificar su funcionalidad y velocidad.
-            \item \textbf{Off Canvas}: creación de menús dinámicos
-            \item \textbf{Customizable}: permite hacer diseño completamente personalizables,
-            pudiendo eliminar elementos, definir el tamaño de las columnas, colores,
-            fondos, etc
-        \end{itemize}
-
-    \subsubsection{Materialize CSS}
-    \textbf{Materialize CSS} \cite{materialize-css} sigue el principio \textit{Material Design},
-    es decir, ofrece componentes ya listos para ser utilizados, por supuesto adaptativo.
-    Además, integra comportamientos dinámicos mediante JavaScript y no necesita de Jquery para
-    funcionar.
-
-    Entre sus principales características se encuentran:
-        
-        \begin{itemize}
-            \item Al igual que otros frameworks mencionados, permite un diseño adaptativo.
-            \item Permite crear menús laterales desplegables o abiertos según la resolución
-            del dispositivo.
-            \item Diseños utilizando la filosofía Material Design (colecciones, tarjetas,
-            barras de navegación, modales, toast, etc).
-            \item Añade utilidades como \textbf{Parallax} (técnica de diseño web en la que se crea
-            un efecto de profundidad al hacer scroll)
-        \end{itemize}
-
-\subsection{Base de Datos}
-Antes de pasar a la elección de la Base de Datos concreta necesitamos especificar si
-necesitamos una base de datos SQL o una base de datos noSQL. 
-\begin{itemize}
-    \item \textbf{Bases de Datos relacionales}: son aquellas que utilizan el lenguaje SQL (
-    \textit{Structure Query Languaje}), un lenguaje de consulta estructurado. Este tipo de 
-    bases de datos están formadas por filas y columnas. En cada una de las filas residen
-    registros, mientras que las columnas corresponden a campos de los mismos. Son el tipo
-    de bases de datos más estándarizado y con más uso actualmente.
-    \item \textbf{Base de Datos noSQL}:  son aquellas bases de datos diseñadas para permitir
-    grandes cantidades de datos, tipos de datos complejos, más índices,distintos tipos de
-    consulta, etc. Este tipo de base de datos surgió para dar solución a los problemas de
-    escalabilidad y rendimiento de las bases de datos relacionales en las que hay miles de
-    usuarios concurrentemente y realizando millones de consultas.
-\end{itemize}
-
-En la siguiente tabla, se realiza una breve comparación entre ambos tipos: 
-
-    \begin{table}[H]
-        \begin{center}
-            \begin{tabular}{ |l|l| } \hline
-                \textbf{SQL} & \textbf{noSQL} \\ \hline
-                Tablas & Hashes, listas \\
-                Escalabilidad vertical & Escalabilidad horizontal \\
-                Datos estructurados & Datos menos estructurados \\ 
-                Consistencia & Dinamicidad \\ \hline
-            \end{tabular}
-            \caption{tabla con la comparativa entre SQL y noSQL}
-            \label{tab:databases}
-        \end{center}
-    \end{table}
-
-Dada la naturaleza de nuestro problema, donde existe una clara jerarquización de los
-elementos con los que se trabaja: \textbf{UE, sector, año, hecho, estructura}, ordenados
-de menor a mayor complejidad, intuimos que necesitamos hacer uso de un sistema de
-almacenamiento de información que cumpla con el esquema entidad-relación, por lo tanto,
-deberemos usar una base de datos SQL. Los distintos SGBD (Sistemas Gestores de Bases de
-Datos) datos que podemos encontrar son los siguientes:
-
-    \subsubsection{MySQL}
-    \textbf{MySQL} \cite{mysql} es un sistema de gestión de bases de datos relacionales de
-    código abierto (también conocido como RDBMS, Relational Database Management System). Es
-    una de las bases de datos más populares en la actualidad y usa un modelo
-    cliente-servidor.
-    
-
-    \subsubsection{SQLite}
-    \textbf{SQLite} \cite{sqlite} es un RDBMS de tamaño reducido (aproximadamente 275 kiB)
-    que a diferencia de otros RDBMS como mySQL, no usa un proceso cliente y un proceso
-    servidor(modelo cliente-servidor). En este caso, funciona como un servidor
-    propio independiente, haciendo uso de llamadas a subrutinas y funciones integradas en el
-    propio código fuente que eliminan la necesidad de hacer consultas entre procesos
-    separados.
-
-    \subsubsection{PostgreSQL}
-    \textbf{PostgreSQL} \cite{postgresql} es un sistema de gestión de base de datos relacional
-    que está orientado a objetos, de código abierto y además gratuito. Este RDBMS posee tipos
-    de datos avanzados y permite optimizar de forma considerable el rendimiento, este tipo de
-    características por lo general solo se ofrecen en sistemas de bases de datos privativas.
-    Además de las características anteriormente mencionadas, permite un control de grandes
-    volúmenes de datos y tiene soporte completo para \textbf{ACID} (\textit{Atomicity,
-    Consistency, Isolation, Durability}).
-
-\subsection{Solución propuesta}
-Como se ha mencionado anteriormente, en cualquier elección de herramientas se debe señalar
-claramente las características que debe cumplir para así poder descartar con facilidad
-entre las disintas alternativas.
-
-    \subsubsection{Elección del Framework de Desarrollo Web}
-    El framework de Desarrollo Web debe cumplir con una serie de \textbf{requisitos} para
-    su aceptación:
-
-        \begin{enumerate}
-            \item Que haga una deducción de los elementos principales de la aplicación,
-            permitiendo centrarnos exclusivamente en el desarrollo de la misma.
-            \item Que pueda permitir la configuración del mismo con distintas bases de
-            datos.
-            \item Que posea un sistema de gestión de usuarios (\textbf{autenticación}).
-            \item Que el manejo de los modelos de la base de datos pueda abstraerse
-            independientemente de la base de datos elegida mediante un \textbf{Object
-            Relational Mapping} (ORM).
-            \item Que incluya una fácil creación de la API para la posible comunicación
-            con la App android.
-        \end{enumerate}
-
-    Tras tantear los distintos frameworks para el desarrollo de aplicaciones web disponibles
-    se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar para mí y
-    además cumple todos los requisitos anteriormente mencionados.
-
-    Dicho framework permite hacer lo siguiente:
-        
-        \begin{itemize}
-            \item Crear la aplicación sin tener que preocuparnos de elementos para que
-            ésta funcione.
-            \item Configuración con distintas bases de datos, SQLite es la base de datos
-            por defecto, pero además permite configurarlo para trabajar con mySQL y
-            postgreSQL.
-            \item Sistema de autenticación de usuarios, por lo que podremos gestionar el
-            registro e inicio de sesión de los mismos.
-            \item Contiene un ORM que permite el manejo de modelos de la base de datos
-            abstrayendo la base de datos utilizada.
-            \item A pesar de no venir incluido como tal, instalando la aplicación Django
-            REST framework, es posible realizar la configuración de la API de una forma
-            relativamente sencilla.
-            \item Tiene una documentación realmente buena, clara y sencilla.
-        \end{itemize}
-    
-    Éstas son las razones por las que se ha decidido elegir Django para el desarrollo de
-    nuestra aplicación web.
-
-    \subsubsection{Elección del Framework CSS}
-    Entre los requisitos que el framework CSS debe cumplir están los siguientes:
-
-        \begin{enumerate}
-            \item Que permita un diseño adaptativo de la página web.
-            \item Que siga la metodología Responsive Web Design.
-            \item Que sea fácil de usar.
-            \item Que esté actualmente mantenido por la comunidad.
-            \item Que posea una documentación simple y fácil de entender. 
-        \end{enumerate}
-
-    Siguiendo los requisitos de arriba, Foundation puede ser descartado ya que no cumple el
-    segundo requisito, ya que nuestra aplicación web principalmente va a estar diseñada para
-    utilizarse en un ordenador (también podrá usarse en un smartphone, pero no es la
-    finalidad).
-
-    Entre los tres frameworks restantes, podría utilizarse cualquiera de ellos ya que cumplen
-    con los requisitos, pero finalmente se ha decidido utilizar Bootstrap ya que es
-    probablemente el framework más popular y sencillo de usar que hay, además de seguir
-    siendo muy usado por la comunidad. 
-    
-
-    \subsubsection{Elección de la Base de Datos}
-    Para la elección de la Base de Datos que utilizará el servidor web para almacenar toda
-    la información de las excavaciones se tienen que cumplir los siguientes requisitos:
-
-        \begin{enumerate}
-            \item Que sea una base de datos relacional.
-            \item Que sea open-source y gratuita.
-            \item Que tenga soporte para la realización de transacciones seguras.
-            \item Que haga un uso eficiente de los datos.
-        \end{enumerate}
-
-    Por cuestiones de escalabilidad, utilizar SQLite se puede descartar ya que posee un
-    reducido número de tipos de datos y más bien está pensada para utilizarse en dispositivos
-    con poca capacidad de almacenamiento.
-
-    Ahora nos tocaría pensar en, ¿mySQL o postgreSQL? Realmente podría utilizarse cualquiera
-    de las dos, pero posgreSQL ofrece algunas ventajas respecto a mySQL que merece la pena
-    mencionar: 
-    
-        \begin{itemize}
-            \item MySQL es propiedad de Oracle y podría pasar a ser un producto comercial
-            (de pago), sin embargo, postgreSQL es \textbf{open source 100\%}.
-            \item PostgreSQL ofrece una mayor \textbf{integridad y fiabilidad} de los datos
-            (principio ACID).
-            \item Gracias a funciones que lectura y escritura en paralelo, postgreSQL ofrece
-            una mayor \textbf{velocidad} frente a mySQL.
-        \end{itemize}
-    
-    Por estas razones, finalmente se ha decidido usar postgreSQL como base de datos para
-    nuestro servidor web.
+    \end{tabular}
+    \caption{Tabla de requisitos de información}
+    \label{tab:ri-table}
+\end{table}

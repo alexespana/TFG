@@ -16,19 +16,22 @@
                             <caption>Listado de materiales sedimentarios</caption>
                             <tr>
                                 <th>Nombre</th>
+                                {% if perms.myFindings.delete_sedimentarymaterial %}
                                 <th>Opciones</th>
+                                {% endif %}
                             </tr>
                     
                             {% for m in sedimentarymaterials %}
                     
                             <tr>
                                 <td>{{ m.nombre }}</td>
+                                {% if perms.myFindings.delete_sedimentarymaterial %}
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{% url 'modify_sedimentarymaterial' m.nombre %}" class="btn btn-modify me-md-2">Modificar</a>
                                         <a href="{% url 'delete_sedimentarymaterial' m.nombre %}" class="btn btn-delete">Eliminar</a>
                                     </div>
                                 </td>
+                                {% endif %}
                             </tr>
                             
                             {% endfor %}

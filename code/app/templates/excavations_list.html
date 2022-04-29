@@ -18,7 +18,9 @@
                                 <th>Latitud </th>
                                 <th>Longitud</th>
                                 <th>Altura</th>
+                                {% if perms.myFindings.view_sedimentaryue and perms.myFindings.view_builtue or perms.myFindings.change_excavation or perms.myFindings.delete_excavation %}    
                                 <th>Opciones</th>
+                                {% endif %}
                             </tr>
                     
                             {% for e in excavations %}
@@ -28,13 +30,24 @@
                                 <td>{{ e.latitud }}</td>
                                 <td>{{ e.longitud }}</td>
                                 <td>{{ e.altura }}</td>
+                                {% if perms.myFindings.view_sedimentaryue and perms.myFindings.view_builtue or perms.myFindings.change_excavation or  perms.myFindings.delete_excavation %}    
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{% url 'excavationues_list' e.id %}" class="btn btn-list me-md-2">Listar UES</a>
+                                        {% if perms.myFindings.view_sedimentaryue and perms.myFindings.view_builtue %}
+                                        <a href="{% url 'excavationues' e.id %}" class="btn btn-list me-md-2">Listar UES</a>
+                                        {% endif %}
+                                        {% if perms.myFindings.change_excavation %}
                                         <a href="{% url 'modify_excavation' e.id %}" class="btn btn-modify me-md-2">Modificar</a>
-                                        <a href="{% url 'delete_excavation' e.id %}" class="btn btn-delete">Eliminar</a>
+                                        {% endif %}
+                                        {% if perms.myFindings.delete_excavation %}
+                                        <a href="{% url 'delete_excavation' e.id %}" class="btn btn-delete me-md-2">Eliminar</a>
+                                        {% endif %}
+                                        {% if perms.myFindings.view_excavation %}
+                                        <a href="{% url 'generate_report' e.id %}" class="btn btn-info">Descargar informe (.docx)</a>
+                                        {% endif %}
                                     </div>
                                 </td>
+                                {% endif %}
                             </tr>
                             
                             {% endfor %}

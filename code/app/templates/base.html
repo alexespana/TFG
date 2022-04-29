@@ -38,6 +38,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a href="{% url 'home' %}" onclick="navbarLinkActive(0)" class="nav-link">MyFindings</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a id="list-elements" class="nav-link">Listados <em class="bi bi-caret-down"></em></a>
                         <ul>
@@ -55,8 +56,8 @@
                             <li class="dropdown">
                                 <a id="list-materials" class="nav-link">Materiales <em class="bi bi-caret-right"></em></a>
                                 <ul>
-                                    <li><a href="{% url 'allsedimentarymaterials_list' %}" onclick="navbarLinkActive(10)" class="nav-link">Sedimentarios</a></li>
-                                    <li><a href="{% url 'allbuiltmaterials_list' %}" onclick="navbarLinkActive(11)" class="nav-link">Construidos</a></li>
+                                    <li><a href="{% url 'sedimentarymaterials' %}" onclick="navbarLinkActive(10)" class="nav-link">Sedimentarios</a></li>
+                                    <li><a href="{% url 'builtmaterials' %}" onclick="navbarLinkActive(11)" class="nav-link">Construidos</a></li>
                                 </ul>
                             </li>
                             <li><a href="{% url 'photos' %}" onclick="navbarLinkActive(12)" class="nav-link">Fotografías</a></li>
@@ -85,12 +86,24 @@
                             </li>
                             <li><a href="{% url 'add_photo' %}" onclick="navbarLinkActive(24)" class="nav-link">Fotografía</a></li>
                         </ul>
-
                     </li>
-                    
                     <li><a href="{% url 'about' %}" onclick="navbarLinkActive(25)" class="nav-link">Sobre la aplicación</a></li>
                     <li><a href="{% url 'team' %}" onclick="navbarLinkActive(26)" class="nav-link">Equipo</a></li>
                     <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(27)" class="nav-link">Contacto</a></li>
+                    <li class="nav-item dropdown">
+                        <a id="welcome-user" class="nav-link">Bienvenido {{ user.username }} <em class="bi bi-caret-down"></em></a>
+                        <ul>
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(29)" class="nav-link">Cambiar contraseña</a></li>
+                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(30)" class="nav-link">Log out</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'about' %}" onclick="navbarLinkActive(1)" class="nav-link">Sobre la aplicación</a></li>
+                    <li><a href="{% url 'team' %}" onclick="navbarLinkActive(2)" class="nav-link">Equipo</a></li>
+                    <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(3)" class="nav-link">Contacto</a></li>
+                    <li id="login-item"><a href="{% url 'login' %}" onclick="navbarLinkActive(4)" class="nav-link">Log in</a></li>
+                    <li id="login-item"><a href="{% url 'register' %}" onclick="navbarLinkActive(5)" class="nav-link">Sign in</a></li>
+                    {% endif %}
                 </ul>
                 <em class="bi bi-list phone-toggle"></em>
             </nav>

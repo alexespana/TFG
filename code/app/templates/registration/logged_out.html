@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Logged out{% endblock %}
+{% load static %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<div id="logout" class="logout-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-3">
+                    <div class="card border-box">
+                        <div class="card-body">
+                        <h2>Sesión terminada</h2>
+                        <hr>
+                        <p class="confirm-message">Gracias por pasar un buen rato con el sitio web hoy 😊.</p>
+                        <div class="d-flex justify-content-end form-buttons">
+                            <a href="{% url 'login' %}" class="btn btn-list me-md-2">Iniciar sesión de nuevo</a>
+                            <a href="{% url 'home' %}" class="btn btn-modify">Home</a>
+                        </div>                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

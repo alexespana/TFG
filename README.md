@@ -1,10 +1,17 @@
 # Trabajo de Fin de Grado: *Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas*
 
-**Este sería el README de tu proyecto. Consulta las [instrucciones de
-instalación](INSTALL.md)
 
 ### Autor(a): Joaquín Alejandro España Sánchez
 ### Tutor(a)(es): Daniel Sánchez Fernández
+___
+<p align="center"> 
+<a href="https://github.com/alexespana/TFG/actions/workflows/docs.yml"><img src="https://github.com/alexespana/TFG/actions/workflows/docs.yml/badge.svg" alt="Build Docs"></a>
+<a href="https://github.com/alexespana/TFG/actions/workflows/build.yml"><img src="https://github.com/alexespana/TFG/actions/workflows/build.yml/badge.svg" alt="Build Images"></a>
+<a href="https://github.com/alexespana/TFG/actions/workflows/tests.yml"><img src="https://github.com/alexespana/TFG/actions/workflows/tests.yml/badge.svg" alt="Tests Status"></a>
+<a href="https://codecov.io/gh/alexespana/TFG"><img src="https://codecov.io/gh/alexespana/TFG/branch/master/graph/badge.svg?token=IRSGLTKUCT"/></a>
+<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License"></a>
+</p>
+
 ___
 
 La documentación de este proyecto está realizada con `LaTeX`, por lo

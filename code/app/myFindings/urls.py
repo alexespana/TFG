@@ -103,11 +103,9 @@ urlpatterns = [
     # SEDIMENTARY MATERIAL
     # #####################
     # Sedimentary materials list
-    path('allsedimentarymaterials_list/', views.list_allsedimentarymaterials, name='allsedimentarymaterials_list'),
+    path('sedimentarymaterials/', views.list_allsedimentarymaterials, name='sedimentarymaterials'),
     # Add sedimentary material
     path('add_sedimentarymaterial/', views.add_sedimentarymaterial, name='add_sedimentarymaterial'),
-    # Modify sedimentary material
-    path('modify_sedimentarymaterial/<id>/', views.modify_sedimentarymaterial, name="modify_sedimentarymaterial"),
     # Delete sedimentary material
     path('delete_sedimentarymaterial/<nombre>/', views.delete_sedimentarymaterial, name="delete_sedimentarymaterial"),
 
@@ -115,11 +113,9 @@ urlpatterns = [
     # BUILT MATERIAL
     # #####################
     # Built materials list
-    path('allbuiltmaterials_list/', views.list_allbuiltmaterials, name='allbuiltmaterials_list'),
+    path('builtmaterials/', views.list_allbuiltmaterials, name='builtmaterials'),
     # Add built material
     path('add_builtmaterial/', views.add_builtmaterial, name='add_builtmaterial'),
-    # Modify built material
-    path('modify_builtmaterial/<id>/', views.modify_builtmaterial, name="modify_builtmaterial"),
     # Delete built material
     path('delete_builtmaterial/<nombre>/', views.delete_builtmaterial, name="delete_builtmaterial"),
 
@@ -127,10 +123,19 @@ urlpatterns = [
     # ####################
     # SPECIFIC LISTINGS  
     # ####################
-    path('excavationues_list/<id>', views.list_excavationues, name='excavationues_list'),
-    path('roomfacts_list/<id>', views.list_roomfacts, name='roomfacts_list'),
-    path('factues_list/<id>', views.list_factues, name='factues_list'),
+    path('excavationues/<id>', views.list_excavationues, name='excavationues'),
+    path('roomfacts/<id>', views.list_roomfacts, name='roomfacts'),
+    path('factues/<id>', views.list_factues, name='factues'),
 
+    # ####################
+    # AUTHENTICATION
+    # ####################
+    path('register/', views.register, name='register'),
+    path('send_email_password_reset/', views.send_email_password_reset, name='send_email_password_reset'),
 
+    # ####################
+    # REPORT GENERATION
+    # ####################
+    path('generate_report/<id>', views.generate_report, name='generate_report'),
 
 ]

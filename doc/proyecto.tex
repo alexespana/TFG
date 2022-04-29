@@ -28,8 +28,10 @@
 \hypersetup{
 	colorlinks=true,	% false: boxed links; true: colored links
 	linkcolor=black,	% color of internal links
-	urlcolor=blue		% color of external links
+	urlcolor=myred,		% color of external links
+	citecolor=mygreen	% color of citations
 }
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -45,6 +47,8 @@
 
 \usepackage{titlesec, blindtext, color}
 \definecolor{gray75}{gray}{0.75}
+\definecolor{mygreen}{rgb}{0,.5,0}
+\definecolor{myred}{rgb}{.6,0,0}
 \newcommand{\hsp}{\hspace{20pt}}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 \setcounter{secnumdepth}{4}
@@ -58,6 +62,7 @@
 
 % Uso del paquete minted para la inserción de código en
 % distintos lenguajes de programación
+% DESCOMENTAR
 \usepackage{minted}
 
 \begin{document}
@@ -91,30 +96,40 @@
 	% 	2. Propuesta
 	\input{secciones/03_estado_del_arte}
 	
+	% Planificación
+	% 	1. Metodología usada
+	% 	2. Temporización
+	% 	3. Seguimiento del desarrollo
 	\input{secciones/04_planificacion}
 
 	% Análisis del problema
-	% 1. Análisis de requisitos
-	% 2. Análisis de las soluciones
-	% 3. Solucion propuesta
-	% 4. Análisis de seguridad
+	% 	1. Ingeniería de requisitos
+	% 		1.1. Requisitos funcionales
+	% 		1.2. Requisitos no funcionales
+	% 		1.3. Requisitos de información
 	\input{secciones/05_analisis}
 
-	% Desarrollo bajo sprints: 
-	% 	1. Permitir registros y login de usuarios
-	% 	2. Desarrollo del sistema de incidencias
-	% 	3. Desarrollo del sistema de denuncias administrativas y accidentes
-	% 	4. Desarrollo del sistema de croquis
-	%   5. Instalación de la aplicación de manera automática
-	\input{secciones/06_implementacion}
+	% Diseño
+	% 1. Análisis de las soluciones posibles
+	% 2. Soluciones propuestas
+	% 4. Análisis de seguridad
+	\input{secciones/06_diseño}
 
-	% Presupuesto
+	% Implementación
+	% 	1. Tecnologías disponibles
+	% 	2. Soluciones propuestas
+	% 	3. Desarrollo basado en sprints
+	% 		3.1. Creación del sitio web
+	% 		3.2. Creación de la base de datos
+	% 		3.3. Autenticación
+	% 		3.4. Testeo de comportamiento
+	%   	3.5. Sistema de logs
+	% 		3.6. API REST
+	% 		3.7. Producción
+	\input{secciones/07_implementacion}
 
 	% Conclusiones
-	\input{secciones/07_conclusiones}
-
-	% Trabajos futuros
-
+	\input{secciones/08_conclusiones}
 
 	% Anexos del proyecto
 	\cleardoublepage
@@ -141,4 +156,3 @@
 	\bibliographystyle{plain}
 	
 \end{document}
-
