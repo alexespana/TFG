@@ -1,6 +1,7 @@
 import os
 from django.test import TestCase
-from website.settings import DEBUG, ALLOWED_HOSTS, LOGIN_REDIRECT_URL
+from website.settings import DEBUG, ALLOWED_HOSTS, LOGIN_REDIRECT_URL, \
+                             EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 class TestSettings(TestCase):
 
     def test_secretkey_defined_in_production(self):
@@ -15,12 +16,10 @@ class TestSettings(TestCase):
             self.assertTrue(DEBUG)
 
     def test_emailhostuser_defined(self):
-        result = os.environ.get('EMAIL_HOST_USER')
-        self.assertNotEqual(result, None)
+        self.assertNotEqual(EMAIL_HOST_USER, None)
 
     def test_emailhostpassword_defined(self):
-        result = os.environ.get('EMAIL_HOST_PASSWORD')
-        self.assertNotEqual(result, None)
+        self.assertNotEqual(EMAIL_HOST_PASSWORD, None)
 
     def test_login_redirects(self):
         self.assertEqual(LOGIN_REDIRECT_URL, '/')
