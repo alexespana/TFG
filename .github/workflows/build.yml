@@ -9,7 +9,9 @@ jobs:
   build-images:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: Build images
         run: |
           cd code/ && touch .env
