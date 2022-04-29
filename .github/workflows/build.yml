@@ -4,12 +4,6 @@ on:
     paths:
       - '.github/workflows/build.yml'
       - 'code/*'
-    branches: [ main, development ]
-  pull_request:
-    paths:
-      - '.github/workflows/build.yml'
-      - 'code/*'
-    branches: [ main, development ]
 
 jobs:
   build-images:

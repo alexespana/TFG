@@ -5,12 +5,6 @@ on:
     paths:
       - '.github/workflows/tests.yml'
       - 'code/**/*.py'
-    branches: [ main, development ]
-  pull_request:
-    paths:
-      - '.github/workflows/tests.yml'
-      - 'code/**/*.py'
-    branches: [ main, development ]
 
 permissions:
   contents: read
