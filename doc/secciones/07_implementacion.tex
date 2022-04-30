@@ -302,13 +302,13 @@ Los hitos (\textbf{milestones}) del proyecto son los siguientes:
     integration (Integración Continua)}}: el software desarrollado debe integrarse con el
     posible software ya existente en el sitio web, asegurando el correcto funcionaminto
     de ambos.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M6]. Log system
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/6}{[M6]. API REST}}:
+    el diseño y posterior implementación de la API REST que permita gestionar los recursos
+    con los que trabaja la aplicación.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M7]. Log system
     (Sistema de Log)}}: los eventos más importantes que ocurren en la aplicación deben ser
     grabados a través del uso de un servicio de log. Es conveniente capturar errores en un
     nivel superior de abstracción, evitando modificar código ya hecho.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/6}{[M7]. API REST}}:
-    el diseño y posterior implementación de la API REST que permita gestionar los recursos
-    con los que trabaja la aplicación.
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8]. Deployment
     (Despliegue)}}: el despliegue de la aplicación web en la nube debe realizarse utilizando
     un dominio público y un WSGI (Web Server Gateway Interface).
@@ -509,6 +509,56 @@ relaciones. Todo esto, se verá en la sección siguiente.
             \label{fig:e-rmodel}
         \end{figure}
 
+    Por cuestiones de comodidad, se ha dividido la imagen en secciones que se pueden ver
+    ampliadas en las páginas siguientes. Si se desea ir directamente a una sección, pulse
+    sobre la sección deseada: sección 1 (\textbf{\ref{fig:e-rmodel1}}), sección 2
+    (\textbf{\ref{fig:e-rmodel2}}), sección 3 (\textbf{\ref{fig:e-rmodel3}}), sección 4
+    (\textbf{\ref{fig:e-rmodel4}}), sección 5 (\textbf{\ref{fig:e-rmodel5}}) y sección 6
+    (\textbf{\ref{fig:e-rmodel6}}).
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.40]{imagenes/E-R1.png}
+            \caption{Modelo E/R: sección 1}
+            \label{fig:e-rmodel1}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.40]{imagenes/E-R2.png}
+            \caption{Modelo E/R: sección 2}
+            \label{fig:e-rmodel2}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.32]{imagenes/E-R3.png}
+            \caption{Modelo E/R: sección 3}
+            \label{fig:e-rmodel3}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics{imagenes/E-R4.png}
+            \caption{Modelo E/R: sección 4}
+            \label{fig:e-rmodel4}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.35]{imagenes/E-R5.png}
+            \caption{Modelo E/R: sección 5}
+            \label{fig:e-rmodel5}
+        \end{figure}
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.35]{imagenes/E-R6.png}
+            \caption{Modelo E/R: sección 6}
+            \label{fig:e-rmodel6}
+        \end{figure}
+
+
     Vamos a comenzar justificando las elecciones más importantes que se han ido tomando
     sobre el modelo, para ello seguiré el siguiente orden: \textbf{entidades fuertes},
     \textbf{herencia}, \textbf{entidades débiles} y \textbf{relaciones}.\\
@@ -701,19 +751,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        latitud = models.FloatField()
-        longitud = models.FloatField()
-        altura = models.PositiveSmallIntegerField()
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     latitud = models.FloatField()
+    %     longitud = models.FloatField()
+    %     altura = models.PositiveSmallIntegerField()
 
-        def __str__(self):
-            return str(self.n_excavacion)
-    \end{minted}
+    %     def __str__(self):
+    %         return str(self.n_excavacion)
+    % \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -746,15 +796,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     .
+    %     .
+    % \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -765,17 +815,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            unique_together = ('letra', 'numero',)
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         unique_together = ('letra', 'numero',)
+    % \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -783,20 +833,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            constraints = [
-                models.UniqueConstraint(fields=['letra', 'numero'], 
-                                        name='fact_constraint')                                                  
-            ]
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         constraints = [
+    %             models.UniqueConstraint(fields=['letra', 'numero'], 
+    %                                     name='fact_constraint')                                                  
+    %         ]
+    % \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
