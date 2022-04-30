@@ -6,9 +6,7 @@ from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    PhotoForm, CustomUserCreationForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
                     SedimentaryMaterial, BuiltUE, SedimentaryUE
-from django.contrib.auth import authenticate, login
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
@@ -18,6 +16,13 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
+from rest_framework import viewsets
+from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
+                         BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
+                         InclusionSerializer, RoomSerializer, SedimentaryUEFloorSerializer, \
+                         SedimentaryUESectionSerializer, BuiltUEFloorSerializer, \
+                         BuiltUESectionSerializer, FactSerializer, FactPlanSerializer, \
+                         FactSectionSerializer, RoomFloorSerializer
 
 # Create your views here.
 def index(request):
@@ -717,3 +722,67 @@ def generate_report(request, id):
     response["Content-Encoding"] = "UTF-8"
     
     return response
+
+# API REST
+class ExcavationViewSet(viewsets.ModelViewSet):
+    queryset = Excavation.objects.all()
+    serializer_class = ExcavationSerializer
+
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+
+class InclusionViewSet(viewsets.ModelViewSet):
+    queryset = Inclusion.objects.all()
+    serializer_class = InclusionSerializer
+
+class SedimentaryUEViewSet(viewsets.ModelViewSet):
+    queryset = SedimentaryUE.objects.all()
+    lookup_field = 'codigo'
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return SedimentaryUEFloorSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return SedimentaryUESectionSerializer
+        return SedimentaryUESerializer
+
+class BuiltUEViewSet(viewsets.ModelViewSet):
+    queryset = BuiltUE.objects.all()
+    lookup_field = 'codigo'
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return BuiltUEFloorSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return BuiltUESectionSerializer
+        return BuiltUESerializer
+
+class SedimentaryMaterialViewSet(viewsets.ModelViewSet):
+    queryset = SedimentaryMaterial.objects.all()
+    serializer_class = SedimentaryMaterialSerializer
+
+class BuiltMaterialViewSet(viewsets.ModelViewSet):
+    queryset = BuiltMaterial.objects.all()
+    serializer_class = BuiltMaterialSerializer
+    lookup_field = 'codigo'
+
+class FactViewSet(viewsets.ModelViewSet):
+    queryset = Fact.objects.all()
+    serializer_class = FactSerializer
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'plan':
+            return FactPlanSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return FactSectionSerializer
+        return FactSerializer
+
+class RoomViewSet(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return RoomFloorSerializer
+        return RoomSerializer
