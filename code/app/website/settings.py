@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myFindings',
     'crispy_forms',
+    'rest_framework',
 ]
 
 

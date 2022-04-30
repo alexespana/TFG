@@ -1,6 +1,22 @@
 # myFindings/urls.py
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework import routers
+from .views import ExcavationViewSet,PhotoViewSet,InclusionViewSet,SedimentaryUEViewSet, \
+                   BuiltUEViewSet,SedimentaryMaterialViewSet,BuiltMaterialViewSet, \
+                   FactViewSet,RoomViewSet
+
+# API endpoints
+router = routers.DefaultRouter()
+router.register('excavation', ExcavationViewSet)
+router.register('photo', PhotoViewSet)
+router.register('inclusion', InclusionViewSet)
+router.register('sedimentaryue', SedimentaryUEViewSet)
+router.register('builtue', BuiltUEViewSet)
+router.register('sedimentarymaterial', SedimentaryMaterialViewSet)
+router.register('builtmaterial', BuiltMaterialViewSet)
+router.register('fact', FactViewSet)
+router.register('room', RoomViewSet)
 
 urlpatterns = [
     # Home
@@ -72,7 +88,6 @@ urlpatterns = [
     # Delete room
     path('delete_room/<id>/', views.delete_room, name="delete_room"),
 
-
     # ################
     # PHOTO
     # ################
@@ -84,8 +99,6 @@ urlpatterns = [
     path('modify_photo/<id>/', views.modify_photo, name="modify_photo"),
     # Delete photo
     path('delete_photo/<id>/', views.delete_photo, name="delete_photo"),
-
-
 
     # ################
     # INCLUSION
@@ -119,7 +132,6 @@ urlpatterns = [
     # Delete built material
     path('delete_builtmaterial/<nombre>/', views.delete_builtmaterial, name="delete_builtmaterial"),
 
-
     # ####################
     # SPECIFIC LISTINGS  
     # ####################
@@ -137,4 +149,9 @@ urlpatterns = [
     # REPORT GENERATION
     # ####################
     path('generate_report/<id>', views.generate_report, name='generate_report'),
+
+    # ####################
+    # API
+    # ####################
+    path('api/', include(router.urls)),
 ]
