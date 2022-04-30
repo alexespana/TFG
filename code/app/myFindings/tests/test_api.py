@@ -1,48 +1,46 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
-from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
-                              BuiltMaterial, SedimentaryMaterial, SedimentaryUE, BuiltUE
+                              SedimentaryUE, BuiltUE
 
 class TestListingAPIViews(APITestCase):
 
     def test_api_list_excavations_GET(self):
         response = self.client.get(reverse('excavation-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_photos_GET(self):
         response = self.client.get(reverse('photo-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_facts_GET(self):
         response = self.client.get(reverse('fact-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_rooms_GET(self):
         response = self.client.get(reverse('room-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_inclusions_GET(self):
         response = self.client.get(reverse('inclusion-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_sedimentarymaterials_GET(self):
         response = self.client.get(reverse('sedimentarymaterial-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_builtmaterials_GET(self):
         response = self.client.get(reverse('builtmaterial-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_sedimentaryues_GET(self):
         response = self.client.get(reverse('sedimentaryue-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_list_builtues_GET(self):
         response = self.client.get(reverse('builtue-list', kwargs={}))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class TestAddAPIViews(APITestCase):
