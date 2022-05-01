@@ -1175,3 +1175,27 @@ siguientes:
         los permisos otorgados por el arqueólogo administrador (staff), bien por añadirlo
         a un \textbf{grupo de permisos} o por darle permisos específicos.
     \end{enumerate}
+
+\subsubsection{Panel de administración}
+En todo sitio web, existe un panel de administración desde el que un usuario o usuarios
+con privilegios pueden hacer acciones privilegiadas en la aplicación. Dado que Django
+tiene su propio panel de administración \cite{admin-panel}, con multitud de funcionalidades
+ya implementadas, se ha decidido reutilizar éste.\\
+
+Dicho panel será únicamente utilizado por el administrador del sistema, que en este caso
+sería o bien el desarrollador de este proyecto o el arqueólogo, \textbf{Francisco Javier
+Brao Gonzalez}. Además, se ha querido hacer más atractiva visualmente la interfaz
+utilizando una aplicación de terceros llamada \textbf{django-admin-interface}
+\cite{admin-interface}, con la que podremos darle el aspecto siguiente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.32]{imagenes/admin-interface.png}
+        \caption{Panel de administración}
+        \label{fig:admin-interface}
+    \end{figure}
+
+Como podemos observar, en él podremos definir grupos de usuarios con los permisos deseados,
+ver los usuarios registrados en el sistema, modificarlos, eliminarlos, cambiar el diseño
+de la interfaz (\textbf{Temas}), además de poder ver, añadir, modificar o eliminar
+cualquier objeto perteneciente a los modelos que hemos definido en la aplicación.
