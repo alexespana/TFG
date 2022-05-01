@@ -1029,3 +1029,149 @@ que estará en una variable de entorno junto al correo de la cuenta.
         \caption{Contraseñas de aplicaciones}
         \label{fig:apps-pass}
     \end{figure}
+
+\subsubsection{Permisos y roles de usuario}
+Uno de los puntos más importantes de la aplicación es el manejo de permisos y roles de
+usuario. Para el control de ello, Django viene integrado con un sistema de permisos,
+que nos permite controlar qué usuarios pueden \textbf{ver}, \textbf{añadir}, \textbf{
+modificar} o \textbf{eliminar}. Por ejemplo, para el manejo de los usuarios que pueden
+realizar acciones sobre excavaciones tendríamos:
+
+    \begin{itemize}
+        \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
+        vistas.
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.view_excavation', 
+    %                                     raise_exception=True)
+    % def list_allexcavations(request):
+    %     # Get all excavations
+    %     excavations = Excavation.objects.all()
+    %     data = { 'excavations': excavations}
+    
+    %     return render(request, 'excavations_list.html', data)
+    % \end{minted}
+
+        \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
+        desde las vistas.
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.add_excavacion', 
+    %                                     raise_exception=True)
+    % def add_excavation(request):
+    %     # Get the fields of excavation
+    %     data = { 'form': ExcavationForm() }
+    
+    %     if request.method == 'POST':
+    %         # Get the data entered by the user
+    %         form = ExcavationForm(data=request.POST)
+    %         if(form.is_valid()):    # Check if valid
+    %             form.save()         # Save form
+    
+    %             # Redirect to the list of excavations
+    %             return redirect(to='excavations')
+    %         else:
+    %             data['form'] = form
+    
+    %     return render(request, 'add_excavation.html', data)
+    % \end{minted}
+
+        \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
+        desde las vistas.
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.change_excavation', 
+    %                                     raise_exception=True)
+    % def modify_excavation(request, id):
+    %     excavation = get_object_or_404(Excavation, id=id)
+        
+    %     # Guardar el formulario con los datos del cuadro
+    %     data = { 'form': ExcavationForm(instance=excavation) }
+    
+    %     if request.method == 'POST':
+    %         form = ExcavationForm(data=request.POST,
+    %                                     instance=excavation)
+    %         if form.is_valid():       # Si es válido
+    %             form.save()           # Guardarlo
+    
+    %             return redirect(to="excavations")
+    
+    %         data["form"] = form
+    
+    %     return render(request, 'modify_excavation.html', data)
+    % \end{minted}
+
+        \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
+        desde las vistas.
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.delete_excavation',
+    %                                     raise_exception=True)
+    % def delete_excavation(request, id):
+    %     # Get the excavation, if it doesn't exist, get an Http404
+    %     excavation = get_object_or_404(Excavation, id=id)
+    
+    %     # Delete the excavation
+    %     excavation.delete()    
+    
+    %     return redirect(to="excavations")
+    % \end{minted}
+    \end{itemize}
+
+Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
+que nos permiten controlar el acceso a las vistas. En este caso, el decorador
+\textbf{@login\_required} nos permite controlar que el usuario esté autenticado,
+y el decorador \textbf{@permission\_required} nos permite controlar que el usuario
+tenga el permiso correspondiente.\\
+
+Esto hace mucho más segura la aplicación, ya que si un usuario no autenticado intenta
+acceder a alguna url a la que no tiene permiso \textbf{escribiéndola directamente en
+el navegador}, primero se comprobará que esté autenticado en el sistema, y en caso
+contrario se le redirigirá a la página de login. Como vemos en la siguiente imagen,
+el usuario ha intentado acceder a la página add\_excavation/ sin estar autenticado,
+por lo que se le ha redirigido a la página de login para luego redirigirlo a la página
+requerida (\textbf{?next=/add\_excavation/}).
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{imagenes/login-required.png}
+        \caption{Login requerido}
+        \label{fig:login-required}
+    \end{figure}
+
+
+Una vez autenticado, se pasará al segundo decorador, que comprobará que tenga el permiso
+correspondiente y en caso contrario mostrará un mensaje de \textbf{403 Forbidden}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.50]{imagenes/403-forbidden.png}
+        \caption{Permiso denegado}
+        \label{fig:403-forbidden}
+    \end{figure}
+
+Otro de los temas importantes de la aplicación son los roles de usuario, que serían los
+siguientes:
+
+    \begin{enumerate}
+        \item \textbf{Administrador}: es el usuario que tiene todos los permisos del
+        sistema, puede realizar cualquier acción dentro de él: eliminar modelos, eliminar
+        usuarios, crear grupos, cambiar permisos a usuarios concretos, etc.
+        \item \textbf{Staff}: es el usuario con permisos otorgados por el administrador
+        del sistema. En nuestra aplicación corresponderá al arqueólogo con permisos
+        privilegiados, que se encarga de aceptar o rechazar a los usuarios que se han
+        enviado la petición de registro. Éstos deberán poder d \textbf{añadir y eliminar}
+        usuarios de los grupos de permisos ya definidos, además de \textbf{tener acceso a
+        todos los modelos} definidos en el sistema: excavaciones, inclusiones, materiales, etc.
+        \item \textbf{Usuario registrado}: es el usuario común de la aplicación, que tendrá
+        los permisos otorgados por el arqueólogo administrador (staff), bien por añadirlo
+        a un \textbf{grupo de permisos} o por darle permisos específicos.
+    \end{enumerate}
