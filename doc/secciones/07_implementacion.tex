@@ -326,7 +326,7 @@ proyecto puede visitar los siguientes enlaces:
 \end{itemize}
 
 
-\subsection{Website creation}
+\subsection{Creación del sitio web}
 Para realizar la implementación de las distintas plantillas de la aplicación, se ha hecho
 uso del sistema propio de plantillas de Django, llamado \textbf{Django template language},
 que es muy parecido a JinJa2 y que está completamente implementado en los backends que
@@ -452,7 +452,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     destinada para el \textbf{iframe} de google maps cuyo código html ha sido extraído
     directamente de la aplicación web y puesto sobre el código.
 
-\subsection{Database creation}
+\subsection{Creación de la base de datos}
 Este milestone es uno de los más importantes del proyecto ya que tiene como principal objetivo
 la definición de la base de datos que se utilizará, que posteriormente nos permitirá hacer las
 consultas apropiadas según las necesidades que busca el cliente, en este caso los arqueólogos.\\
@@ -778,7 +778,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     Lo siguiente va a ser explicar cómo representar en los modelos las \textbf{primary keys},
     \textbf{candidate keys} y \textbf{relationships}.\\
     
-    \paragraph{Primary keys} \underline{}
+    \paragraph{Claves primarias} \underline{}
     \newline En los atributos de los modelos, en los tipos de campo, existe un parámetro llamado
     \textbf{primary\underline{ }key}, si se indica a True, entonces dicho campo será la clave
     primaria del modelo, pero si no se indica el primary key en ningún campo del modelo,
@@ -791,7 +791,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     automáticamente por django en los modelos serán las de \textbf{Excavacion, UE, Hecho,
     Estancia y Fotografia}. 
     
-    \paragraph{Candidate keys} \underline{}
+    \paragraph{Claves candidatas} \underline{}
     \newline Para las \textbf{claves candidatas simples} únicamente hay que indicar en el campo
     correspondiente al argumento \textbf{unique} a True. Por ejemplo, en el modelo
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
@@ -852,7 +852,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
 
-    \paragraph{Relationships} \underline{}
+    \paragraph{Relaciones} \underline{}
     \newline Django soporta las mismas tres relaciones que existen en una base de datos relacional:
     uno a uno, uno a muchos, y muchos a muchos. Para representarlas, usa tres tipos de campos
     para los modelos, que son:
@@ -901,3 +901,131 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \end{enumerate}
 
     Esta sería una visión global de la implementación utilizando el ORM que nos ofrece Django.
+
+\subsection{Autenticación}
+En este milestone del proyecto se ha trabajado sobre la autenticación y autorización de
+usuarios en la aplicación web. A continuación se explicará todo lo que se ha
+implementado.\\
+
+Django cuenta con un \textbf{sistema de de autenticación} \cite{django-auth} de usuarios,
+éste puede manejar cuentas de usuario, grupos de usuario, permisos, sesiones de usuario
+basadas en cookies, etc. Antes de nada debemos de tener claro qué significan los términos
+de autenticación y autorización:
+
+    \begin{itemize}
+        \item \textbf{Autenticación}: es un proceso en el que verifica que un usuario
+        es quién dice ser. Por ejemplo, una de las pruebas más comunes de autenticación
+        es mediante la escritura de una contraseña.
+        \item \textbf{Autorización}: en este caso, se determina lo que un usuario
+        autenticado puede hacer en el sistema, es decir, los permisos que éste posee. Por
+        ejemplo, en nuestro caso, si puede o no modificar una excavación.
+    \end{itemize}
+
+Todo lo requerido para la autenticación en Django está implementado en uno de sus módulos,
+concretamente en el módulo \textbf{django.contrib.auth}, que tendremos que añadirlo a
+nuestro proyecto. Además, necesitaremos definir los permisos asociados a nuestros modelos,
+por ejemplo, poder ver una excavacion, poder editarla, etc, para ello se usa el módulo
+\textbf{django.contrib.contenttypes}, que también tendremos que añadir al proyecto.
+
+\subsubsection{Vistas de autenticación}
+En Django hay dos formas de implementar la autenticación de la aplicación: mediante la
+definición de \textbf{tus propias vistas}, o utilizando las vistas \textbf{ya predefinidas}
+de Django. En nuestro caso hemos obtado por la última, ya que nos ofrece todo lo necesario
+para nuestro propósito y hace mucho más sencilla la implementación.\\
+
+Para aclarar un poco más esto último, si nos fijamos en la figura \ref{fig:mvt}, lo que
+estaríamos usando ya de forma predefinida por Django serían las urls (\textbf{URL}) y las
+vistas (\textbf{VIEW}), quedando a nuestro cargo la definición de los correspondientes
+\textbf{plantillas/templates} asociadas a cada una de las vistas y urls.\\
+
+A continuación, se indican las rutas que se encuentran definidas en
+\textbf{django.contrib.auth.urls} junto a la descripción de las funcionalidades de las
+\textbf{plantillas/templates} que renderizan:
+
+    \begin{itemize}
+        \item \textbf{accounts/login/}: es el template desde el que los usuarios pueden
+        loguearse en la aplicación, es decir, autenticarse.
+        \item \textbf{accounts/logout/}: cuando un usuario está logueado y accede a esta
+        url, se deslogueará automáticamente.
+        \item \textbf{accounts/password\underline{ }change/}: permite a un usuario
+        autenticado cambiar su contraseña en la aplicación.
+        \item \textbf{accounts/password\underline{ }change/done/}: es el template que
+        muestra el resultado del cambio de contraseña.
+        \item \textbf{accounts/password\underline{ }reset/}: en caso de olvido de contraseña,
+        este template permite a un usuario no logueado, introducir su correo para que se le
+        envíe un enlace de recuperación de contraseña.
+        \item \textbf{accounts/password\underline{ }reset/done/}: muestra el resultado de
+        haber enviado el correo de recuperación de contraseña al usuario.
+        \item \textbf{accounts/reset/<uidb64>/<token>/}: en este caso, la url anterior
+        envía un enlace de recuperación de contraseña al usuario, este enlace tiene el
+        formato aquí indicado, un \textbf{uidb64}, que sería el id del usuario codificado
+        en base 64, y un \textbf{token}, que es un token de seguridad que se genera en
+        el momento de la creación del enlace y verifica que el password sea válido.
+        \item \textbf{accounts/reset/done/}: este template muestra un mensaje de confirmación
+        tras el cambio de contraseña.
+    \end{itemize}
+
+\subsubsection{Registro de usuarios}
+En este punto, dado que Django no ofrece ninguna vista ni url ya definida para el registro
+de usuarios, se ha procedido a incorporar a nuestra aplicación una ruta (register/),
+una vista (register) y una plantilla (register.html). Desde la plantilla, un usuario no
+registrado en el sistema podrá registrarse introduciendo su \textbf{nombre de usuario}, un
+\textbf{correo electrónico} (necesario para poder recuperar la contraseña en caso de
+olvido), la \textbf{contraseña} y una \textbf{confirmación de contraseña}.\\
+
+Para el registro de usuarios, se ha decidido que se siga el siguiente flujo de acciones en
+la aplicación:
+
+    \begin{enumerate}
+        \item Un usuario no registrado rellena el formulario de registro y lo envía. Ahora
+        estaría registrado en el sistema, pero como un usuario \textbf{inactivo}, por lo
+        que no podrá loguearse en la aplicación.
+        \item Al realizarse una solicitud de registro, se enviará un correo al administrador
+        del sistema para que apruebe el registro del usuario.
+        \item Al administrador del sistema aprueba el registro del usuario, \textbf{activando}
+        al usuario desde su panel de administración.
+        \item Se le notifica al usuario mediante correo electrónico que ya puede hacer login
+        en la aplicación.
+    \end{enumerate}
+
+\subsubsection{Envío de correos}} 
+El envío de correos electrónicos es una parte importante de la aplicación, ya que se
+utiliza para enviar correos de recuperación de contraseña, para activar usuarios, para
+confirmar las activaciones, etc.\\
+
+A pesar de que python tiene una interfaz para enviar correos en el módulo de
+\textbf{smtplib}, Django incorpora capas superiores para que el envío de los correos se
+haga de forma mas rápida y para dar soporte a las plataformas que no puedan usar SMTP
+\footnote{\textbf{Simple Mail Transfer Protocol} es un protocolo que utilizan los servidores
+de correo electrónico para enviar y recibir emails.}.\\
+
+En esta ocasión, se ha decidido usar el servidor de correo de Google, ya que es uno de los
+más populares y seguros. Para ello, se han tenido que definir en la configuración de
+Django ajustes como el backend que se usará para enviar los correos, el host, el puerto,
+indicar si se usa una conexión segura con TLS, el usuario y la contraseña, por supuesto,
+éstos dos últimos almacenados siempre en \textbf{variables de entorno} por temas de
+seguridad.\\
+
+En una primera aproximación a la solución final adoptada, Django se autenticaba con el
+usuario y contraseña de correo indicados en \textbf{settings.py}, teniendo que permitir
+el \textbf{acceso de aplicaciones menos seguras} explícitamente en Gmail para que Django
+pudiera autenticarse.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.40]{imagenes/apps-access.png}
+        \caption{Acceso de aplicaciones menos seguras}
+        \label{fig:apps-access}
+    \end{figure}
+
+Como vemos, esta opción no parece muy recomendable ya que puede ser un punto vulnerable
+en la seguridad de nuestra cuenta y de nuestra aplicación, por lo que finalmente se ha
+decidido activar la autenticación en dos pasos y crear una contraseña de aplicación,
+que estará en una variable de entorno junto al correo de la cuenta.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.35]{imagenes/apps-pass.png}
+        \caption{Contraseñas de aplicaciones}
+        \label{fig:apps-pass}
+    \end{figure}
