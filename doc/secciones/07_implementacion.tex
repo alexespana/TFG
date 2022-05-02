@@ -752,19 +752,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     latitud = models.FloatField()
-    %     longitud = models.FloatField()
-    %     altura = models.PositiveSmallIntegerField()
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        latitud = models.FloatField()
+        longitud = models.FloatField()
+        altura = models.PositiveSmallIntegerField()
 
-    %     def __str__(self):
-    %         return str(self.n_excavacion)
-    % \end{minted}
+        def __str__(self):
+            return str(self.n_excavacion)
+    \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -797,15 +797,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     .
-    %     .
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        .
+        .
+    \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -816,17 +816,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         unique_together = ('letra', 'numero',)
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            unique_together = ('letra', 'numero',)
+    \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -834,20 +834,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         constraints = [
-    %             models.UniqueConstraint(fields=['letra', 'numero'], 
-    %                                     name='fact_constraint')                                                  
-    %         ]
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            constraints = [
+                models.UniqueConstraint(fields=['letra', 'numero'], 
+                                        name='fact_constraint')                                                  
+            ]
+    \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
@@ -1040,90 +1040,90 @@ realizar acciones sobre excavaciones tendríamos:
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
         vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.view_excavation', 
-    %                                     raise_exception=True)
-    % def list_allexcavations(request):
-    %     # Get all excavations
-    %     excavations = Excavation.objects.all()
-    %     data = { 'excavations': excavations}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.view_excavation', 
+                                        raise_exception=True)
+    def list_allexcavations(request):
+        # Get all excavations
+        excavations = Excavation.objects.all()
+        data = { 'excavations': excavations}
     
-    %     return render(request, 'excavations_list.html', data)
-    % \end{minted}
+        return render(request, 'excavations_list.html', data)
+    \end{minted}
 
         \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.add_excavacion', 
-    %                                     raise_exception=True)
-    % def add_excavation(request):
-    %     # Get the fields of excavation
-    %     data = { 'form': ExcavationForm() }
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.add_excavacion', 
+                                        raise_exception=True)
+    def add_excavation(request):
+        # Get the fields of excavation
+        data = { 'form': ExcavationForm() }
     
-    %     if request.method == 'POST':
-    %         # Get the data entered by the user
-    %         form = ExcavationForm(data=request.POST)
-    %         if(form.is_valid()):    # Check if valid
-    %             form.save()         # Save form
+        if request.method == 'POST':
+            # Get the data entered by the user
+            form = ExcavationForm(data=request.POST)
+            if(form.is_valid()):    # Check if valid
+                form.save()         # Save form
     
-    %             # Redirect to the list of excavations
-    %             return redirect(to='excavations')
-    %         else:
-    %             data['form'] = form
+                # Redirect to the list of excavations
+                return redirect(to='excavations')
+            else:
+                data['form'] = form
     
-    %     return render(request, 'add_excavation.html', data)
-    % \end{minted}
+        return render(request, 'add_excavation.html', data)
+    \end{minted}
 
         \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.change_excavation', 
-    %                                     raise_exception=True)
-    % def modify_excavation(request, id):
-    %     excavation = get_object_or_404(Excavation, id=id)
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.change_excavation', 
+                                        raise_exception=True)
+    def modify_excavation(request, id):
+        excavation = get_object_or_404(Excavation, id=id)
         
-    %     # Guardar el formulario con los datos del cuadro
-    %     data = { 'form': ExcavationForm(instance=excavation) }
+        # Guardar el formulario con los datos del cuadro
+        data = { 'form': ExcavationForm(instance=excavation) }
     
-    %     if request.method == 'POST':
-    %         form = ExcavationForm(data=request.POST,
-    %                                     instance=excavation)
-    %         if form.is_valid():       # Si es válido
-    %             form.save()           # Guardarlo
+        if request.method == 'POST':
+            form = ExcavationForm(data=request.POST,
+                                        instance=excavation)
+            if form.is_valid():       # Si es válido
+                form.save()           # Guardarlo
     
-    %             return redirect(to="excavations")
+                return redirect(to="excavations")
     
-    %         data["form"] = form
+            data["form"] = form
     
-    %     return render(request, 'modify_excavation.html', data)
-    % \end{minted}
+        return render(request, 'modify_excavation.html', data)
+    \end{minted}
 
         \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.delete_excavation',
-    %                                     raise_exception=True)
-    % def delete_excavation(request, id):
-    %     # Get the excavation, if it doesn't exist, get an Http404
-    %     excavation = get_object_or_404(Excavation, id=id)
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.delete_excavation',
+                                        raise_exception=True)
+    def delete_excavation(request, id):
+        # Get the excavation, if it doesn't exist, get an Http404
+        excavation = get_object_or_404(Excavation, id=id)
     
-    %     # Delete the excavation
-    %     excavation.delete()    
+        # Delete the excavation
+        excavation.delete()    
     
-    %     return redirect(to="excavations")
-    % \end{minted}
+        return redirect(to="excavations")
+    \end{minted}
     \end{itemize}
 
 Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
@@ -1199,3 +1199,189 @@ Como podemos observar, en él podremos definir grupos de usuarios con los permis
 ver los usuarios registrados en el sistema, modificarlos, eliminarlos, cambiar el diseño
 de la interfaz (\textbf{Temas}), además de poder ver, añadir, modificar o eliminar
 cualquier objeto perteneciente a los modelos que hemos definido en la aplicación.
+
+
+\subsection{Testear comportamiento}
+En este milestone explicaremos por qué es tan importante la realización de tests durante
+el proceso de desarrollo y cómo lo hemos llevado a cabo.\\
+
+Los errores humanos en el desarrollo del software son posibles y pueden causar fallos o
+defectos en cualquier fase del desarrollo del software. Dichos errores pueden ser algo
+trivial, \textbf{fácil} de solucionar, o algo más \textbf{complejo}, que pueda requerir
+tiempo y un coste elevado para solucionarlo. Dichos errores pueden evitarse con un
+correcto testeo durante la fase del desarrollo del software, ya que gracias a él
+podremos \cite{why-testing}:
+
+    \begin{itemize}
+        \item \textbf{Detectar errores} durante el desarrollo del software.
+        \item Hacer que el software desarrollado tenga una \textbf{mayor calidad y
+        fiabilidad}.
+        \item \textbf{Cumplir los requisitos} especificados por el cliente, y por lo tanto,
+        que el cliente esté satisfecho.
+        \item Obtener un funcionamiento \textbf{fiable y de alto rendimiento}.
+        \item Evitar que en \textbf{releases}\footnote{\textbf{Lanzamiento} (publicación)
+        de una versión definitiva del software} puedan introducirse errores.
+    \end{itemize}
+
+Poniendo un ejemplo, supongamos que queremos enviar una cantidad de dinero a través de
+Bizum a un amigo, se comienza la \textbf{transacción} y se le envía el dinero al
+destinatario, indicando finalmente un mensaje de confirmación. Sin embargo, nuestro amigo
+dice que no ha recibido ningún ingreso en su cuenta y nosotros tampoco vemos que en nuestra
+cuenta se haya anulado el envío del dinero. Esta situación nos generará molestia y no
+estaremos satisfechos con el servicio. ¿Por qué sucede esto? Esto sucede por un testeo
+incorrecto o inexistente antes de lanzar el producto (\textbf{release}).\\
+
+El testeo de una aplicación web es una tarea difícil, ya que está compuesta por varias
+capas lógicas, que van desde el manejo de \textbf{solicitudes HTTP}, a la
+\textbf{validación y procesamiento de formularios}, hasta la \textbf{renderización de las
+plantillas}. Para realizar todas estas tareas, Django tiene un marco de ejecución de
+pruebas con el que se pueden simular solicitudes HTTP, insertar datos de prueba y en
+general, comprobar que el código funciona como se espera.\\
+
+Antes de nada, vamos a explicar la jerarquía de clases que existen para el testeo de la
+aplicación:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.60]{imagenes/classes-hierarchy.png}
+        \caption[Jerarquía de las clases para pruebas unitarias.]{Jerarquía de las
+        clases para pruebas unitarias. Fuente \cite{classes-hierarchy}}
+        \label{fig:classes-hierarchy}
+    \end{figure}
+
+Como podemos observar, la clase padre de la que el resto hereda todas sus funcionalidades
+es la clase \textbf{TestCase}, que se encuentra en el módulo \textbf{unittest} de la
+biblioteca estándar de Python. A continuación, vamos a explicar brevemente las subclases
+que implementa el framework de test de Django:
+
+    \begin{itemize}
+        \item \textbf{SimpleTestCase}: esta clase añade numerosas funcionalidades a la
+        clase base del módulo de Python. Normalmente es utilizada cuando no se necesita
+        ninguna consulta a la base de datos.
+        \item \textbf{TransactionTestCase}: esta clase añade más funcionalidades a la
+        clase SimpleTestCase. Esta clase y TestCase (siguiente punto) son idénticas
+        excepto por la forma en que la base de datos se restablece.
+        \item \textbf{TestCase}: esta clase es la más utulizada para escribir tests en
+        Django. En nuestros tests, hemos utilizado esta clase ya que nuestra aplicación
+        utiliza una base de datos y será por lo tanto necesaria.
+        \item \textbf{LiveServerTestCase}: esta clase es la más peculiar de todas, ya que
+        hace lo mismo que TransactionTestCase, pero además, permite que se ejecuten
+        \textbf{tests visuales}, es decir, tests en los que se abre un navegador y se
+        se simulan acciones reales de un usuario, verificando que la página se comporta
+        como es debido, por ejemplo, al pulsar un botón, al loquearse, al ver las unidades
+        estratigráficas, etc.
+    \end{itemize}
+
+\subsubsection{Base de datos de tests}
+Como hemos comentado anteriormente, existen tests que requerirán una base de datos para
+funcionar (aquellos que heredan de \textbf{TestCase} de Django). Esta base de datos no debe
+ser la base de datos real, es decir, la de producción, ya que al finalizar los tests podría
+estar en un estado inválido o desconocido. Para ello, Django crea una base de datos nueva
+en el momento en que se ejecutan los tests, que tendrá la misma configuración que la
+indicada en el archivo \textbf{settings.py} del proyecto y que además, se eliminará al
+finalizar los tests.\\
+
+Para lanzar los tests en Django se tiene que usar el comando \textbf{test} de la utilidad
+\textbf{manage.py} de nuestro proyecto, que básicamente es un archivo ejecutable con el
+que se pueden ejecutar los comandos del proyecto Django, comandos relacinados con modelos,
+migraciones, tests, etc. Veamos un sencillo ejemplo de lanzamiento de tests:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.40]{imagenes/db-test.png}
+        \caption{Base de datos para testing}
+        \label{fig:db-test}
+    \end{figure}
+
+Debemos recordar que nosotros al inicio del desarrollo del software, decidimos lanzar el
+proyecto usando \textbf{docker} \cite{docker} y \textbf{docker-compose} \cite{docker-compose},
+es decir, dockerizándolo, por esta razón lanzamos el contenedor antes para lanzar los
+tests.\\
+
+Como vemos, lo primero que se hace es crear la base de datos para testing, posteriormente
+se ejecutan los tests (cada punto indica la ejecución correcta de un test) y finalmente se
+destruye la base de datos creada al principio.\\
+
+En este caso, si quisiéramos ver con más detalle lo que sucede, podríamos indicar en el
+comando la opción \textbf{-v <nivel>} (verbosity) en el el nivel indica la profundidad de
+detalle (0,1,2,3), en este caso, dado que la salida es demasiado extensa, no se aporta la
+imagen. Si ejecutásemos los tests con un nivel dos o superior podríamos como Django, antes
+de lanzar los tests, realiza todas las \textbf{migraciones} de las base de datos,
+teniendo de esta forma un entorno independiente para el testeo de la aplicación y dejando
+la base de datos usada en producción en el mismo estado que al comienzo de los tests.\\
+
+\subsubsection{Lanzamiento de tests}
+Por defecto, Django incorpora en su estructura base de proyecto, un archivo llamado
+\textbf{tests.py}, donde se podrán escribir todos los tests necesarios para el proyecto.
+Sin embargo, dado que nuestra aplicación tiene miles de líneas de código, se ha decidido
+crear un directorio llamado \textbf{tests} y dentro de él, todos los archivos (módulos) de
+tests que sean necesarios. Concretamente, hemos creado los siguientes archivos:
+
+    \begin{itemize}
+        \item \textbf{tests/\underline{  }init\underline{  }.py}: este archivo es el
+        encargado de importar todos los módulos de tests que se encuentren en el
+        directorio \textbf{tests}.
+        \item \textbf{tests/test\_urls.py}: este archivo contiene los tests de las urls de la
+        aplicación. Comprueba que las urls de la aplicación estén vinculadas siempre a su
+        correpondiente vista.
+        \item \textbf{tests/test\_settings.py}: este archivo contiene los tests de los settings
+        de la aplicación. Comprueba que ciertas variables esenciales en la aplicación
+        estén correctamente declaradas. Por ejemplo, que la \textbf{SECRET\_KEY} de la
+        aplicación esté siemrpre declarada en una variable de entorno.
+        \item \textbf{tests/test\_models.py}: este archivo contiene los tests de los modelos
+        de la aplicación. Principalmente testea que las operaciones de guardado de distintos
+        modelos funcionen adecuadamente.
+        \item \textbf{tests/test\_views.py}: este archivo contiene los tests de las vistas
+        de la aplicación, testea todas las vistas diseñadas para listar, añadir, modificar o
+        eliminar objetos de la base de datos.
+        \item \textbf{tests/test\_forms.py}: este archivo contiene los tests de los formularios
+        de la aplicación. Principalmente comprueba que los formularios sean válidos o no
+        al introducir determinados datos de entrada.
+        \item \textbf{tests/test\_api.py}: este archivo contiene los tests de la API de la
+        aplicación. Comprueba que las principales operaciones de listar, añadir, modificar y
+        eliminar se ejecuten correctamente sobre los modelos.
+    \end{itemize}
+
+Gracias al descubrimiento de pruebas (\textbf{Test discovery}) basado en el módulo de
+unittest \cite{test-discovery}, se descubrirán tests que se encuentren en cualquier nombre
+de archivo que siga la expresión regular \textbf{test*.py}. Además tambien podemos indicar
+la ejecución de tests concretos mediante la adición de \textbf{etiquetas de test} (test
+labels). Por ejemplo, supongamos que queremos ejecutar un determinado método de test
+llamado \textbf{test\_list\_excavations\_GET}. Para ello, podemos indicarlo de la siguiente
+forma:
+
+    \begin{enumerate}
+        \item \textbf{myFindings.tests} es la ruta completa de puntos de Python hacia el
+        paquete \textbf{tests}.
+        \item \textbf{test\_views} indica el módulo (arquivo Python) donde se quieren
+        buscar los tests.
+        \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
+        ya que hereda de la clase TestCase de Django:
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class TestListingViews(TestCase):
+        .
+        .
+    \end{minted}
+        \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
+        ejecutar.
+    \end{enumerate}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{imagenes/one-test.png}
+        \caption{Ejecución de un método de test}
+        \label{fig:one-test}
+    \end{figure}
+
+Al terminar la realización de test (por ahora) en este milestone se han realizado un total de
+\textbf{143 tests}, intentando testear la máxima cantidad de código posible, la ejecución de
+los mismos se encuentra en la siguiente imagen:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{imagenes/one-test.png}
+        \caption{Ejecución de todos los tests}
+        \label{fig:one-test}
+    \end{figure}
