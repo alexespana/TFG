@@ -752,19 +752,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        latitud = models.FloatField()
-        longitud = models.FloatField()
-        altura = models.PositiveSmallIntegerField()
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     latitud = models.FloatField()
+    %     longitud = models.FloatField()
+    %     altura = models.PositiveSmallIntegerField()
 
-        def __str__(self):
-            return str(self.n_excavacion)
-    \end{minted}
+    %     def __str__(self):
+    %         return str(self.n_excavacion)
+    % \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -797,15 +797,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     .
+    %     .
+    % \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -816,17 +816,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            unique_together = ('letra', 'numero',)
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         unique_together = ('letra', 'numero',)
+    % \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -834,20 +834,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            constraints = [
-                models.UniqueConstraint(fields=['letra', 'numero'], 
-                                        name='fact_constraint')                                                  
-            ]
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         constraints = [
+    %             models.UniqueConstraint(fields=['letra', 'numero'], 
+    %                                     name='fact_constraint')                                                  
+    %         ]
+    % \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
@@ -1040,90 +1040,90 @@ realizar acciones sobre excavaciones tendríamos:
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
         vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.view_excavation', 
-                                        raise_exception=True)
-    def list_allexcavations(request):
-        # Get all excavations
-        excavations = Excavation.objects.all()
-        data = { 'excavations': excavations}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.view_excavation', 
+    %                                     raise_exception=True)
+    % def list_allexcavations(request):
+    %     # Get all excavations
+    %     excavations = Excavation.objects.all()
+    %     data = { 'excavations': excavations}
     
-        return render(request, 'excavations_list.html', data)
-    \end{minted}
+    %     return render(request, 'excavations_list.html', data)
+    % \end{minted}
 
         \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.add_excavacion', 
-                                        raise_exception=True)
-    def add_excavation(request):
-        # Get the fields of excavation
-        data = { 'form': ExcavationForm() }
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.add_excavacion', 
+    %                                     raise_exception=True)
+    % def add_excavation(request):
+    %     # Get the fields of excavation
+    %     data = { 'form': ExcavationForm() }
     
-        if request.method == 'POST':
-            # Get the data entered by the user
-            form = ExcavationForm(data=request.POST)
-            if(form.is_valid()):    # Check if valid
-                form.save()         # Save form
+    %     if request.method == 'POST':
+    %         # Get the data entered by the user
+    %         form = ExcavationForm(data=request.POST)
+    %         if(form.is_valid()):    # Check if valid
+    %             form.save()         # Save form
     
-                # Redirect to the list of excavations
-                return redirect(to='excavations')
-            else:
-                data['form'] = form
+    %             # Redirect to the list of excavations
+    %             return redirect(to='excavations')
+    %         else:
+    %             data['form'] = form
     
-        return render(request, 'add_excavation.html', data)
-    \end{minted}
+    %     return render(request, 'add_excavation.html', data)
+    % \end{minted}
 
         \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.change_excavation', 
-                                        raise_exception=True)
-    def modify_excavation(request, id):
-        excavation = get_object_or_404(Excavation, id=id)
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.change_excavation', 
+    %                                     raise_exception=True)
+    % def modify_excavation(request, id):
+    %     excavation = get_object_or_404(Excavation, id=id)
         
-        # Guardar el formulario con los datos del cuadro
-        data = { 'form': ExcavationForm(instance=excavation) }
+    %     # Guardar el formulario con los datos del cuadro
+    %     data = { 'form': ExcavationForm(instance=excavation) }
     
-        if request.method == 'POST':
-            form = ExcavationForm(data=request.POST,
-                                        instance=excavation)
-            if form.is_valid():       # Si es válido
-                form.save()           # Guardarlo
+    %     if request.method == 'POST':
+    %         form = ExcavationForm(data=request.POST,
+    %                                     instance=excavation)
+    %         if form.is_valid():       # Si es válido
+    %             form.save()           # Guardarlo
     
-                return redirect(to="excavations")
+    %             return redirect(to="excavations")
     
-            data["form"] = form
+    %         data["form"] = form
     
-        return render(request, 'modify_excavation.html', data)
-    \end{minted}
+    %     return render(request, 'modify_excavation.html', data)
+    % \end{minted}
 
         \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.delete_excavation',
-                                        raise_exception=True)
-    def delete_excavation(request, id):
-        # Get the excavation, if it doesn't exist, get an Http404
-        excavation = get_object_or_404(Excavation, id=id)
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.delete_excavation',
+    %                                     raise_exception=True)
+    % def delete_excavation(request, id):
+    %     # Get the excavation, if it doesn't exist, get an Http404
+    %     excavation = get_object_or_404(Excavation, id=id)
     
-        # Delete the excavation
-        excavation.delete()    
+    %     # Delete the excavation
+    %     excavation.delete()    
     
-        return redirect(to="excavations")
-    \end{minted}
+    %     return redirect(to="excavations")
+    % \end{minted}
     \end{itemize}
 
 Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
@@ -1357,13 +1357,13 @@ forma:
         buscar los tests.
         \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
         ya que hereda de la clase TestCase de Django:
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class TestListingViews(TestCase):
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class TestListingViews(TestCase):
+    %     .
+    %     .
+    % \end{minted}
         \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
         ejecutar.
     \end{enumerate}
@@ -1385,3 +1385,94 @@ los mismos se encuentra en la siguiente imagen:
         \caption{Ejecución de todos los tests}
         \label{fig:all-tests}
     \end{figure}
+
+\subsection{Integración continua}
+En este milestone del proyecto se va a explicar en qué consiste la integración continua y
+cómo se ha llevado a cabo en este proyecto. Antes de nada, vamos a explicar en qué consiste
+la integración continua \cite{continuous-integration}:
+
+    \begin{itemize}
+        \item La \textbf{integración continua} o \textbf{CI} es una práctica de desarrollo
+        del software que nos permite controlar que en proyectos donde trabajan uno o varios
+        desarrolladores el código siga funcionando adecuadamente mediante la automatización
+        de pruebas de test, compilado, ejecución, etc.
+    \end{itemize}
+
+Imaginemos que estamos trabajando colaborativamente en un proyecto y hasta el momento todo
+funcionaba correctamenete, ahora, un compañero que está trabajando en una mejora, añade su
+código a la base del proyecto. Esta nueva mejora hace cambiar el comportamiento habitual del
+proyecto, haciendo que se produzcan resultados incorrectos. Este error puede venir causado
+por la falta de ejecución de tests antes de añadir el código, error que se podría haber
+evitado si antes de añadir dicho código al proyecto base se hubiesen ejecutado los tests
+automáticamente. Este tipo de \textbf{pruebas automatizadas} es lo que se conoce como
+integración continua.\\
+
+Entre los principales requisitos que debe tener el sistema de integración continua que
+usemos, se encuentran:
+
+    \begin{itemize}
+        \item Que sea sencillo de configurar, tanto para la ejecución de tests como para
+        cualquier otra tarea.
+        \item Que no requiera introducir tarjeta de crédito o pagar por mensualidad, es
+        decir, que sea gratuito.
+        \item Que sea fácil de integrar con Github, es decir, ver fácilmente el resultado
+        de la integración continua ejecutada.
+    \end{itemize}
+
+En la actualidad, existen numerosos sistemas de CI, entre los que podemos encontrar:
+
+    \begin{itemize}
+        \item \textbf{Travis CI} \cite{travis-ci}: si atendemos a la facilidad de uso y lo
+        estándar que es el sistema, quizás éste sea el más recomendado de usar, sin embargo,
+        requiere introducir tarjeta de crédito, por lo que lo hemos descartado como opción.
+        \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente el más popular
+        en la actualidad, sin embargo, éste no es solo un sistema de CI, por lo que muchas de
+        sus características no las usaríamos.
+        \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
+        proporcionado por Github y tiene la ventaja de poder usar otras Github Actions ya
+        implementadas. Además de que permite automatizar, customizar y ejecutar flujos de
+        trabajo (explicados más adelante) directamente desde el repositorio de Github.
+        \item \textbf{Circle CI} \cite{circle-ci}: este sistema de CI es muy completo y
+        sencillo de utilizar. Además, permite visualizar los resultados de las pruebas de la
+        integración continua habilitando el Github Checks.
+    \end{itemize}
+
+    Mencionados los sistemas de CI más relevantes (hay muchos más), hemos decidido usar las
+    Github Actions de Github, ya que permiten una configuración sencilla, es un servicio
+    gratuito, es la herramienta con la que más familiarizados estamos (aunque se podría haber
+    escogido Circle CI sin problema), es muy potente y además, como es obvio, permite ver los
+    resultados de CI directamente en la interfaz de Github.
+
+\newpage
+\subsubsection{Flujos de trabajo}
+En este apartado, explicaremos qué son los \textbf{flujos de trabajo o workflows} y cuáles
+hemos añadido a nuestro proyecto.\\
+
+Un flujo de trabajo es un proceso automatizado que ejecutará uno o más \textbf{trabajos}
+(job), siendo un job una tarea que se ejecuta en un entorno determinado y donde existen una
+serie de pasos (steps). Dichos flujos de trabajo se definen en archivos que siguen el formato
+YAML (Yet Another Markup Language), un formato de serialización de datos de alto nivel
+(comprensible por humanos).\\
+
+Estos workflows se definen en la carpeta \textbf{.github/workflows} en el directorio raíz
+del repositorio y puede haber tantos workflows como se desee, normalmente uno por archivo.
+Cada workflow debe tener los siguientes tres componentes:
+
+    \begin{enumerate}
+        \item El evento que hace que se ejecute el workflow (\textbf{trigger}).
+        \item Uno o más trabajos (\textbf{jobs}), cada uno de los cuales estará ejecutado en
+        un entorno a elegir (máquina virtual, contenedor, etc) y ejecutará una serie de
+        pasos (\textbf{steps}).
+        \item Cada step podrá ejecutar un script que hayamos definido nosotros mismos, Un
+        comando del entorno donde estemos ejecutan el job, o bien usar una github action
+        predefinida que podamos encontrar en el
+        \href{https://github.com/marketplace?type=actions}{GitHub Marketplace}.
+    \end{enumerate}
+
+En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
+
+    \begin{enumerate}
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/docs.yml}{Build LaTeX documentation}}:
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/build.yml}{Build images}}:
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/tests.yml}{Tests}}:
+    \end{enumerate}
