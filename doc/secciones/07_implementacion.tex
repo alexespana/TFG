@@ -752,19 +752,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     latitud = models.FloatField()
-    %     longitud = models.FloatField()
-    %     altura = models.PositiveSmallIntegerField()
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        latitud = models.FloatField()
+        longitud = models.FloatField()
+        altura = models.PositiveSmallIntegerField()
 
-    %     def __str__(self):
-    %         return str(self.n_excavacion)
-    % \end{minted}
+        def __str__(self):
+            return str(self.n_excavacion)
+    \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -797,15 +797,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     n_excavacion = models.PositiveIntegerField(unique=True, 
-    %                     verbose_name='Número de excavación')
-    %     .
-    %     .
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        n_excavacion = models.PositiveIntegerField(unique=True, 
+                        verbose_name='Número de excavación')
+        .
+        .
+    \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -816,17 +816,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         unique_together = ('letra', 'numero',)
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            unique_together = ('letra', 'numero',)
+    \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -834,20 +834,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % % DESCOMENTAR
-    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class Excavacion(models.Model):
-    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-    %     numero = models.CharField(max_length=6)    
-    %     .
-    %     .
-    %     class Meta:
-    %         constraints = [
-    %             models.UniqueConstraint(fields=['letra', 'numero'], 
-    %                                     name='fact_constraint')                                                  
-    %         ]
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class Excavacion(models.Model):
+        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+        numero = models.CharField(max_length=6)    
+        .
+        .
+        class Meta:
+            constraints = [
+                models.UniqueConstraint(fields=['letra', 'numero'], 
+                                        name='fact_constraint')                                                  
+            ]
+    \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
@@ -913,7 +913,7 @@ basadas en cookies, etc. Antes de nada debemos de tener claro qué significan lo
 de autenticación y autorización:
 
     \begin{itemize}
-        \item \textbf{Autenticación}: es un proceso en el que verifica que un usuario
+        \item \textbf{Autenticación}: es un proceso en el que se verifica que un usuario
         es quién dice ser. Por ejemplo, una de las pruebas más comunes de autenticación
         es mediante la escritura de una contraseña.
         \item \textbf{Autorización}: en este caso, se determina lo que un usuario
@@ -1040,90 +1040,90 @@ realizar acciones sobre excavaciones tendríamos:
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
         vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.view_excavation', 
-    %                                     raise_exception=True)
-    % def list_allexcavations(request):
-    %     # Get all excavations
-    %     excavations = Excavation.objects.all()
-    %     data = { 'excavations': excavations}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.view_excavation', 
+                                        raise_exception=True)
+    def list_allexcavations(request):
+        # Get all excavations
+        excavations = Excavation.objects.all()
+        data = { 'excavations': excavations}
     
-    %     return render(request, 'excavations_list.html', data)
-    % \end{minted}
+        return render(request, 'excavations_list.html', data)
+    \end{minted}
 
         \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.add_excavacion', 
-    %                                     raise_exception=True)
-    % def add_excavation(request):
-    %     # Get the fields of excavation
-    %     data = { 'form': ExcavationForm() }
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.add_excavacion', 
+                                        raise_exception=True)
+    def add_excavation(request):
+        # Get the fields of excavation
+        data = { 'form': ExcavationForm() }
     
-    %     if request.method == 'POST':
-    %         # Get the data entered by the user
-    %         form = ExcavationForm(data=request.POST)
-    %         if(form.is_valid()):    # Check if valid
-    %             form.save()         # Save form
+        if request.method == 'POST':
+            # Get the data entered by the user
+            form = ExcavationForm(data=request.POST)
+            if(form.is_valid()):    # Check if valid
+                form.save()         # Save form
     
-    %             # Redirect to the list of excavations
-    %             return redirect(to='excavations')
-    %         else:
-    %             data['form'] = form
+                # Redirect to the list of excavations
+                return redirect(to='excavations')
+            else:
+                data['form'] = form
     
-    %     return render(request, 'add_excavation.html', data)
-    % \end{minted}
+        return render(request, 'add_excavation.html', data)
+    \end{minted}
 
         \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.change_excavation', 
-    %                                     raise_exception=True)
-    % def modify_excavation(request, id):
-    %     excavation = get_object_or_404(Excavation, id=id)
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.change_excavation', 
+                                        raise_exception=True)
+    def modify_excavation(request, id):
+        excavation = get_object_or_404(Excavation, id=id)
         
-    %     # Guardar el formulario con los datos del cuadro
-    %     data = { 'form': ExcavationForm(instance=excavation) }
+        # Guardar el formulario con los datos del cuadro
+        data = { 'form': ExcavationForm(instance=excavation) }
     
-    %     if request.method == 'POST':
-    %         form = ExcavationForm(data=request.POST,
-    %                                     instance=excavation)
-    %         if form.is_valid():       # Si es válido
-    %             form.save()           # Guardarlo
+        if request.method == 'POST':
+            form = ExcavationForm(data=request.POST,
+                                        instance=excavation)
+            if form.is_valid():       # Si es válido
+                form.save()           # Guardarlo
     
-    %             return redirect(to="excavations")
+                return redirect(to="excavations")
     
-    %         data["form"] = form
+            data["form"] = form
     
-    %     return render(request, 'modify_excavation.html', data)
-    % \end{minted}
+        return render(request, 'modify_excavation.html', data)
+    \end{minted}
 
         \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
         desde las vistas.
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % @login_required
-    % @permission_required('myFindings.delete_excavation',
-    %                                     raise_exception=True)
-    % def delete_excavation(request, id):
-    %     # Get the excavation, if it doesn't exist, get an Http404
-    %     excavation = get_object_or_404(Excavation, id=id)
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    @login_required
+    @permission_required('myFindings.delete_excavation',
+                                        raise_exception=True)
+    def delete_excavation(request, id):
+        # Get the excavation, if it doesn't exist, get an Http404
+        excavation = get_object_or_404(Excavation, id=id)
     
-    %     # Delete the excavation
-    %     excavation.delete()    
+        # Delete the excavation
+        excavation.delete()    
     
-    %     return redirect(to="excavations")
-    % \end{minted}
+        return redirect(to="excavations")
+    \end{minted}
     \end{itemize}
 
 Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
@@ -1357,13 +1357,13 @@ forma:
         buscar los tests.
         \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
         ya que hereda de la clase TestCase de Django:
-    % % DESCOMENTAR
-    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    % class TestListingViews(TestCase):
-    %     .
-    %     .
-    % \end{minted}
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    class TestListingViews(TestCase):
+        .
+        .
+    \end{minted}
         \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
         ejecutar.
     \end{enumerate}
@@ -1472,7 +1472,147 @@ Cada workflow debe tener los siguientes tres componentes:
 En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
 
     \begin{enumerate}
-        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/docs.yml}{Build LaTeX documentation}}:
-        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/build.yml}{Build images}}:
-        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/tests.yml}{Tests}}:
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/docs.yml}
+        {Build LaTeX documentation}}: este flujo de trabajo se encargará de comprobar que
+        la documentación del proyecto pueda construirse correctamente. Procedamos a
+        explicar sus partes principales:
+            \begin{enumerate}
+                \item \textbf{Trigger}: este flujo de trabajo se ejecutará cuando se haga
+                push\footnote{Subida de cambios desde el repositorio local al remoto,
+                normalmente con el comando \textbf{git push} o similar.} al repositorio,
+                siempre y cuando los archivos modificados sean el propio archivo
+                donde se define el workflow (\textbf{docs.yml}) o cualquier archivo latex de
+                la documentación.
+                \item \textbf{Job}: existe un único job llamado \textbf{build-latex} que se
+                ejecutará en la última versión de ubuntu (\textbf{ubuntu-latest}) y que
+                tendrá una serie de steps que se encargarán de compilar el código latex.
+                \item \textbf{Steps}: el job build-latex se compone de dos pasos:
+                    \begin{enumerate}
+                        \item \textbf{Checkout}: acción muy típica en Github Actions, se baja
+                        todos los archivos del repositorio para poder trabaar con ellos. En
+                        él se ha usado una Github Action predefinida llamada
+                        \href{https://github.com/marketplace/actions/checkout}{Checkout}.
+                        \item \textbf{Compile LaTeX document}: este paso compila todos los
+                        archivos latex y construye un pdf de salida. En él también se ha
+                        usado una Github Action predefinida llamada
+                        \href{https://github.com/marketplace/actions/github-action-for-latex}
+                        {Github Action for LaTeX}
+                    \end{enumerate}
+            \end{enumerate}
+
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/build.yml}
+        {Build images}}: como ya mencionamos en secciones anteriores, nosotros hemos decidido
+        ejecutar nuestra aplicación utilizando docker y docker-compose, por lo que este flujo
+        de trabajo se encargará de comprobar que las imágenes que deben crearse se creen
+        correctamente. Entre sus principales partes tenemos:
+            \begin{enumerate}
+                \item \textbf{Trigger}: este flujo de trabajo se ejecutará cuando se haga
+                push al repositorio, siempre y cuando los archivos modificados sean el propio
+                archivo donde se define el workflow (\textbf{build.yml}) o cualquier archivo
+                que se encuentre en el primer nivel de la carpeta \textbf{code}, es decir, los
+                archivos \textit{docker-compose.yml, Dockerfile y requirements.txt}.
+                \item \textbf{Job}: existe un único job llamado \textbf{build-images} que se
+                ejecutará en la última versión de ubuntu (\textbf{ubuntu-latest}) y que
+                tendrá una serie de steps que se encargarán dde construir las imágenes.
+                \item \textbf{Steps}: el job build-images se compone únicamente de dos pasos:
+                    \begin{enumerate}
+                        \item \textbf{Checkout}: es exactamente el mismo paso descrito para
+                        el workflow anterior.
+                        \item \textbf{Build images}: en este paso se construyen las
+                        imágenes. Para ello, desde la carpeta code se ejecuta el comando
+                        \textbf{docker-compose build} para construir las imágenes.
+                    \end{enumerate}
+            \end{enumerate}
+
+        \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/tests.yml}
+        {Tests}}: este flujo de trabajo es algo más complejo que los anteriores y se encargará
+        de ejecutar automáticamente las pruebas de tests. Procedamos a explicar sus componentes:
+            \begin{enumerate}
+                \item \textbf{Trigger}: al igual que en workflows anteriores, este flujo se
+                ejecutará cuando se haga push al repositorio, siempre y cuando los archivos
+                modificados sean el propio archivo donde se define el workflow
+                (\textbf{tests.yml}) o cualquier archivo python del proyecto de Django.
+                \item \textbf{Job}: en este caso también hay un único job, llamado
+                \textbf{run-tests} y que se ejecutará en la última versión de ubuntu
+                (\textbf{ubuntu-latest}).
+                \item \textbf{Services}: dado que debemos ejecutar los tests utilizando un
+                servicio para la base de datos, ha sido necesario definir dentro del ejecutor
+                del flujo (ubuntu-latest) un servicio de postgres. De esta forma,
+                podremos crear la base de datos para test.              
+                \item \textbf{Steps}: este job tiene un total de cinco pasos, que son los
+                siguientes:
+                    \begin{enumerate}
+                        \item \textbf{Checkout}: es exactamente el mismo paso descrito para
+                        el workflow anterior.
+                        \item \textbf{Set up Python}: en este paso inicializamos el entorno
+                        con una \textbf{versión de python}, en concreto con la versión 3.10.
+                        Para ello, se ha utilizado la Github Action predefinida
+                        \href{https://github.com/marketplace/actions/setup-python}{Setup
+                        Python}.
+                        \item \textbf{Install dependencies}: instalación de las dependencias
+                        necesarias para que el proyecto funcione. Dichas dependencias se
+                        encuentran en el archivo \textbf{requires.txt}.
+                        \item \textbf{Run tests}: ejecución de los tests. Para ello, se han
+                        tenido que definir varias variables de entorno. Estas variables de
+                        entorno se almacenan en los \textbf{secrets} de Github, variables
+                        secretas que se definen en el repositorio y que luego son accesibles
+                        desde el entorno de los workflow.\\
+                        
+                        Dicho esto, cabe destacar que para la ejecución de los tests, se ha
+                        utilizado la herramienta \href{https://pypi.org/project/coverage/}
+                        {coverage}, que mide la \textbf{cobertura del código}, es decir,
+                        determina qué porcentaje de líneas de código del total del proyecto
+                        se han ejecutado durante los tests, además de generar un informe que
+                        será utilizado por el paso siguiente. Por lo tanto, cuanto más
+                        elevado sea ese porcentaje, mayor muestra de código de calidad
+                        tendremos. Éste sería el resultado de la ejecución:
+
+                                \begin{figure}[H]
+                                    \centering
+                                    \includegraphics[scale=0.40]{imagenes/codecov-report.png}
+                                    \caption{Informe de Codecov}
+                                    \label{fig:codecov-report}
+                                \end{figure}
+                        
+                        Como vemos, se ha testeado el 92 por ciento del código por ahora, lo
+                        cual es un resultado bastante bueno, y además se ha escrito el
+                        informe en el archivo \textbf{coverage.xml}.
+                        
+                        \item \textbf{Codecov}: este último paso utiliza una Github Action
+                        predefinida llamada
+                        \href{https://github.com/marketplace/actions/codecov}{Codecov GitHub
+                        Action}, que se encarga de subir los resultados del informe del paso
+                        anterior a Codecov web, que nos servirá posteriormente para la
+                        generación de una \textbf{insignia de estado} para el porcentaje de
+                        código cubierto.
+                    \end{enumerate}
+            \end{enumerate}
     \end{enumerate}
+
+Éstos son los flujos de trabajo o workflows que se ejecutarán automáticamente en nuestro
+proyecto cada vez que se produzca uno de los eventos descritos.
+
+\subsubsection{Insignias de estado}
+Una buena práctica en un proyecto software donde se practique integración continua, es la
+inclusión de \textbf{insignias de estado}, o \textbf{badges}. Antes de nada, vamos a
+explicar qué es una insignia de estado: una insignia de estado es simplemente un elemento
+gráfico que indica si un flujo de trabajo falla o pasa actualmente. Con esto en mente,
+nosotros podríamos incluir cuatro insignias de estado: \textbf{una por cada flujo de
+trabajo de CI} y otra adicional mostrando el \textbf{porcentaje de código testeado}.\\
+
+Normalmente dichas insignias se incluyen en la página principal del proyecto, es decir, en
+el \textbf{README.md}, que será lo primero que veamos al entrar, dándonos una buena señal
+de calidad del código del mismo. Dicho esto, el aspecto de la página inicial de nuestro
+repositorio sería el siguiente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.27]{imagenes/badge-status.png}
+        \caption{Insignias de estado}
+        \label{fig:badge-status}
+    \end{figure}
+
+Como vemos, todas ellas indican que las pruebas automatizadas de integración continua han
+pasado con éxito y además, tenemos el porcentaje de codecov añadido, para el cuál se ha
+obtenido el badge desde Codecov web. Adicionalmente, se ha añadido el badge de la
+\textbf{licencia} de código que estamos usando, \textbf{gplv3}.
