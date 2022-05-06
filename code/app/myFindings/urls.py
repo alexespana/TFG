@@ -4,7 +4,7 @@ from . import views
 from rest_framework import routers
 from .views import ExcavationViewSet,PhotoViewSet,InclusionViewSet,SedimentaryUEViewSet, \
                    BuiltUEViewSet,SedimentaryMaterialViewSet,BuiltMaterialViewSet, \
-                   FactViewSet,RoomViewSet
+                   FactViewSet,RoomViewSet,CustomAuthToken
 
 # API endpoints
 router = routers.DefaultRouter()
@@ -154,4 +154,5 @@ urlpatterns = [
     # API
     # ####################
     path('api/', include(router.urls)),
+    path('api-token-auth/', CustomAuthToken.as_view()),
 ]

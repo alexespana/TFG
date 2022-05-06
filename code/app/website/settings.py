@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'myFindings',
     'crispy_forms',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 

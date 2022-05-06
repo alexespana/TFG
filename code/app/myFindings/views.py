@@ -17,6 +17,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
 from rest_framework import viewsets
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
                          BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
                          InclusionSerializer, RoomSerializer, SedimentaryUEFloorSerializer, \
@@ -786,3 +789,22 @@ class RoomViewSet(viewsets.ModelViewSet):
         if self.request.GET.get('type') == 'floor':
             return RoomFloorSerializer
         return RoomSerializer
+
+class CustomAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'groups': [group.name for group in user.groups.all()],
+            'user_permissions': [permission for permission in user.get_all_permissions()]
+        })
