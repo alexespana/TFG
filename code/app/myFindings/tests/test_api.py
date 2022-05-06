@@ -1,10 +1,15 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
                               SedimentaryUE, BuiltUE
 
 class TestListingAPIViews(APITestCase):
+
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
 
     def test_api_list_excavations_GET(self):
         response = self.client.get(reverse('excavation-list', kwargs={}))
@@ -45,6 +50,8 @@ class TestListingAPIViews(APITestCase):
 
 class TestAddAPIViews(APITestCase):
     def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
             n_excavacion='1',
             latitud=1,
@@ -120,6 +127,8 @@ class TestAddAPIViews(APITestCase):
 
 class TestUpdateAPIViews(APITestCase): 
     def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
             n_excavacion='1',
             latitud=1,
@@ -219,6 +228,8 @@ class TestUpdateAPIViews(APITestCase):
     
 class TestDeleteAPIViews(APITestCase):
     def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
             n_excavacion='1',
             latitud=1,
