@@ -1,6 +1,5 @@
 from django.test import TestCase
 from myFindings.models import Room, Excavation, Fact, SedimentaryUE
-
 from myFindings.forms import ExcavationForm, FactForm, RoomForm, PhotoForm, \
     SedimentaryUEForm, BuiltUEForm, SedimentaryMaterialForm, BuiltMaterialForm, \
     InclusionForm, CustomUserCreationForm
