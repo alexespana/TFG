@@ -675,6 +675,21 @@ def send_email_password_reset(request):
 
     return redirect(to='password_reset', context=data)
 
+@login_required
+def staff_panel(request):
+    # Get all excavations
+    users = User.objects.filter(is_active=True, is_superuser=False)
+    staff_users = User.objects.filter(groups__name__in=['Staff'])
+  
+    # Exclude the users that are already staff
+    users = users.exclude(id__in=staff_users.values_list('id', flat=True))
+            
+    data = { 'users': users}
+    return render(request, 'staff_panel.html', data)
+
+# ######################
+# REPORT GENERATOR
+# ######################
 def generate_report(request, id):
     excavation = get_object_or_404(Excavation, id=id)   # Get the excavation   
 
@@ -726,7 +741,9 @@ def generate_report(request, id):
     
     return response
 
+# ######################
 # API REST
+# ######################
 class ExcavationViewSet(viewsets.ModelViewSet):
     queryset = Excavation.objects.all()
     serializer_class = ExcavationSerializer
