@@ -687,7 +687,7 @@ def send_email_password_reset(request):
 
     return redirect(to='password_reset', context=data)
 
-# ####################
+# #####################
 # AUXILIARY DECORATOR 
 # ####################
 def group_required(*group_names):
@@ -737,8 +737,6 @@ def change_perms(request, id):
         form = CustomUserChangeForm(data=request.POST, instance=user)
         
         if(form.is_valid()):        # Check if valid
-            print(was_active)
-            print(form.cleaned_data['is_active'])
             if was_active and not form.cleaned_data['is_active']:
                 # If the user is active and is deactivated, send an email to the user              
                 send_email(subject='MyFindings: cuenta desactivada', from_email=settings.EMAIL_HOST_USER,

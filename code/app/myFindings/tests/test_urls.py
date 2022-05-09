@@ -181,3 +181,11 @@ class TestUrls(TestCase):
     def test_generate_report_url(self):
         url = reverse('generate_report', kwargs={'id': 1})
         self.assertEquals(resolve(url).func, generate_report)
+
+    def test_staff_panel_url(self):
+        url = reverse('staff_panel', kwargs={})
+        self.assertEquals(resolve(url).func, staff_panel)
+
+    def test_change_perms_url(self):
+        url = reverse('change_perms', kwargs={'id': 1})
+        self.assertEquals(resolve(url).func, change_perms)
