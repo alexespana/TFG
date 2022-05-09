@@ -8,7 +8,7 @@ register = template.Library()
 #   ...
 # {% endif %}
 @register.filter(name='is_in_group') 
-def in_group(user, group_name):
+def is_in_group(user, group_name):
     """
     Checks if a user is in a group
     """

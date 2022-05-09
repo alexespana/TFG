@@ -94,7 +94,7 @@
                     <li class="nav-item dropdown">
                         <a id="welcome-user" class="nav-link">Bienvenido {{ user.username }} <em class="bi bi-caret-down"></em></a>
                         <ul>
-                            {% if user | is_in_group: "Staff" %}
+                            {% if user|is_in_group:"Staff" %}
                             <li><a href="{% url 'staff_panel' %}" onclick="navbarLinkActive(29)" class="nav-link">Panel de administración</a></li>
                             <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(30)" class="nav-link">Cambiar contraseña</a></li>
                             {% else %}
