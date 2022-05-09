@@ -30,5 +30,13 @@
             El usuario {{ user.username }} {{ user.first_name }} {{ user.last_name }} con email {{ user.email }} está
             esperando la verificación de su cuenta.
         </p>
+        <p>
+            para modificar al usuario, vaya al siguiente enlace:
+        </p>
+        <p>
+            <a href="{{ protocol}}://{{ domain }}{% url 'change_perms' user.id %}">
+                {{ protocol}}://{{ domain }}{% url 'change_perms' user.id %}
+            </a>
+        </p>
     </body>
 </html>

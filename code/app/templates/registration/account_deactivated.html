@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Account activated</title>
+        <title>Account deactivated</title>
         <style>
             h1{
                 font-family: serif;
@@ -25,17 +25,16 @@
         </style>
     </head>
     <body>
-        <h1>Cuenta activada</h1>
+        <h1>Cuenta desactivada</h1>
         <p>
             Hola {{ user.username }} {{ user.first_name }} {{ user.last_name}},
         </p>
         <p>
-            tu cuenta ha sido activada, para iniciar sesión, vaya al siguiente enlace:
+            por motivos desconocidos, tu cuenta ha sido desactivada por un administrador, podrá volver a acceder cuando
+            se le conceda permiso.
         </p>
         <p>
-            <a href="{{ protocol}}://{{ domain }}:{{ port }}{% url 'login' %}">
-                {{ protocol}}://{{ domain }}:{{ port }}{% url 'login' %}
-            </a>
+            Gracias por su atención.
         </p>
     </body>
 </html>
