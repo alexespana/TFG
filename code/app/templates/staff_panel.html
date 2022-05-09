@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Users{% endblock %}
+{% block title %}Staff panel{% endblock %}
 {% block contenido %}
 {% load crispy_forms_tags %}
 
@@ -12,7 +12,7 @@
                     <hr>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
-                            <caption>Lista de usuarios</caption>
+                            <caption>Usuarios disponibles</caption>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Email</th>
@@ -25,9 +25,10 @@
                                 <td>{{ u.email }}</td>
                           
                                 <td>
-                                    <div class="d-flex">
+                                    <div class="d-flex ">
                                         <div class="d-flex">
-                                            {% comment %} <a href="{% url 'change_perms' u.id %}" class="btn btn-list me-md-2">Cambiar permisos</a> {% endcomment %}
+                                            <a href="{% url 'change_perms' u.id%}" class="btn btn-list me-md-2">Activación y permisos</a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
