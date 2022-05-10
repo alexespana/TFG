@@ -200,7 +200,7 @@ class UE(models.Model):
         ('Sureste','Sureste'),
     ]
 
-    codigo = models.CharField(unique=True, max_length=6)
+    codigo = models.CharField(unique=True, max_length=6, blank=True)
     n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
                                 help_text='Ej. 1, 2, 3, etc', validators=[validate_number]) 
 

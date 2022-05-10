@@ -1,23 +1,33 @@
 import io
 from docx import Document
+from django import template
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
-                   PhotoForm, CustomUserCreationForm
+                   PhotoForm, CustomUserCreationForm, CustomUserChangeForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
                     SedimentaryMaterial, BuiltUE, SedimentaryUE
-from django.contrib.auth import authenticate, login
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
+from rest_framework import viewsets
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
+                         BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
+                         InclusionSerializer, RoomSerializer, SedimentaryUEFloorSerializer, \
+                         SedimentaryUESectionSerializer, BuiltUEFloorSerializer, \
+                         BuiltUESectionSerializer, FactSerializer, FactPlanSerializer, \
+                         FactSectionSerializer, RoomFloorSerializer
 
 # Create your views here.
 def index(request):
@@ -45,7 +55,7 @@ def list_allexcavations(request):
     return render(request, 'excavations_list.html', data)
 
 @login_required
-@permission_required('myFindings.add_excavacion', raise_exception=True)
+@permission_required('myFindings.add_excavation', raise_exception=True)
 def add_excavation(request):
     # Get the fields of excavation
     data = { 'form': ExcavationForm() }
@@ -613,6 +623,16 @@ def register(request):
             # default to non-active
             user.is_active = False
             user.save()
+
+            # Send an email to the archeologist administering the site
+            template_data = {
+                'user': user,
+                'protocol': 'http',
+                'domain': request.get_host(),
+            }
+            send_email(subject='Verificación de registro', from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[settings.EMAIL_HOST_USER], html_message='registration/registration_check.html', data=template_data)
+
             return render(request, 'registration/register_confirm.html')
 
         else:
@@ -667,6 +687,80 @@ def send_email_password_reset(request):
 
     return redirect(to='password_reset', context=data)
 
+# #####################
+# AUXILIARY DECORATOR 
+# ####################
+def group_required(*group_names):
+    def in_groups(u):
+        if u.is_authenticated:
+            if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
+                return True
+        # Raise a permission denied error instead of returning False
+        raise PermissionDenied
+
+    return user_passes_test(in_groups)
+
+@login_required
+@group_required('Staff')
+def staff_panel(request):
+    # Get all excavations
+    users = User.objects.filter(is_superuser=False)
+    staff_users = User.objects.filter(groups__name__in=['Staff'])
+  
+    # Exclude the users that are already staff
+    users = users.exclude(id__in=staff_users.values_list('id', flat=True))
+            
+    data = { 'users': users}
+    return render(request, 'staff_panel.html', data)
+
+@login_required
+@group_required('Staff')
+def change_perms(request, id):
+    # Get the user
+    user = get_object_or_404(User, id=id)
+
+    # Save the inicial value of is_active field
+    was_active = user.is_active
+
+    # Fill the form with the user's data
+    data = { 'form': CustomUserChangeForm(instance=user) }
+
+    # Get the fields for the emails
+    template_data = {
+        'user': user,
+        'protocol': 'http',
+        'domain': request.get_host(),
+    }
+
+    if request.method == 'POST':
+        # Get the data entered by the user
+        form = CustomUserChangeForm(data=request.POST, instance=user)
+        
+        if(form.is_valid()):        # Check if valid
+            if was_active and not form.cleaned_data['is_active']:
+                # If the user is active and is deactivated, send an email to the user              
+                send_email(subject='MyFindings: cuenta desactivada', from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[user.email], html_message='registration/account_deactivated.html', data=template_data)
+            
+            form.save()      # Save form
+
+            # Check if the is_active field was changed
+            if(form.cleaned_data['is_active']):
+
+                # Send an email to the user
+                send_email(subject='MyFindings: cuenta activada', from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[user.email], html_message='registration/account_activated.html', data=template_data)
+     
+            return redirect(to='staff_panel')
+        
+        data['form'] = form
+
+    return render(request, 'change_perms.html', data)
+
+
+# ######################
+# REPORT GENERATOR
+# ######################
 def generate_report(request, id):
     excavation = get_object_or_404(Excavation, id=id)   # Get the excavation   
 
@@ -718,3 +812,87 @@ def generate_report(request, id):
     
     return response
 
+# ######################
+# API REST
+# ######################
+class ExcavationViewSet(viewsets.ModelViewSet):
+    queryset = Excavation.objects.all()
+    serializer_class = ExcavationSerializer
+
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+
+class InclusionViewSet(viewsets.ModelViewSet):
+    queryset = Inclusion.objects.all()
+    serializer_class = InclusionSerializer
+
+class SedimentaryUEViewSet(viewsets.ModelViewSet):
+    queryset = SedimentaryUE.objects.all()
+    lookup_field = 'codigo'
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return SedimentaryUEFloorSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return SedimentaryUESectionSerializer
+        return SedimentaryUESerializer
+
+class BuiltUEViewSet(viewsets.ModelViewSet):
+    queryset = BuiltUE.objects.all()
+    lookup_field = 'codigo'
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return BuiltUEFloorSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return BuiltUESectionSerializer
+        return BuiltUESerializer
+
+class SedimentaryMaterialViewSet(viewsets.ModelViewSet):
+    queryset = SedimentaryMaterial.objects.all()
+    serializer_class = SedimentaryMaterialSerializer
+
+class BuiltMaterialViewSet(viewsets.ModelViewSet):
+    queryset = BuiltMaterial.objects.all()
+    serializer_class = BuiltMaterialSerializer
+    lookup_field = 'codigo'
+
+class FactViewSet(viewsets.ModelViewSet):
+    queryset = Fact.objects.all()
+    serializer_class = FactSerializer
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'plan':
+            return FactPlanSerializer
+        elif(self.request.GET.get('type') == 'section'):
+            return FactSectionSerializer
+        return FactSerializer
+
+class RoomViewSet(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+    def get_serializer_class(self):
+        if self.request.GET.get('type') == 'floor':
+            return RoomFloorSerializer
+        return RoomSerializer
+
+class CustomAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'groups': [group.name for group in user.groups.all()],
+            'user_permissions': [permission for permission in user.get_all_permissions()]
+        })

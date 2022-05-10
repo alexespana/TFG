@@ -1,9 +1,9 @@
-from re import S
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
                               BuiltMaterial, SedimentaryMaterial, SedimentaryUE, BuiltUE
+from django.contrib.auth.models import Group
 
 class TestListingViews(TestCase):
 
@@ -84,6 +84,10 @@ class TestListingViews(TestCase):
         response = self.client.get(reverse('factues', kwargs={'id': pk}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'excavationues.html')
+
+    def test_staff_panel_GET(self):
+        response = self.client.get(reverse('staff_panel'))
+        self.assertEqual(response.status_code, 200)
 
 class TestAddViews(TestCase):
     def setUp(self):
@@ -288,6 +292,33 @@ class TestModifierViews(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(SedimentaryUE.objects.get(pk=self.sedimentaryue.pk).codigo, '001002')
+
+    def test_modify_user_active_POST(self):
+        pk = User.objects.create(
+            username='testuser2',
+            password='12345',
+            is_active=False,
+        ).pk
+        response = self.client.post(reverse('change_perms', kwargs={'id': pk}), {
+            'is_active': True,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.get(pk=pk).is_active)
+
+    def test_modify_user_group_POST(self):
+        # Create a group and obtain its id
+        pkgroup = Group.objects.create(name='testgroup').pk
+
+        pk = User.objects.create(
+            username='testuser3',
+            password='12345',
+            is_active=True, 
+        ).pk
+        response = self.client.post(reverse('change_perms', kwargs={'id': pk}), {
+            'groups': pkgroup,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.objects.get(pk=pk).groups.get().pk, pkgroup)
 
 class TestEliminatingViews(TestCase):
     def setUp(self):

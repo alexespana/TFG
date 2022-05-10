@@ -1,6 +1,7 @@
+
 from django import forms
 from .models import Room, Excavation, Inclusion, Photo, Fact, BuiltMaterial, SedimentaryMaterial, BuiltUE, SedimentaryUE
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 class ExcavationForm(forms.ModelForm):
@@ -51,7 +52,18 @@ class InclusionForm(forms.ModelForm):
         fields = '__all__'
 
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(label='Correo electrónico', required=True)
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+class CustomUserChangeForm(forms.ModelForm):
+    # Name and email of the user must be disabled
+    username = forms.CharField(label='Nombre de usuario', required=False, disabled=True)
+    email = forms.EmailField(label='Correo electrónico', required=False, disabled=True)
+    is_active = forms.BooleanField(label='Activo', required=False, help_text='Activa o desactiva la cuenta del usuario.')
+
+    class Meta:
+        model = User
+        # I need only the username, email, is_active and groups
+        fields = ['username', 'email', 'is_active', 'groups']
