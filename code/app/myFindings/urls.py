@@ -144,6 +144,8 @@ urlpatterns = [
     # ####################
     path('register/', views.register, name='register'),
     path('send_email_password_reset/', views.send_email_password_reset, name='send_email_password_reset'),
+    path('staff_panel/', views.staff_panel, name='staff_panel'),
+    path('change_perms/<id>', views.change_perms, name='change_perms'),
 
     # ####################
     # REPORT GENERATION

@@ -10,7 +10,8 @@
     <meta name="author" content="Joaquín Alejandro España Sánchez">
 
     <!-- Etiqueta static para carga de archivos estáticos -->
-    {% load static%}
+    {% load static %}
+    {% load groups %}
 
     <!-- Icon -->
     <link href="{% static 'img/favicon.png' %}" rel="icon">
@@ -93,8 +94,13 @@
                     <li class="nav-item dropdown">
                         <a id="welcome-user" class="nav-link">Bienvenido {{ user.username }} <em class="bi bi-caret-down"></em></a>
                         <ul>
+                            {% if user|is_in_group:"Staff" %}
+                            <li><a href="{% url 'staff_panel' %}" onclick="navbarLinkActive(29)" class="nav-link">Panel de administración</a></li>
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(30)" class="nav-link">Cambiar contraseña</a></li>
+                            {% else %}
                             <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(29)" class="nav-link">Cambiar contraseña</a></li>
-                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(30)" class="nav-link">Log out</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(31)" class="nav-link">Log out</a></li>
                         </ul>
                     </li>
                     {% else %}
