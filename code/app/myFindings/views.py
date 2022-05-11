@@ -16,7 +16,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.mail import BadHeaderError, send_mail
-from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -50,7 +51,18 @@ def team(request):
 def list_allexcavations(request):
     # Get all excavations
     excavations = Excavation.objects.all()
-    data = { 'excavations': excavations}
+    
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(excavations, 6)
+        excavations = paginator.page(page)
+    except:
+        raise Http404("No hay excavaciones para mostrar.")
+
+    data = { 
+        'entity': excavations,
+        'paginator': paginator,
+    }
 
     return render(request, 'excavations_list.html', data)
 
@@ -111,7 +123,18 @@ def delete_excavation(request, id):
 def list_allsedimentaryues(request):
     # Get all sedimentary ues
     sedimentaryues = SedimentaryUE.objects.all()
-    data = { 'sedimentaryues': sedimentaryues}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator.page(page)
+    except:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
+
+    data = { 
+        'entity': sedimentaryues,
+        'paginator': paginator,
+    }
 
     return render(request, 'sedimentaryues_list.html', data)
 
@@ -172,7 +195,19 @@ def delete_sedimentaryue(request, id):
 def list_allbuiltues(request):
     # Get all built ues
     builtues = BuiltUE.objects.all()
-    data = { 'builtues': builtues}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(builtues, 6)
+        builtues = paginator.page(page)
+    except:
+        raise Http404("No hay unidades construidas para mostrar.")
+
+
+    data = { 
+        'entity': builtues,
+        'paginator': paginator,
+    }
 
     return render(request, 'builtues_list.html', data)
 
@@ -234,7 +269,19 @@ def delete_builtue(request, id):
 def list_allfacts(request):
     # Get all facts
     facts = Fact.objects.all()
-    data = { 'facts': facts}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(facts, 6)
+        facts = paginator.page(page)
+    except:
+        raise Http404("No hay hechos para mostrar.")
+
+
+    data = { 
+        'entity': facts,
+        'paginator': paginator,
+    }
 
     return render(request, 'facts_list.html', data)
 
@@ -295,7 +342,18 @@ def delete_fact(request, id):
 def list_allrooms(request):
     # Get all rooms
     rooms = Room.objects.all()
-    data = { 'rooms': rooms}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(rooms, 6)
+        rooms = paginator.page(page)
+    except:
+        raise Http404("No hay estancias para mostrar.")
+
+    data = { 
+        'entity': rooms,
+        'paginator': paginator,
+    }
 
     return render(request, 'rooms_list.html', data)
 
@@ -356,7 +414,18 @@ def delete_room(request, id):
 def list_allphotos(request):
     # Get all photos
     photos = Photo.objects.all()
-    data = { 'photos': photos}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(photos, 6)
+        photos = paginator.page(page)
+    except:
+        raise Http404("No hay fotos para mostrar.")
+
+    data = { 
+        'entity': photos,
+        'paginator': paginator,
+    }
 
     return render(request, 'photos_list.html', data)
 
@@ -417,7 +486,18 @@ def delete_photo(request, id):
 def list_allinclusions(request):
     # Get all photos
     inclusions = Inclusion.objects.all()
-    data = { 'inclusions': inclusions}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(inclusions, 6)
+        inclusions = paginator.page(page)
+    except:
+        raise Http404("No hay inclusiones para mostrar.")
+
+    data = { 
+        'entity': inclusions,
+        'paginator': paginator,
+    }
 
     return render(request, 'inclusions_list.html', data)
 
@@ -478,7 +558,18 @@ def delete_inclusion(request, id):
 def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
     sedimentarymaterials = SedimentaryMaterial.objects.all()
-    data = { 'sedimentarymaterials': sedimentarymaterials}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(sedimentarymaterials, 6)
+        sedimentarymaterials = paginator.page(page)
+    except:
+        raise Http404("No hay materiales sedimentarios para mostrar.")
+
+    data = { 
+        'entity': sedimentarymaterials,
+        'paginator': paginator,
+    }
 
     return render(request, 'sedimentarymaterials_list.html', data)
 
@@ -520,7 +611,18 @@ def delete_sedimentarymaterial(request, nombre):
 def list_allbuiltmaterials(request):
     # Get all built materials
     builtmaterials = BuiltMaterial.objects.all()
-    data = { 'builtmaterials': builtmaterials}
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(builtmaterials, 6)
+        builtmaterials = paginator.page(page)
+    except:
+        raise Http404("No hay materiales construidos para mostrar.")
+
+    data = { 
+        'entity': builtmaterials,
+        'paginator': paginator,
+    }
 
     return render(request, 'builtmaterials_list.html', data)
 
@@ -568,10 +670,30 @@ def list_excavationues(request, id):
     # Find all associated sedimentary stratigraphic units
     sedimentaryues = SedimentaryUE.objects.filter(excavacion__id=id)
 
+    page1 = request.GET.get('page1', 1)
+    try:
+        paginator1 = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator1.page(page1)
+    except:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
+
     # Find all associated built stratigraphic units
     builtues = BuiltUE.objects.filter(excavacion__id=id)
 
-    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_excavacion': excavation.n_excavacion}
+    page2 = request.GET.get('page2', 1)
+    try:
+        paginator2 = Paginator(builtues, 6)
+        builtues = paginator2.page(page2)
+    except:
+        raise Http404("No hay unidades construidas para mostrar.")
+
+    data = { 
+        'sedimentaryues': sedimentaryues, 
+        'builtues': builtues, 
+        'n_excavacion': excavation.n_excavacion,
+        'paginator1': paginator1,
+        'paginator2': paginator2,
+    }
 
     return render(request, 'excavationues.html', data)
 
@@ -585,7 +707,14 @@ def list_roomfacts(request, id):
     # Find all associated facts
     facts = Fact.objects.filter(estancia__id=id)
 
-    data = { 'facts': facts,  'n_room': room.n_estancia}
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(facts, 6)
+        facts = paginator.page(page)
+    except:
+        raise Http404("No hay hechos para mostrar.")
+
+    data = { 'entity': facts,  'n_room': room.n_estancia}
 
     return render(request, 'facts_list.html', data)
 
@@ -600,11 +729,31 @@ def list_factues(request, id):
     # Find all associated sedimentary stratigraphic units
     sedimentaryues = SedimentaryUE.objects.filter(hecho__id=id)
 
+    page1 = request.GET.get('page1', 1)
+    try:
+        paginator1 = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator1.page(page1)
+    except:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
+    
     # Find all associated built stratigraphic units
     builtues = BuiltUE.objects.filter(hecho__id=id)
 
+    page2 = request.GET.get('page2', 1)
+    try:
+        paginator2 = Paginator(builtues, 6)
+        builtues = paginator2.page(page2)
+    except:
+        raise Http404("No hay unidades construidas para mostrar.")
+
     nombre = fact.letra + fact.numero
-    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_hecho': nombre}
+    data = { 
+        'sedimentaryues': sedimentaryues,
+        'builtues': builtues,
+        'n_hecho': nombre,
+        'paginator1': paginator1,
+        'paginator2': paginator2,
+    }
 
     return render(request, 'excavationues.html', data)
 

@@ -28,7 +28,7 @@
                                 {% endif %}
                             </tr>
                     
-                            {% for u in sedimentaryues %}
+                            {% for u in entity %}
                     
                             <tr>
                                 <td>{{ u.codigo }}</td>
@@ -61,6 +61,9 @@
                             {% endfor %}
                             
                         </table>
+                        <div>
+                            {% include 'templates/paginator.html' %}
+                        </div>
                     </div>
                 </div>
             </div>

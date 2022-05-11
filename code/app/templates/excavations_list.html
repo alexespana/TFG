@@ -23,7 +23,7 @@
                                 {% endif %}
                             </tr>
                     
-                            {% for e in excavations %}
+                            {% for e in entity %}
                     
                             <tr>
                                 <td>{{ e.n_excavacion }}</td>
@@ -53,6 +53,9 @@
                             {% endfor %}
                             
                         </table>
+                        <div>
+                            {% include 'templates/paginator.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
