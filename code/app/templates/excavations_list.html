@@ -43,7 +43,7 @@
                                         <a href="{% url 'delete_excavation' e.id %}" class="btn btn-delete me-md-2">Eliminar</a>
                                         {% endif %}
                                         {% if perms.myFindings.view_excavation %}
-                                        <a href="{% url 'generate_report' e.id %}" class="btn btn-info">Descargar informe (.docx)</a>
+                                        <a href="{% url 'generate_report' e.id %}" class="btn btn-docs">Descargar informe (.docx)</a>
                                         {% endif %}
                                     </div>
                                 </td>

@@ -35,9 +35,9 @@
     </ul>
 </div>
          
-<div class="d-flex justify-content-center d-sm-none">   
+<div class="pagination2 d-flex justify-content-center d-sm-none">   
     {% if entity.has_previous %}
-        <span class="page-item"><a  class="page-link" href="?{{parameter|default:"page"}}={{ entity.previous_page_number }}">Anterior</a></span>
+        <span class="page-item"><a class="page-link" href="?{{parameter|default:"page"}}={{ entity.previous_page_number }}">Anterior</a></span>
     {% endif %}
     {% if entity.has_next %}
         <span class="page-item"><a class="page-link" href="?{{parameter|default:"page"}}={{ entity.next_page_number }}">Siguiente</a></span>
