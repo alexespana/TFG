@@ -11,6 +11,27 @@ def validate_number(value):
     if(int(value) < 1 or int(value) > 999):
         raise ValidationError('El número debe ser mayor que 0.')
 
+def validate_excavation(value):
+    validate_number(value)
+    excavation_number = value.zfill(3)
+
+    if Excavation.objects.filter(n_excavacion=excavation_number).exists():
+        raise ValidationError('Ya existe una excavación con este número.')
+
+def validate_room(value):
+    validate_number(value)
+    room_number = value.zfill(3)
+
+    if Room.objects.filter(n_estancia=room_number).exists():
+        raise ValidationError('Ya existe una estancia con este número.')
+
+def validate_ue(value):
+    validate_number(value)
+    ue_number = value.zfill(3)
+
+    if UE.objects.filter(n_orden=ue_number).exists():
+        raise ValidationError('Ya existe una unidad con ese número de orden para la misma excavación.')
+
 FASE_CHOICES = [
     (('A: época contemporánea'), (
             ('A1','A1: Siglo XVIII'),
@@ -89,7 +110,7 @@ PERIODO_CHOICES = [
 class Room(models.Model):
     # 1, 2, 3, 4, etc
     n_estancia = models.CharField(max_length=3, verbose_name='Número de estancia', 
-                                  help_text='Ej. 1, 2, 3, etc', validators=[validate_number], unique=True)
+                                  help_text='Ej. 1, 2, 3, etc', validators=[validate_room], unique=True)
     n_zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     n_sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
     observaciones = models.CharField(max_length=200, blank=True, null=True)
@@ -116,7 +137,7 @@ class Room(models.Model):
 class Excavation(models.Model):
     # Ej. 001, 002, 003, etc
     n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 1, 2, 3, etc', 
-                                    validators=[validate_number], unique=True)      
+                                    validators=[validate_excavation], unique=True)      
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
     altura = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -202,7 +223,7 @@ class UE(models.Model):
 
     codigo = models.CharField(unique=True, max_length=6, blank=True)
     n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
-                                help_text='Ej. 1, 2, 3, etc', validators=[validate_number]) 
+                                help_text='Ej. 1, 2, 3, etc', validators=[validate_ue]) 
 
     # Foreign Keys
     hecho = models.ForeignKey(Fact, on_delete=models.CASCADE, blank=True, null=True)
@@ -318,7 +339,7 @@ class BuiltUE(UE):
     ]
 
     sistema_constructivo = models.CharField(max_length=50, blank=True, null=True)
-    tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, blank=True, null=True)
+    tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, default='Positiva')
     materiales = models.ManyToManyField(BuiltMaterial, blank=True)
     n_estructura = models.PositiveSmallIntegerField(verbose_name='Número de estructura' , blank=True, null=True)
 
