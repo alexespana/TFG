@@ -9,6 +9,7 @@ from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
                     SedimentaryMaterial, BuiltUE, SedimentaryUE
 from django.conf import settings
 from django.template.loader import get_template
+from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -78,6 +79,9 @@ def add_excavation(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Excavación creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='excavations')
         else:
@@ -98,6 +102,9 @@ def modify_excavation(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Excavación modificada correctamente.')
+
             return redirect(to="excavations")
 
         data["form"] = form
@@ -112,6 +119,9 @@ def delete_excavation(request, id):
 
     # Delete the excavation
     excavation.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Excavación eliminada correctamente.')
 
     return redirect(to="excavations")    
 
@@ -150,6 +160,9 @@ def add_sedimentaryue(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Unidad sedimentaria creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='sedimentaryues')
         else:
@@ -170,6 +183,9 @@ def modify_sedimentaryue(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Unidad sedimentaria modificada correctamente.')
+
             return redirect(to="sedimentaryues")
 
         data["form"] = form
@@ -184,6 +200,9 @@ def delete_sedimentaryue(request, id):
 
     # Delete the sedimentaryue
     sedimentaryue.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Unidad sedimentaria eliminada correctamente.')
 
     return redirect(to="sedimentaryues")   
 
@@ -223,6 +242,9 @@ def add_builtue(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Unidad construida creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='builtues')
         else:
@@ -243,6 +265,9 @@ def modify_builtue(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Unidad construida modificada correctamente.')
+
             return redirect(to="builtues")
 
         data["form"] = form
@@ -257,6 +282,9 @@ def delete_builtue(request, id):
 
     # Delete the excavation
     builtue.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Unidad construida eliminada correctamente.')
 
     return redirect(to="builtues")
 
@@ -297,6 +325,9 @@ def add_fact(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Hecho creado correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='facts')
         else:
@@ -317,6 +348,9 @@ def modify_fact(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Hecho modificado correctamente.')
+
             return redirect(to="facts")
 
         data["form"] = form
@@ -331,6 +365,9 @@ def delete_fact(request, id):
 
     # Delete the excavation
     fact.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Hecho eliminado correctamente.')
 
     return redirect(to="facts")  
 
@@ -369,6 +406,9 @@ def add_room(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Estancia creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='rooms')
         else:
@@ -389,6 +429,9 @@ def modify_room(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Estancia modificada correctamente.')
+
             return redirect(to="rooms")
 
         data["form"] = form
@@ -403,6 +446,9 @@ def delete_room(request, id):
 
     # Delete the room
     room.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Estancia eliminada correctamente.')
 
     return redirect(to="rooms") 
 
@@ -441,6 +487,9 @@ def add_photo(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Foto creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='photos')
         else:
@@ -461,6 +510,9 @@ def modify_photo(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Foto modificada correctamente.')
+
             return redirect(to="photos")
 
         data["form"] = form
@@ -475,6 +527,9 @@ def delete_photo(request, id):
 
     # Delete the photo
     photo.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Foto eliminada correctamente.')
 
     return redirect(to="photos") 
 
@@ -513,6 +568,9 @@ def add_inclusion(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Inclusion creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='inclusions')
         else:
@@ -533,6 +591,9 @@ def modify_inclusion(request, id):
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
+            # Send a message to the user
+            messages.success(request, 'Inclusion modificada correctamente.')
+
             return redirect(to="inclusions")
 
         data["form"] = form
@@ -547,6 +608,9 @@ def delete_inclusion(request, id):
 
     # Delete the inclusion
     inclusion.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Inclusion eliminada correctamente.')
 
     return redirect(to="inclusions")
 
@@ -585,6 +649,9 @@ def add_sedimentarymaterial(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Material sedimentario creado correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='sedimentarymaterials')
         else:
@@ -600,6 +667,9 @@ def delete_sedimentarymaterial(request, nombre):
 
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Material sedimentario eliminado correctamente.')
 
     return redirect(to="sedimentarymaterials")
 
@@ -638,6 +708,9 @@ def add_builtmaterial(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Material construido creado correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='builtmaterials')
         else:
@@ -653,6 +726,9 @@ def delete_builtmaterial(request, nombre):
 
     # Delete the built material
     builtmaterial.delete()    
+
+    # Send a message to the user
+    messages.success(request, 'Material construido eliminado correctamente.')
 
     return redirect(to="builtmaterials")
 
