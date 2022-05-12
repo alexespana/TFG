@@ -1,5 +1,6 @@
 from django.test import TestCase
-from myFindings.models import UE, Excavation, Room
+from myFindings.models import UE, Excavation, Room, validate_number
+from django.core.exceptions import ValidationError
 
 class TestModels(TestCase):
 
@@ -34,3 +35,41 @@ class TestModels(TestCase):
 
     def test_lower_limit_correct(self):
         self.assertEqual(self.ue.cota_inferior, 1198.8)
+
+class TestValidators(TestCase):
+    
+    def test_validate_number_too_long(self):
+        
+        # It raise an ValidationError, check the message
+        with self.assertRaises(ValidationError) as context:
+            validate_number('123456789')
+        self.assertEqual(context.exception.message, 'El número debe tener 3 dígitos.')
+
+    def test_validate_number_too_short(self):
+            
+        # It raise an ValidationError, check the message
+        with self.assertRaises(ValidationError) as context:
+            validate_number('12')
+        self.assertEqual(context.exception.message, 'El número debe tener 3 dígitos.')
+
+    def test_validate_number_with_letters(self):
+                
+        # It raise an ValidationError, check the message
+        with self.assertRaises(ValidationError) as context:
+            validate_number('12a')
+        self.assertEqual(context.exception.message, 'Introduzca un formato de número positivo válido.')
+
+
+    def test_validate_number_with_negative_number(self):
+
+        # It raise an ValidationError, check the message
+        with self.assertRaises(ValidationError) as context:
+            validate_number('-12')
+        self.assertEqual(context.exception.message, 'Introduzca un formato de número positivo válido.')
+
+    def test_validate_number_not_zero(self):
+            
+        # It raise an ValidationError, check the message
+        with self.assertRaises(ValidationError) as context:
+            validate_number('000')
+        self.assertEqual(context.exception.message, 'El número debe ser mayor que 0.')

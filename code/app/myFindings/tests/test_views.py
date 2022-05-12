@@ -413,3 +413,19 @@ class TestEliminatingViews(TestCase):
         response = self.client.delete(reverse('delete_builtue', kwargs={'id': pk}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(BuiltUE.objects.count(), 0)
+
+class TestReportGenerator(TestCase):
+
+    def test_generate_excavation_report(self):
+        # Create an excavation
+        excavation = Excavation.objects.create(
+            n_excavacion='001',
+            latitud=1,
+            longitud=1,
+            altura=1
+        )
+        response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
+
+        # It returns on the response a docs file
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('Content-Disposition'), 'attachment; filename = "Informe de excavación.docx"')
