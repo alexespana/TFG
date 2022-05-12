@@ -722,3 +722,13 @@ table img{
   color: red;
   font-weight: bold;
 }
+
+/* ----------------------------------------------------
+#  ------------- Validators messages ------------------
+-----------------------------------------------------*/
+div.alert.alert-block.alert-danger{
+  border: solid 2px red;
+}
+div.alert.alert-block.alert-danger > ul{
+  list-style: none;
+}
