@@ -5,32 +5,16 @@ from django.core.exceptions import ValidationError
 
 def validate_number(value):
     regex = r'^[0-9]{1,3}$'
+
+    if len(value) != 3:
+        raise ValidationError('El número debe tener 3 dígitos.')
+
     if not re.match(regex, value):
         raise ValidationError('Introduzca un formato de número positivo válido.')
 
     if(int(value) < 1 or int(value) > 999):
         raise ValidationError('El número debe ser mayor que 0.')
 
-def validate_excavation(value):
-    validate_number(value)
-    excavation_number = value.zfill(3)
-
-    if Excavation.objects.filter(n_excavacion=excavation_number).exists():
-        raise ValidationError('Ya existe una excavación con este número.')
-
-def validate_room(value):
-    validate_number(value)
-    room_number = value.zfill(3)
-
-    if Room.objects.filter(n_estancia=room_number).exists():
-        raise ValidationError('Ya existe una estancia con este número.')
-
-def validate_ue(value):
-    validate_number(value)
-    ue_number = value.zfill(3)
-
-    if UE.objects.filter(n_orden=ue_number).exists():
-        raise ValidationError('Ya existe una unidad con ese número de orden para la misma excavación.')
 
 FASE_CHOICES = [
     (('A: época contemporánea'), (
@@ -108,9 +92,9 @@ PERIODO_CHOICES = [
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Room(models.Model):
-    # 1, 2, 3, 4, etc
+    # 001, 002, 003, 004, etc
     n_estancia = models.CharField(max_length=3, verbose_name='Número de estancia', 
-                                  help_text='Ej. 1, 2, 3, etc', validators=[validate_room], unique=True)
+                                  help_text='Ej. 001, 002, 003, etc', validators=[validate_number], unique=True)
     n_zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     n_sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
     observaciones = models.CharField(max_length=200, blank=True, null=True)
@@ -124,10 +108,6 @@ class Room(models.Model):
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES, blank=True, null=True)
     autor = models.CharField(max_length=50, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.n_estancia = self.n_estancia.zfill(3)
-        super(Room, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.n_estancia
 
@@ -136,15 +116,11 @@ class Room(models.Model):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavation(models.Model):
     # Ej. 001, 002, 003, etc
-    n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 1, 2, 3, etc', 
-                                    validators=[validate_excavation], unique=True)      
+    n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 001, 002, 003, etc', 
+                                    validators=[validate_number], unique=True)      
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
     altura = models.PositiveSmallIntegerField(blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        self.n_excavacion = self.n_excavacion.zfill(3)
-        super(Excavation, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.n_excavacion)
@@ -223,7 +199,7 @@ class UE(models.Model):
 
     codigo = models.CharField(unique=True, max_length=6, blank=True)
     n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
-                                help_text='Ej. 1, 2, 3, etc', validators=[validate_ue]) 
+                                help_text='Ej. 001, 002, 003, etc', validators=[validate_number]) 
 
     # Foreign Keys
     hecho = models.ForeignKey(Fact, on_delete=models.CASCADE, blank=True, null=True)
@@ -256,7 +232,6 @@ class UE(models.Model):
     cota_inferior = models.FloatField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        self.n_orden = self.n_orden.zfill(3)
         self.codigo = self.excavacion.n_excavacion + self.n_orden
 
         if(self.excavacion.altura and self.cota_superior_diff):
