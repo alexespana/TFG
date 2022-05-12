@@ -92,6 +92,10 @@ PERIODO_CHOICES = [
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Room(models.Model):
+    class Meta:
+        verbose_name = 'estancia'
+        verbose_name_plural = 'estancias'
+
     # 001, 002, 003, 004, etc
     n_estancia = models.CharField(max_length=3, verbose_name='Número de estancia', 
                                   help_text='Ej. 001, 002, 003, etc', validators=[validate_number], unique=True)
@@ -115,6 +119,10 @@ class Room(models.Model):
 # EXCAVACION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavation(models.Model):
+    class Meta:
+        verbose_name = 'excavación'
+        verbose_name_plural = 'excavaciones'
+
     # Ej. 001, 002, 003, etc
     n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 001, 002, 003, etc', 
                                     validators=[validate_number], unique=True)      
@@ -162,6 +170,8 @@ class Fact(models.Model):
     croquis_seccion = models.ImageField(verbose_name='Croquis de la sección', blank=True, null=True)
 
     class Meta:
+        verbose_name = 'hecho'
+        verbose_name_plural = 'hechos'
         constraints = [
             models.UniqueConstraint(fields=['letra', 'numero'], name='fact_constraint')                                                  
         ]
@@ -197,7 +207,7 @@ class UE(models.Model):
         ('Sureste','Sureste'),
     ]
 
-    codigo = models.CharField(unique=True, max_length=6, blank=True)
+    codigo = models.CharField(max_length=6, blank=True)
     n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
                                 help_text='Ej. 001, 002, 003, etc', validators=[validate_number]) 
 
@@ -240,10 +250,19 @@ class UE(models.Model):
             self.cota_inferior = self.excavacion.altura + self.cota_inferior_diff
         super(UE, self).save(*args, **kwargs)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['excavacion', 'n_orden'], name='ue_constraint')                                                  
+        ]
+
     def __str__(self):
         return self.codigo
 
 class Photo(models.Model):
+    class Meta:
+        verbose_name = 'fotografía'
+        verbose_name_plural = 'fotografías'
+
     numero = models.PositiveIntegerField(unique=True)
    
     # Foreign Keys
@@ -264,6 +283,10 @@ class Photo(models.Model):
 # MATERIALSEDIMENTARIA ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryMaterial(models.Model):
+    class Meta:
+        verbose_name = 'material sedimentario'
+        verbose_name_plural = 'materiales sedimentarios'
+
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -273,6 +296,10 @@ class SedimentaryMaterial(models.Model):
 # MATERIALCONSTRUIDA   ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltMaterial(models.Model):
+    class Meta:
+        verbose_name = 'material construido'
+        verbose_name_plural = 'materiales construidos'
+
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -282,6 +309,10 @@ class BuiltMaterial(models.Model):
 # UESEDIMENTARIA      ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryUE(UE):
+    class Meta:
+        verbose_name = 'unidad sedimentaria'
+        verbose_name_plural = 'unidades sedimentarias'
+
     ESTRUCTURA_CHOICES = [
         ('Compacta', 'Compacta'),
         ('Suelta', 'Suelta'),
@@ -308,6 +339,10 @@ class SedimentaryUE(UE):
 # UECONSTRUIDA        ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltUE(UE):
+    class Meta:
+        verbose_name = 'unidad construida'
+        verbose_name_plural = 'unidades construidas'
+
     TIPO_CHOICES = [
         ('Positiva', 'Positiva'),
         ('Negativa', 'Negativa'),
@@ -322,6 +357,10 @@ class BuiltUE(UE):
 # INCLUSION           ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Inclusion(models.Model):
+    class Meta:
+        verbose_name = 'inclusión'
+        verbose_name_plural = 'inclusiones'
+
     FRECUENCIA_CHOICES = [
         ('Ausencia', 'Ausencia'),
         ('Ocasional', 'Ocasional'),
