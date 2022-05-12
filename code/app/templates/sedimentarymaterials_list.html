@@ -11,6 +11,11 @@
                 <div class="card-body">
                     <h2>Materiales sedimentarios</h2>
                     <hr>
+                    {% if perms.myFindings.add_sedimentarymaterial %}
+                    <div class="d-flex justify-content-end mb-2">
+                        <a href="{% url 'add_sedimentarymaterial' %}" class="btn btn-add">Añadir</a>
+                    </div
+                    {% endif %}
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <caption>Listado de materiales sedimentarios</caption>

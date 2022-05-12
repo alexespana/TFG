@@ -41,7 +41,7 @@
                     <li><a href="{% url 'home' %}" onclick="navbarLinkActive(0)" class="nav-link">MyFindings</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a id="list-elements" class="nav-link">Listados <em class="bi bi-caret-down"></em></a>
+                        <a id="list-elements" class="nav-link">Visualizar <em class="bi bi-caret-down"></em></a>
                         <ul>
                             <li><a href="{% url 'excavations' %}" onclick="navbarLinkActive(2)" class="nav-link">Excavaciones</a></li>
                             <li><a href="{% url 'rooms' %}" onclick="navbarLinkActive(3)" class="nav-link">Estancias</a></li>
@@ -64,43 +64,19 @@
                             <li><a href="{% url 'photos' %}" onclick="navbarLinkActive(12)" class="nav-link">Fotografías</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a id="add-elements" class="nav-link">Añadir <em class="bi bi-caret-down"></em></a>
-                        <ul>
-                            <li><a href="{% url 'add_excavation' %}" onclick="navbarLinkActive(14)" class="nav-link">Excavación</a></li>
-                            <li><a href="{% url 'add_room' %}" onclick="navbarLinkActive(15)" class="nav-link">Estancia</a></li>
-                            <li><a href="{% url 'add_fact' %}" onclick="navbarLinkActive(16)" class="nav-link">Hecho</a></li>
-                            <li class="dropdown">
-                                <a id="add-ues" class="nav-link">UE <em class="bi bi-caret-right"></em></a>
-                                <ul>
-                                    <li><a href="{% url 'add_sedimentaryue' %}" onclick="navbarLinkActive(18)" class="nav-link">Sedimentaria</a></li>
-                                    <li><a href="{% url 'add_builtue' %}" onclick="navbarLinkActive(19)" class="nav-link">Construida</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{% url 'add_inclusion' %}" onclick="navbarLinkActive(20)" class="nav-link">Inclusión</a></li>
-                            <li class="dropdown">
-                                <a id="add-materials" class="nav-link">Material <em class="bi bi-caret-right"></em></a>
-                                <ul>
-                                    <li><a href="{% url 'add_sedimentarymaterial' %}" onclick="navbarLinkActive(22)" class="nav-link">Sedimentario</a></li>
-                                    <li><a href="{% url 'add_builtmaterial' %}" onclick="navbarLinkActive(23)" class="nav-link">Construido</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{% url 'add_photo' %}" onclick="navbarLinkActive(24)" class="nav-link">Fotografía</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{% url 'about' %}" onclick="navbarLinkActive(25)" class="nav-link">Sobre la aplicación</a></li>
-                    <li><a href="{% url 'team' %}" onclick="navbarLinkActive(26)" class="nav-link">Equipo</a></li>
-                    <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(27)" class="nav-link">Contacto</a></li>
+                    <li><a href="{% url 'about' %}" onclick="navbarLinkActive(13)" class="nav-link">Sobre la aplicación</a></li>
+                    <li><a href="{% url 'team' %}" onclick="navbarLinkActive(14)" class="nav-link">Equipo</a></li>
+                    <li><a href="{% url 'contact' %}" onclick="navbarLinkActive(15)" class="nav-link">Contacto</a></li>
                     <li class="nav-item dropdown">
                         <a id="welcome-user" class="nav-link">Bienvenido {{ user.username }} <em class="bi bi-caret-down"></em></a>
                         <ul>
                             {% if user|is_in_group:"Staff" %}
-                            <li><a href="{% url 'staff_panel' %}" onclick="navbarLinkActive(29)" class="nav-link">Panel de administración</a></li>
-                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(30)" class="nav-link">Cambiar contraseña</a></li>
+                            <li><a href="{% url 'staff_panel' %}" onclick="navbarLinkActive(17)" class="nav-link">Panel de administración</a></li>
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(18)" class="nav-link">Cambiar contraseña</a></li>
                             {% else %}
-                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(29)" class="nav-link">Cambiar contraseña</a></li>
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(19)" class="nav-link">Cambiar contraseña</a></li>
                             {% endif %}
-                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(31)" class="nav-link">Log out</a></li>
+                            <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(20)" class="nav-link">Log out</a></li>
                         </ul>
                     </li>
                     {% else %}

@@ -661,6 +661,12 @@ table img{
   align-items: center;
 }
 
+.btn-add{
+  background: darkgoldenrod;
+  border-color: orange;
+  padding: 10px;
+}
+
 .btn-list{
   border-color: blue;
   background-color: cadetblue;
@@ -681,8 +687,9 @@ table img{
   background-color: teal;
 }
 
-.btn-list:hover, .btn-modify:hover, .btn-delete:hover, 
-.btn-clean:hover, .btn-save:hover, .btn-docs:hover{
+.btn-add:hover, .btn-list:hover, .btn-modify:hover,
+.btn-delete:hover, .btn-clean:hover, .btn-save:hover,
+.btn-docs:hover{
   background-color: #fff;
   transition: 0.5s;
 }

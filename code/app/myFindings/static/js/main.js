@@ -73,16 +73,12 @@ function _changeNavBarItem(){
       item.classList.remove('active')
 
       if(document.querySelector('#login-item') == null){  // If login item is present
-        if( (itemActive>1 && itemActive <13 && index==1) ||
-            (itemActive>13 && itemActive<25 && index==13)
-        ){
+        if(itemActive>1 && itemActive <13 && index==1){
           item.classList.add('active')
         }
 
         if( (itemActive>5 && itemActive<8 && index==5) ||
-            (itemActive>9 && itemActive<12 && index==9) ||
-            (itemActive>17 && itemActive<20 && index==17) ||
-            (itemActive>21 && itemActive<24 && index==21)         
+            (itemActive>9 && itemActive<12 && index==9)
         ){
           item.classList.add('active')
         }
