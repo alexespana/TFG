@@ -5,13 +5,13 @@ class TestModels(TestCase):
 
     def setUp(self):
         self.excavation = Excavation.objects.create(
-            n_excavacion = '1',
+            n_excavacion = '001',
             latitud = 1.0,
             longitud = 1.0,
             altura = 1200,
         )
         self.ue = UE.objects.create(
-            n_orden = '2',
+            n_orden = '002',
             excavacion = self.excavation,
             cota_superior_diff = 1.3,
             cota_inferior_diff = -1.2,
@@ -22,7 +22,7 @@ class TestModels(TestCase):
 
     def test_room_str(self):
         room = Room.objects.create(
-            n_estancia = '1'
+            n_estancia = '001'
         )
         self.assertEqual(str(room), '001')
 
