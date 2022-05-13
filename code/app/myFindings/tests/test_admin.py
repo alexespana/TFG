@@ -143,6 +143,34 @@ class TestModelsAdmin(TestCase):
         response = self.client.get('/admin/myFindings/builtue/add/')
         self.assertContains(response, 'readonly', count=1)
 
+    def test_room_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/room/add/')
+        self.assertContains(response, 'readonly', count=0)
+
+    def test_fact_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/fact/add/')
+        self.assertContains(response, 'readonly', count=0)
+
+    def test_excavation_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/excavation/add/')
+        self.assertContains(response, 'readonly', count=0)
+
+    def test_photo_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/photo/add/')
+        self.assertContains(response, 'readonly', count=0)
+
+    def test_builtmaterial_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/builtmaterial/add/')
+        self.assertContains(response, 'readonly', count=0)
+
+    def test_sedimentarymaterial_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/sedimentarymaterial/add/')
+        self.assertContains(response, 'readonly', count=0)
+        
+    def test_inclusion_readonly_fields_creating(self):
+        response = self.client.get('/admin/myFindings/inclusion/add/')
+        self.assertContains(response, 'readonly', count=0)
+        
     def test_room_list_display(self):
         response = self.client.get('/admin/myFindings/room/')
         self.assertContains(response, 'n_estancia')

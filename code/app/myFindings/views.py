@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.mail import BadHeaderError, send_mail
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets
@@ -58,7 +58,7 @@ def list_allexcavations(request):
     try:
         paginator = Paginator(excavations, 6)
         excavations = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay excavaciones para mostrar.")
 
     data = { 
@@ -144,7 +144,7 @@ def list_allsedimentaryues(request):
     try:
         paginator = Paginator(sedimentaryues, 6)
         sedimentaryues = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades sedimentarias para mostrar.")
 
     data = { 
@@ -225,7 +225,7 @@ def list_allbuiltues(request):
     try:
         paginator = Paginator(builtues, 6)
         builtues = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades construidas para mostrar.")
 
 
@@ -308,7 +308,7 @@ def list_allfacts(request):
     try:
         paginator = Paginator(facts, 6)
         facts = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay hechos para mostrar.")
 
 
@@ -390,7 +390,7 @@ def list_allrooms(request):
     try:
         paginator = Paginator(rooms, 6)
         rooms = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay estancias para mostrar.")
 
     data = { 
@@ -476,7 +476,7 @@ def list_allphotos(request):
     try:
         paginator = Paginator(photos, 6)
         photos = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay fotos para mostrar.")
 
     data = { 
@@ -562,7 +562,7 @@ def list_allinclusions(request):
     try:
         paginator = Paginator(inclusions, 6)
         inclusions = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay inclusiones para mostrar.")
 
     data = { 
@@ -643,7 +643,7 @@ def list_allsedimentarymaterials(request):
     try:
         paginator = Paginator(sedimentarymaterials, 6)
         sedimentarymaterials = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay materiales sedimentarios para mostrar.")
 
     data = { 
@@ -702,7 +702,7 @@ def list_allbuiltmaterials(request):
     try:
         paginator = Paginator(builtmaterials, 6)
         builtmaterials = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay materiales construidos para mostrar.")
 
     data = { 
@@ -766,7 +766,7 @@ def list_excavationues(request, id):
     try:
         paginator1 = Paginator(sedimentaryues, 6)
         sedimentaryues = paginator1.page(page1)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades sedimentarias para mostrar.")
 
     # Find all associated built stratigraphic units
@@ -776,7 +776,7 @@ def list_excavationues(request, id):
     try:
         paginator2 = Paginator(builtues, 6)
         builtues = paginator2.page(page2)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades construidas para mostrar.")
 
     data = { 
@@ -803,7 +803,7 @@ def list_roomfacts(request, id):
     try:
         paginator = Paginator(facts, 6)
         facts = paginator.page(page)
-    except:
+    except EmptyPage:
         raise Http404("No hay hechos para mostrar.")
 
     data = { 'entity': facts,  'n_room': room.n_estancia}
@@ -825,7 +825,7 @@ def list_factues(request, id):
     try:
         paginator1 = Paginator(sedimentaryues, 6)
         sedimentaryues = paginator1.page(page1)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades sedimentarias para mostrar.")
     
     # Find all associated built stratigraphic units
@@ -835,7 +835,7 @@ def list_factues(request, id):
     try:
         paginator2 = Paginator(builtues, 6)
         builtues = paginator2.page(page2)
-    except:
+    except EmptyPage:
         raise Http404("No hay unidades construidas para mostrar.")
 
     nombre = fact.letra + fact.numero
