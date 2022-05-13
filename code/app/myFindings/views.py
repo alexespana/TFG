@@ -51,7 +51,7 @@ def team(request):
 @permission_required('myFindings.view_excavation', raise_exception=True)
 def list_allexcavations(request):
     # Get all excavations
-    excavations = Excavation.objects.all()
+    excavations = Excavation.objects.get_queryset().order_by('id')
     
     page = request.GET.get('page', 1)
     try:
@@ -132,7 +132,7 @@ def delete_excavation(request, id):
 @permission_required('myFindings.view_sedimentaryue', raise_exception=True)
 def list_allsedimentaryues(request):
     # Get all sedimentary ues
-    sedimentaryues = SedimentaryUE.objects.all()
+    sedimentaryues = SedimentaryUE.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -213,7 +213,7 @@ def delete_sedimentaryue(request, id):
 @permission_required('myFindings.view_builtue', raise_exception=True)
 def list_allbuiltues(request):
     # Get all built ues
-    builtues = BuiltUE.objects.all()
+    builtues = BuiltUE.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -296,7 +296,7 @@ def delete_builtue(request, id):
 @permission_required('myFindings.view_fact', raise_exception=True)
 def list_allfacts(request):
     # Get all facts
-    facts = Fact.objects.all()
+    facts = Fact.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -378,7 +378,7 @@ def delete_fact(request, id):
 @permission_required('myFindings.view_room', raise_exception=True)
 def list_allrooms(request):
     # Get all rooms
-    rooms = Room.objects.all()
+    rooms = Room.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -459,7 +459,7 @@ def delete_room(request, id):
 @permission_required('myFindings.view_photo', raise_exception=True)
 def list_allphotos(request):
     # Get all photos
-    photos = Photo.objects.all()
+    photos = Photo.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -540,7 +540,7 @@ def delete_photo(request, id):
 @permission_required('myFindings.view_inclusion', raise_exception=True)
 def list_allinclusions(request):
     # Get all photos
-    inclusions = Inclusion.objects.all()
+    inclusions = Inclusion.objects.get_queryset().order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -621,7 +621,7 @@ def delete_inclusion(request, id):
 @permission_required('myFindings.view_sedimentarymaterial', raise_exception=True)
 def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
-    sedimentarymaterials = SedimentaryMaterial.objects.all()
+    sedimentarymaterials = SedimentaryMaterial.objects.get_queryset().order_by('nombre')
 
     page = request.GET.get('page', 1)
     try:
@@ -680,7 +680,7 @@ def delete_sedimentarymaterial(request, nombre):
 @permission_required('myFindings.view_builtmaterial', raise_exception=True)
 def list_allbuiltmaterials(request):
     # Get all built materials
-    builtmaterials = BuiltMaterial.objects.all()
+    builtmaterials = BuiltMaterial.objects.get_queryset().order_by('nombre')
 
     page = request.GET.get('page', 1)
     try:
@@ -744,7 +744,7 @@ def list_excavationues(request, id):
     excavation = get_object_or_404(Excavation, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = SedimentaryUE.objects.filter(excavacion__id=id)
+    sedimentaryues = SedimentaryUE.objects.get_queryset().filter(excavacion__id=id).order_by('id')
 
     page1 = request.GET.get('page1', 1)
     try:
@@ -754,7 +754,7 @@ def list_excavationues(request, id):
         raise Http404("No hay unidades sedimentarias para mostrar.")
 
     # Find all associated built stratigraphic units
-    builtues = BuiltUE.objects.filter(excavacion__id=id)
+    builtues = BuiltUE.objects.get_queryset().filter(excavacion__id=id).order_by('id')
 
     page2 = request.GET.get('page2', 1)
     try:
@@ -781,7 +781,7 @@ def list_roomfacts(request, id):
     room = get_object_or_404(Room, id=id)
 
     # Find all associated facts
-    facts = Fact.objects.filter(estancia__id=id)
+    facts = Fact.objects.get_queryset().filter(estancia__id=id).order_by('id')
 
     page = request.GET.get('page', 1)
     try:
@@ -803,7 +803,7 @@ def list_factues(request, id):
     fact = get_object_or_404(Fact, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = SedimentaryUE.objects.filter(hecho__id=id)
+    sedimentaryues = SedimentaryUE.objects.get_queryset().filter(hecho__id=id).order_by('id')
 
     page1 = request.GET.get('page1', 1)
     try:
@@ -813,7 +813,7 @@ def list_factues(request, id):
         raise Http404("No hay unidades sedimentarias para mostrar.")
     
     # Find all associated built stratigraphic units
-    builtues = BuiltUE.objects.filter(hecho__id=id)
+    builtues = BuiltUE.objects.get_queryset().filter(hecho__id=id).order_by('id')
 
     page2 = request.GET.get('page2', 1)
     try:
