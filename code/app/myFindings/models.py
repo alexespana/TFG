@@ -397,6 +397,8 @@ class Inclusion(models.Model):
     grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES, blank=True, null=True)
 
     class Meta:
+        verbose_name = 'inclusión'
+        verbose_name_plural = 'inclusiones'
         constraints = [
             models.UniqueConstraint(fields=['tipo', 'uesedimentaria'], name='inclusion_constraint')                                                  
         ]
