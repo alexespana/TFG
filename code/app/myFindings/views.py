@@ -4,7 +4,8 @@ from django import template
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
-                   PhotoForm, CustomUserCreationForm, CustomUserChangeForm
+                   PhotoForm, CustomUserCreationForm, CustomUserChangeForm, \
+                   InclusionUpdateForm, FactUpdateForm, SedimentaryUEUpdateForm, BuiltUEUpdateForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
                     SedimentaryMaterial, BuiltUE, SedimentaryUE
 from django.conf import settings
@@ -94,8 +95,13 @@ def add_excavation(request):
 def modify_excavation(request, id):
     excavation = get_object_or_404(Excavation, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': ExcavationForm(instance=excavation) }
+    form = ExcavationForm(instance=excavation)
+
+    # Make the field n_excavacion readonly
+    form.fields['n_excavacion'].widget.attrs['readonly'] = True
+
+    # Save the form with the excavation data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = ExcavationForm(data=request.POST, instance=excavation)
@@ -175,11 +181,11 @@ def add_sedimentaryue(request):
 def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': SedimentaryUEForm(instance=sedimentaryue) }
+    # Save the form with the sedimentaryue data
+    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue) }
 
     if request.method == 'POST':
-        form = SedimentaryUEForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
+        form = SedimentaryUEUpdateForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
@@ -257,11 +263,11 @@ def add_builtue(request):
 def modify_builtue(request, id):
     builtue = get_object_or_404(BuiltUE, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': BuiltUEForm(instance=builtue) }
+    # Save the form with the data of the builtue
+    data = { 'form': BuiltUEUpdateForm(instance=builtue) }
 
     if request.method == 'POST':
-        form = BuiltUEForm(data=request.POST, instance=builtue, files=request.FILES)
+        form = BuiltUEUpdateForm(data=request.POST, instance=builtue, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
@@ -340,11 +346,11 @@ def add_fact(request):
 def modify_fact(request, id):
     fact = get_object_or_404(Fact, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': FactForm(instance=fact) }
+    # Save the form with the fact data
+    data = { 'form': FactUpdateForm(instance=fact) }
 
     if request.method == 'POST':
-        form = FactForm(data=request.POST, instance=fact, files=request.FILES)
+        form = FactUpdateForm(data=request.POST, instance=fact, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 
@@ -421,8 +427,13 @@ def add_room(request):
 def modify_room(request, id):
     room = get_object_or_404(Room, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': RoomForm(instance=room) }
+    form = RoomForm(instance=room)
+
+    # Make the field n_estancia readonly
+    form.fields['n_estancia'].widget.attrs['readonly'] = True
+
+    # Save the form with the room data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = RoomForm(data=request.POST, instance=room, files=request.FILES)
@@ -502,8 +513,13 @@ def add_photo(request):
 def modify_photo(request, id):
     photo = get_object_or_404(Photo, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': PhotoForm(instance=photo) }
+    form = PhotoForm(instance=photo)
+
+    # Make the field numero readonly
+    form.fields['numero'].widget.attrs['readonly'] = True
+
+    # Save the form with the photo data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = PhotoForm(data=request.POST, instance=photo, files=request.FILES)
@@ -583,11 +599,11 @@ def add_inclusion(request):
 def modify_inclusion(request, id):
     inclusion = get_object_or_404(Inclusion, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': InclusionForm(instance=inclusion) }
+    # Save the form with the inclusion data
+    data = { 'form': InclusionUpdateForm(instance=inclusion) }
 
     if request.method == 'POST':
-        form = InclusionForm(data=request.POST, instance=inclusion, files=request.FILES)
+        form = InclusionUpdateForm(data=request.POST, instance=inclusion, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
 

@@ -229,11 +229,11 @@ class TestModifierViews(TestCase):
         ).pk
         response = self.client.post(reverse('modify_fact', kwargs={'id': pk}), {
             'letra': 'MR',
-            'numero': '000002',
-            'comentarios': 'Fact 2',
+            'numero': '000001',
+            'comentarios': 'Fact with modifications',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Fact.objects.get(pk=pk).numero, '000002')
+        self.assertEqual(Fact.objects.get(pk=pk).comentarios, 'Fact with modifications')
 
     def test_modify_room_POST(self):
         response = self.client.post(reverse('modify_room', kwargs={'id': self.room.pk}), {
