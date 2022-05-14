@@ -159,6 +159,15 @@ class TestListingViews(TestCase):
         response = self.client.get('/factues/' + str(pk) + '?page2=2')
         self.assertEqual(response.status_code, 404)
 
+    def test_roomfacts_raise_pagenotfound(self):
+        # Create a room
+        pk = Room.objects.create(
+            n_estancia='001',
+        ).pk
+
+        response = self.client.get('/builtmaterials/' + str(pk) + '?page=2')
+        self.assertEqual(response.status_code, 404)
+
 class TestAddViews(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='testuser', password='12345')
@@ -585,3 +594,30 @@ class TestReportGenerator(TestCase):
         # It returns on the response a docs file
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get('Content-Disposition'), 'attachment; filename = "Informe de excavación.docx"')
+
+class RegisterUserTest(TestCase):
+
+    def test_register_user_GET(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_user_POST(self):
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'password1': '12345',
+            'password2': '12345',
+            'email': 'example@gmail.com',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        
+    def test_register_validation_error(self):
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'password1': '12345',
+            'password2': '123456',
+            'email': 'example@gmail.com',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'password2', 'The two password fields didn’t match.')
