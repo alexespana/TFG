@@ -9,12 +9,24 @@ class RoomAdmin(admin.ModelAdmin):
     ordering = ('n_estancia',)
     list_per_page = 10
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['n_estancia']
+        else:
+            return []
+
 @admin.register(Fact)  # This decorator registers the model in the admin interface
 class FactAdmin(admin.ModelAdmin):
     list_display = ('letra', 'numero')
     ordering = ('letra','numero',)
     list_filter = ('estancia',)
     list_per_page = 10
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['letra', 'numero']
+        else:
+            return []
 
 @admin.register(Excavation)
 class ExcavationAdmin(admin.ModelAdmin):
@@ -23,6 +35,12 @@ class ExcavationAdmin(admin.ModelAdmin):
     ordering = ('n_excavacion',)
     list_per_page = 10
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['n_excavacion']
+        else:
+            return []
+
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('numero', 'ue', 'estancia')
@@ -30,16 +48,34 @@ class PhotoAdmin(admin.ModelAdmin):
     list_filter = ('ue', 'estancia')
     list_per_page = 10
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['numero']
+        else:
+            return []
+
 @admin.register(BuiltMaterial)
 class BuiltMaterialAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['nombre']
+        else:
+            return []
 
 @admin.register(SedimentaryMaterial)
 class SedimentaryMaterialAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
     search_fields = ('nombre',)
     list_per_page = 10
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['nombre']
+        else:
+            return []
 
 @admin.register(BuiltUE, SedimentaryUE)
 class UEAdmin(admin.ModelAdmin):
@@ -49,6 +85,12 @@ class UEAdmin(admin.ModelAdmin):
     list_filter = ('excavacion','hecho')
     list_per_page = 10
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['codigo', 'excavacion', 'n_orden']
+        else:
+            return ['codigo']
+
 @admin.register(Inclusion)
 class InclusionAdmin(admin.ModelAdmin):
     list_display = ('tipo','uesedimentaria','frecuencia', 'grosor')
@@ -57,6 +99,11 @@ class InclusionAdmin(admin.ModelAdmin):
     list_filter = ('uesedimentaria',)
     list_per_page = 10
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['tipo', 'uesedimentaria']
+        else:
+            return []
 
 # Changing the header, title and description of the admin interface
 admin.site.index_title = 'MyFindings'

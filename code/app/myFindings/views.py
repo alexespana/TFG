@@ -4,11 +4,13 @@ from django import template
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
-                   PhotoForm, CustomUserCreationForm, CustomUserChangeForm
+                   PhotoForm, CustomUserCreationForm, CustomUserChangeForm, \
+                   InclusionUpdateForm, FactUpdateForm, SedimentaryUEUpdateForm, BuiltUEUpdateForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
                     SedimentaryMaterial, BuiltUE, SedimentaryUE
 from django.conf import settings
 from django.template.loader import get_template
+from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -16,7 +18,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.mail import BadHeaderError, send_mail
-from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage
+from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -49,8 +52,19 @@ def team(request):
 @permission_required('myFindings.view_excavation', raise_exception=True)
 def list_allexcavations(request):
     # Get all excavations
-    excavations = Excavation.objects.all()
-    data = { 'excavations': excavations}
+    excavations = Excavation.objects.get_queryset().order_by('id')
+    
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(excavations, 6)
+        excavations = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay excavaciones para mostrar.")
+
+    data = { 
+        'entity': excavations,
+        'paginator': paginator,
+    }
 
     return render(request, 'excavations_list.html', data)
 
@@ -66,6 +80,9 @@ def add_excavation(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Excavación creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='excavations')
         else:
@@ -78,13 +95,21 @@ def add_excavation(request):
 def modify_excavation(request, id):
     excavation = get_object_or_404(Excavation, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': ExcavationForm(instance=excavation) }
+    form = ExcavationForm(instance=excavation)
+
+    # Make the field n_excavacion readonly
+    form.fields['n_excavacion'].widget.attrs['readonly'] = True
+
+    # Save the form with the excavation data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = ExcavationForm(data=request.POST, instance=excavation)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Excavación modificada correctamente.')
 
             return redirect(to="excavations")
 
@@ -101,6 +126,9 @@ def delete_excavation(request, id):
     # Delete the excavation
     excavation.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Excavación eliminada correctamente.')
+
     return redirect(to="excavations")    
 
 # ################
@@ -110,8 +138,19 @@ def delete_excavation(request, id):
 @permission_required('myFindings.view_sedimentaryue', raise_exception=True)
 def list_allsedimentaryues(request):
     # Get all sedimentary ues
-    sedimentaryues = SedimentaryUE.objects.all()
-    data = { 'sedimentaryues': sedimentaryues}
+    sedimentaryues = SedimentaryUE.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
+
+    data = { 
+        'entity': sedimentaryues,
+        'paginator': paginator,
+    }
 
     return render(request, 'sedimentaryues_list.html', data)
 
@@ -127,6 +166,9 @@ def add_sedimentaryue(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Unidad sedimentaria creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='sedimentaryues')
         else:
@@ -139,13 +181,16 @@ def add_sedimentaryue(request):
 def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': SedimentaryUEForm(instance=sedimentaryue) }
+    # Save the form with the sedimentaryue data
+    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue) }
 
     if request.method == 'POST':
-        form = SedimentaryUEForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
+        form = SedimentaryUEUpdateForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Unidad sedimentaria modificada correctamente.')
 
             return redirect(to="sedimentaryues")
 
@@ -162,6 +207,9 @@ def delete_sedimentaryue(request, id):
     # Delete the sedimentaryue
     sedimentaryue.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Unidad sedimentaria eliminada correctamente.')
+
     return redirect(to="sedimentaryues")   
 
 # ################
@@ -171,8 +219,20 @@ def delete_sedimentaryue(request, id):
 @permission_required('myFindings.view_builtue', raise_exception=True)
 def list_allbuiltues(request):
     # Get all built ues
-    builtues = BuiltUE.objects.all()
-    data = { 'builtues': builtues}
+    builtues = BuiltUE.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(builtues, 6)
+        builtues = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay unidades construidas para mostrar.")
+
+
+    data = { 
+        'entity': builtues,
+        'paginator': paginator,
+    }
 
     return render(request, 'builtues_list.html', data)
 
@@ -188,6 +248,9 @@ def add_builtue(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Unidad construida creada correctamente.')
+
             # Redirect to the list of excavations
             return redirect(to='builtues')
         else:
@@ -200,13 +263,16 @@ def add_builtue(request):
 def modify_builtue(request, id):
     builtue = get_object_or_404(BuiltUE, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': BuiltUEForm(instance=builtue) }
+    # Save the form with the data of the builtue
+    data = { 'form': BuiltUEUpdateForm(instance=builtue) }
 
     if request.method == 'POST':
-        form = BuiltUEForm(data=request.POST, instance=builtue, files=request.FILES)
+        form = BuiltUEUpdateForm(data=request.POST, instance=builtue, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Unidad construida modificada correctamente.')
 
             return redirect(to="builtues")
 
@@ -223,6 +289,9 @@ def delete_builtue(request, id):
     # Delete the excavation
     builtue.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Unidad construida eliminada correctamente.')
+
     return redirect(to="builtues")
 
 
@@ -233,8 +302,20 @@ def delete_builtue(request, id):
 @permission_required('myFindings.view_fact', raise_exception=True)
 def list_allfacts(request):
     # Get all facts
-    facts = Fact.objects.all()
-    data = { 'facts': facts}
+    facts = Fact.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(facts, 6)
+        facts = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay hechos para mostrar.")
+
+
+    data = { 
+        'entity': facts,
+        'paginator': paginator,
+    }
 
     return render(request, 'facts_list.html', data)
 
@@ -250,6 +331,9 @@ def add_fact(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Hecho creado correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='facts')
         else:
@@ -262,13 +346,16 @@ def add_fact(request):
 def modify_fact(request, id):
     fact = get_object_or_404(Fact, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': FactForm(instance=fact) }
+    # Save the form with the fact data
+    data = { 'form': FactUpdateForm(instance=fact) }
 
     if request.method == 'POST':
-        form = FactForm(data=request.POST, instance=fact, files=request.FILES)
+        form = FactUpdateForm(data=request.POST, instance=fact, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Hecho modificado correctamente.')
 
             return redirect(to="facts")
 
@@ -285,6 +372,9 @@ def delete_fact(request, id):
     # Delete the excavation
     fact.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Hecho eliminado correctamente.')
+
     return redirect(to="facts")  
 
 # ################
@@ -294,8 +384,19 @@ def delete_fact(request, id):
 @permission_required('myFindings.view_room', raise_exception=True)
 def list_allrooms(request):
     # Get all rooms
-    rooms = Room.objects.all()
-    data = { 'rooms': rooms}
+    rooms = Room.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(rooms, 6)
+        rooms = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay estancias para mostrar.")
+
+    data = { 
+        'entity': rooms,
+        'paginator': paginator,
+    }
 
     return render(request, 'rooms_list.html', data)
 
@@ -311,6 +412,9 @@ def add_room(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Estancia creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='rooms')
         else:
@@ -323,13 +427,21 @@ def add_room(request):
 def modify_room(request, id):
     room = get_object_or_404(Room, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': RoomForm(instance=room) }
+    form = RoomForm(instance=room)
+
+    # Make the field n_estancia readonly
+    form.fields['n_estancia'].widget.attrs['readonly'] = True
+
+    # Save the form with the room data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = RoomForm(data=request.POST, instance=room, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Estancia modificada correctamente.')
 
             return redirect(to="rooms")
 
@@ -346,6 +458,9 @@ def delete_room(request, id):
     # Delete the room
     room.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Estancia eliminada correctamente.')
+
     return redirect(to="rooms") 
 
 # ################
@@ -355,8 +470,19 @@ def delete_room(request, id):
 @permission_required('myFindings.view_photo', raise_exception=True)
 def list_allphotos(request):
     # Get all photos
-    photos = Photo.objects.all()
-    data = { 'photos': photos}
+    photos = Photo.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(photos, 6)
+        photos = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay fotos para mostrar.")
+
+    data = { 
+        'entity': photos,
+        'paginator': paginator,
+    }
 
     return render(request, 'photos_list.html', data)
 
@@ -372,6 +498,9 @@ def add_photo(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Foto creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='photos')
         else:
@@ -384,13 +513,21 @@ def add_photo(request):
 def modify_photo(request, id):
     photo = get_object_or_404(Photo, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': PhotoForm(instance=photo) }
+    form = PhotoForm(instance=photo)
+
+    # Make the field numero readonly
+    form.fields['numero'].widget.attrs['readonly'] = True
+
+    # Save the form with the photo data
+    data = { 'form': form }
 
     if request.method == 'POST':
         form = PhotoForm(data=request.POST, instance=photo, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Foto modificada correctamente.')
 
             return redirect(to="photos")
 
@@ -407,6 +544,9 @@ def delete_photo(request, id):
     # Delete the photo
     photo.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Foto eliminada correctamente.')
+
     return redirect(to="photos") 
 
 # ################
@@ -416,8 +556,19 @@ def delete_photo(request, id):
 @permission_required('myFindings.view_inclusion', raise_exception=True)
 def list_allinclusions(request):
     # Get all photos
-    inclusions = Inclusion.objects.all()
-    data = { 'inclusions': inclusions}
+    inclusions = Inclusion.objects.get_queryset().order_by('id')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(inclusions, 6)
+        inclusions = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay inclusiones para mostrar.")
+
+    data = { 
+        'entity': inclusions,
+        'paginator': paginator,
+    }
 
     return render(request, 'inclusions_list.html', data)
 
@@ -433,6 +584,9 @@ def add_inclusion(request):
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
 
+            # Send a message to the user
+            messages.success(request, 'Inclusion creada correctamente.')
+
             # Redirect to the list of facts
             return redirect(to='inclusions')
         else:
@@ -445,13 +599,16 @@ def add_inclusion(request):
 def modify_inclusion(request, id):
     inclusion = get_object_or_404(Inclusion, id=id)
     
-    # Guardar el formulario con los datos del cuadro
-    data = { 'form': InclusionForm(instance=inclusion) }
+    # Save the form with the inclusion data
+    data = { 'form': InclusionUpdateForm(instance=inclusion) }
 
     if request.method == 'POST':
-        form = InclusionForm(data=request.POST, instance=inclusion, files=request.FILES)
+        form = InclusionUpdateForm(data=request.POST, instance=inclusion, files=request.FILES)
         if form.is_valid():       # Si es válido
             form.save()           # Guardarlo
+
+            # Send a message to the user
+            messages.success(request, 'Inclusion modificada correctamente.')
 
             return redirect(to="inclusions")
 
@@ -468,6 +625,9 @@ def delete_inclusion(request, id):
     # Delete the inclusion
     inclusion.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Inclusion eliminada correctamente.')
+
     return redirect(to="inclusions")
 
 # #####################
@@ -477,8 +637,19 @@ def delete_inclusion(request, id):
 @permission_required('myFindings.view_sedimentarymaterial', raise_exception=True)
 def list_allsedimentarymaterials(request):
     # Get all sedimentary materials
-    sedimentarymaterials = SedimentaryMaterial.objects.all()
-    data = { 'sedimentarymaterials': sedimentarymaterials}
+    sedimentarymaterials = SedimentaryMaterial.objects.get_queryset().order_by('nombre')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(sedimentarymaterials, 6)
+        sedimentarymaterials = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay materiales sedimentarios para mostrar.")
+
+    data = { 
+        'entity': sedimentarymaterials,
+        'paginator': paginator,
+    }
 
     return render(request, 'sedimentarymaterials_list.html', data)
 
@@ -493,6 +664,9 @@ def add_sedimentarymaterial(request):
         form = SedimentaryMaterialForm(data=request.POST)
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
+
+            # Send a message to the user
+            messages.success(request, 'Material sedimentario creado correctamente.')
 
             # Redirect to the list of facts
             return redirect(to='sedimentarymaterials')
@@ -510,6 +684,9 @@ def delete_sedimentarymaterial(request, nombre):
     # Delete the sedimentary material
     sedimentarymaterial.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Material sedimentario eliminado correctamente.')
+
     return redirect(to="sedimentarymaterials")
 
 # #####################
@@ -519,8 +696,19 @@ def delete_sedimentarymaterial(request, nombre):
 @permission_required('myFindings.view_builtmaterial', raise_exception=True)
 def list_allbuiltmaterials(request):
     # Get all built materials
-    builtmaterials = BuiltMaterial.objects.all()
-    data = { 'builtmaterials': builtmaterials}
+    builtmaterials = BuiltMaterial.objects.get_queryset().order_by('nombre')
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(builtmaterials, 6)
+        builtmaterials = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay materiales construidos para mostrar.")
+
+    data = { 
+        'entity': builtmaterials,
+        'paginator': paginator,
+    }
 
     return render(request, 'builtmaterials_list.html', data)
 
@@ -535,6 +723,9 @@ def add_builtmaterial(request):
         form = BuiltMaterialForm(data=request.POST)
         if(form.is_valid()):    # Check if valid
             form.save()         # Save form
+
+            # Send a message to the user
+            messages.success(request, 'Material construido creado correctamente.')
 
             # Redirect to the list of facts
             return redirect(to='builtmaterials')
@@ -552,6 +743,9 @@ def delete_builtmaterial(request, nombre):
     # Delete the built material
     builtmaterial.delete()    
 
+    # Send a message to the user
+    messages.success(request, 'Material construido eliminado correctamente.')
+
     return redirect(to="builtmaterials")
 
 # ####################
@@ -566,12 +760,32 @@ def list_excavationues(request, id):
     excavation = get_object_or_404(Excavation, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = SedimentaryUE.objects.filter(excavacion__id=id)
+    sedimentaryues = SedimentaryUE.objects.get_queryset().filter(excavacion__id=id).order_by('id')
+
+    page1 = request.GET.get('page1', 1)
+    try:
+        paginator1 = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator1.page(page1)
+    except EmptyPage:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
 
     # Find all associated built stratigraphic units
-    builtues = BuiltUE.objects.filter(excavacion__id=id)
+    builtues = BuiltUE.objects.get_queryset().filter(excavacion__id=id).order_by('id')
 
-    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_excavacion': excavation.n_excavacion}
+    page2 = request.GET.get('page2', 1)
+    try:
+        paginator2 = Paginator(builtues, 6)
+        builtues = paginator2.page(page2)
+    except EmptyPage:
+        raise Http404("No hay unidades construidas para mostrar.")
+
+    data = { 
+        'sedimentaryues': sedimentaryues, 
+        'builtues': builtues, 
+        'n_excavacion': excavation.n_excavacion,
+        'paginator1': paginator1,
+        'paginator2': paginator2,
+    }
 
     return render(request, 'excavationues.html', data)
 
@@ -583,9 +797,16 @@ def list_roomfacts(request, id):
     room = get_object_or_404(Room, id=id)
 
     # Find all associated facts
-    facts = Fact.objects.filter(estancia__id=id)
+    facts = Fact.objects.get_queryset().filter(estancia__id=id).order_by('id')
 
-    data = { 'facts': facts,  'n_room': room.n_estancia}
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(facts, 6)
+        facts = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay hechos para mostrar.")
+
+    data = { 'entity': facts,  'n_room': room.n_estancia}
 
     return render(request, 'facts_list.html', data)
 
@@ -598,13 +819,33 @@ def list_factues(request, id):
     fact = get_object_or_404(Fact, id=id)
 
     # Find all associated sedimentary stratigraphic units
-    sedimentaryues = SedimentaryUE.objects.filter(hecho__id=id)
+    sedimentaryues = SedimentaryUE.objects.get_queryset().filter(hecho__id=id).order_by('id')
 
+    page1 = request.GET.get('page1', 1)
+    try:
+        paginator1 = Paginator(sedimentaryues, 6)
+        sedimentaryues = paginator1.page(page1)
+    except EmptyPage:
+        raise Http404("No hay unidades sedimentarias para mostrar.")
+    
     # Find all associated built stratigraphic units
-    builtues = BuiltUE.objects.filter(hecho__id=id)
+    builtues = BuiltUE.objects.get_queryset().filter(hecho__id=id).order_by('id')
+
+    page2 = request.GET.get('page2', 1)
+    try:
+        paginator2 = Paginator(builtues, 6)
+        builtues = paginator2.page(page2)
+    except EmptyPage:
+        raise Http404("No hay unidades construidas para mostrar.")
 
     nombre = fact.letra + fact.numero
-    data = { 'sedimentaryues': sedimentaryues, 'builtues': builtues, 'n_hecho': nombre}
+    data = { 
+        'sedimentaryues': sedimentaryues,
+        'builtues': builtues,
+        'n_hecho': nombre,
+        'paginator1': paginator1,
+        'paginator2': paginator2,
+    }
 
     return render(request, 'excavationues.html', data)
 

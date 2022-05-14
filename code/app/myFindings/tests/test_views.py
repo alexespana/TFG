@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
                               BuiltMaterial, SedimentaryMaterial, SedimentaryUE, BuiltUE
 from django.contrib.auth.models import Group
+from django.http import Http404
+from django.core.paginator import Paginator, EmptyPage
 
 class TestListingViews(TestCase):
 
@@ -58,7 +60,7 @@ class TestListingViews(TestCase):
 
     def test_list_excavationues_GET(self):
         pk=Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1,
@@ -70,7 +72,7 @@ class TestListingViews(TestCase):
 
     def test_list_roomfacts_GET(self):
         pk=Room.objects.create(
-            n_estancia='1',
+            n_estancia='001',
         ).pk
         response = self.client.get(reverse('roomfacts', kwargs={'id': pk}))
         self.assertEqual(response.status_code, 200)
@@ -89,12 +91,89 @@ class TestListingViews(TestCase):
         response = self.client.get(reverse('staff_panel'))
         self.assertEqual(response.status_code, 200)
 
+    def test_excavation_raise_pagenotfound(self):
+        response = self.client.get('/excavations/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_sedimentaryues_raise_pagenotfound(self):
+        response = self.client.get('/sedimentaryues/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_builtues_raise_pagenotfound(self):
+        response = self.client.get('/builtues/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_facts_raise_pagenotfound(self):
+        response = self.client.get('/facts/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_rooms_raise_pagenotfound(self):
+        response = self.client.get('/rooms/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_photos_raise_pagenotfound(self):
+        response = self.client.get('/photos/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_inclusions_raise_pagenotfound(self):
+        response = self.client.get('/inclusions/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_sedimentarymaterials_raise_pagenotfound(self):
+        response = self.client.get('/sedimentarymaterials/?page=3')
+        self.assertEqual(response.status_code, 404)
+
+    def test_builtmaterials_raise_pagenotfound(self):
+        response = self.client.get('/builtmaterials/?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_excavationues_raise_pagenotfound(self):
+        # Create an excavation
+        pk = Excavation.objects.create(
+            n_excavacion='001',
+            latitud=1,
+            longitud=1,
+            altura=1,
+        ).pk
+
+        # For the first table
+        response = self.client.get('/excavationues/' + str(pk) + '?page1=2')
+        self.assertEqual(response.status_code, 404)
+
+        # For the second table
+        response = self.client.get('/excavationues/' + str(pk) + '?page2=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_factues_raise_pagenotfound(self):
+        # Create a fact
+        pk = Fact.objects.create(
+            letra='MR',
+            numero='001001'
+        ).pk
+
+        # For the first table
+        response = self.client.get('/factues/' + str(pk) + '?page1=2')
+        self.assertEqual(response.status_code, 404)
+
+        # For the second table
+        response = self.client.get('/factues/' + str(pk) + '?page2=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_roomfacts_raise_pagenotfound(self):
+        # Create a room
+        pk = Room.objects.create(
+            n_estancia='001',
+        ).pk
+
+        response = self.client.get('/builtmaterials/' + str(pk) + '?page=2')
+        self.assertEqual(response.status_code, 404)
+
 class TestAddViews(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
@@ -102,7 +181,7 @@ class TestAddViews(TestCase):
 
     def test_add_excavation_POST(self):
         response = self.client.post(reverse('add_excavation'), {
-            'n_excavacion': '2',
+            'n_excavacion': '002',
             'latitud': 2,
             'longitud': 2,
             'altura': 2
@@ -112,7 +191,7 @@ class TestAddViews(TestCase):
 
     def test_add_sedimentaryue_POST(self):
         response = self.client.post(reverse('add_sedimentaryue'), {
-            'n_orden': '1',
+            'n_orden': '001',
             'excavacion': self.excavation,
             'descripcion': 'Sedimento',
         })
@@ -121,9 +200,10 @@ class TestAddViews(TestCase):
 
     def test_add_builtue_POST(self):
         response = self.client.post(reverse('add_builtue'), {
-            'n_orden': '1',
+            'n_orden': '001',
             'excavacion': self.excavation,
             'descripcion': 'Construcción',
+            'tipo': 'Positiva',
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(BuiltUE.objects.count(), 1)
@@ -139,7 +219,7 @@ class TestAddViews(TestCase):
 
     def test_add_room_POST(self):
         response = self.client.post(reverse('add_room'), {
-            'n_estancia': '1',
+            'n_estancia': '001',
             'observaciones': 'This room is the largest',
         })
         self.assertEqual(response.status_code, 302)
@@ -154,7 +234,7 @@ class TestAddViews(TestCase):
 
     def test_add_inclusion_POST(self):
         SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=self.excavation,
             descripcion='Descripcion 1'
         )
@@ -188,17 +268,17 @@ class TestModifierViews(TestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
         )
         self.room = Room.objects.create(
-            n_estancia='1',
+            n_estancia='001',
             observaciones='This room is the largest',
         )
         self.sedimentaryue = SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=self.excavation,
             descripcion='Sedimentaria',
         )
@@ -206,13 +286,13 @@ class TestModifierViews(TestCase):
 
     def test_modify_excavation_POST(self):
         pkexcavation = Excavation.objects.create(
-            n_excavacion='2',
+            n_excavacion='002',
             latitud=2,
             longitud=2,
             altura=2
         ).pk
         response = self.client.post(reverse('modify_excavation', kwargs={'id': pkexcavation}), {
-            'n_excavacion': '3',
+            'n_excavacion': '003',
             'latitud': 2,
             'longitud': 2,
             'altura': 2
@@ -228,15 +308,15 @@ class TestModifierViews(TestCase):
         ).pk
         response = self.client.post(reverse('modify_fact', kwargs={'id': pk}), {
             'letra': 'MR',
-            'numero': '000002',
-            'comentarios': 'Fact 2',
+            'numero': '000001',
+            'comentarios': 'Fact with modifications',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Fact.objects.get(pk=pk).numero, '000002')
+        self.assertEqual(Fact.objects.get(pk=pk).comentarios, 'Fact with modifications')
 
     def test_modify_room_POST(self):
         response = self.client.post(reverse('modify_room', kwargs={'id': self.room.pk}), {
-            'n_estancia': '2',
+            'n_estancia': '002',
             'observaciones': 'This room is the smallest',
         })
         self.assertEqual(response.status_code, 302)
@@ -272,21 +352,23 @@ class TestModifierViews(TestCase):
 
     def test_modify_builtue_POST(self):
         pk = BuiltUE.objects.create(
-            n_orden='2',
+            n_orden='002',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Sedimento',
+            tipo='Negativa',
         ).pk
         response = self.client.post(reverse('modify_builtue', kwargs={'id': pk}), {
-            'n_orden': '3',
+            'n_orden': '003',
             'excavacion': Excavation.objects.get(pk=self.excavation.pk),
             'descripcion': 'Construida',
+            'tipo': 'Positiva',
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(BuiltUE.objects.get(pk=pk).codigo, '001003')
 
     def test_modify_sedimentaryue_POST(self):
         response = self.client.post(reverse('modify_sedimentaryue', kwargs={'id': self.sedimentaryue.pk}), {
-            'n_orden': '2',
+            'n_orden': '002',
             'excavacion': Excavation.objects.get(pk=self.excavation.pk),
             'descripcion': 'Sedimento 2',
         })
@@ -320,23 +402,109 @@ class TestModifierViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(User.objects.get(pk=pk).groups.get().pk, pkgroup)
 
+    def test_excavation_validate_error(self):
+        response = self.client.post(reverse('modify_excavation', kwargs={'id': self.excavation.pk}), {
+            'n_excavacion': '003',
+            'latitud': 'e',
+            'longitud': 2,
+            'altura': 2
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'latitud', 'Enter a number.')
+
+    def test_sedimentaryue_validate_error(self):
+        response = self.client.post(reverse('modify_sedimentaryue', kwargs={'id': self.sedimentaryue.pk}), {
+            'n_orden': '001',
+            'excavacion': self.excavation.pk,
+            'plano_n': '-12',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'plano_n', 'Ensure this value is greater than or equal to 0.')
+
+    def test_builtue_validate_error(self):
+        # Create a built ue 
+        pk = BuiltUE.objects.create(
+            n_orden='002',
+            excavacion=self.excavation,
+        ).pk
+
+        response = self.client.post(reverse('modify_builtue', kwargs={'id': pk}), {
+            'n_orden': '002',
+            'excavacion': self.excavation.pk,
+            'seccion_n': 8711212,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'seccion_n', 'Ensure this value is less than or equal to 32767.')
+
+    def test_fact_validate_error(self):
+        # Create a fact
+        pk = Fact.objects.create(
+            letra='MR',
+            numero='003',
+            fase='A1',
+        ).pk
+
+        response = self.client.post(reverse('modify_fact', kwargs={'id': pk}), {
+            'letra': 'MR',
+            'numero': '003',
+            'fase': 'Another',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'fase', 'Select a valid choice. Another is not one of the available choices.')
+
+    def test_room_validate_error(self):
+        response = self.client.post(reverse('modify_room', kwargs={'id': self.room.pk}), {
+            'n_estancia': 'Sala de pruebas',
+            'n_zona': -23,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'n_zona', 'Ensure this value is greater than or equal to 0.')
+
+    def test_photo_validate_error(self):
+        # Create a photo
+        pk = Photo.objects.create(
+            numero=3,
+        ).pk
+
+        response = self.client.post(reverse('modify_photo', kwargs={'id': pk}), {
+            'dist_focal': 'invalid data',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'dist_focal', 'Enter a whole number.')
+
+    def test_inclusion_validate_error(self):
+        # Create an inclusion
+        pk = Inclusion.objects.create(
+            tipo='Cenizas',
+            uesedimentaria=self.sedimentaryue,
+        ).pk
+
+        response = self.client.post(reverse('modify_inclusion', kwargs={'id': pk}), {
+            'tipo': 'Cenizas',
+            'uesedimentaria': self.sedimentaryue.pk,
+            'frecuencia': 'invalid data',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'frecuencia', 'Select a valid choice. invalid data is not one of the available choices.')
+
+
 class TestEliminatingViews(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
         )
         self.sedimentaryue = SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Sedimento',
         )
         self.room = Room.objects.create(
-            n_estancia='1',
+            n_estancia='001',
             observaciones='This room is the largest',
         )
 
@@ -403,10 +571,53 @@ class TestEliminatingViews(TestCase):
     
     def test_delete_builtue_DELETE(self):
         pk = BuiltUE.objects.create(
-            n_orden='2',
+            n_orden='002',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Construida',
         ).pk
         response = self.client.delete(reverse('delete_builtue', kwargs={'id': pk}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(BuiltUE.objects.count(), 0)
+
+class TestReportGenerator(TestCase):
+
+    def test_generate_excavation_report(self):
+        # Create an excavation
+        excavation = Excavation.objects.create(
+            n_excavacion='001',
+            latitud=1,
+            longitud=1,
+            altura=1
+        )
+        response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
+
+        # It returns on the response a docs file
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('Content-Disposition'), 'attachment; filename = "Informe de excavación.docx"')
+
+class RegisterUserTest(TestCase):
+
+    def test_register_user_GET(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_user_POST(self):
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'password1': '12345',
+            'password2': '12345',
+            'email': 'example@gmail.com',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        
+    def test_register_validation_error(self):
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'password1': '12345',
+            'password2': '123456',
+            'email': 'example@gmail.com',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'password2', 'The two password fields didn’t match.')

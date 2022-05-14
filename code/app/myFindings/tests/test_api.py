@@ -53,7 +53,7 @@ class TestAddAPIViews(APITestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
@@ -61,7 +61,7 @@ class TestAddAPIViews(APITestCase):
 
     def test_api_add_excavation_POST(self):
         response = self.client.post(reverse('excavation-list', kwargs={}),{
-            'n_excavacion': '2',
+            'n_excavacion': '002',
         })
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -80,13 +80,13 @@ class TestAddAPIViews(APITestCase):
         
     def test_api_add_room_POST(self):
         response = self.client.post(reverse('room-list', kwargs={}),{
-            'n_estancia': '1',
+            'n_estancia': '001',
         })
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_api_add_inclusion_POST(self):
         SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=self.excavation,
             descripcion='Descripcion 1'
         )
@@ -110,7 +110,7 @@ class TestAddAPIViews(APITestCase):
 
     def test_api_add_sedimentaryue_POST(self):
         response = self.client.post(reverse('sedimentaryue-list', kwargs={}),{
-            'n_orden': '1',
+            'n_orden': '001',
             'excavacion': self.excavation.n_excavacion,
             'descripcion': 'Sedimento',
         })
@@ -118,7 +118,7 @@ class TestAddAPIViews(APITestCase):
 
     def test_api_add_builtue_POST(self):
         response = self.client.post(reverse('builtue-list', kwargs={}),{
-            'n_orden': '1',
+            'n_orden': '001',
             'excavacion': self.excavation.n_excavacion,
             'descripcion': 'Material',
         })
@@ -130,24 +130,24 @@ class TestUpdateAPIViews(APITestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
         )
         self.room = Room.objects.create(
-            n_estancia='1',
+            n_estancia='001',
             observaciones='This room is the largest',
         )
         self.sedimentaryue = SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=self.excavation,
             descripcion='Sedimentaria',
         )   
 
     def test_api_update_excavation_PUT(self):
         response = self.client.put(reverse('excavation-detail', kwargs={'pk': self.excavation.pk}),{
-            'n_excavacion': '1',
+            'n_excavacion': '001',
             'altura': 2,
         })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -183,7 +183,7 @@ class TestUpdateAPIViews(APITestCase):
 
     def test_api_update_room_PUT(self):
         response = self.client.put(reverse('room-detail', kwargs={'pk': self.room.pk}),{
-            'n_estancia': '1',
+            'n_estancia': '001',
             'observaciones': 'This room is the smallest',
         })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -205,7 +205,7 @@ class TestUpdateAPIViews(APITestCase):
 
     def test_api_update_sedimentaryue_PUT(self):
         response = self.client.put(reverse('sedimentaryue-detail', kwargs={'codigo': self.sedimentaryue.codigo}),{
-            'n_orden': '1',
+            'n_orden': '001',
             'excavacion': self.excavation.n_excavacion,
             'descripcion': 'Sedimento',
         })
@@ -214,12 +214,12 @@ class TestUpdateAPIViews(APITestCase):
 
     def test_api_update_builtue_PUT(self):
         pk = BuiltUE.objects.create(
-            n_orden='2',
+            n_orden='002',
             excavacion=Excavation.objects.get(pk=self.excavation.pk),
             descripcion='Construida',
         ).pk
         response = self.client.put(reverse('builtue-detail', kwargs={'codigo': BuiltUE.objects.get(pk=pk).codigo}),{
-            'n_orden': '2',
+            'n_orden': '002',
             'excavacion': self.excavation.n_excavacion,
             'descripcion': 'Construida con metal',
         })
@@ -231,17 +231,17 @@ class TestDeleteAPIViews(APITestCase):
         User.objects.create_superuser(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.excavation = Excavation.objects.create(
-            n_excavacion='1',
+            n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
         )
         self.room = Room.objects.create(
-            n_estancia='1',
+            n_estancia='001',
             observaciones='This room is the largest',
         )
         self.sedimentaryue = SedimentaryUE.objects.create(
-            n_orden='1',
+            n_orden='001',
             excavacion=self.excavation,
             descripcion='Sedimentaria',
         )   
@@ -293,7 +293,7 @@ class TestDeleteAPIViews(APITestCase):
 
     def test_api_delete_builtue_DELETE(self):
         pk = BuiltUE.objects.create(
-            n_orden='2',
+            n_orden='002',
             excavacion=self.excavation,
             descripcion='Construida',
         ).pk

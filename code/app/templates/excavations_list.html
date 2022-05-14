@@ -10,6 +10,11 @@
                 <div class="card-body">
                     <h2>Excavaciones</h2>
                     <hr>
+                    {% if perms.myFindings.add_excavation %}
+                    <div class="d-flex justify-content-end mb-2">
+                        <a href="{% url 'add_excavation' %}" class="btn btn-add">Añadir</a>
+                    </div>
+                    {% endif %}
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <caption>Listado de excavaciones</caption>
@@ -23,7 +28,7 @@
                                 {% endif %}
                             </tr>
                     
-                            {% for e in excavations %}
+                            {% for e in entity %}
                     
                             <tr>
                                 <td>{{ e.n_excavacion }}</td>
@@ -43,7 +48,7 @@
                                         <a href="{% url 'delete_excavation' e.id %}" class="btn btn-delete me-md-2">Eliminar</a>
                                         {% endif %}
                                         {% if perms.myFindings.view_excavation %}
-                                        <a href="{% url 'generate_report' e.id %}" class="btn btn-info">Descargar informe (.docx)</a>
+                                        <a href="{% url 'generate_report' e.id %}" class="btn btn-docs">Descargar informe (.docx)</a>
                                         {% endif %}
                                     </div>
                                 </td>
@@ -53,6 +58,9 @@
                             {% endfor %}
                             
                         </table>
+                        <div>
+                            {% include 'templates/paginator.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
