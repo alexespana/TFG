@@ -70,6 +70,9 @@ header #logo h1 a, header .logo h1 a:hover{
     header #logo h1 {
       font-size: 28px;
     }
+    .btn-list, .btn-modify, .btn-delete, .btn-clean, .btn-save{
+      margin-right: 5px;
+    }
 }
 
 /* ----------------------------------------------------
@@ -605,6 +608,50 @@ table img{
 }
 
 /* ----------------------------------------------------
+#  ---------------- Paginators ------------------------
+-----------------------------------------------------*/
+.pagination > li > a, .pagination > li > span, 
+.pagination2 > span > a{
+  color: #444;
+  background: #f9f9f9;
+  border: 1px solid #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 0;
+  margin-right: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease 0s;
+}
+
+.page-item.active .page-link{
+  color: #fff;
+  background: chocolate;
+  border: 1px solid chocolate;
+}
+
+.pagination > li > a:hover, .pagination > li > span:hover,
+.pagination2 > span > a:hover{
+  background: chocolate;
+  color: white;
+}
+
+.pagination2 > span:nth-child(2) > a{
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus,
+.pagination > .active > a:hover, .pagination > .active > span{
+  background: chocolate;
+  color: white;
+}
+
+/* ----------------------------------------------------
 #  ---------------- Buttons ---------------------------
 -----------------------------------------------------*/
 .btn{
@@ -612,6 +659,12 @@ table img{
   color: #fff;
   border-width: 2px;
   align-items: center;
+}
+
+.btn-add{
+  background: darkgoldenrod;
+  border-color: orange;
+  padding: 10px;
 }
 
 .btn-list{
@@ -629,8 +682,14 @@ table img{
   background-color: indianred;
 }
 
-.btn-list:hover, .btn-modify:hover, .btn-delete:hover, 
-.btn-clean:hover, .btn-save:hover{
+.btn-docs{
+  border-color: darkgreen;
+  background-color: teal;
+}
+
+.btn-add:hover, .btn-list:hover, .btn-modify:hover,
+.btn-delete:hover, .btn-clean:hover, .btn-save:hover,
+.btn-docs:hover{
   background-color: #fff;
   transition: 0.5s;
 }
@@ -668,4 +727,14 @@ table img{
   font-size: 20px;
   color: red;
   font-weight: bold;
+}
+
+/* ----------------------------------------------------
+#  ------------- Validators messages ------------------
+-----------------------------------------------------*/
+div.alert.alert-block.alert-danger{
+  border: solid 2px red;
+}
+div.alert.alert-block.alert-danger > ul{
+  list-style: none;
 }

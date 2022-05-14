@@ -10,6 +10,11 @@
                 <div class="card-body">
                     <h2>Unidades construidas</h2>
                     <hr>
+                    {% if perms.myFindings.add_builtue %}
+                    <div class="d-flex justify-content-end mb-2">
+                        <a href="{% url 'add_builtue' %}" class="btn btn-add">Añadir</a>
+                    </div>
+                    {% endif %}
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <caption>Listado de unidades construidas</caption>
@@ -29,7 +34,7 @@
                                 {% endif %}
                             </tr>
                     
-                            {% for u in builtues %}
+                            {% for u in entity %}
                     
                             <tr>
                                 <td>{{ u.codigo }}</td>
@@ -63,6 +68,9 @@
                             {% endfor %}
                             
                         </table>
+                        <div>
+                            {% include 'templates/paginator.html' %}
+                        </div>
                     </div>
                 </div>
             </div>

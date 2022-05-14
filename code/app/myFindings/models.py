@@ -5,11 +5,16 @@ from django.core.exceptions import ValidationError
 
 def validate_number(value):
     regex = r'^[0-9]{1,3}$'
+
+    if len(value) != 3:
+        raise ValidationError('El número debe tener 3 dígitos.')
+
     if not re.match(regex, value):
         raise ValidationError('Introduzca un formato de número positivo válido.')
 
     if(int(value) < 1 or int(value) > 999):
         raise ValidationError('El número debe ser mayor que 0.')
+
 
 FASE_CHOICES = [
     (('A: época contemporánea'), (
@@ -87,9 +92,13 @@ PERIODO_CHOICES = [
 # ESTANCIA            ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Room(models.Model):
-    # 1, 2, 3, 4, etc
+    class Meta:
+        verbose_name = 'estancia'
+        verbose_name_plural = 'estancias'
+
+    # 001, 002, 003, 004, etc
     n_estancia = models.CharField(max_length=3, verbose_name='Número de estancia', 
-                                  help_text='Ej. 1, 2, 3, etc', validators=[validate_number], unique=True)
+                                  help_text='Ej. 001, 002, 003, etc', validators=[validate_number], unique=True)
     n_zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     n_sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
     observaciones = models.CharField(max_length=200, blank=True, null=True)
@@ -103,10 +112,6 @@ class Room(models.Model):
     periodo = models.CharField(max_length=100, choices=PERIODO_CHOICES, blank=True, null=True)
     autor = models.CharField(max_length=50, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.n_estancia = self.n_estancia.zfill(3)
-        super(Room, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.n_estancia
 
@@ -114,16 +119,16 @@ class Room(models.Model):
 # EXCAVACION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavation(models.Model):
+    class Meta:
+        verbose_name = 'excavación'
+        verbose_name_plural = 'excavaciones'
+
     # Ej. 001, 002, 003, etc
-    n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 1, 2, 3, etc', 
+    n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 001, 002, 003, etc', 
                                     validators=[validate_number], unique=True)      
     latitud = models.FloatField(blank=True, null=True)
     longitud = models.FloatField(blank=True, null=True)
     altura = models.PositiveSmallIntegerField(blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        self.n_excavacion = self.n_excavacion.zfill(3)
-        super(Excavation, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.n_excavacion)
@@ -165,6 +170,8 @@ class Fact(models.Model):
     croquis_seccion = models.ImageField(verbose_name='Croquis de la sección', blank=True, null=True)
 
     class Meta:
+        verbose_name = 'hecho'
+        verbose_name_plural = 'hechos'
         constraints = [
             models.UniqueConstraint(fields=['letra', 'numero'], name='fact_constraint')                                                  
         ]
@@ -200,9 +207,9 @@ class UE(models.Model):
         ('Sureste','Sureste'),
     ]
 
-    codigo = models.CharField(unique=True, max_length=6, blank=True)
+    codigo = models.CharField(max_length=6, blank=True)
     n_orden = models.CharField(max_length=3, verbose_name='Número de orden', 
-                                help_text='Ej. 1, 2, 3, etc', validators=[validate_number]) 
+                                help_text='Ej. 001, 002, 003, etc', validators=[validate_number]) 
 
     # Foreign Keys
     hecho = models.ForeignKey(Fact, on_delete=models.CASCADE, blank=True, null=True)
@@ -235,7 +242,6 @@ class UE(models.Model):
     cota_inferior = models.FloatField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        self.n_orden = self.n_orden.zfill(3)
         self.codigo = self.excavacion.n_excavacion + self.n_orden
 
         if(self.excavacion.altura and self.cota_superior_diff):
@@ -244,10 +250,19 @@ class UE(models.Model):
             self.cota_inferior = self.excavacion.altura + self.cota_inferior_diff
         super(UE, self).save(*args, **kwargs)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['excavacion', 'n_orden'], name='ue_constraint')                                                  
+        ]
+
     def __str__(self):
         return self.codigo
 
 class Photo(models.Model):
+    class Meta:
+        verbose_name = 'fotografía'
+        verbose_name_plural = 'fotografías'
+
     numero = models.PositiveIntegerField(unique=True)
    
     # Foreign Keys
@@ -268,6 +283,10 @@ class Photo(models.Model):
 # MATERIALSEDIMENTARIA ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryMaterial(models.Model):
+    class Meta:
+        verbose_name = 'material sedimentario'
+        verbose_name_plural = 'materiales sedimentarios'
+
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -277,6 +296,10 @@ class SedimentaryMaterial(models.Model):
 # MATERIALCONSTRUIDA   ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltMaterial(models.Model):
+    class Meta:
+        verbose_name = 'material construido'
+        verbose_name_plural = 'materiales construidos'
+
     nombre = models.CharField(max_length=40, primary_key=True)
 
     def __str__(self):
@@ -286,6 +309,10 @@ class BuiltMaterial(models.Model):
 # UESEDIMENTARIA      ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryUE(UE):
+    class Meta:
+        verbose_name = 'unidad sedimentaria'
+        verbose_name_plural = 'unidades sedimentarias'
+
     ESTRUCTURA_CHOICES = [
         ('Compacta', 'Compacta'),
         ('Suelta', 'Suelta'),
@@ -312,13 +339,17 @@ class SedimentaryUE(UE):
 # UECONSTRUIDA        ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltUE(UE):
+    class Meta:
+        verbose_name = 'unidad construida'
+        verbose_name_plural = 'unidades construidas'
+
     TIPO_CHOICES = [
         ('Positiva', 'Positiva'),
         ('Negativa', 'Negativa'),
     ]
 
     sistema_constructivo = models.CharField(max_length=50, blank=True, null=True)
-    tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, blank=True, null=True)
+    tipo = models.CharField(max_length=8, choices=TIPO_CHOICES, default='Positiva')
     materiales = models.ManyToManyField(BuiltMaterial, blank=True)
     n_estructura = models.PositiveSmallIntegerField(verbose_name='Número de estructura' , blank=True, null=True)
 
@@ -326,6 +357,10 @@ class BuiltUE(UE):
 # INCLUSION           ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Inclusion(models.Model):
+    class Meta:
+        verbose_name = 'inclusión'
+        verbose_name_plural = 'inclusiones'
+
     FRECUENCIA_CHOICES = [
         ('Ausencia', 'Ausencia'),
         ('Ocasional', 'Ocasional'),
@@ -362,6 +397,8 @@ class Inclusion(models.Model):
     grosor = models.CharField(max_length=10, choices=GROSOR_CHOICES, blank=True, null=True)
 
     class Meta:
+        verbose_name = 'inclusión'
+        verbose_name_plural = 'inclusiones'
         constraints = [
             models.UniqueConstraint(fields=['tipo', 'uesedimentaria'], name='inclusion_constraint')                                                  
         ]
