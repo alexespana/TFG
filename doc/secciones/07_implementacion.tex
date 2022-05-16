@@ -1616,3 +1616,450 @@ Como vemos, todas ellas indican que las pruebas automatizadas de integración co
 pasado con éxito y además, tenemos el porcentaje de codecov añadido, para el cuál se ha
 obtenido el badge desde Codecov web. Adicionalmente, se ha añadido el badge de la
 \textbf{licencia} de código que estamos usando, \textbf{gplv3}.
+
+\subsection{API REST}
+En este milestone del desarrollo software, vamos a explicar en qué consiste una API, los
+distintos tipos que nos podemos encontrar, por qué son necesarias y sobre todo, cómo la
+hemos implementado en nuestra aplicación web.\\
+
+Una \textbf{API \cite{api} (Application Programming Interfaces o Interfaz de programación
+de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e integrar el
+software de las aplicaciones, es decir, establecen cómo se han de comunicar dos
+aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\
+
+La creación de una API permite que los servicios o recursos que utiliza una aplicación
+puedan ser acceddidos desde cualquier otro servicio o aplicación, sin necesidad de
+conocer cómo están implementados. Según el tipo de interfaz o especificación de protocolo
+que use la API, podemos distinguir dos tipos:
+
+    \begin{itemize}
+        \item \textbf{SOAP}: este tipo de API, conocida como \textbf{Protocolo de Acceso a
+        Objetos Simples}, surgió como consecuencia del creciente uso de las APIs y para
+        permitir una estandarización en el intercambio de la información. Utilizan el XML
+        como el lenguaje de programación de intercambio de datos, y pueden usar el HTTP,
+        FTP, SMTP, etc como protocolo de comunicación. Con este tipo de protocolo, la
+        comunicación entre aplicaciones que se encuentren en entornos distintos o que estén
+        escritas en distintos lenguajes se hace más sencilla. En la actualidad, su uso es
+        reducido, ya que normalmente se usan para transacciones complejas que requieren
+        alta seguridad, como pasarelas de pago, ERPS \footnote{\textbf{Sistemas de
+        planificación de recursos empresariales}: software de gestión empresarial compuesto
+        por módulos que gestionan y automatizan tareas internas de la empresa.}, etc.
+
+        \item \textbf{REST}: este tipo de API, conocida como \textbf{Representational State
+        Transfer o Transferencia de Estado Representacional}, es una interfaz simple que
+        solo usa HTTP y JSON o XML en la respuesta. Una de sus principales características
+        es que se basan en una sintaxis universal para el acceso a los recursos, utilizando
+        las \textbf{Uniform Resource Identifiers (URI)}, que son una secuencia de caracteres
+        que identifican un recurso lógico o físico en una aplicación.\\
+        
+        Este tipo de API, en su versión más extendida (es la que usamos en nuestro proyecto)
+        pasa a considerarse \textbf{RESTful}, con la peculiaridad de usar los verbos de
+        \href{https://developer.mozilla.org/es/docs/Web/HTTP/Methods}{HTTP} para las
+        llamadas desde el cliente (aplicación android) al servidor, asociándolos a
+        operaciones \textbf{CRUD} (Create, Read, Update, Delete) de los recursos. En
+        concreto, las API se consideran RESTful cuando siguen los siguientes cuatro
+        principios:
+
+            \begin{enumerate}
+                \item \textbf{Usar explícitamente los verbos HTTP}: las llamadas a la API
+                deben ser usando los verbos o métodos HTTP, teniendo por lo tanto los
+                siguientes (asociándolos a operaciones CRUD):
+                    
+                    \begin{itemize}
+                        \item \textbf{GET}: para obtener un recurso (Read).
+                        \item \textbf{POST}: para crear un recurso (Create).
+                        \item \textbf{PUT}: para actualizar un recurso (Update).
+                        \item \textbf{PATCH}: para actualizar parcialmente un
+                        recurso (Update).
+                        \item \textbf{DELETE}: para eliminar un recurso (Delete).
+                    \end{itemize}
+
+                \item \textbf{Ser sin estado (stateless)}: que el resultado de la llamadas
+                no dependa de otras llamadas anteriores, es decir, que sea
+                \textbf{idempotente}.
+                \item \textbf{Usar URIs con estilo path}: que las URIs sigan un formato
+                estándar, es decir, que sean legibles por humanos y pueda identificarse
+                claramente el recurso que se solicita. Por ejemplo, si solicitamos Una
+                excavación que la URI no sea así: \textbf{/info\_excavacion?id=1}, y que
+                sea algo asi: \textbf{/excavaciones/1}. Estos paths son los llamados
+                \textbf{endpoints}.
+                \item \textbf{Devolver en la respuesta JSON o XML}: como hemos mencionado
+                anteriormente, las respuestas deben ser en formato XML o JSON,
+                devolviendo correspondientemente el
+                \href{https://developer.mozilla.org/es/docs/Web/HTTP/Status}{status code}
+                correspondiente, es decir, el código de estado HTTP que indica cómo ha
+                sido el resultado de la petición.
+            \end{enumerate}
+    \end{itemize}
+
+\subsubsection{Django REST Framework}
+En esta sección explicaremos con detalle  en qué consiste \textbf{Django REST Framework}
+\cite{djangorestframework} y cómo se ha utilizado en nuestro proyecto para la
+implementación de la API \textbf{RESTful}.\\
+
+Django de por sí no trae un mecanismo para implementar APIs web, por lo que se ha tenido
+que añadir a las dependencias y, por tanto, añadir como aplicación instalada al proyecto,
+Django REST Framework. Esta aplicación nos propporciona todas las funcionalidades
+necesarias para la implementación de la API de nuestro proyecto. Funcionalidades como:
+
+    \begin{itemize}
+        \item \textbf{Autenticación}: para que la API sea accesible solo por usuarios
+        autenticados.
+        \item \textbf{Autorización}: para que los usuarios autenticados puedan realizar
+        operaciones CRUD sobre los recursos.
+        \item \textbf{Serialización}: para que los datos devueltos por la API sean
+        representados en formato JSON o XML.
+        \item \textbf{Deserialización}: para que los datos recibidos por la API sean
+        interpretados en formato JSON o XML.
+        \item \textbf{Cache}: para que la API no sea consultada varias veces para la
+        solicitud de un mismo recurso.
+        \item \textbf{Routing}: para que la API se pueda acceder a través de una URI.
+        \item \textbf{Paginación}: para que la API devuelva páginas de resultados.
+    \end{itemize}
+
+Como vemos, entre ellas se encuentran algunos de los requisitos necesarios para poder
+considerar una API como RESTful como que sea cacheable y que las respuestas sean en JSON
+o XML.\\
+
+Para la creación de cualquier ruta en la API que sea funcional, son necesarios los
+siguientes elementos:
+
+    \begin{itemize}
+        \item \textbf{Router}: es una clase ya incluida en el módulo de Django REST
+        Framework que nos permitirá definir la ruta correspondiente al \textbf{endpoint}
+        que queremos implementar. Por ejemplo, en el caso de las excavaciones se haría del
+        siguiente modo:
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    from rest_framework import routers
+    from .views import ExcavationViewSet
+        .
+        .
+    # API endpoints
+    router = routers.DefaultRouter()
+    router.register('excavation', ExcavationViewSet)
+        .
+        .
+    \end{minted}
+
+        \item \textbf{Serializer}: es una clase que hereda de \textbf{ModelSerializer}
+        y que se encargará de serializar automáticamente los datos correspondientes a
+        un modelo en dado, es decir, poder transformarlo a formato JSON o XML, además
+        de generar los validadores correspondientes para el serializador, siendo capaz
+        de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
+        Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
+        las excavaciones tendríamos la siguiente implementación:
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    from rest_framework import serializers
+    from .models import Excavation
+        .
+        .
+    class ExcavationSerializer(serializers.ModelSerializer):
+      class Meta:
+          model = Excavation
+          fields = '__all__'
+        .
+        .
+    \end{minted}
+
+        \item \textbf{Viewset}: es una clase que hereda de \textbf{ModelViewSet} y que
+        será la vista asociada a una URI concreta. Además de esto, cabe mencionar que
+        la clase ModelViewSet hereda de la clase \textbf{GenericAPIView}, por lo que
+        incluye ya implementadas acciones como listar, recuperar, actualizar, actualizar
+        parcialmente y eliminar, teniendo solo que definir al menos dos atributos en la
+        clase que son el \textbf{queryset} y el \textbf{serializer}. Por ejemplo, para las
+        excavaciones, tendría la siguiente implementación:
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    from .serializers import ExcavationSerializer
+    from .models import Excavation
+        .
+        .
+    # API REST
+    class ExcavationViewSet(viewsets.ModelViewSet):
+        queryset = Excavation.objects.all()
+        serializer_class = ExcavationSerializer
+        .
+        .
+    \end{minted}
+        
+        Esta vista utilizará el
+        serializador anteriormente mencionado para pasar los datos correspondientes del 
+    \end{itemize}
+
+Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{endpoints}:
+
+\begin{longtable}[H]{|l|l|l|}
+    \hline
+    \textbf{Método} & \textbf{EndPoint} & \textbf{Descripción} \\
+    \hline
+    \endfirsthead
+   
+    \hline
+    \multicolumn{3}{|c|}{Continuación de la tabla \ref{tab:endpoints}}\\
+    \hline
+    \textbf{Método} & \textbf{EndPoint} & \textbf{Descripción} \\
+    \hline
+    \hline
+    \endhead
+   
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Excavaciones}} \\
+    \hline
+    GET & api/excavation & Lista de excavaciones \\
+    GET & api/excavation/\{pk\} & Recupera una excavación\\
+    POST & api/excavation & Crea una excavación \\
+    PUT & api/excavation/\{pk\} & Actualiza una excavación \\
+    PATCH & api/excavation/\{pk\} & Actualiza parcialmente una \\
+    &  & excavación \\
+    DELETE & api/excavation/\{pk\} & Elimina una excavación \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Fotografías}} \\
+    \hline
+    GET & api/photo & Lista de fotografías \\
+    GET & api/photo/\{pk\} & Recupera una fotografía \\
+    POST & api/photo & Crea una fotografía \\
+    PUT & api/photo/\{pk\} & Actualiza una fotografía \\
+    PATCH & api/photo/\{pk\} & Actualiza parcialmente una \\
+    &  & fotografía \\
+    DELETE & api/photo/\{pk\} & Elimina una fotografía \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Inclusiones}} \\
+    \hline
+    GET & api/inclusion & Lista de inclusiones \\
+    GET & api/inclusion/\{pk\} & Recupera una inclusión \\
+    POST & api/inclusion & Crea una inclusión \\
+    PUT & api/inclusion/\{pk\} & Actualiza una inclusión\\
+    PATCH & api/inclusion/\{pk\} & Actualiza parcialmente una \\
+    &  & inclusión \\
+    DELETE & api/inclusion/\{pk\} & Elimina una inclusión \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Unidades sedimentarias}} \\
+    \hline
+    GET & api/sedimentaryue & Lista de unidades sedimentarias \\
+    GET & api/sedimentaryue/\{codigo\} & Recupera una unidad sedimentaria \\
+    POST & api/sedimentaryue & Crea una unidad sedimentaria \\
+    PUT & api/sedimentaryue/\{codigo\} & Actualiza una unidad sedimentaria \\
+    PATCH & api/sedimentaryue/\{codigo\} & Actualiza parcialmente una \\
+    &  & unidad sedimentaria \\
+    DELETE & api/sedimentaryue/\{codigo\} & Elimina una unidad sedimentaria \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Unidades construidas}} \\
+    \hline
+    GET & api/builtue & Lista de unidades construidas \\
+    GET & api/builtue/\{codigo\} & Recupera una unidad construida \\
+    POST & api/builtue & Crea una unidad construida \\
+    PUT & api/builtue/\{codigo\} & Actualiza una unidad construida \\
+    PATCH & api/builtue/\{codigo\} & Actualiza parcialmente una \\
+    &  & unidad construida \\
+    DELETE & api/builtue/\{codigo\} & Elimina una unidad construida \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Materiales sedimentarios}} \\
+    \hline
+    GET & api/sedimentarymaterial & Lista de materiales sedimentarios \\
+    GET & api/sedimentarymaterial/\{pk\} & Recupera un material sedimentario \\
+    POST & api/sedimentarymaterial & Crea un material sedimentario \\
+    PUT & api/sedimentarymaterial/\{pk\} & Actualiza un material sedimentario \\
+    PATCH & api/sedimentarymaterial/\{pk\} & Actualiza parcialmente un \\
+    &  & material sedimentario \\
+    DELETE & api/sedimentarymaterial/\{pk\} & Elimina un material sedimentario \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Materiales construidos}} \\
+    \hline
+    GET & api/builtmaterial & Lista de materiales construidos \\
+    GET & api/builtmaterial/\{pk\} & Recupera un material construido \\
+    POST & api/builtmaterial & Crea un material construido \\
+    PUT & api/builtmaterial/\{pk\} & Actualiza un material construido \\
+    PATCH & api/builtmaterial/\{pk\} & Actualiza parcialmente un \\
+    &  & material construido \\
+    DELETE & api/builtmaterial/\{pk\} & Elimina un material construido \\
+    \hline\hline
+    \newpage
+    \multicolumn{3}{|l|}{\textbf{Hechos}} \\
+    \hline
+    GET & api/fact & Lista de hechos \\
+    GET & api/fact/\{pk\} & Recupera un hecho \\
+    POST & api/fact & Crea un hecho \\
+    PUT & api/fact/\{pk\} & Actualiza un hecho \\
+    PATCH & api/fact/\{pk\} & Actualiza parcialmente \\
+    &  & un hecho \\
+    DELETE & api/fact/\{pk\} & Elimina un hecho \\
+    \hline\hline
+    \multicolumn{3}{|l|}{\textbf{Estancias}} \\
+    \hline
+    GET & api/room & Lista de estancias \\
+    GET & api/room/\{pk\} & Recupera una estancia \\
+    POST & api/room & Crea una estancia \\
+    PUT & api/room/\{pk\} & Actualiza una estancia \\
+    PATCH & api/room/\{pk\} & Actualiza parcialmente \\
+    &  & una estancia \\
+    DELETE & api/room/\{pk\} & Elimina una estancia \\
+    \hline
+
+    \caption{Endpoints de la API}
+    \label{tab:endpoints}
+\end{longtable}
+
+Como podemos observar, existen bastante endpoints para la API. Cabe nombrar que los
+términos que aparecen entre corchetes serían los parámetros que reciben los endpoints,
+donde \textbf{pk} (primary key o clave primaria) es el id interno que se genera
+automáticamente en la base de datos y consiste en un número entero, y el \textbf{codigo}
+para las unidades estratigráficas es el identificador formado por la excavación a la
+que pertenece la unidad y el número de orden de la unidad. Por ejemplo, si la unidad
+pertenece a la excavación \textbf{1} y es la segunda unidad de la excavación, el código
+sería \textbf{001002} y el endpoint para obtener dicha unidad estratigráfica (supongamos
+que es una unidad construida) sería:
+
+            \begin{center} \textbf{api/builtue/001002} \end{center}
+
+\subsubsection{Autenticación}
+Otro de los puntos a tener en cuenta es la autenticación en la API, ya que no cualquier
+usuario puede tener acceso a ella y realizar cualquier acción sobre los recursos de la
+aplicación, para ello, se debe elegir un sistema de autenticación adecuado. Dado que
+nuestro proyecto es un servidor web al que una aplicación móvil debe hacer peticiones,
+el esquema \textbf{Autenticación mediante Token} es el más apropiado. Para usar este
+esquema de \textbf{TokenAuthentication}, se necesita incluir \textbf{rest\_framework.authtoken}
+en la configuración de aplicaciones instaladas de la aplicación.\\
+
+Teniendo en cuenta lo anteriormente mencionado, los clientes podrán autenticar a los usuarios
+pasando en el cuerpo de la petición un token vinculado a un usuario determinado. Para
+ello, el token deberá estar incluido en la cabecera HTTP de autorización. Por ejemplo:
+
+\begin{center}
+    \textbf{Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b}
+\end{center}
+
+A continuación, vamos a describir el procedimiento de utilización de la API, tanto desde el
+punto de vista gráfico mediante la \textbf{interfaz web} como desde la simulación del envío
+de peticiones a través de un \textbf{cliente móvil}.\\
+
+Ésta sería la interfaz gráfica de la API, donde tenemos una pestaña de \textbf{login} para
+autenticarse en ella, las distintas opciones (OPTIONS) y métodos HTTP (GET, etc), y
+finalmente las distintas rutas definidas en la API para el manejo de los recursos del
+servidor, junto a las cabeceras HTTP que se usan en cada petición.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.25]{imagenes/root-api.png}
+            \caption{Home de la API}
+            \label{fig:root-api}
+        \end{figure}
+
+Si un usuario no autenticado intentase acceder a cualquier enlace de la misma, obtendría el
+siguiente mensaje, que indica que no se proveyeron las credenciales del usuario, ya que al
+añadir el login para la API, es necesario que los usuarios estén autenticados para poder
+usarla.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.25]{imagenes/unauthorized.png}
+            \caption{API web: no autorizado (unauthorized)}
+            \label{fig:unauthorized}
+        \end{figure}
+
+Una vez ingresadas nuestras credenciales (en este caso hemos creado un usuario ficticio que
+se llama \textbf{Alex} y tiene de password \textbf{inventado1234}) podríamos ver la lista
+con las excavaciones disponibles en la aplicación.
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.30]{imagenes/list-excavations.png}
+            \caption{Lista de excavaciones}
+            \label{fig:list-excavations}
+        \end{figure}
+
+Ahora vamos a proceder a realizar una sencilla simulación del flujo de acciones que tendría
+que realizar un cliente para poder utilizar la API. Para ello, hemos utilizado
+\href{https://www.postman.com/}{POSTMAN}, una herramienta que nos permite realizar
+simulaciones de peticiones a través de una interfaz muy simple y fácil de usar.\\
+
+Lo primero de todo sería obtener el \textbf{token de autenticación} para poder autenticarse.
+Para ello, haría una petición \textbf{POST} a una ruta concreta, en este caso
+\textbf{api-token-auth/}, envianando en el cuerpo de la petición el \textbf{nombre} y
+\textbf{password} del usuario:
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.25]{imagenes/get-token.png}
+            \caption{Obtención del token de autenticación}
+            \label{fig:get-token}
+        \end{figure}
+
+Como vemos, el servidor web ha devuelto un token vinculado al usuario. Dicho token será
+almacenado para realizar peticiones a la API, enviando el token en la cabecera de
+autorización de la petición. Si por ejemplo intentamos obtener todas las excavaciones
+disponibles sin mandar el token de autenticación, obtendremos el siguiente mensaje, que es
+mismo que obteníamos anteriormente en la interfaz web:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.45]{imagenes/unauthorized2.png}
+        \caption{Petición a la API: no autorizado (unauthorized)}
+        \label{fig:unauthorized2}
+    \end{figure}
+
+Esto se debe a que el cliente no ha enviado el token obtenido anteriormente en la
+cabecera de autorización de la petición. Para ello, deberá hacerlo de la siguiente
+forma:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.38]{imagenes/token-auth.png}
+        \caption{Autenticación mediante token}
+        \label{fig:token-auth}
+    \end{figure}
+
+Como vemos, hemos obtenido la correspondiente información en formato JSON sobre las
+excavaciones disponibles.\\
+
+Finalmente, podríamos hacernos una pregunta, \textbf{¿y los permisos de los usuarios en la
+API, se mantienen igual que los otorgados en la aplicación web?} La respuesta es sí, siempre
+y cuando se haga la configuración correspondiente. Para ello, debemos indicar que se usen
+los mismos permisos que se han otorgado en los modelos de la aplicación web. Es decir, si
+tenemos un usuario en la aplicación al que sólo le hemos dado permiso para añadir excavaciones
+y no modificarlas, en la API debe ser exactamente igual. Con la siguiente configuración en
+\textbf{settings.py} podremos indicar que se usen los mismos permisos:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    REST_FRAMEWORK = {
+        .
+        .
+        .
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.DjangoModelPermissions',
+        ]
+    }
+    \end{minted}
+
+Veamos si funciona correctamente. Primero enviamos una petición POST a la ruta de la API
+\textbf{api/excavation/} para añadir una excavación, pasando en el cuerpo de la misma
+todos los datos necesarios:
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.40]{imagenes/post-excavation.png}
+            \caption{Añadir excavación}
+            \label{fig:post-excavation}
+        \end{figure}
+
+Ahora si intentásemos modificar la misma excavación,tendríamos que realizar una petición
+\textbf{PUT} o \textbf{PATCH} a la ruta \textbf{api/excavation/} con el id de la excavación
+que queremos modificar, es decir, \textbf{api/excavation/1/}, pasando en el cuerpo de la
+petición los datos que queremos modificar:
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.40]{imagenes/put-excavation.png}
+            \caption{Modificar excavación}
+            \label{fig:put-excavation}
+        \end{figure}
+
+Como vemos, no nos ha permitido modificar la excavación, lo cuál es correcto, ya que no
+tenemos permisos para modificar excavaciones.
+
