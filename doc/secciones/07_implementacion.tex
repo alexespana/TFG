@@ -752,19 +752,19 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        latitud = models.FloatField()
-        longitud = models.FloatField()
-        altura = models.PositiveSmallIntegerField()
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     latitud = models.FloatField()
+    %     longitud = models.FloatField()
+    %     altura = models.PositiveSmallIntegerField()
 
-        def __str__(self):
-            return str(self.n_excavacion)
-    \end{minted}
+    %     def __str__(self):
+    %         return str(self.n_excavacion)
+    % \end{minted}
 
     Si nos fijamos, vemos que es necesario que esta función devuelva un string, por esta
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
@@ -797,15 +797,15 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     n_excavacion = models.PositiveIntegerField(unique=True, 
+    %                     verbose_name='Número de excavación')
+    %     .
+    %     .
+    % \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
     dos formas posibles:
@@ -816,17 +816,17 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            unique_together = ('letra', 'numero',)
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         unique_together = ('letra', 'numero',)
+    % \end{minted}
 
         \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
@@ -834,20 +834,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % DESCOMENTAR
-    \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
-        numero = models.CharField(max_length=6)    
-        .
-        .
-        class Meta:
-            constraints = [
-                models.UniqueConstraint(fields=['letra', 'numero'], 
-                                        name='fact_constraint')                                                  
-            ]
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class Excavacion(models.Model):
+    %     letra = models.CharField(max_length=2, choices=LETRA_CHOICES)
+    %     numero = models.CharField(max_length=6)    
+    %     .
+    %     .
+    %     class Meta:
+    %         constraints = [
+    %             models.UniqueConstraint(fields=['letra', 'numero'], 
+    %                                     name='fact_constraint')                                                  
+    %         ]
+    % \end{minted}
 
     Dicha restricción tendrá el nombre de \textbf{fact\underline{ }constraint}.
     \end{enumerate}
@@ -1040,90 +1040,90 @@ realizar acciones sobre excavaciones tendríamos:
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
         vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.view_excavation', 
-                                        raise_exception=True)
-    def list_allexcavations(request):
-        # Get all excavations
-        excavations = Excavation.objects.all()
-        data = { 'excavations': excavations}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.view_excavation', 
+    %                                     raise_exception=True)
+    % def list_allexcavations(request):
+    %     # Get all excavations
+    %     excavations = Excavation.objects.all()
+    %     data = { 'excavations': excavations}
     
-        return render(request, 'excavations_list.html', data)
-    \end{minted}
+    %     return render(request, 'excavations_list.html', data)
+    % \end{minted}
 
         \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.add_excavacion', 
-                                        raise_exception=True)
-    def add_excavation(request):
-        # Get the fields of excavation
-        data = { 'form': ExcavationForm() }
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.add_excavacion', 
+    %                                     raise_exception=True)
+    % def add_excavation(request):
+    %     # Get the fields of excavation
+    %     data = { 'form': ExcavationForm() }
     
-        if request.method == 'POST':
-            # Get the data entered by the user
-            form = ExcavationForm(data=request.POST)
-            if(form.is_valid()):    # Check if valid
-                form.save()         # Save form
+    %     if request.method == 'POST':
+    %         # Get the data entered by the user
+    %         form = ExcavationForm(data=request.POST)
+    %         if(form.is_valid()):    # Check if valid
+    %             form.save()         # Save form
     
-                # Redirect to the list of excavations
-                return redirect(to='excavations')
-            else:
-                data['form'] = form
+    %             # Redirect to the list of excavations
+    %             return redirect(to='excavations')
+    %         else:
+    %             data['form'] = form
     
-        return render(request, 'add_excavation.html', data)
-    \end{minted}
+    %     return render(request, 'add_excavation.html', data)
+    % \end{minted}
 
         \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.change_excavation', 
-                                        raise_exception=True)
-    def modify_excavation(request, id):
-        excavation = get_object_or_404(Excavation, id=id)
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.change_excavation', 
+    %                                     raise_exception=True)
+    % def modify_excavation(request, id):
+    %     excavation = get_object_or_404(Excavation, id=id)
         
-        # Guardar el formulario con los datos del cuadro
-        data = { 'form': ExcavationForm(instance=excavation) }
+    %     # Guardar el formulario con los datos del cuadro
+    %     data = { 'form': ExcavationForm(instance=excavation) }
     
-        if request.method == 'POST':
-            form = ExcavationForm(data=request.POST,
-                                        instance=excavation)
-            if form.is_valid():       # Si es válido
-                form.save()           # Guardarlo
+    %     if request.method == 'POST':
+    %         form = ExcavationForm(data=request.POST,
+    %                                     instance=excavation)
+    %         if form.is_valid():       # Si es válido
+    %             form.save()           # Guardarlo
     
-                return redirect(to="excavations")
+    %             return redirect(to="excavations")
     
-            data["form"] = form
+    %         data["form"] = form
     
-        return render(request, 'modify_excavation.html', data)
-    \end{minted}
+    %     return render(request, 'modify_excavation.html', data)
+    % \end{minted}
 
         \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
         desde las vistas.
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-           frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    @login_required
-    @permission_required('myFindings.delete_excavation',
-                                        raise_exception=True)
-    def delete_excavation(request, id):
-        # Get the excavation, if it doesn't exist, get an Http404
-        excavation = get_object_or_404(Excavation, id=id)
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %        frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % @login_required
+    % @permission_required('myFindings.delete_excavation',
+    %                                     raise_exception=True)
+    % def delete_excavation(request, id):
+    %     # Get the excavation, if it doesn't exist, get an Http404
+    %     excavation = get_object_or_404(Excavation, id=id)
     
-        # Delete the excavation
-        excavation.delete()    
+    %     # Delete the excavation
+    %     excavation.delete()    
     
-        return redirect(to="excavations")
-    \end{minted}
+    %     return redirect(to="excavations")
+    % \end{minted}
     \end{itemize}
 
 Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
@@ -1357,13 +1357,13 @@ forma:
         buscar los tests.
         \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
         ya que hereda de la clase TestCase de Django:
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class TestListingViews(TestCase):
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % class TestListingViews(TestCase):
+    %     .
+    %     .
+    % \end{minted}
         \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
         ejecutar.
     \end{enumerate}
@@ -1729,19 +1729,19 @@ siguientes elementos:
         Framework que nos permitirá definir la ruta correspondiente al \textbf{endpoint}
         que queremos implementar. Por ejemplo, en el caso de las excavaciones se haría del
         siguiente modo:
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    from rest_framework import routers
-    from .views import ExcavationViewSet
-        .
-        .
-    # API endpoints
-    router = routers.DefaultRouter()
-    router.register('excavation', ExcavationViewSet)
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % from rest_framework import routers
+    % from .views import ExcavationViewSet
+    %     .
+    %     .
+    % # API endpoints
+    % router = routers.DefaultRouter()
+    % router.register('excavation', ExcavationViewSet)
+    %     .
+    %     .
+    % \end{minted}
 
         \item \textbf{Serializer}: es una clase que hereda de \textbf{ModelSerializer}
         y que se encargará de serializar automáticamente los datos correspondientes a
@@ -1750,20 +1750,20 @@ siguientes elementos:
         de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
         Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
         las excavaciones tendríamos la siguiente implementación:
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    from rest_framework import serializers
-    from .models import Excavation
-        .
-        .
-    class ExcavationSerializer(serializers.ModelSerializer):
-      class Meta:
-          model = Excavation
-          fields = '__all__'
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % from rest_framework import serializers
+    % from .models import Excavation
+    %     .
+    %     .
+    % class ExcavationSerializer(serializers.ModelSerializer):
+    %   class Meta:
+    %       model = Excavation
+    %       fields = '__all__'
+    %     .
+    %     .
+    % \end{minted}
 
         \item \textbf{Viewset}: es una clase que hereda de \textbf{ModelViewSet} y que
         será la vista asociada a una URI concreta. Además de esto, cabe mencionar que
@@ -1772,20 +1772,20 @@ siguientes elementos:
         parcialmente y eliminar, teniendo solo que definir al menos dos atributos en la
         clase que son el \textbf{queryset} y el \textbf{serializer}. Por ejemplo, para las
         excavaciones, tendría la siguiente implementación:
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    from .serializers import ExcavationSerializer
-    from .models import Excavation
-        .
-        .
-    # API REST
-    class ExcavationViewSet(viewsets.ModelViewSet):
-        queryset = Excavation.objects.all()
-        serializer_class = ExcavationSerializer
-        .
-        .
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % from .serializers import ExcavationSerializer
+    % from .models import Excavation
+    %     .
+    %     .
+    % # API REST
+    % class ExcavationViewSet(viewsets.ModelViewSet):
+    %     queryset = Excavation.objects.all()
+    %     serializer_class = ExcavationSerializer
+    %     .
+    %     .
+    % \end{minted}
         
         Esta vista utilizará el
         serializador anteriormente mencionado para pasar los datos correspondientes del 
@@ -2024,18 +2024,18 @@ tenemos un usuario en la aplicación al que sólo le hemos dado permiso para añ
 y no modificarlas, en la API debe ser exactamente igual. Con la siguiente configuración en
 \textbf{settings.py} podremos indicar que se usen los mismos permisos:
 
-    % DESCOMENTAR
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
-                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    REST_FRAMEWORK = {
-        .
-        .
-        .
-        'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.DjangoModelPermissions',
-        ]
-    }
-    \end{minted}
+    % % DESCOMENTAR
+    % \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    %                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    % REST_FRAMEWORK = {
+    %     .
+    %     .
+    %     .
+    %     'DEFAULT_PERMISSION_CLASSES': [
+    %         'rest_framework.permissions.DjangoModelPermissions',
+    %     ]
+    % }
+    % \end{minted}
 
 Veamos si funciona correctamente. Primero enviamos una petición POST a la ruta de la API
 \textbf{api/excavation/} para añadir una excavación, pasando en el cuerpo de la misma

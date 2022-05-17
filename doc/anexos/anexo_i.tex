@@ -183,3 +183,33 @@ Mencionadas estas anotaciones, se procede a modificar la estructura anterior de 
 incluyendo un apartado nuevo dedicado al diseño. La sección de elección de herramientas
 \ref{sec:tools} irá incluida en el capítulo de implementación, que recogerá la discusión de
 herramientas elegidas y cómo se ha llevado a cabo la implementación de la aplicación.
+
+\section{6º Reunión (16/05/22): prueba funcional de la aplicación}
+Transcurridos más de dos meses desde el comienzo de la implementación del proyecto, se ha
+vuelto a tener una reunión física con el tutor \textit{Daniel Sánchez Fernández} y el
+arqueólogo \textit{Francisco Javier Brao Gonzalez}.\\
+
+El principal objetivo de la misma es mostrar el funcionamiento de la aplicación al cliente, y
+ver qué puntos le gustaría añadir o en qué puntos podría mejorar de cara a la entrega del
+producto final. Tras esta reunión se propusieron los siguientes cambios al proyecto:
+
+    \begin{enumerate}
+        \item Es necesario mostrar el identificador de las unidades estratigráficas
+        \textbf{precedido de las letras \textit{UE}}, para una mejor identificación de los
+        elementos.
+        \item La identificación de las excavaciones es correcta (mediante tres dígitos),
+        pero la identificación de las UEs es necesario cambiarlas. Pongamos un ejemplo:
+        digamos que tenemos la \textbf{excavación 5 (005)} y vinculada a ella la unidad
+        estratigráfica con \textbf{número de orden 23}. Siempre será necesario añadir tres
+        ceros a la cifra de la excavación, es decir, \textbf{5000} y sumarle el número de
+        orden 23, es decir \textbf{5023}, teniedo la unidad estratigráfica \textbf{UE5023}.
+        \item Añadir un campo que sea el \textbf{nombre} de la excavación en las
+        excavaciones.
+        \item Añadir las \textbf{relaciones entre unidades estratigráficas}, es decir, en una
+        unidad estratigráfica: la que está por encima y por debajo de la misma.
+        \item Añadir si es posible un \textbf{sistema de log} en la aplicación para recoger
+        todas las acciones realizadas por los usuarios. Estos logs podrán ser vistos por
+        usuarios \textbf{staff} de la aplicación, es decir, arqueólogos con privilegios.
+    \end{enumerate}
+
+Estos cambios necesitarán ser añadidos a la entrega final del proyecto.
