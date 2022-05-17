@@ -922,7 +922,7 @@ de autenticación y autorización:
     \end{itemize}
 
 Todo lo requerido para la autenticación en Django está implementado en uno de sus módulos,
-concretamente en el módulo \textbf{django.contrib.auth}, que tendremos que añadirlo a
+concretamente en el módulo \textbf{django.contrib.auth}, que tendremos que añadir a
 nuestro proyecto. Además, necesitaremos definir los permisos asociados a nuestros modelos,
 por ejemplo, poder ver una excavacion, poder editarla, etc, para ello se usa el módulo
 \textbf{django.contrib.contenttypes}, que también tendremos que añadir al proyecto.
@@ -982,7 +982,7 @@ la aplicación:
         que no podrá loguearse en la aplicación.
         \item Al realizarse una solicitud de registro, se enviará un correo al administrador
         del sistema para que apruebe el registro del usuario.
-        \item Al administrador del sistema aprueba el registro del usuario, \textbf{activando}
+        \item El administrador del sistema aprueba el registro del usuario, \textbf{activando}
         al usuario desde su panel de administración.
         \item Se le notifica al usuario mediante correo electrónico que ya puede hacer login
         en la aplicación.
@@ -1183,10 +1183,10 @@ tiene su propio panel de administración \cite{admin-panel}, con multitud de fun
 ya implementadas, se ha decidido reutilizar éste.\\
 
 Dicho panel será únicamente utilizado por el administrador del sistema, que en este caso
-sería o bien el desarrollador de este proyecto o el arqueólogo, \textbf{Francisco Javier
-Brao Gonzalez}. Además, se ha querido hacer más atractiva visualmente la interfaz
-utilizando una aplicación de terceros llamada \textbf{django-admin-interface}
-\cite{admin-interface}, con la que podremos darle el aspecto siguiente:
+sería el desarrollador de este proyecto. Además, se ha querido hacer más atractiva
+visualmente la interfaz utilizando una aplicación de terceros llamada
+\textbf{django-admin-interface} \cite{admin-interface}, con la que podremos darle el
+aspecto siguiente:
 
     \begin{figure}[H]
         \centering
@@ -1232,7 +1232,7 @@ estaremos satisfechos con el servicio. ¿Por qué sucede esto? Esto sucede por u
 incorrecto o inexistente antes de lanzar el producto (\textbf{release}).\\
 
 El testeo de una aplicación web es una tarea difícil, ya que está compuesta por varias
-capas lógicas, que van desde el manejo de \textbf{solicitudes HTTP}, a la
+capas lógicas, que van desde el manejo de \textbf{solicitudes HTTP}, pasando por la
 \textbf{validación y procesamiento de formularios}, hasta la \textbf{renderización de las
 plantillas}. Para realizar todas estas tareas, Django tiene un marco de ejecución de
 pruebas con el que se pueden simular solicitudes HTTP, insertar datos de prueba y en
@@ -1261,14 +1261,14 @@ que implementa el framework de test de Django:
         \item \textbf{TransactionTestCase}: esta clase añade más funcionalidades a la
         clase SimpleTestCase. Esta clase y TestCase (siguiente punto) son idénticas
         excepto por la forma en que la base de datos se restablece.
-        \item \textbf{TestCase}: esta clase es la más utulizada para escribir tests en
+        \item \textbf{TestCase}: esta clase es la más utilizada para escribir tests en
         Django. En nuestros tests, hemos utilizado esta clase ya que nuestra aplicación
-        utiliza una base de datos y será por lo tanto necesaria.
+        usa una base de datos y será por lo tanto necesaria.
         \item \textbf{LiveServerTestCase}: esta clase es la más peculiar de todas, ya que
         hace lo mismo que TransactionTestCase, pero además, permite que se ejecuten
         \textbf{tests visuales}, es decir, tests en los que se abre un navegador y se
         se simulan acciones reales de un usuario, verificando que la página se comporta
-        como es debido, por ejemplo, al pulsar un botón, al loquearse, al ver las unidades
+        como es debido, por ejemplo, al pulsar un botón, al loguearse, al ver las unidades
         estratigráficas, etc.
     \end{itemize}
 
@@ -1283,7 +1283,7 @@ finalizar los tests.\\
 
 Para lanzar los tests en Django se tiene que usar el comando \textbf{test} de la utilidad
 \textbf{manage.py} de nuestro proyecto, que básicamente es un archivo ejecutable con el
-que se pueden ejecutar los comandos del proyecto Django, comandos relacinados con modelos,
+que se pueden ejecutar los comandos del proyecto Django, comandos relacionados con modelos,
 migraciones, tests, etc. Veamos un sencillo ejemplo de lanzamiento de tests:
 
     \begin{figure}[H]
@@ -1303,10 +1303,10 @@ se ejecutan los tests (cada punto indica la ejecución correcta de un test) y fi
 destruye la base de datos creada al principio.\\
 
 En este caso, si quisiéramos ver con más detalle lo que sucede, podríamos indicar en el
-comando la opción \textbf{-v <nivel>} (verbosity) en el el nivel indica la profundidad de
-detalle (0,1,2,3), en este caso, dado que la salida es demasiado extensa, no se aporta la
-imagen. Si ejecutásemos los tests con un nivel dos o superior podríamos como Django, antes
-de lanzar los tests, realiza todas las \textbf{migraciones} de las base de datos,
+comando la opción \textbf{-v <nivel>} (verbosity) en el que el nivel indica la profundidad
+de detalle (0,1,2,3). En este caso, dado que la salida es demasiado extensa, no se aporta
+la imagen. Si ejecutásemos los tests con un nivel dos o superior podríamos ver cómo Django,
+antes de lanzar los tests, realiza todas las \textbf{migraciones} de las base de datos,
 teniendo de esta forma un entorno independiente para el testeo de la aplicación y dejando
 la base de datos usada en producción en el mismo estado que al comienzo de los tests.\\
 
@@ -1376,7 +1376,7 @@ forma:
     \end{figure}
 
 Al terminar la realización de test (por ahora) en este milestone se han realizado un total de
-\textbf{142 tests}, intentando testear la máxima cantidad de código posible, la ejecución de
+\textbf{142 tests}, intentando testear la máxima cantidad de código posible. La ejecución de
 los mismos se encuentra en la siguiente imagen:
 
     \begin{figure}[H]
@@ -1399,7 +1399,7 @@ la integración continua \cite{continuous-integration}:
     \end{itemize}
 
 Imaginemos que estamos trabajando colaborativamente en un proyecto y hasta el momento todo
-funcionaba correctamenete, ahora, un compañero que está trabajando en una mejora, añade su
+funcionaba correctamente. Ahora, un compañero que está trabajando en una mejora, añade su
 código a la base del proyecto. Esta nueva mejora hace cambiar el comportamiento habitual del
 proyecto, haciendo que se produzcan resultados incorrectos. Este error puede venir causado
 por la falta de ejecución de tests antes de añadir el código, error que se podría haber
@@ -1425,12 +1425,12 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
         \item \textbf{Travis CI} \cite{travis-ci}: si atendemos a la facilidad de uso y lo
         estándar que es el sistema, quizás éste sea el más recomendado de usar, sin embargo,
         requiere introducir tarjeta de crédito, por lo que lo hemos descartado como opción.
-        \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente el más popular
-        en la actualidad, sin embargo, éste no es solo un sistema de CI, por lo que muchas de
-        sus características no las usaríamos.
+        \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente es el más
+        popular en la actualidad. Sin embargo, éste no es solo un sistema de CI, por lo
+        que muchas de sus características no las usaríamos.
         \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
         proporcionado por Github y tiene la ventaja de poder usar otras Github Actions ya
-        implementadas. Además de que permite automatizar, customizar y ejecutar flujos de
+        implementadas, además de que permite automatizar, customizar y ejecutar flujos de
         trabajo (explicados más adelante) directamente desde el repositorio de Github.
         \item \textbf{Circle CI} \cite{circle-ci}: este sistema de CI es muy completo y
         sencillo de utilizar. Además, permite visualizar los resultados de las pruebas de la
@@ -1463,8 +1463,8 @@ Cada workflow debe tener los siguientes tres componentes:
         \item Uno o más trabajos (\textbf{jobs}), cada uno de los cuales estará ejecutado en
         un entorno a elegir (máquina virtual, contenedor, etc) y ejecutará una serie de
         pasos (\textbf{steps}).
-        \item Cada step podrá ejecutar un script que hayamos definido nosotros mismos, Un
-        comando del entorno donde estemos ejecutan el job, o bien usar una github action
+        \item Cada step podrá ejecutar un script que hayamos definido nosotros mismos, un
+        comando del entorno donde estemos ejecutando el job, o bien usar una github action
         predefinida que podamos encontrar en el
         \href{https://github.com/marketplace?type=actions}{GitHub Marketplace}.
     \end{enumerate}
@@ -1474,7 +1474,7 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
     \begin{enumerate}
         \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/docs.yml}
         {Build LaTeX documentation}}: este flujo de trabajo se encargará de comprobar que
-        la documentación del proyecto pueda construirse correctamente. Procedamos a
+        la documentación del proyecto pueda construirse correctamente. Procedemos a
         explicar sus partes principales:
             \begin{enumerate}
                 \item \textbf{Trigger}: este flujo de trabajo se ejecutará cuando se haga
@@ -1513,7 +1513,7 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
                 archivos \textit{docker-compose.yml, Dockerfile y requirements.txt}.
                 \item \textbf{Job}: existe un único job llamado \textbf{build-images} que se
                 ejecutará en la última versión de ubuntu (\textbf{ubuntu-latest}) y que
-                tendrá una serie de steps que se encargarán dde construir las imágenes.
+                tendrá una serie de steps que se encargarán de construir las imágenes.
                 \item \textbf{Steps}: el job build-images se compone únicamente de dos pasos:
                     \begin{enumerate}
                         \item \textbf{Checkout}: es exactamente el mismo paso descrito para
@@ -1583,8 +1583,8 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
                         \href{https://github.com/marketplace/actions/codecov}{Codecov GitHub
                         Action}, que se encarga de subir los resultados del informe del paso
                         anterior a Codecov web, que nos servirá posteriormente para la
-                        generación de una \textbf{insignia de estado} para el porcentaje de
-                        código cubierto.
+                        generación de una \textbf{insignia de estado}, de las que hablaremos
+                        en el siguiente apartado, para el porcentaje de código cubierto.
                     \end{enumerate}
             \end{enumerate}
     \end{enumerate}
@@ -1613,7 +1613,7 @@ repositorio sería el siguiente:
     \end{figure}
 
 Como vemos, todas ellas indican que las pruebas automatizadas de integración continua han
-pasado con éxito y además, tenemos el porcentaje de codecov añadido, para el cuál se ha
+pasado con éxito y además, tenemos el porcentaje de codecov añadido, para el cual se ha
 obtenido el badge desde Codecov web. Adicionalmente, se ha añadido el badge de la
 \textbf{licencia} de código que estamos usando, \textbf{gplv3}.
 
