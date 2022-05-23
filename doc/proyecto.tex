@@ -19,7 +19,9 @@
 \usepackage{enumerate}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{adjustbox}
 \usepackage{tabularx}
+\usepackage{ragged2e}
 \usepackage{booktabs}
 \usepackage{appendix}
 \usepackage[table,xcdraw]{xcolor}
@@ -33,6 +35,7 @@
 	citecolor=mygreen	% color of citations
 }
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -63,8 +66,8 @@
 
 % Uso del paquete minted para la inserción de código en
 % distintos lenguajes de programación
-% % DESCOMENTAR
-% \usepackage{minted}
+% DESCOMENTAR
+\usepackage{minted}
 
 \begin{document}
 
