@@ -182,7 +182,7 @@ def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
     
     # Save the form with the sedimentaryue data
-    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue) }
+    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue), 'code': sedimentaryue.codigo }
 
     if request.method == 'POST':
         form = SedimentaryUEUpdateForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
@@ -264,7 +264,7 @@ def modify_builtue(request, id):
     builtue = get_object_or_404(BuiltUE, id=id)
     
     # Save the form with the data of the builtue
-    data = { 'form': BuiltUEUpdateForm(instance=builtue) }
+    data = { 'form': BuiltUEUpdateForm(instance=builtue), 'code': builtue.codigo }
 
     if request.method == 'POST':
         form = BuiltUEUpdateForm(data=request.POST, instance=builtue, files=request.FILES)
