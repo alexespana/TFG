@@ -181,6 +181,7 @@ class TestAddViews(TestCase):
 
     def test_add_excavation_POST(self):
         response = self.client.post(reverse('add_excavation'), {
+            'nombre': 'New excavation',
             'n_excavacion': '002',
             'latitud': 2,
             'longitud': 2,
@@ -286,12 +287,14 @@ class TestModifierViews(TestCase):
 
     def test_modify_excavation_POST(self):
         pkexcavation = Excavation.objects.create(
+            nombre='New excavation',
             n_excavacion='002',
             latitud=2,
             longitud=2,
             altura=2
         ).pk
         response = self.client.post(reverse('modify_excavation', kwargs={'id': pkexcavation}), {
+            'nombre': 'New excavation 2',
             'n_excavacion': '003',
             'latitud': 2,
             'longitud': 2,

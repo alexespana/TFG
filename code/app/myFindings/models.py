@@ -89,7 +89,7 @@ PERIODO_CHOICES = [
 
 # Create your models here.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# ESTANCIA            ~~~~~~~~
+# ROOM                ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Room(models.Model):
     class Meta:
@@ -116,12 +116,14 @@ class Room(models.Model):
         return self.n_estancia
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# EXCAVACION          ~~~~~~~~
+# EXCAVATION          ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Excavation(models.Model):
     class Meta:
         verbose_name = 'excavación'
         verbose_name_plural = 'excavaciones'
+
+    nombre = models.CharField(max_length=100, verbose_name='Nombre de la excavación', default='')
 
     # Ej. 001, 002, 003, etc
     n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 001, 002, 003, etc', 
@@ -134,7 +136,7 @@ class Excavation(models.Model):
         return str(self.n_excavacion)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# HECHO               ~~~~~~~~
+# FACT                ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Fact(models.Model):
     LETRA_CHOICES = [
@@ -279,9 +281,9 @@ class Photo(models.Model):
     def __str__(self):
         return str(self.numero)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# MATERIALSEDIMENTARIA ~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# SEDIMENTARYMATERIAL  ~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryMaterial(models.Model):
     class Meta:
         verbose_name = 'material sedimentario'
@@ -292,9 +294,9 @@ class SedimentaryMaterial(models.Model):
     def __str__(self):
         return self.nombre
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# MATERIALCONSTRUIDA   ~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# BUILTMATERIAL        ~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltMaterial(models.Model):
     class Meta:
         verbose_name = 'material construido'
@@ -306,7 +308,7 @@ class BuiltMaterial(models.Model):
         return self.nombre
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# UESEDIMENTARIA      ~~~~~~~~
+# SEDIMENTARYUE       ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class SedimentaryUE(UE):
     class Meta:
@@ -336,7 +338,7 @@ class SedimentaryUE(UE):
     materiales = models.ManyToManyField(SedimentaryMaterial, blank=True)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# UECONSTRUIDA        ~~~~~~~~
+# BUILTUE             ~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class BuiltUE(UE):
     class Meta:

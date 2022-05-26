@@ -25,6 +25,7 @@ class TestForms(TestCase):
 
     def test_excavation_form_valid_data(self):
         form = ExcavationForm(data={
+            'nombre': 'Excavation',
             'n_excavacion': '002',
             'latitud': 1.0,
             'longitud': 1.0,
