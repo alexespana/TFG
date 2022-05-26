@@ -30,8 +30,8 @@ class FactAdmin(admin.ModelAdmin):
 
 @admin.register(Excavation)
 class ExcavationAdmin(admin.ModelAdmin):
-    list_display = ('n_excavacion', 'latitud', 'longitud', 'altura')
-    search_fields = ('n_excavacion', 'latitud', 'longitud', 'altura')
+    list_display = ('nombre','n_excavacion', 'latitud', 'longitud', 'altura')
+    search_fields = ('nombre','n_excavacion', 'latitud', 'longitud', 'altura')
     ordering = ('n_excavacion',)
     list_per_page = 10
 
