@@ -43,7 +43,7 @@ class TestForms(TestCase):
         form = FactForm(data={
             'estancia': self.room.n_estancia,
             'letra': 'SL',
-            'numero': '123',
+            'numero': self.sedimentaryue,
             'fase': 'A1',
             'tpq': 1,
             'taq': 2,

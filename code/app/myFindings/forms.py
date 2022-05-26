@@ -1,6 +1,6 @@
 from django import forms
 from .models import Room, Excavation, Inclusion, Photo, Fact, BuiltMaterial, SedimentaryMaterial, \
-                    BuiltUE, SedimentaryUE
+                    BuiltUE, SedimentaryUE, UE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -10,6 +10,8 @@ class ExcavationForm(forms.ModelForm):
         fields = '__all__'
 
 class FactForm(forms.ModelForm):
+    numero = forms.ModelChoiceField(label='Número', queryset=UE.objects.all())
+
     class Meta:
         model = Fact
         fields = '__all__'

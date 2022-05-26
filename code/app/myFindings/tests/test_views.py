@@ -178,6 +178,10 @@ class TestAddViews(TestCase):
             longitud=1,
             altura=1
         )
+        self.sedimentaryue = SedimentaryUE.objects.create(
+            n_orden = '001',
+            excavacion = self.excavation
+        )
 
     def test_add_excavation_POST(self):
         response = self.client.post(reverse('add_excavation'), {
@@ -192,16 +196,16 @@ class TestAddViews(TestCase):
 
     def test_add_sedimentaryue_POST(self):
         response = self.client.post(reverse('add_sedimentaryue'), {
-            'n_orden': '001',
+            'n_orden': '002',
             'excavacion': self.excavation,
             'descripcion': 'Sedimento',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(SedimentaryUE.objects.count(), 1)
+        self.assertEqual(SedimentaryUE.objects.count(), 2)
 
     def test_add_builtue_POST(self):
         response = self.client.post(reverse('add_builtue'), {
-            'n_orden': '001',
+            'n_orden': '002',
             'excavacion': self.excavation,
             'descripcion': 'Construcción',
             'tipo': 'Positiva',
@@ -212,7 +216,7 @@ class TestAddViews(TestCase):
     def test_add_fact_POST(self):
         response = self.client.post(reverse('add_fact'), {
             'letra': 'MR',
-            'numero': '000001',
+            'numero': self.sedimentaryue.pk,
             'comentarios': 'Fact',
         })
         self.assertEqual(response.status_code, 302)
@@ -235,7 +239,7 @@ class TestAddViews(TestCase):
 
     def test_add_inclusion_POST(self):
         SedimentaryUE.objects.create(
-            n_orden='001',
+            n_orden='002',
             excavacion=self.excavation,
             descripcion='Descripcion 1'
         )

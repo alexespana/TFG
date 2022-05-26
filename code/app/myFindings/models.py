@@ -243,6 +243,12 @@ class UE(models.Model):
     cota_superior = models.FloatField(blank=True, null=True)
     cota_inferior = models.FloatField(blank=True, null=True)
 
+    # Relations between UE's
+    igual_a = models.ManyToManyField('self', blank=True)
+    equivalente_a = models.ManyToManyField('self', blank=True)
+    sobre = models.ManyToManyField('self', blank=True)
+    bajo = models.ManyToManyField('self', blank=True)
+
     def save(self, *args, **kwargs):
         self.codigo = self.excavacion.n_excavacion + self.n_orden
 
