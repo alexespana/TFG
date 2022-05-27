@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}System logs{% endblock %}
+{% block contenido %}
+
+<div id="logs-list" class="logs-area">
+    <div class="area-padding">
+        <div class="container">
+            <div class="card border-box">
+                <div class="card-body">
+                    <h2>Logs del sistema</h2>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <caption>Logs del sistema</caption>
+                            <tr>
+                                <th>Logs</th>
+                            </tr>
+                    
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log }}</td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

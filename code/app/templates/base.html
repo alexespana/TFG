@@ -72,9 +72,10 @@
                         <ul>
                             {% if user|is_in_group:"Staff" %}
                             <li><a href="{% url 'staff_panel' %}" onclick="navbarLinkActive(17)" class="nav-link">Panel de administración</a></li>
-                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(18)" class="nav-link">Cambiar contraseña</a></li>
-                            {% else %}
+                            <li><a href="{% url 'system_logs' %}" onclick="navbarLinkActive(18)" class="nav-link">Logs del sistema</a></li>
                             <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(19)" class="nav-link">Cambiar contraseña</a></li>
+                            {% else %}
+                            <li><a href="{% url 'password_change' %}" onclick="navbarLinkActive(17)" class="nav-link">Cambiar contraseña</a></li>
                             {% endif %}
                             <li><a href="{% url 'logout' %}" onclick="navbarLinkActive(20)" class="nav-link">Log out</a></li>
                         </ul>

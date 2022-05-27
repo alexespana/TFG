@@ -158,4 +158,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', CustomAuthToken.as_view()),
+
+    # ####################
+    # LOG SYSTEM
+    # ####################
+    path('system_logs/', views.process_logs, name='system_logs'),
 ]

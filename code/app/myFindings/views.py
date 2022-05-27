@@ -1165,3 +1165,11 @@ class CustomAuthToken(ObtainAuthToken):
             'groups': [group.name for group in user.groups.all()],
             'user_permissions': [permission for permission in user.get_all_permissions()]
         })
+
+# ######################
+# LOG SYSTEM
+# ######################
+def process_logs(request):
+    data = {'logs': ['provisional']}
+
+    return render(request, 'logs.html', data)
