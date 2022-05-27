@@ -209,7 +209,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/app.log'),
+            'filename': '/var/log/myFindings.log',
             'formatter': 'adminArchaeologists'
         },
         'mail_admins': {
