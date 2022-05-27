@@ -82,7 +82,7 @@ class InclusionUpdateForm(forms.ModelForm):
 class FactUpdateForm(forms.ModelForm):
     # Letra and numero must be disabled
     letra = forms.ChoiceField(label='Letra', required=False, disabled=True, choices=Fact.LETRA_CHOICES)
-    numero = forms.IntegerField(label='Número', required=False, disabled=True)
+    numero = forms.CharField(label='Número', required=False, disabled=True)
 
     class Meta:
         model = Fact

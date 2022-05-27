@@ -123,7 +123,7 @@ class Excavation(models.Model):
         verbose_name = 'excavación'
         verbose_name_plural = 'excavaciones'
 
-    nombre = models.CharField(max_length=100, verbose_name='Nombre de la excavación', default='')
+    nombre = models.CharField(max_length=100, verbose_name='Nombre de la excavación', blank=True, null=True)
 
     # Ej. 001, 002, 003, etc
     n_excavacion = models.CharField(max_length=3, verbose_name='Número de excavación', help_text='Ej. 001, 002, 003, etc', 
