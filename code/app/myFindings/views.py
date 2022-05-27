@@ -1,4 +1,4 @@
-import io, logging
+import os, io, logging
 from docx import Document
 from django import template
 from django.shortcuts import render, redirect, get_object_or_404
@@ -1169,7 +1169,44 @@ class CustomAuthToken(ObtainAuthToken):
 # ######################
 # LOG SYSTEM
 # ######################
+@login_required
+@group_required('Staff')
 def process_logs(request):
-    data = {'logs': ['provisional']}
+
+    try:
+        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
+        logs = file.readlines()
+        logs.reverse()
+    except:
+        return HttpResponse(status=500)
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(logs, 7)
+        logs = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay más logs para mostrar.")
+
+    data = { 
+        'entity': logs,
+        'paginator': paginator,
+    }
 
     return render(request, 'logs.html', data)
+
+@login_required
+@group_required('Staff')
+def download_logs(request):
+
+    try:
+        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
+        logs = file.readlines()
+        logs.reverse()
+    except:
+        return HttpResponse(status=500)
+
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="myFindings.txt"'
+    response.write('\n'.join(logs))
+
+    return response

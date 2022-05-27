@@ -209,7 +209,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/myFindings.log',
+            'filename': os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'),
             'formatter': 'adminArchaeologists'
         },
         'mail_admins': {

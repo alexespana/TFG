@@ -163,4 +163,5 @@ urlpatterns = [
     # LOG SYSTEM
     # ####################
     path('system_logs/', views.process_logs, name='system_logs'),
+    path('download_logs/', views.download_logs, name='download_logs'),
 ]
