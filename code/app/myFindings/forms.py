@@ -1,7 +1,7 @@
 
 from django import forms
 from .models import Room, Excavation, Inclusion, Photo, Fact, BuiltMaterial, SedimentaryMaterial, \
-                    BuiltUE, SedimentaryUE
+                    BuiltUE, SedimentaryUE, UE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -11,6 +11,8 @@ class ExcavationForm(forms.ModelForm):
         fields = '__all__'
 
 class FactForm(forms.ModelForm):
+    numero = forms.ModelChoiceField(label='Número', queryset=UE.objects.all())
+
     class Meta:
         model = Fact
         fields = '__all__'
@@ -81,7 +83,7 @@ class InclusionUpdateForm(forms.ModelForm):
 class FactUpdateForm(forms.ModelForm):
     # Letra and numero must be disabled
     letra = forms.ChoiceField(label='Letra', required=False, disabled=True, choices=Fact.LETRA_CHOICES)
-    numero = forms.IntegerField(label='Número', required=False, disabled=True)
+    numero = forms.CharField(label='Número', required=False, disabled=True)
 
     class Meta:
         model = Fact

@@ -1,4 +1,4 @@
-import io
+import os, io, logging
 from docx import Document
 from django import template
 from django.shortcuts import render, redirect, get_object_or_404
@@ -31,6 +31,9 @@ from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMateri
                          SedimentaryUESectionSerializer, BuiltUEFloorSerializer, \
                          BuiltUESectionSerializer, FactSerializer, FactPlanSerializer, \
                          FactSectionSerializer, RoomFloorSerializer
+
+# Module variable
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -82,6 +85,7 @@ def add_excavation(request):
 
             # Send a message to the user
             messages.success(request, 'Excavación creada correctamente.')
+            logger.info('El usuario %s ha creado la excavación %s.' % (request.user, form.instance.n_excavacion))
 
             # Redirect to the list of excavations
             return redirect(to='excavations')
@@ -110,6 +114,7 @@ def modify_excavation(request, id):
 
             # Send a message to the user
             messages.success(request, 'Excavación modificada correctamente.')
+            logger.info('El usuario %s ha modificado la excavación %s.' % (request.user, excavation.n_excavacion))
 
             return redirect(to="excavations")
 
@@ -128,6 +133,7 @@ def delete_excavation(request, id):
 
     # Send a message to the user
     messages.success(request, 'Excavación eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la excavación %s.' % (request.user, excavation.n_excavacion))
 
     return redirect(to="excavations")    
 
@@ -168,6 +174,7 @@ def add_sedimentaryue(request):
 
             # Send a message to the user
             messages.success(request, 'Unidad sedimentaria creada correctamente.')
+            logger.info('El usuario %s ha creado la unidad sedimentaria UE%s.' % (request.user, form.instance.codigo))
 
             # Redirect to the list of excavations
             return redirect(to='sedimentaryues')
@@ -182,7 +189,7 @@ def modify_sedimentaryue(request, id):
     sedimentaryue = get_object_or_404(SedimentaryUE, id=id)
     
     # Save the form with the sedimentaryue data
-    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue) }
+    data = { 'form': SedimentaryUEUpdateForm(instance=sedimentaryue), 'code': sedimentaryue.codigo }
 
     if request.method == 'POST':
         form = SedimentaryUEUpdateForm(data=request.POST, instance=sedimentaryue, files=request.FILES)
@@ -191,6 +198,7 @@ def modify_sedimentaryue(request, id):
 
             # Send a message to the user
             messages.success(request, 'Unidad sedimentaria modificada correctamente.')
+            logger.info('El usuario %s ha modificado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo))
 
             return redirect(to="sedimentaryues")
 
@@ -209,6 +217,7 @@ def delete_sedimentaryue(request, id):
 
     # Send a message to the user
     messages.success(request, 'Unidad sedimentaria eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo))
 
     return redirect(to="sedimentaryues")   
 
@@ -250,6 +259,7 @@ def add_builtue(request):
 
             # Send a message to the user
             messages.success(request, 'Unidad construida creada correctamente.')
+            logger.info('El usuario %s ha creado la unidad construida UE%s.' % (request.user, form.instance.codigo))
 
             # Redirect to the list of excavations
             return redirect(to='builtues')
@@ -264,7 +274,7 @@ def modify_builtue(request, id):
     builtue = get_object_or_404(BuiltUE, id=id)
     
     # Save the form with the data of the builtue
-    data = { 'form': BuiltUEUpdateForm(instance=builtue) }
+    data = { 'form': BuiltUEUpdateForm(instance=builtue), 'code': builtue.codigo }
 
     if request.method == 'POST':
         form = BuiltUEUpdateForm(data=request.POST, instance=builtue, files=request.FILES)
@@ -273,6 +283,7 @@ def modify_builtue(request, id):
 
             # Send a message to the user
             messages.success(request, 'Unidad construida modificada correctamente.')
+            logger.info('El usuario %s ha modificado la unidad construida UE%s.' % (request.user, builtue.codigo))
 
             return redirect(to="builtues")
 
@@ -291,6 +302,7 @@ def delete_builtue(request, id):
 
     # Send a message to the user
     messages.success(request, 'Unidad construida eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la unidad construida UE%s.' % (request.user, builtue.codigo))
 
     return redirect(to="builtues")
 
@@ -333,6 +345,7 @@ def add_fact(request):
 
             # Send a message to the user
             messages.success(request, 'Hecho creado correctamente.')
+            logger.info('El usuario %s ha creado el hecho %s%s.' % (request.user, form.instance.letra, form.instance.numero))
 
             # Redirect to the list of facts
             return redirect(to='facts')
@@ -356,6 +369,7 @@ def modify_fact(request, id):
 
             # Send a message to the user
             messages.success(request, 'Hecho modificado correctamente.')
+            logger.info('El usuario %s ha modificado el hecho %s%s.' % (request.user, fact.letra, fact.numero))
 
             return redirect(to="facts")
 
@@ -374,6 +388,7 @@ def delete_fact(request, id):
 
     # Send a message to the user
     messages.success(request, 'Hecho eliminado correctamente.')
+    logger.info('El usuario %s ha eliminado el hecho %s%s.' % (request.user, fact.letra, fact.numero))
 
     return redirect(to="facts")  
 
@@ -414,6 +429,7 @@ def add_room(request):
 
             # Send a message to the user
             messages.success(request, 'Estancia creada correctamente.')
+            logger.info('El usuario %s ha creado la estancia %s.' % (request.user, form.instance.n_estancia))
 
             # Redirect to the list of facts
             return redirect(to='rooms')
@@ -442,6 +458,7 @@ def modify_room(request, id):
 
             # Send a message to the user
             messages.success(request, 'Estancia modificada correctamente.')
+            logger.info('El usuario %s ha modificado la estancia %s.' % (request.user, room.n_estancia))
 
             return redirect(to="rooms")
 
@@ -460,6 +477,7 @@ def delete_room(request, id):
 
     # Send a message to the user
     messages.success(request, 'Estancia eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la estancia %s.' % (request.user, room.n_estancia))
 
     return redirect(to="rooms") 
 
@@ -500,6 +518,7 @@ def add_photo(request):
 
             # Send a message to the user
             messages.success(request, 'Foto creada correctamente.')
+            logger.info('El usuario %s ha creado la foto %s.' % (request.user, form.instance.numero))
 
             # Redirect to the list of facts
             return redirect(to='photos')
@@ -528,6 +547,7 @@ def modify_photo(request, id):
 
             # Send a message to the user
             messages.success(request, 'Foto modificada correctamente.')
+            logger.info('El usuario %s ha modificado la foto %s.' % (request.user, photo.numero))
 
             return redirect(to="photos")
 
@@ -546,6 +566,7 @@ def delete_photo(request, id):
 
     # Send a message to the user
     messages.success(request, 'Foto eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la foto %s.' % (request.user, photo.numero))
 
     return redirect(to="photos") 
 
@@ -586,6 +607,7 @@ def add_inclusion(request):
 
             # Send a message to the user
             messages.success(request, 'Inclusion creada correctamente.')
+            logger.info('El usuario %s ha creado la inclusión %s para UE%s.' % (request.user, form.instance.tipo, form.instance.uesedimentaria.codigo))
 
             # Redirect to the list of facts
             return redirect(to='inclusions')
@@ -609,6 +631,7 @@ def modify_inclusion(request, id):
 
             # Send a message to the user
             messages.success(request, 'Inclusion modificada correctamente.')
+            logger.info('El usuario %s ha modificado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo))
 
             return redirect(to="inclusions")
 
@@ -627,6 +650,7 @@ def delete_inclusion(request, id):
 
     # Send a message to the user
     messages.success(request, 'Inclusion eliminada correctamente.')
+    logger.info('El usuario %s ha eliminado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo))
 
     return redirect(to="inclusions")
 
@@ -667,6 +691,7 @@ def add_sedimentarymaterial(request):
 
             # Send a message to the user
             messages.success(request, 'Material sedimentario creado correctamente.')
+            logger.info('El usuario %s ha creado el material sedimentario %s.' % (request.user, form.instance.nombre))
 
             # Redirect to the list of facts
             return redirect(to='sedimentarymaterials')
@@ -686,6 +711,7 @@ def delete_sedimentarymaterial(request, nombre):
 
     # Send a message to the user
     messages.success(request, 'Material sedimentario eliminado correctamente.')
+    logger.info('El usuario %s ha eliminado el material sedimentario %s.' % (request.user, nombre))
 
     return redirect(to="sedimentarymaterials")
 
@@ -726,6 +752,7 @@ def add_builtmaterial(request):
 
             # Send a message to the user
             messages.success(request, 'Material construido creado correctamente.')
+            logger.info('El usuario %s ha creado el material construido %s.' % (request.user, form.instance.nombre))
 
             # Redirect to the list of facts
             return redirect(to='builtmaterials')
@@ -745,6 +772,7 @@ def delete_builtmaterial(request, nombre):
 
     # Send a message to the user
     messages.success(request, 'Material construido eliminado correctamente.')
+    logger.info('El usuario %s ha eliminado el material construido %s.' % (request.user, nombre))
 
     return redirect(to="builtmaterials")
 
@@ -1071,24 +1099,12 @@ class InclusionViewSet(viewsets.ModelViewSet):
 class SedimentaryUEViewSet(viewsets.ModelViewSet):
     queryset = SedimentaryUE.objects.all()
     lookup_field = 'codigo'
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return SedimentaryUEFloorSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return SedimentaryUESectionSerializer
-        return SedimentaryUESerializer
+    serializer_class = SedimentaryUESerializer
 
 class BuiltUEViewSet(viewsets.ModelViewSet):
     queryset = BuiltUE.objects.all()
     lookup_field = 'codigo'
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return BuiltUEFloorSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return BuiltUESectionSerializer
-        return BuiltUESerializer
+    serializer_class = BuiltUESerializer
 
 class SedimentaryMaterialViewSet(viewsets.ModelViewSet):
     queryset = SedimentaryMaterial.objects.all()
@@ -1103,21 +1119,9 @@ class FactViewSet(viewsets.ModelViewSet):
     queryset = Fact.objects.all()
     serializer_class = FactSerializer
 
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'plan':
-            return FactPlanSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return FactSectionSerializer
-        return FactSerializer
-
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return RoomFloorSerializer
-        return RoomSerializer
 
 class CustomAuthToken(ObtainAuthToken):
 
@@ -1137,3 +1141,48 @@ class CustomAuthToken(ObtainAuthToken):
             'groups': [group.name for group in user.groups.all()],
             'user_permissions': [permission for permission in user.get_all_permissions()]
         })
+
+# ######################
+# LOG SYSTEM
+# ######################
+@login_required
+@group_required('Staff')
+def process_logs(request):
+
+    try:
+        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
+        logs = file.readlines()
+        logs.reverse()
+    except:
+        return HttpResponse(status=500)
+
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator(logs, 7)
+        logs = paginator.page(page)
+    except EmptyPage:
+        raise Http404("No hay más logs para mostrar.")
+
+    data = { 
+        'entity': logs,
+        'paginator': paginator,
+    }
+
+    return render(request, 'logs.html', data)
+
+@login_required
+@group_required('Staff')
+def download_logs(request):
+
+    try:
+        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
+        logs = file.readlines()
+        logs.reverse()
+    except:
+        return HttpResponse(status=500)
+
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="myFindings.txt"'
+    response.write('\n'.join(logs))
+
+    return response
