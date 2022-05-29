@@ -1,3 +1,4 @@
+import os, math
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -6,6 +7,28 @@ from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
 from django.contrib.auth.models import Group
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage
+
+class TestMainPages(TestCase):
+
+    def test_home(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_about(self):
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'about.html')
+
+    def test_contact(self):
+        response = self.client.get(reverse('contact'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'contact.html')
+
+    def test_team(self):
+        response = self.client.get(reverse('team'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'team.html')
 
 class TestListingViews(TestCase):
 
@@ -166,6 +189,17 @@ class TestListingViews(TestCase):
         ).pk
 
         response = self.client.get('/builtmaterials/' + str(pk) + '?page=2')
+        self.assertEqual(response.status_code, 404)
+
+    def test_list_logs_GET(self):
+        response = self.client.get(reverse('system_logs'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'logs.html')
+
+    def test_logs_raise_pagenotfound(self):
+        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r')
+        num_pages = math.ceil((len(file.readlines()) / 7) + 1)
+        response = self.client.get('/system_logs/?page=' + str(num_pages))
         self.assertEqual(response.status_code, 404)
 
 class TestAddViews(TestCase):
@@ -628,3 +662,16 @@ class RegisterUserTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'password2', 'The two password fields didn’t match.')
+
+class TestLogsDownload(TestCase):
+    
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+
+    def test_download_logs(self):
+        response = self.client.get(reverse('download_logs', kwargs={}))
+
+        # It returns on the response a txt file
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('Content-Disposition'), 'attachment; filename="myFindings.txt"')
