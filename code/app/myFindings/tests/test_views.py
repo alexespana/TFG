@@ -188,7 +188,7 @@ class TestListingViews(TestCase):
             n_estancia='001',
         ).pk
 
-        response = self.client.get('/builtmaterials/' + str(pk) + '?page=2')
+        response = self.client.get('/roomfacts/' + str(pk) + '?page=2')
         self.assertEqual(response.status_code, 404)
 
     def test_list_logs_GET(self):
@@ -300,6 +300,85 @@ class TestAddViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(BuiltMaterial.objects.count(), 7)
 
+    def test_add_sedimentarymaterial_validate_error(self):
+        response = self.client.post(reverse('add_sedimentarymaterial', kwargs={}), {
+            'nombre': 'Muestras'
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'nombre', 'Material sedimentario with this Nombre already exists.')
+
+    def test_add_builtmaterial_validate_error(self):
+        response = self.client.post(reverse('add_builtmaterial', kwargs={}), {
+            'nombre': 'Piedra'
+        })
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'nombre', 'Material construido with this Nombre already exists.')
+
+    def test_add_inclusion_validate_error(self):
+        response = self.client.post(reverse('add_inclusion', kwargs={}), {
+            'tipo': 'Cenizas',
+            'uesedimentaria': self.sedimentaryue.pk,
+            'frecuencia': 'invalid data',
+        })
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'frecuencia', 'Select a valid choice. invalid data is not one of the available choices.')
+
+    def test_add_photo_validate_error(self):
+        response = self.client.post(reverse('add_photo', kwargs={}), {
+            'numero': 1,
+            'dist_focal': 'invalid data',
+        })
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'dist_focal', 'Enter a whole number.')
+
+    def test_add_room_validate_error(self):
+        response = self.client.post(reverse('add_room', kwargs={}), {
+            'n_estancia': '004',
+            'n_zona': -23,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'n_zona', 'Ensure this value is greater than or equal to 0.')
+
+    def test_add_fact_validate_error(self):
+        response = self.client.post(reverse('add_fact', kwargs={}), {
+            'letra': 'MR',
+            'numero': self.sedimentaryue.codigo,
+            'fase': 'Another',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'fase', 'Select a valid choice. Another is not one of the available choices.')
+
+    def test_add_builtue_validate_error(self):
+        response = self.client.post(reverse('add_builtue', kwargs={}), {
+            'n_orden': '002',
+            'excavacion': self.excavation.pk,
+            'seccion_n': 8711212,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'seccion_n', 'Ensure this value is less than or equal to 32767.')
+
+    def test_add_sedimentaryue_validate_error(self):
+        response = self.client.post(reverse('add_sedimentaryue', kwargs={}), {
+            'n_orden': '001',
+            'excavacion': self.excavation.pk,
+            'plano_n': '-12',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'plano_n', 'Ensure this value is greater than or equal to 0.')
+
+    def test_add_excavation_validate_error(self):
+        response = self.client.post(reverse('add_excavation', kwargs={}), {
+            'n_excavacion': '003',
+            'latitud': 'e',
+            'longitud': 2,
+            'altura': 2
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'latitud', 'Enter a number.')
 
 class TestModifierViews(TestCase):
 

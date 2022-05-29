@@ -1099,24 +1099,12 @@ class InclusionViewSet(viewsets.ModelViewSet):
 class SedimentaryUEViewSet(viewsets.ModelViewSet):
     queryset = SedimentaryUE.objects.all()
     lookup_field = 'codigo'
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return SedimentaryUEFloorSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return SedimentaryUESectionSerializer
-        return SedimentaryUESerializer
+    serializer_class = SedimentaryUESerializer
 
 class BuiltUEViewSet(viewsets.ModelViewSet):
     queryset = BuiltUE.objects.all()
     lookup_field = 'codigo'
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return BuiltUEFloorSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return BuiltUESectionSerializer
-        return BuiltUESerializer
+    serializer_class = BuiltUESerializer
 
 class SedimentaryMaterialViewSet(viewsets.ModelViewSet):
     queryset = SedimentaryMaterial.objects.all()
@@ -1131,21 +1119,9 @@ class FactViewSet(viewsets.ModelViewSet):
     queryset = Fact.objects.all()
     serializer_class = FactSerializer
 
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'plan':
-            return FactPlanSerializer
-        elif(self.request.GET.get('type') == 'section'):
-            return FactSectionSerializer
-        return FactSerializer
-
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-
-    def get_serializer_class(self):
-        if self.request.GET.get('type') == 'floor':
-            return RoomFloorSerializer
-        return RoomSerializer
 
 class CustomAuthToken(ObtainAuthToken):
 
