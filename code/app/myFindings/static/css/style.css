@@ -457,7 +457,7 @@ header #logo h1 a, header .logo h1 a:hover{
 }
 
 .team-image img{
-  width: 100%;
+  width: 70%;
 }
 
 .team-content {
@@ -677,7 +677,7 @@ table img{
   background-color: mediumseagreen;
 }
 
-.btn-delete{
+.btn-delete, .btn-download{
   border-color:red;
   background-color: indianred;
 }
@@ -689,7 +689,7 @@ table img{
 
 .btn-add:hover, .btn-list:hover, .btn-modify:hover,
 .btn-delete:hover, .btn-clean:hover, .btn-save:hover,
-.btn-docs:hover{
+.btn-docs:hover, .btn-download:hover{
   background-color: #fff;
   transition: 0.5s;
 }

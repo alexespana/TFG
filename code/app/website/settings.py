@@ -169,3 +169,65 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'example@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '1234')
+
+# Admin of the site
+ADMINS = [
+    (
+        os.environ.get('ADMIN_NAME', 'Admin'),
+        os.environ.get('ADMIN_EMAIL', 'exampleadmin@gmail.com')
+    ),
+]
+
+
+# Logging System
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'adminArchaeologists': {
+            'format': '[ %(asctime)s ] => %(message)s',
+            'datefmt': "%d-%m-%Y %H:%M:%S",
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'),
+            'formatter': 'adminArchaeologists'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false'],
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'myFindings.views': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

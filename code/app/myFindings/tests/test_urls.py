@@ -189,3 +189,11 @@ class TestUrls(TestCase):
     def test_change_perms_url(self):
         url = reverse('change_perms', kwargs={'id': 1})
         self.assertEquals(resolve(url).func, change_perms)
+
+    def test_system_logs_url(self):
+        url = reverse('system_logs', kwargs={})
+        self.assertEquals(resolve(url).func, process_logs)
+
+    def test_download_logs_url(self):
+        url = reverse('download_logs', kwargs={})
+        self.assertEquals(resolve(url).func, download_logs)
