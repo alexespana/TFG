@@ -1622,13 +1622,13 @@ En este milestone del desarrollo software, vamos a explicar en qué consiste una
 distintos tipos que nos podemos encontrar, por qué son necesarias y sobre todo, cómo la
 hemos implementado en nuestra aplicación web.\\
 
-Una \textbf{API \cite{api} (Application Programming Interfaces o Interfaz de programación
+Una \textbf{API \cite{api} (Application Programming Interface o Interfaz de programación
 de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e integrar el
 software de las aplicaciones, es decir, establecen cómo se han de comunicar dos
 aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\
 
 La creación de una API permite que los servicios o recursos que utiliza una aplicación
-puedan ser acceddidos desde cualquier otro servicio o aplicación, sin necesidad de
+puedan ser accedidos desde cualquier otro servicio o aplicación, sin necesidad de
 conocer cómo están implementados. Según el tipo de interfaz o especificación de protocolo
 que use la API, podemos distinguir dos tipos:
 
@@ -1699,7 +1699,7 @@ implementación de la API \textbf{RESTful}.\\
 
 Django de por sí no trae un mecanismo para implementar APIs web, por lo que se ha tenido
 que añadir a las dependencias y, por tanto, añadir como aplicación instalada al proyecto,
-Django REST Framework. Esta aplicación nos propporciona todas las funcionalidades
+Django REST Framework. Esta aplicación nos proporciona todas las funcionalidades
 necesarias para la implementación de la API de nuestro proyecto. Funcionalidades como:
 
     \begin{itemize}
@@ -1718,8 +1718,8 @@ necesarias para la implementación de la API de nuestro proyecto. Funcionalidade
     \end{itemize}
 
 Como vemos, entre ellas se encuentran algunos de los requisitos necesarios para poder
-considerar una API como RESTful como que sea cacheable y que las respuestas sean en JSON
-o XML.\\
+considerar una API como RESTful como que permita almacenar información en la memoria
+caché o que las respuestas sean en JSON o XML.\\
 
 Para la creación de cualquier ruta en la API que sea funcional, son necesarios los
 siguientes elementos:
@@ -1745,7 +1745,7 @@ siguientes elementos:
 
         \item \textbf{Serializer}: es una clase que hereda de \textbf{ModelSerializer}
         y que se encargará de serializar automáticamente los datos correspondientes a
-        un modelo en dado, es decir, poder transformarlo a formato JSON o XML, además
+        un modelo dado, es decir, poder transformarlo a formato JSON o XML, además
         de generar los validadores correspondientes para el serializador, siendo capaz
         de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
         Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
@@ -1787,8 +1787,9 @@ siguientes elementos:
         .
     \end{minted}
         
-        Esta vista utilizará el
-        serializador anteriormente mencionado para pasar los datos correspondientes del 
+        Esta vista utilizará el serializador anteriormente mencionado para poder crear
+        un formulario acorde a los campos del modelo en cuestión, en este caso de la
+        excavación.
     \end{itemize}
 
 Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{endpoints}:
@@ -1903,7 +1904,7 @@ Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{endp
     \label{tab:endpoints}
 \end{longtable}
 
-Como podemos observar, existen bastante endpoints para la API. Cabe nombrar que los
+Como podemos observar, existen bastantes endpoints para la API. Cabe nombrar que los
 términos que aparecen entre corchetes serían los parámetros que reciben los endpoints,
 donde \textbf{pk} (primary key o clave primaria) es el id interno que se genera
 automáticamente en la base de datos y consiste en un número entero, y el \textbf{codigo}
@@ -1918,7 +1919,7 @@ que es una unidad construida) sería:
 \subsubsection{Autenticación}
 Otro de los puntos a tener en cuenta es la autenticación en la API, ya que no cualquier
 usuario puede tener acceso a ella y realizar cualquier acción sobre los recursos de la
-aplicación, para ello, se debe elegir un sistema de autenticación adecuado. Dado que
+aplicación. Para ello, se debe elegir un sistema de autenticación adecuado. Dado que
 nuestro proyecto es un servidor web al que una aplicación móvil debe hacer peticiones,
 el esquema \textbf{Autenticación mediante Token} es el más apropiado. Para usar este
 esquema de \textbf{TokenAuthentication}, se necesita incluir \textbf{rest\_framework.authtoken}
@@ -1943,7 +1944,7 @@ servidor, junto a las cabeceras HTTP que se usan en cada petición.
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.25]{imagenes/root-api.png}
+            \includegraphics[scale=0.30]{imagenes/root-api.png}
             \caption{Home de la API}
             \label{fig:root-api}
         \end{figure}
@@ -1955,7 +1956,7 @@ usarla.
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.25]{imagenes/unauthorized.png}
+            \includegraphics[scale=0.30]{imagenes/unauthorized.png}
             \caption{API web: no autorizado (unauthorized)}
             \label{fig:unauthorized}
         \end{figure}
@@ -1978,7 +1979,7 @@ simulaciones de peticiones a través de una interfaz muy simple y fácil de usar
 
 Lo primero de todo sería obtener el \textbf{token de autenticación} para poder autenticarse.
 Para ello, haría una petición \textbf{POST} a una ruta concreta, en este caso
-\textbf{api-token-auth/}, envianando en el cuerpo de la petición el \textbf{nombre} y
+\textbf{api-token-auth/}, enviando en el cuerpo de la petición el \textbf{nombre} y
 \textbf{password} del usuario:
 
         \begin{figure}[H]
@@ -2319,9 +2320,10 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
         que podrá ver un arqueólogo administrador. Para ello, definimos la correspondiente
         ruta en el archivo \textbf{urls.py}, creamos el template (html) correspondiente
         que se renderizará, y la vista que manejará la petición. Dicha vista hará uso
-        de la función \textbf{open} de Python para abrir el archivo de logs y procesarlo
-        línea por línea, creando una lista que luego será enviada como un parámetro al
-        template. Un ejemplo de la vista de logs es el siguiente:
+        de la función \href{https://docs.python.org/3/library/functions.html#open}{open}
+        de Python para abrir el archivo de logs y procesarlo línea por línea, creando una
+        lista que luego será enviada como un parámetro al template. Un ejemplo de la vista
+        de logs es el siguiente:
         
             \begin{figure}[H]
                 \centering
