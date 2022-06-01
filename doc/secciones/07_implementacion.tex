@@ -2061,3 +2061,273 @@ petición los datos que queremos modificar:
 
 Como vemos, no nos ha permitido modificar la excavación, lo cuál es correcto, ya que no
 tenemos permisos para modificar excavaciones.
+
+\subsection{Sistema de Log}
+En este milestone del desarrollo software nos centraremos en explicar qué es un Sistema
+de Log y cómo hemos llevado a cabo su implementación en nuestra aplicación. \\
+
+Un \textbf{Sistema de Log} \cite{log-system} es una herramienta que nos permite registrar los principales
+eventos que suceden en nuestra aplicación, desde operaciones relacionadas con la base de
+datos hasta errores que se producen en el sistema. Normalmente, un registro en el Sistema
+de Log se corresponde con una cadena de texto, lo que de forma técnica de denomina
+\textbf{registro de log} (\textbf{log entry}). Estos registros de log se suelen
+almacenar en ficheros de texto especiales (con extensión \textbf{.log}), pero también
+se pueden almacenar en bases de datos o imprimir directamente a través de una terminal
+o consola.\\
+
+En ocasiones, al construir aplicaciones, este punto se olvida o no se implementa
+adecuadamente, lo que hace que ante un error en el sistema o ante una acción extraña, sea
+muy complicado averiguar la \textbf{traza} \footnote{\textbf{Origen},
+\textbf{lugar de procedencia} o \textbf{rastro} que deja el error en el sistema.} del
+mismo, provocando problemas como los siguientes:
+
+    \begin{itemize}
+        \item \textbf{Imposibilidad} para encontrar el origen del error que se ha
+        producido.
+        \item \textbf{Formas no estandarizadas} para identificar el error.
+        \item \textbf{Incremento} del tiempo de respuesta ante un error, que tendrá
+        consecuencias directamente negativas en la calidad de servicio.
+    \end{itemize}
+
+Para el Sistema de Log, Django usa y extiende el módulo \textbf{logging}
+\cite{python-logging} de Python, el cuál es muy extenso y carece de sentido explicar a
+fondo en esta sección. Sin embargo, vamos a explicar las partes principales que son
+necesarias para nuestra aplicación. Toda configuración Python para logging consta de
+cuatro partes (usaremos preferentemente los términos ingleses, ya que es lo más común al
+hablar sobre logging):
+
+    \begin{enumerate}
+        \item \textbf{Loggers (registradores)}: es el punto de entrada inicial del Sistema
+        de Log (instancia de la clase \textbf{logging.Logger}). Cada logger tiene
+        configurado un \textbf{log level} que indicará a partir de qué nivel los mensajes
+        serán procesados. Python define los siguientes log levels:
+
+            \begin{itemize}
+                \item \textbf{DEBUG}: nivel más bajo de registro, normalmente se usa para
+                registrar mensajes de depuración.
+                \item \textbf{INFO}: información general del sistema.
+                \item \textbf{WARNING}: mensaje que indica que se ha producido un error
+                que no debería ocurrir, pero que es de poca importancia.
+                \item \textbf{ERROR}: información describiendo un error importante que se
+                ha producido.
+                \item \textbf{CRITICAL}: mensaje que describe un error crítico que se
+                ha producido.
+            \end{itemize}
+
+        Cada mensaje que es escrito en el logger es un \textbf{registro de log} (que hemos
+        mencionado anteriormente). Cada registro de log contiene un \textbf{nivel de log}
+        indicando la severidad del mensaje. Cada vez que un mensaje es enviado al log se
+        comprueba si el nivel del mensaje es mayor o igual que el nivel de log del logger,
+        si es así, se escribe el mensaje en el log.
+
+        \item \textbf{Handlers (manejadores)}: los manejadores determinan qué sucede con
+        cada mensaje escrito en un logger. Describen un comportamiento específico para
+        el logging, como puede ser escribir el mensaje en un fichero, en una pantalla,
+        en consola, etc.
+
+        Al igual que los loggers, también poseen un nivel de log (log level) que determina
+        qué mensajes de los que el logger le envía serán procesados, según el criterio
+        anteriormente descrito. Esto hace posible que un logger pueda tener asociados
+        \textbf{varios handlers}, por ejemplo, uno que registre mensajes \textbf{ERROR} y
+        \textbf{CRITICAL} en un fichero y otro que registre mensajes de cualquier nivel.
+
+        \item \textbf{Filters (filtros)}: normalmente, todo mensaje que cumpla con el
+        nivel de log establecido en el logger será pasado del logger al manejador. Sin
+        embargo, se pueden definir filtros para añadir criterios adicionales para que un
+        mensaje pase del logger al handler, como puede ser por ejemplo los que provengan
+        de una fuente determinada. En nuestra aplicación web, estos no serán necesarios.
+
+        \item \textbf{Formatters (formateadores)}: como hemos mencionado anteriormente,
+        cada registro de log se renderiza (representa) como una cadena de texto. Dicha
+        cadena de texto tendrá uno u otro formato, para lo que se usan los formateadores.
+        
+        Cada registro de log tiene una 
+        \href{https://docs.python.org/3/library/logging.html#logrecord-attributes}{serie
+        de atributos}  que se podrán indicar en el formateador, de modo que la cadena de
+        texto tenga dicho formato. Por ejemplo, podríamos mostrar información como el
+        nivel del mensaje, la fecha y hora, el nombre del logger, la traza del mensaje,
+        el número de línea donde se produjo, etc.
+    \end{enumerate}
+
+Una vez hemos explicado brevemente las partes principales para la configuración de un
+Sistema de Log, vamos a proceder a explicar cómo lo hemos implementado en nuestra
+aplicación web.
+
+\subsubsection{Notificación a administradores}
+En nuestra aplicación web, como hemos explicado en puntos anteriores, existen distintos
+roles de usuario, entre los que se encuentra el administrador del sistema, que corresponde
+con el usuario que ha desarrollado la web y conoce perfectamente su funcionamiento. Dicho
+esto, ¿cómo podría un administrador del sistema saber si se ha producido un error de
+nivel \textbf{ERROR} o \textbf{CRITICAL} en la aplicación durante su uso (sin estar al
+tanto de la aplicación y de forma automática)? \\
+
+Para esta cuestión, Django incluye un manejador muy oportuno llamado
+\href{https://docs.djangoproject.com/en/4.0/ref/logging/#django.utils.log.AdminEmailHandler}
+{AdminEmailHandler}, que se encarga de notificar por correo electrónico a los
+administradores del sistema cuando se producen errores de nivel \textbf{ERROR} o
+\textbf{CRITICAL}. \\
+
+Para que funcione correctamente, primero debemos incorporar a nuestro archivo de
+configuración \textbf{settings.py} la variable \textbf{ADMINS}, que contiene la lista de
+administradores del sistema. Por cuestiones de seguridad y privacidad, hemos decidido
+darle valor a esta variable a través de variables de entorno definidas en un archivo
+\textbf{.env}. Quedando algo así:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    ADMINS = [
+        (
+            os.environ.get('ADMIN_NAME', 'Admin'),
+            os.environ.get('ADMIN_EMAIL', 'exampleadmin@gmail.com')
+        ),
+    ]
+    \end{minted}
+
+Además, deberemos hacer la correspondiente configuración del logging, para ello añadimos
+la variable \textbf{LOGGING} a nuestro archivo de configuración \textbf{settings.py} y
+añadimos las distintas \textbf{claves}: \textbf{formatters, filters, handlers y loggers},
+con sus correspondientes configuraciones. Mencionamos la palabra clave porque dicha
+variable tiene formato de \textbf{diccionario}, al igual que se usa para el logging de
+Python, por lo que tendrá parejas de \textbf{clave-valor} separadas por dos puntos (:). \\
+
+De esta forma, los administradores podrán localizar de forma automática los errores
+que se produzcan en la aplicación a través de los correos electrónicos que recibirán. Por
+cuestiones de seguridad, no se va a poner un ejemplo aquí, pero en dicho correo llegaría
+información completa de la petición que produjo el error, es decir, lo que produjo el
+fallo y toda la configuración de la aplicación que se habría mostrado si nuestra variable
+\textbf{DEBUG} de settings.py estuviera a \textbf{True}.
+
+
+\subsubsection{Página de logs}
+Toda la configuración anteriormente descrita es útil solo para administradores del sistema,
+pero necesitamos también que arqueólogos administradores puedan saber las acciones que se
+realizan en la aplicación. Por ejemplo, imaginemos que tenemos una excavación almacenada en
+la aplicación y de repente es eliminada por otro arqueólogo sin nuestro consentimiento.
+Necesitaríamos saber qué arqueólogo en concreto eliminó dicha excavación, para lo que haría
+falta realizar un registro de logs específico de las acciones que se realizan en la
+aplicación web. \\
+
+Esto trae algunos inconvenientes a la hora de la implementación, ya que normalmente los
+logs se almacenan en archivos de texto, por lo que tendríamos que hacer visibles dichos
+logs en algún template de la aplicación, que sería una página a la que sólo el arqueólogo
+administrador tendría acceso. \\
+
+Procedamos a explicar la implementación necesaria para esta página de logs:
+
+    \begin{enumerate}
+        \item Primero, se han registrado en las vistas todas las operaciones útiles
+        relacionadas con la base de datos: añadir, modificar o eliminar registros. Para
+        ello, desde la documentación de Django se recomienda crear una variable de módulo
+        para el logger:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                   frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    # views.py
+    import logging
+    .
+    .
+    logger = logging.getLogger(__name__)
+    \end{minted}
+
+        Dicha variable será una instancia de la clase \textbf{logging.Logger} con la que
+        registraremos todas las acciones realizadas en las vistas. En este caso, la variable
+        \textbf{\_name\_} será el nombre que identificará al logger,
+        proporcionando el nombre del módulo de Python donde se encuentre, en este caso
+        \textbf{myFindings.views}.
+        
+        \item El siguiente paso, será realizar la correspondiente configuración del logging
+        en la variable \textbf{LOGGING} del archivo settings.py. Para ello, se han
+        definido las siguientes partes:
+
+            \begin{itemize}
+                \item \textbf{Formatter}: dado que necesitamos que los logs sean legibles
+                por humanos, debemos definir un formato sencillo y descriptivo de la
+                acción, como puede ser el siguiente:
+                \begin{center}
+                    \textbf{[ Fecha, Hora ] => Usuario y acción que realiza} 
+                \end{center}
+
+                \item \textbf{Handler}: necesitamos un manejador que almacene los logs en
+                un archivo de texto para su posterior lectura. Siguiendo buenas prácticas
+                de programación, los archivos de log nunca deben incluirse como código
+                fuente de la aplicación, por lo que deberemos almacenarlos en un archivo
+                que se encuentre fuera del directorio raíz de la aplicación y donde
+                tengamos permisos de lectura y escritura. \\
+                
+                Si hacemos memoria, recordaremos que para la ejecución de nuestra
+                aplicación hacemos uso de \textbf{docker} con \textbf{docker-compose}, por
+                lo que tendremos una estructura de directorios dentro del contenedor
+                disponible, donde podremos almacenar el archivo de logs. 
+                
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[scale=0.35]{imagenes/docker-structure.png}
+                        \caption{Estructura de directorios del contenedor}
+                        \label{fig:docker-structure}
+                    \end{figure}
+                
+                Tenemos que prevenir que ante una posible caída de la aplicación los logs
+                se pierdan, por lo que estos se almacenarán en la carpeta \textbf{/var/log/}
+                y el archivo que los contendrá será \textbf{myFindings.log}. Esta sería la
+                ruta por defecto, aunque también podría modificarse a través de una
+                variable de entorno. Quedando el manejador con la siguiente configuración:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    .
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.environ.get('LOG_FILE_PATH',
+                                       '/var/log/myFindings.log'),
+            'formatter': 'adminArchaeologists'
+        },
+    },
+    .
+    \end{minted}
+
+                \item \textbf{Logger}: finalmente, queda la configuración del logger
+                que recogerá los logs que proceden desde el archivo views.py de la
+                aplicación. \\
+
+                Como hemos mencionado anterioremente, el logger de las vistas se
+                identifica con el nombre \textbf{myFindings.views}, por lo que éste
+                será el nombre de nuestro logger. Además, usará el handler especificado
+                en el punto anterior y sólo controlará mensajes que tengan un nivel de log
+                (\textbf{log level}) INFO o superior. Su configuración quedaría de la
+                siguiente forma:
+
+    % DESCOMENTAR
+    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    .
+    'loggers': {
+        'myFindings.views': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+    },
+    .
+    \end{minted}
+            \end{itemize}
+
+        \item Finalmente, deberemos crear la ruta correspondiente para la vista de logs
+        que podrá ver un arqueólogo administrador. Para ello, definimos la correspondiente
+        ruta en el archivo \textbf{urls.py}, creamos el template (html) correspondiente
+        que se renderizará, y la vista que manejará la petición. Dicha vista hará uso
+        de la función \textbf{open} de Python para abrir el archivo de logs y procesarlo
+        línea por línea, creando una lista que luego será enviada como un parámetro al
+        template. Un ejemplo de la vista de logs es el siguiente:
+        
+            \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.20]{imagenes/logs.png}
+                \caption{Página de logs}
+                \label{fig:log-template}
+            \end{figure}
+
+    \end{enumerate}
