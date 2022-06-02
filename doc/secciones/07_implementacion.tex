@@ -2333,3 +2333,307 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
             \end{figure}
 
     \end{enumerate}
+
+\subsection{Despliegue}
+En este punto del desarrollo software, vamos a llevar a cabo el despliegue de
+nuestra aplicación web. Explicaremos cómo y por qué hemos tomado ciertas decisiones
+y cómo las hemos llevado a cabo. \\
+
+En desarrollo de software, el término \textbf{deploy} (desplegar o lanzar) \cite{deploy} 
+se define como el proceso de llevar una aplicación a producción, es decir, hacer de alguna
+forma que la aplicación sea accesible para los clientes finales. Hasta el momento, hemos
+trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se ejecuta en el
+\textbf{entorno} de una máquina u ordenador concreto.} que Django nos ha proporcionado
+con su configutación por defecto. Dicho servidor de desarrollo nos ha servido para
+realizar el desarrollo completo de nuestra aplicación y realizar pruebas en un entorno
+local, como puede ser nuestro ordenador. Muy resumidamente, necesitamos que nuestra
+aplicación se ejecute en un entorno que no sea nuestro propio ordenador. \\
+
+Al comienzo de nuestro desarrollo, se debatieron diversos puntos del proyecto, entre los
+que se encontraba este. En un principio, se acordó con el cliente (arqueólogo administrador)
+que la aplicación web estaría ejecutándose en su propio ordenador, sirviendo la aplicación
+web a los distintos usuarios. Sin embargo, es fácil deducir que esta no es la mejor opción por
+los siquientes motivos:
+
+    \begin{itemize}
+        \item A pesar de utilizar un entorno de ejecución aislado (usando \textbf{docker
+        con docker-compose}), la mejor o peor ejecución del mismo dependerá de los
+        \textbf{recursos hardware} que su ordenador posea.
+        \item Necesitaría tener el ordenador \textbf{siempre encendido} para poder servir
+        la aplicación web, afectando directamente a la disponibilidad del sitio web.
+        \item Se requeriría la configuración de su propio router para permitir el acceso
+        a la aplicación web desde cualquier lugar, abriendo el puerto que estuviera
+        sirviendo la aplicación, normalmente el 80.
+        \item No sería seguro que un usuario que no sea el administrador del sistema
+        tuviese el código fuente en su propio ordenador.
+    \end{itemize}
+
+En definitiva, esta opción no es la mejor. Necesitaremos que la aplicación se ejecute en
+un servidor que esté en la \textbf{nube} (en internet), y que consecuentemente esté
+siempre conectado, haciendo que la disponibilidad de nuestra aplicación web sea casi
+segura para los usuarios. \\
+
+\subsubsection{Servicios en la nube}
+Un \textbf{servicio en la nube} \cite{cloud-computing}, también conocido como computación
+en la nube, es el uso de un conjunto de servidores que están conectados a internet
+ofreciendo a los usuarios algún tipo de servicio como pueden ser servidores de bases de
+datos, almacenamiento de datos, desarrollo de aplicaciones, etc. \\
+
+Elegir el uso de un servicio en la nube tiene diversas ventajas frente a un servicio
+local, entre las más importantes se encuentran:
+
+    \begin{itemize}
+        \item Se puede acceder al servicio utilizado desde cualquier lugar que posea
+        \textbf{conexión a internet}.
+        \item Los riesgos de \textbf{seguridad} son relativamente bajos ya que se aplican
+        diversos mecanismos para garantizarla.
+        \item Normalmente, los proveedores están al corriente de las últimas
+        \textbf{innovaciones} en cloud computing, por lo que no deberemos preocuparnos por
+        el uso de últimas tecnologías en el mercado o similar.
+        \item No es necesario preocuparse por la \textbf{infraestructura} subyacente que
+        utilice el servicio.
+    \end{itemize}
+
+Normalmente dichos servicios en la nube ofrecen planes de pago flexibles, bien según
+el uso que se haga de los distintos recursos de la nube o según alguna tarifa concreta
+que ofrezcan. En nuestro caso, deberemos utilizar algun servicio en la nube que cumpla
+al menos los siguientes requisitos:
+
+    \begin{itemize}
+        \item Que sea un servicio \textbf{gratuito}.
+        \item Que nos ofrezca una buena \textbf{integración con Django}.
+        \item Que nos proporcione una \textbf{base de datos gratuita} para la aplicación.
+        \item Si puede ser posible, que nos permita hacer el despliegue de la
+        aplicación de una manera secilla, como puede ser mediante el despliegue de un
+        \textbf{repositorio git} o una \textbf{rama} concreta de Github. 
+    \end{itemize}
+
+Tras una larga y exhaustiva búsqueda por encontrar un servicio gratuito para el
+despliegue de la aplicación, se tantearon soluciones como las que ofrecía
+\href{https://docs.digitalocean.com/tutorials/app-deploy-django-app/}{DigitalOcean}
+o \href{https://www.linode.com/docs/products/tools/marketplace/guides/django/}{Linode},
+sin embargo, estos son de pago y por tanto fueron descartados.\\
+
+Finalmente, se decidió usar Heroku \cite{heroku}, una plataforma como servicio
+(\textbf{Product as a service, PaaS}), que actualmente es una de las más utilizadas
+para realizar despliegues de aplicaciones y que posee un plan gratuito.\\
+
+Además de todas las ventajas que poseen las plataformas como servicio (no conllevan
+complicaciones de infraestructura, de adminsitración de servidores, bases de datos y
+seguridad), Heroku tiene las siguientes características \cite{heroku-features}:
+
+    \begin{itemize}
+        \item Tiene un plan gratuito.
+        \item Tiene \textbf{soporte para distintos lenguajes de programación}, como Python,
+        Java, Ruby, Node, Go, PHP, Scala, etc
+        \item Las aplicaciones se ejecutan a través de sus propios \textbf{contenedores},
+        llamados \textbf{Dynos}.
+        \item Proporciona varias características de seguridad como pueden ser
+        \textbf{autenticación} y \textbf{SSL} (certificado digital que autentica la
+        identidad de un sitio web, habilitando una conexión cifrada con el mismo).
+    \end{itemize}
+
+Dicho esto, procedamos a explicar el proceso de despliegue de nuestra aplicación.
+
+\subsubsection{Django con Heroku}
+En este subapartado explicaremos el proceso \cite{heroku-with-django} que hemos tenido que
+realizar para poder desplegar nuestra aplicación de Django en Heroku. Para ello, lo primero
+que deberemos de hacer es crearnos una \href{https://id.heroku.com/login}{cuenta} en Heroku,
+como en cualquier otro servicio que usemos.\\
+
+A la hora de realizar este proceso, podemos escoger entre dos opciones, bien a través de la
+\textbf{interfaz gráfica} que ofrece Heroku, o bien a través de la \textbf{interfaz de
+comandos} que ofrece Heroku con la descarga de su cliente. En esta ocasión, hemos elegido usar
+el cliente de comandos ya que nos parece mucho más intuitivo y fácil de usar que la interfaz
+gráfica.\\
+
+En primer lugar, como hemos mencionado, deberemos crear una cuenta de Heroku. En segundo
+lugar, descargar el cliente, \href{https://shorturl.at/emHJY} {\textbf{Heroku CLI}}
+(en este caso para una distribución de Ubuntu/Debian).
+        
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.47]{imagenes/heroku-cli.png}
+        \caption{Heroky CLI}
+        \label{fig:heroku-cli}
+    \end{figure}
+
+Una vez descargado el cliente, comprobamos que se ha instalado correctamente comprobando
+la versión y posteriormente procedemos a \textbf{iniciar sesión}.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.42]{imagenes/heroku-version-login.png}
+        \caption{Login en Heroku CLI}
+        \label{fig:heroku-version-login}
+    \end{figure}
+
+Tras este comando se nos abrirá un navegador con la página de inicio de sesión de Heroku
+para que introduzcamos nuestras credenciales (las de la cuenta creada previamente).\\
+
+Una vez hayamos iniciado sesión en el cliente, el siguiente paso será crear nuestra
+aplicación en Heroku. Para ello, ejecutamos el siguiente comando:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{imagenes/heroku-create.png}
+        \caption{Creación de una nueva aplicación en Heroku}
+        \label{fig:heroku-create}
+    \end{figure}
+
+Otro de los requisitos que estábamos buscando en el servicio en la nube era que tuviera
+integración con Github, lo cuál en este se cumple:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.29]{imagenes/deployment-method.png}
+        \caption{Métodos de despliegue}
+        \label{fig:deployment-method}
+    \end{figure}
+
+Como vemos en la imagen anterior, existen distintos métodos para hacer el deploy:
+
+    \begin{itemize}
+        \item \textbf{Heroku Git}: mediante un repositorio de Git subido directamente
+        al proyecto.
+        \item \textbf{Github}: con el despliegue de una rama concreta de un repositorio
+        de Github.
+        \item \textbf{Container Registry}: mediante un repositorio de Docker Hub.
+    \end{itemize}
+
+En nuestro caso, como es evidente, lo haremos \textbf{a partir de una rama} de un
+repositorio de Github, concretamente del repositorio en el que venimos trabajando
+para el desarrollo de todo el proyecto software.\\
+
+Heroku trabaja sobre el \textbf{directorio raíz} del proyecto, es decir, realiza el
+despliegue trabajando sobre el directorio principal del proyecto, por lo que si no le
+indicamos nada, no funcionará, ya que en el \href{https://github.com/alexespana/TFG}
+{repositorio de Github} tenemos la documentación por un lado y el código fuente por
+otro. Para corregir este inconveniente, deberemos agregar siguientes \textbf{buildpacks}
+(se encargan de transformar el código que queremos desplegar a un slug \footnote{Parte
+\textbf{final} de la URL que \textbf{identifica} a una determinada página en un sitio
+web.}, que luego puede ser ejecutado en un contenedor, en un \textbf{dyno}) a nuestra
+aplicación:
+
+    \begin{enumerate}
+        \item \href{https://elements.heroku.com/buildpacks/timanovsky/subdir-heroku-buildpack}
+        {subdir-heroku-buildpack}: permite poder especificar un subdirectorio de trabajo
+        para el proyecto.
+        \item \href{https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python}
+        {heroku-buildpack-python}: permite crear un entorno para aplicaciones Python,
+        instalando todas las dependencias especificadas en un archivo
+        \textbf{requirements.txt}.
+    \end{enumerate}
+
+Dicho esto, deberemos ejecutar los siguientes comandos:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.39]{imagenes/first-buildpack.png}
+        \caption{Paquete de construcción para subdirectorio}
+        \label{fig:subdir-heroku-buildpack}
+    \end{figure}
+
+Como vemos, es necesario especificar con la opción -a el nombre de la aplicación a la que
+queremos añadir los cambios. En la siguiente imagen, podemos ver cómo se especifíca el
+subdirectorio de trabajo para Heroku, en este caso \textbf{code/app}.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{imagenes/second-buildpack.png}
+        \caption{Paquete de construcción para Python}
+        \label{fig:heroku-buildpack-python}
+    \end{figure}
+
+Con estos ajustes, como podemos ver en la imagen anterior, se crea una nueva variable de
+entorno, \textbf{PROJECT\_PATH}, que será tomada por Heroku al comenzar el despliegue de
+la aplicación.\\
+
+Heroku incluye funcionalidades muy interesantes como la de poder hacer despliegues
+automáticos al \textbf{aplicar cambios} (push) a una determinada rama de Github. Por
+ejemplo, si creamos una rama llamada \textbf{deployment} donde hacemos todos los cambios
+necesarios para el despliegue y queremos que heroku los aplique directamente al dominio
+que tenemos ya funcionando, únicamente tendremos que habilitar la siguiente opción:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.44]{imagenes/autodeploy.png}
+        \caption{Automatización de despliegues}
+        \label{fig:autodeploy}
+    \end{figure}
+
+Además, como vemos, nos permite realizarlos únicamente si se han pasado todos los flujos
+de integración continua que posea la rama (como por ejemplo \textbf{tests}), asegurándonos
+que la misma tendrá un mínimo de calidad para los clientes finales.\\
+
+En nuestro caso, hemos creado una rama específica en Github para realizar el despliegue de
+la aplicación, llamada \textbf{deployment}. Para realizar el primer despliegue de la misma,
+deberemos hacerlo de \textbf{forma manual}, ya que en este caso teníamos todos los cambios
+necesarios en la rama (no hacía falta volver a subir neuvos cambios, push).\\
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.30]{imagenes/first-deploy.png}
+        \caption{Primer despliegue}
+        \label{fig:first-deploy}
+    \end{figure}
+
+Como vemos, el primer despliegue se ha realizado correctamente.\\
+
+
+Una vez tenemos hecho el primer depliegue, tendríamos que hacernos las siguientes
+preguntas: \textbf{¿qué base de datos estamos usando ahora?}, \textbf{¿cómo aplico las
+migraciones para la base de datos?} En este caso, Heroku nos proporciona una base de
+datos como servicio basada en PostgreSQL. Esta base de datos es la llamada
+\href{https://elements.heroku.com/addons/heroku-postgresql}{\textbf{Hobby Dev}}, la única
+con un plan gratuito. Procedemos a su creació mediante el siguiente comando:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.50]{imagenes/heroku-postgresql.png}
+        \caption{Heroku PostgreSQL}
+        \label{fig:heroku-postgresql}
+    \end{figure}
+
+Como vemos, se nos ha creado una nueva variable de entorno llamada \textbf{DATABASE\_URL},
+que deberemos indicar de alguna forma en la configuración de la base de datos de Django,
+ya que antes, como bien sabemos, utilizábamos una \textbf{base de datos local} dentro del
+contenedor donde se ejecutaba la aplicación. Para ello, deberemos cambiar la configuración
+de la base de datos con las siguientes líneas de código:
+
+% DESCOMENTAR
+\begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+               frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
+    }
+\end{minted}
+
+En estas líneas, indicamos la url que tendrá la base de datos recogiendo su valor mediante
+una \textbf{variable de entorno}, ya que esta fue creada automáticamente con la ejecución
+del comando anterior.\\
+
+Ahora sí podremos aplicar las migraciones necesarias para la aplicación y crear el
+usuario adminsitrador del sistema. Mediante el comando \textbf{heroku run <argumentos>},
+podremos ejecutar el comando deseado dentro del contenedor en el que se ejecuta la
+aplicación, que como mencionamos anteriormente recibe el nombre de \textbf{dyno}:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.50]{imagenes/heroku-migrate.png}
+        \caption{Migraciones de la BD}
+        \label{fig:heroku-migrate}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{imagenes/heroku-createsuperuser.png}
+        \caption{Creación de un superusuario}
+        \label{fig:heroku-createsuperuser}
+    \end{figure}
+
+Con esto finalizaría el proceso de despliegue de nuestra aplicación, pudiendo acceder
+ahora de forma pública a la misma a través del siguiente
+\href{https://myfindings.herokuapp.com/}{enlace}.
