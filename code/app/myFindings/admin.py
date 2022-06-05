@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Room, Excavation, Photo, Fact, Inclusion, BuiltMaterial, SedimentaryMaterial, BuiltUE, SedimentaryUE
+from .models import Room, Excavation, Photo, Fact, Inclusion, BuiltMaterial, \
+                    SedimentaryMaterial, BuiltUE, SedimentaryUE
 
 # Register your models here.
 @admin.register(Room)

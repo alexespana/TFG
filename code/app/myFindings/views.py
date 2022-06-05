@@ -1,6 +1,5 @@
 import os, io, logging
 from docx import Document
-from django import template
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \

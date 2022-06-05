@@ -1,6 +1,5 @@
-from collections import UserList
-from django.db import models
 import re
+from django.db import models
 from django.core.exceptions import ValidationError
 
 def validate_number(value):
