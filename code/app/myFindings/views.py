@@ -1011,7 +1011,7 @@ def change_perms(request, id):
             form.save()      # Save form
 
             # Check if the is_active field was changed
-            if(form.cleaned_data['is_active']):
+            if(not was_active and form.cleaned_data['is_active']):
 
                 # Send an email to the user
                 send_email(subject='MyFindings: cuenta activada', from_email=settings.EMAIL_HOST_USER,
