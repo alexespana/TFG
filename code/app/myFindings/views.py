@@ -27,10 +27,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
                          BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
-                         InclusionSerializer, RoomSerializer, SedimentaryUEFloorSerializer, \
-                         SedimentaryUESectionSerializer, BuiltUEFloorSerializer, \
-                         BuiltUESectionSerializer, FactSerializer, FactPlanSerializer, \
-                         FactSectionSerializer, RoomFloorSerializer
+                         InclusionSerializer, RoomSerializer, FactSerializer
 
 # Module variable
 logger = logging.getLogger(__name__)
