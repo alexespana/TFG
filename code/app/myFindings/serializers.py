@@ -42,42 +42,7 @@ class FactSerializer(serializers.ModelSerializer):
         model = Fact
         fields = '__all__'
 
-class FactPlanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fact
-        fields = ['croquis_plan']
-
-class FactSectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fact
-        fields = ['croquis_seccion']
-
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
-
-class RoomFloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = ['croquis_planta']
-
-class SedimentaryUEFloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SedimentaryUE
-        fields = ['croquis_planta']
-
-class SedimentaryUESectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SedimentaryUE
-        fields = ['croquis_seccion']
-
-class BuiltUEFloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BuiltUE
-        fields = ['croquis_planta']
-
-class BuiltUESectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BuiltUE
-        fields = ['croquis_seccion']
