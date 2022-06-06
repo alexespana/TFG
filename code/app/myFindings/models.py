@@ -1,9 +1,10 @@
 import re
 from django.db import models
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
 
 def validate_number(value):
-    regex = r'^[0-9]{1,3}$'
+    regex = r'^\d{1,3}$'
 
     if len(value) != 3:
         raise ValidationError('El número debe tener 3 dígitos.')
@@ -101,7 +102,7 @@ class Room(models.Model):
     n_zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     n_sector = models.PositiveSmallIntegerField(verbose_name='Número de sector', blank=True, null=True)
     observaciones = models.CharField(max_length=200, blank=True, null=True)
-    croquis_planta = models.ImageField(verbose_name='Croquis de la planta', blank=True, null=True)
+    croquis_planta = CloudinaryField('Croquis de la planta', blank=True, null=True)
     n_planta = models.PositiveSmallIntegerField(verbose_name='Número de planta', blank=True, null=True)
     n_seccion = models.PositiveSmallIntegerField(verbose_name='Número de sección',blank=True, null=True)
     elevacion = models.PositiveSmallIntegerField(verbose_name='Número de elevación',blank=True, null=True)
@@ -167,8 +168,8 @@ class Fact(models.Model):
     zona = models.PositiveSmallIntegerField(verbose_name='Número de zona', blank=True, null=True)
     año = models.PositiveSmallIntegerField(blank=True, null=True)
     estructura = models.PositiveSmallIntegerField(verbose_name='Número de estructura', blank=True, null=True) 
-    croquis_plan = models.ImageField(verbose_name='Croquis del plan', blank=True, null=True)
-    croquis_seccion = models.ImageField(verbose_name='Croquis de la sección', blank=True, null=True)
+    croquis_plan = CloudinaryField('Croquis del plan', blank=True, null=True)
+    croquis_seccion = CloudinaryField('Croquis de la sección', blank=True, null=True)
 
     class Meta:
         verbose_name = 'hecho'
@@ -219,8 +220,8 @@ class UE(models.Model):
     plano_n = models.PositiveSmallIntegerField(verbose_name='Número de plano', blank=True, null=True)
     seccion_n = models.PositiveSmallIntegerField(verbose_name='Número de sección', blank=True, null=True)
     elevacion_n = models.PositiveSmallIntegerField(verbose_name='Número de elevación', blank=True, null=True)
-    croquis_planta = models.ImageField(verbose_name='Croquis de la planta', blank=True, null=True)
-    croquis_seccion = models.ImageField(verbose_name='Número de la sección', blank=True, null=True)
+    croquis_planta = CloudinaryField('Croquis de la planta', blank=True, null=True)
+    croquis_seccion = CloudinaryField('Croquis de la sección', blank=True, null=True)
     tpq = models.PositiveSmallIntegerField(verbose_name='Terminus Post Quem (TPQ)',blank=True, null=True)
     taq = models.PositiveSmallIntegerField(verbose_name='Terminus Ante Quem (TAQ)', blank=True, null=True)
     fase = models.CharField(max_length=2, choices=FASE_CHOICES, blank=True, null=True)
@@ -281,7 +282,7 @@ class Photo(models.Model):
     vista_desde = models.CharField(max_length=50, blank=True, null=True)
     dist_focal = models.PositiveSmallIntegerField(verbose_name='Distancia focal', blank=True, null=True)
     descripcion = models.TextField(max_length=200, blank=True, null=True)
-    imagen = models.ImageField(blank=True, null=True)
+    imagen = CloudinaryField('Imagen', blank=True, null=True)
 
     def __str__(self):
         return str(self.numero)

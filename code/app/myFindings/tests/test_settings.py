@@ -9,12 +9,6 @@ class TestSettings(TestCase):
             result = os.environ.get('SECRET_KEY')
             self.assertNotEqual(result, None)
 
-    def test_debug_is_false_in_production(self):
-        if(ALLOWED_HOSTS):
-            self.assertFalse(DEBUG)
-        else:
-            self.assertTrue(DEBUG)
-
     def test_emailhostuser_defined(self):
         self.assertNotEqual(EMAIL_HOST_USER, None)
 
