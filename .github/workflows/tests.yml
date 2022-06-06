@@ -11,7 +11,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: code
+    working-directory: code/app
 
 jobs:
   run-tests:
@@ -57,7 +57,6 @@ jobs:
         DEBUG: ${{ secrets.DEBUG }}
         DEVELOPMENT_MODE: ${{ secrets.DEVELOPMENT_MODE }}
       run: |
-        cd app/
         sudo touch /var/log/myFindings.log && sudo chmod 666 /var/log/myFindings.log
         coverage run manage.py test && coverage report --fail-under=85 && coverage xml
 
