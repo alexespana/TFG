@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 
 def validate_number(value):
-    regex = r'^[0-9]{1,3}$'
+    regex = r'^\d{1,3}$'
 
     if len(value) != 3:
         raise ValidationError('El número debe tener 3 dígitos.')
