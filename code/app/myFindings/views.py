@@ -1,6 +1,5 @@
 import os, io, logging
 from docx import Document
-from django import template
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
@@ -27,10 +26,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
                          BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
-                         InclusionSerializer, RoomSerializer, SedimentaryUEFloorSerializer, \
-                         SedimentaryUESectionSerializer, BuiltUEFloorSerializer, \
-                         BuiltUESectionSerializer, FactSerializer, FactPlanSerializer, \
-                         FactSectionSerializer, RoomFloorSerializer
+                         InclusionSerializer, RoomSerializer, FactSerializer
 
 # Module variable
 logger = logging.getLogger(__name__)
@@ -1014,7 +1010,7 @@ def change_perms(request, id):
             form.save()      # Save form
 
             # Check if the is_active field was changed
-            if(form.cleaned_data['is_active']):
+            if(not was_active and form.cleaned_data['is_active']):
 
                 # Send an email to the user
                 send_email(subject='MyFindings: cuenta activada', from_email=settings.EMAIL_HOST_USER,
