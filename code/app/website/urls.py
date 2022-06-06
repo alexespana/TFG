@@ -22,8 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myFindings.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-] 
-
-# Add Static files and media files routes
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

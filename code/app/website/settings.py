@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import cloudinary
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 
@@ -26,6 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEVELOPMENT_MODE = os.getenv('DEVELOPMENT_MODE', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
@@ -46,6 +48,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -143,8 +147,11 @@ USE_TZ = True
 
 
 # Media files (files uploaded by a user during development)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+cloudinary.config( 
+    cloud_name = os.environ.get('CLOUD_NAME'), 
+    api_key = os.environ.get('API_KEY'), 
+    api_secret = os.environ.get('API_SECRET')
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

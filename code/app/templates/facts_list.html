@@ -57,8 +57,8 @@
                                 <td>{{ f.zona }}</td>
                                 <td>{{ f.año }}</td>
                                 <td>{{ f.estructura }}</td>
-                                <td><img src="/media/{{f.croquis_plan}}" alt="Plan"></td>
-                                <td><img src="/media/{{f.croquis_seccion}}" alt="Seccion"></td>
+                                <td><img src="{{ f.croquis_plan.url }}" alt="Plan"></td>
+                                <td><img src="{{ f.croquis_seccion.url }}" alt="Seccion"></td>
                                 {% if perms.myFindings.view_sedimentaryue and perms.myFindings.view_builtue or perms.myFindings.change_fact or perms.myFindings.delete_fact %}
                                 <td>
                                     <div class="d-flex">

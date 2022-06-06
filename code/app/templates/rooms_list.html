@@ -52,7 +52,7 @@
                                 <td>{{ r.fase }}</td>
                                 <td>{{ r.periodo }}</td>
                                 <td>{{ r.autor }}</td>
-                                <td><img src="/media/{{r.croquis_planta}}" alt="Plan"></td>
+                                <td><img src="{{ r.croquis_planta.url }}" alt="Plan"></td>
                                 {% if perms.myFindings.view_fact or perms.myFindings.change_room or perms.myFindings.delete_room %}
                                 <td>
                                     <div class="d-flex">

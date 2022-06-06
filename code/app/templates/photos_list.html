@@ -44,7 +44,7 @@
                                 <td>{{ p.vista_desde }}</td>
                                 <td>{{ p.dist_focal }}</td>
                                 <td>{{ p.descripcion }}</td>
-                                <td><img src="/media/{{p.imagen}}" alt="Imagen"></td>
+                                <td><img src="{{ p.imagen.url }}" alt="Imagen"></td>
                                 {% if perms.myFindings.change_fotografia or perms.myFindings.delete_photo %}
                                 <td>
                                     <div class="d-flex">
