@@ -1,12 +1,14 @@
 import os, io, logging
 from docx import Document
+from docx.shared import Pt, Inches
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    InclusionForm, RoomForm, SedimentaryMaterialForm, SedimentaryUEForm, \
                    PhotoForm, CustomUserCreationForm, CustomUserChangeForm, \
                    InclusionUpdateForm, FactUpdateForm, SedimentaryUEUpdateForm, BuiltUEUpdateForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
-                    SedimentaryMaterial, BuiltUE, SedimentaryUE
+                    SedimentaryMaterial, BuiltUE, SedimentaryUE, UE
 from django.conf import settings
 from django.template.loader import get_template
 from django.contrib import messages
@@ -1026,44 +1028,227 @@ def change_perms(request, id):
 # ######################
 # REPORT GENERATOR
 # ######################
+def excavation_summary(excavation):
+    description = 'Excavación '
+    
+    if excavation.nombre:
+        description += 'con nombre ' + excavation.nombre
+
+    if excavation.n_excavacion:
+        description += ', identificada por el número de excavación ' + excavation.n_excavacion 
+
+    if excavation.latitud and excavation.longitud:
+        description += ', que se encuentra localizada en los puntos de coordenadas latitud ' \
+        + str(excavation.latitud) + ' y longitud ' + str(excavation.longitud)
+
+    if excavation.altura:
+        description += ', a una altura de ' + str(excavation.altura) + ' metros'
+
+    description += '.'
+
+    return description
+
+def get_relations_generic(all):
+    ues = ''
+
+    for ue in all:
+        ues += 'UE' + ue.codigo
+        # Add a coma except last item
+        if ue != all.last():
+            ues += ', '
+
+    ues += '; '
+    return ues
+
+def get_relations_ue(ue):
+    relations = ''
+
+    # Check if the ManyToMany field is not empty
+    if ue.igual_a.all():
+        relations += 'es igual a: '
+        # Go through the list of relations
+        relations += get_relations_generic(ue.igual_a.all())
+
+    if ue.equivalente_a.all():
+        relations += 'es equivalente a: '
+        # Go through the list of relations
+        relations += get_relations_generic(ue.equivalente_a.all())
+
+    if ue.sobre.all():
+        relations += 'está sobre: '
+        # Go through the list of relations
+        relations += get_relations_generic(ue.sobre.all())
+
+    if ue.bajo.all():
+        relations += 'está bajo: '
+        # Go through the list of relations
+        relations += get_relations_generic(ue.bajo.all())
+
+    relations += '.'
+
+    return relations
+
+def ue_summary(ue):
+    description = ''
+
+    if ue.sector and ue.hecho:
+        description += 'ubicada en el sector ' + str(ue.sector) + ' '
+        description += 'formando parte del hecho ' + str(ue.hecho) + ';'
+
+    description += 'Relaciones estratigráficas: '
+    description += get_relations_ue(ue)
+    
+    if ue.cota_superior:
+        description += 'Cota superior: ' + str(ue.cota_superior) + '. '
+
+    if ue.cota_inferior:
+        description += 'Cota inferior: ' + str(ue.cota_inferior) + '. '
+
+    if ue.pendiente_superior:
+        description += 'Pendiente superior: ' + str(ue.pendiente_superior) + '. '
+
+    if ue.pendiente_inferior:
+        description += 'Pendiente inferior: ' + str(ue.pendiente_inferior) + '. '
+
+    if ue.periodo or ue.fase or ue.tpq or ue.taq:
+        description += 'Cronología: '
+    if ue.periodo:
+        description += ue.periodo + '. '
+    if ue.fase: 
+        description += 'Fase: ' + ue.fase + '. '
+    if ue.tpq and ue.taq:
+        description += 'TPQ: ' + str(ue.tpq) + ' / ' + 'TAQ: ' + str(ue.taq) + '.'
+
+    return description
+
+def fact_summary(fact):
+    description = ''
+
+    if fact.estancia:
+        description += 'perteneciente a la estancia ' + str(fact.estancia) + '; '
+
+    if fact.definicion:
+        description += 'Definición: ' + fact.definicion + '; '
+
+    if fact.comentarios:
+        description += 'Comentarios: ' + fact.comentarios + '; '
+
+    if fact.sector and fact.zona:
+        description += 'ubicado en el sector ' + str(fact.sector) + ' en la zona ' + str(fact.zona) + '; '
+
+    if fact.fase or fact.tpq or fact.taq:
+        description += 'Cronología: '
+
+    if fact.fase: 
+        description += 'Fase: ' + fact.fase + '. '
+    if fact.tpq and fact.taq:
+        description += 'TPQ: ' + str(fact.tpq) + ' / ' + 'TAQ: ' + str(fact.taq) + '.'
+
+    return description
+
+def get_related_facts(excavation):
+    related_facts = []
+
+    # Get the list of related ues
+    ues = UE.objects.filter(excavacion=excavation)
+    if ues:
+        # Create a list of unique values
+        for ue in ues:
+            if ue.hecho:
+                related_facts.append(ue.hecho)
+
+        # Get only unic values
+        related_facts = list(set(related_facts))
+
+    return related_facts
+
 def generate_report(request, id):
     excavation = get_object_or_404(Excavation, id=id)   # Get the excavation   
 
-    # Source: https://python-docx.readthedocs.io/en/latest/ - Temporary
-    document = Document()                               # Create a new document
+    document = Document()
 
-    document.add_heading('Informe de la excavación ' + str(excavation.n_excavacion), 0)           # Add a heading
-    p = document.add_paragraph('A plain paragraph having some ')
-    p.add_run('bold').bold = True
-    p.add_run(' and some ')
-    p.add_run('italic.').italic = True
+    # Change the font size
+    document.styles['Normal'].font.size = Pt(12)
 
-    document.add_heading('Heading, level 1', level=1)
-    document.add_paragraph('Intense quote', style='Intense Quote')
+    # Add a title
+    h = document.add_heading('Informe de la excavación ' + str(excavation.n_excavacion), 0)
+    if excavation.nombre:
+        h.add_run(': ' + excavation.nombre)
+    
+    h.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    document.add_paragraph(
-        'first item in unordered list', style='List Bullet'
-    )
-    document.add_paragraph(
-        'first item in ordered list', style='List Number'
-    )
+    # EXCAVATION
+    # ---------------
+    document.add_heading('Resumen general', level=1)
+    document.add_paragraph(excavation_summary(excavation))
+    # ---------------
 
-    records = (
-        (3, '101', 'Spam'),
-        (7, '422', 'Eggs'),
-        (4, '631', 'Spam, spam, eggs, and spam')
-    )
+    # FACTS
+    # ---------------
+    document.add_heading('Hechos', level=2)
+    facts = get_related_facts(excavation)
+    if facts:
+        for fact in facts:
+            # Add a new paragraph
+            p = document.add_paragraph()
+            p.add_run(fact.letra + fact.numero + ': ').bold = True
+            p.add_run(fact_summary(fact))
+            
+            if fact.croquis_plan:
+                p = document.add_paragraph()
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p.add_run('Croquis del plan').italic  = True
+                document.add_picture(fact.croquis_plan, width=Inches(2))
+                picture_paragraph = document.paragraphs[-1]
+                picture_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    table = document.add_table(rows=1, cols=3)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Qty'
-    hdr_cells[1].text = 'Id'
-    hdr_cells[2].text = 'Desc'
-    for qty, id, desc in records:
-        row_cells = table.add_row().cells
-        row_cells[0].text = str(qty)
-        row_cells[1].text = id
-        row_cells[2].text = desc
+            if fact.croquis_seccion:
+                p = document.add_paragraph()
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p.add_run('Croquis de la sección').italic = True
+                document.add_picture(fact.croquis_seccion, width=Inches(2))
+                picture_paragraph = document.paragraphs[-1]
+                picture_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    else:
+        document.add_paragraph('No se han encontrado hechos relacionados con la excavación.')
+    # ---------------
+
+    # STRATIGRAPHIC UNITS
+    # --------------------
+    document.add_heading('Unidades estratigráficas', level=2)
+    p = document.add_paragraph()
+    p.add_run('Unidades sedimentarias').bold = True
+
+    # Get stratigraphics units that has excavacion like foreign key
+    sedimentaryues = SedimentaryUE.objects.filter(excavacion=excavation)
+    if sedimentaryues:
+        # Go through all the sedimentary units
+        for sedimentaryue in sedimentaryues:
+            # Add a new paragraph
+            p = document.add_paragraph()
+            p.add_run('UE' + sedimentaryue.codigo + ': ').bold = True
+            p.add_run(' unidad sedimentaria; ')
+            p.add_run(ue_summary(sedimentaryue))
+    else:
+        document.add_paragraph('No hay unidades sedimentarias registradas.')
+
+    p2 = document.add_paragraph()
+    p2.add_run('Unidades construidas').bold = True
+
+    # Get stratigraphics units that has excavacion like foreign key
+    builtues = BuiltUE.objects.filter(excavacion=excavation)
+    # Checks if there are any built units
+    if builtues:
+        # Go through all the built units
+        for builtue in builtues:
+            # Add a new paragraph
+            p = document.add_paragraph()
+            p.add_run('UE' + builtue.codigo + ': ').bold = True
+            p.add_run(' unidad construida; ')
+            p.add_run(ue_summary(builtue))
+    else:
+        document.add_paragraph('No hay unidades construidas registradas.')
+    # --------------------
 
     document.add_page_break()
 

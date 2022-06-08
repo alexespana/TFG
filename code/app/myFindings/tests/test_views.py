@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
                               BuiltMaterial, SedimentaryMaterial, SedimentaryUE, BuiltUE
 from django.contrib.auth.models import Group
-from django.http import Http404
-from django.core.paginator import Paginator, EmptyPage
 
 class TestMainPages(TestCase):
 
@@ -700,15 +698,90 @@ class TestEliminatingViews(TestCase):
         self.assertEqual(BuiltUE.objects.count(), 0)
 
 class TestReportGenerator(TestCase):
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
 
-    def test_generate_excavation_report(self):
+    def test_generate_report_excavation_without_data(self):
         # Create an excavation
         excavation = Excavation.objects.create(
+            nombre='Example excavation',
             n_excavacion='001',
             latitud=1,
             longitud=1,
             altura=1
         )
+        response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
+
+        # It returns on the response a docs file
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('Content-Disposition'), 'attachment; filename = "Informe de excavación.docx"')
+
+    def test_generate_report_excavation_with_data(self):
+        # Create an excavation
+        excavation = Excavation.objects.create(
+            nombre='Example excavation',
+            n_excavacion='001',
+            latitud=1,
+            longitud=1,
+            altura=1
+        )
+        # Create an asociated sedimentary UE
+        sedimentaryue = SedimentaryUE.objects.create(
+            n_orden='001',
+            excavacion=excavation,
+            descripcion='Sedimento rudimentario',
+            sector=4,
+            cota_superior_diff=1.3,
+            cota_inferior_diff=4.3,
+            pendiente_superior='Norte',
+            pendiente_inferior='Sureste',
+            fase='A1',
+            periodo='Siglo XVIII',
+            tpq=563,
+            taq=124,
+        )
+
+        # Create a room
+        room=Room.objects.create( n_estancia='001')
+
+        # Create a fact identified by one UE
+        fact = Fact.objects.create(
+            estancia=room,
+            letra='MR',
+            numero=sedimentaryue.codigo,
+            definicion='fact definition',
+            comentarios='fact comments',
+            sector=7,
+            zona=6,
+            fase='A1',
+            tpq=213,
+            taq=333,
+        )
+
+        # Create an asociated built UE
+        builtue = BuiltUE.objects.create(
+            n_orden='002',
+            excavacion=excavation,
+            hecho=fact,
+            descripcion='Construida rudimentaria',
+            sector=4,
+            cota_superior_diff=1.3,
+            cota_inferior_diff=4.3,
+            pendiente_superior='Norte',
+            pendiente_inferior='Sureste',
+            fase='A1',
+            periodo='Siglo XVIII',
+            tpq=563,
+            taq=124,
+        )
+
+        builtue.igual_a.set([sedimentaryue])
+        builtue.equivalente_a.set([sedimentaryue])
+        builtue.sobre.set([sedimentaryue])
+        builtue.bajo.set([sedimentaryue])
+
+        # Generate the report
         response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
 
         # It returns on the response a docs file
