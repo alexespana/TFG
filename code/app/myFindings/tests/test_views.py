@@ -698,6 +698,9 @@ class TestEliminatingViews(TestCase):
         self.assertEqual(BuiltUE.objects.count(), 0)
 
 class TestReportGenerator(TestCase):
+    def setUp(self):
+        User.objects.create_superuser(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
 
     def test_generate_report_excavation_without_data(self):
         # Create an excavation
@@ -739,10 +742,28 @@ class TestReportGenerator(TestCase):
             taq=124,
         )
 
+        # Create a room
+        room=Room.objects.create( n_estancia='001')
+
+        # Create a fact identified by one UE
+        fact = Fact.objects.create(
+            estancia=room,
+            letra='MR',
+            numero=sedimentaryue.codigo,
+            definicion='fact definition',
+            comentarios='fact comments',
+            sector=7,
+            zona=6,
+            fase='A1',
+            tpq=213,
+            taq=333,
+        )
+
         # Create an asociated built UE
         builtue = BuiltUE.objects.create(
             n_orden='002',
             excavacion=excavation,
+            hecho=fact,
             descripcion='Construida rudimentaria',
             sector=4,
             cota_superior_diff=1.3,
@@ -759,32 +780,6 @@ class TestReportGenerator(TestCase):
         builtue.equivalente_a.set([sedimentaryue])
         builtue.sobre.set([sedimentaryue])
         builtue.bajo.set([sedimentaryue])
-
-        # Create a room
-        room=Room.objects.create( n_estancia='001')
-
-        # Create a fact identified by one UE
-        fact = Fact.objects.create(
-            estancia=room,
-            letra='MR',
-            numero='001002',
-            definicion='fact definition',
-            comentarios='fact comments',
-            sector=7,
-            zona=6,
-            fase='A1',
-            tpq=213,
-            taq=333,
-        )
-
-        # Modify the UE's in order to associate them with the fact
-        self.client.post(reverse('modify_sedimentaryue', kwargs={'id': sedimentaryue.pk}), {
-            'hecho': Fact.objects.get(pk=fact.pk),
-        })
-
-        self.client.post(reverse('modify_builtue', kwargs={'id': builtue.pk}), {
-            'hecho': Fact.objects.get(pk=fact.pk),
-        })
 
         # Generate the report
         response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
