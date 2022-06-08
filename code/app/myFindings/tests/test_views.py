@@ -778,11 +778,13 @@ class TestReportGenerator(TestCase):
         )
 
         # Modify the UE's in order to associate them with the fact
-        sedimentaryue.fact = fact
-        sedimentaryue.save()
-        builtue.fact = fact
-        builtue.save()
+        self.client.post(reverse('modify_sedimentaryue', kwargs={'id': sedimentaryue.pk}), {
+            'hecho': Fact.objects.get(pk=fact.pk),
+        })
 
+        self.client.post(reverse('modify_builtue', kwargs={'id': builtue.pk}), {
+            'hecho': Fact.objects.get(pk=fact.pk),
+        })
 
         # Generate the report
         response = self.client.get(reverse('generate_report', kwargs={'id': excavation.pk}))
