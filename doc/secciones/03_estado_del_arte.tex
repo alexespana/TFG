@@ -1,4 +1,126 @@
 \chapter{Estado del arte}
+Hoy en día, el ritmo de desarrollo de las nuevas tecnologías crece exponencialmente y con
+ello, las soluciones a las demandas que el mercado requiere en cada momento. En nuestro
+caso la pregunta sería, ¿qué tecnología existe actualmente para la toma y gestión de datos
+en excavaciones arqueológicas?\\
 
-El software libre y sus licencias \cite{gplv3} ha permitido llevar a cabo una expansión del
-aprendizaje de la informática sin precedentes.
+El hecho de que la profesión del arqueólogo sea un trabajo tan puramente práctico, quizás
+le haya llevado a abstraerse en cierta medida del avance tecnológico, continuando con
+métodos de recogida de datos que son poco prácticos o arcaicos. Por ejemplo, en la recogida
+de datos se utilizan fichas de registro de los distintos elementos en papel, el cual lo
+hace un trabajo muy costoso y difícil de realizar. Como consecuencia de esto, en el mercado
+existe un gran vacío en soluciones software al respecto, siendo el número de aplicaciones
+en el mercado muy bajo. En los apartados siguientes detallaremos cuáles son las
+principales aplicaciones que existen en el mercado (privadas o de código libre)
+que más se asemejarían a nuestra propuesta de aplicación.\\
+
+\section{Piedrac}
+Piedrac \cite{piedrac} es una aplicación de escritorio destinada a la documentación
+arqueológica de campo. Permite registrar parte de la documentación que necesita una
+excavación en una base de datos. Al igual que nuestra aplicación, permite recoger
+información sobre unidades estratigráficas, muestras, coordenadas del contexto en el que
+se realiza la excavación, imágenes, etc.\\
+
+Además, se trata de una aplicación \textbf{portable}, siendo funcional en Windows, Linux
+y MacOS, ya que la misma puede ejecutarse a partir de  un fichero \textbf{JAR}
+\footnote{Tipo de archivo que permite \textbf{ejecutar} aplicaciones y herramientas escritas
+en Java.} que no requiere ningún tipo de instalación por parte del usuario. El sistema
+gestor de base de datos que utiliza es SQLite, conteniendo toda la base de datos en un
+único fichero.\\
+
+Uno de los puntos más fuertes de esta aplicación es que permite la exportación de distintos
+tipos de datos en distintos formatos, que son los siguientes:
+
+    \begin{itemize}
+        \item Las tablas en formato \href{https://dev.socrata.com/docs/formats/csv.html}
+        {\textbf{CSV} (Comma-separated Values)}.
+        \item Las fichas de registro en \textbf{PDF} o en formato \textbf{HTML}.
+        \item Imágenes a \textbf{JPG}.
+        \item Coordenadas a \href{https://docs.fileformat.com/cad/dxf/}
+        {\textbf{DXF} (Drawing Exchange Format)}.
+    \end{itemize}
+
+Finalmente, un punto importante de la misma es que se encuentra distribuida bajo la
+licencia \textbf{GNU GPLv3} \cite{gplv3}, lo que permite obtener el código fuente de
+la misma y modificarla como se requiera, siempre y cuando se redistribuya \textbf{bajo la
+misma licencia}. Además, una de las grandes ventajas de este tipo de licencias es que
+permiten que se lleve un \textbf{mantenimiento} adecuado de la aplicación y vaya
+\textbf{mejorando} mediante contribuciones de desarrolladores interesados en participar en
+el proyecto a lo largo de los años. \\
+
+
+\section{ILIUM}
+\textbf{ILIUM} \cite{ilium} es una aplicación android destinada al registro de toda la
+información arqueológica recogida durante el trabajo de campo, es decir, mientras se
+excava. Al igual que la aplicación anterior, utiliza el sistema gestor de base de datos
+SQLite, conteniendo toda la información de la excavación en la propia tableta o smartphone
+que se ha utilizado.\\
+
+Esta aplicación tiene consecuentenmente como finalidad recoger los datos que pertenecen a
+la ficha de registro de campo reducida, correspondiente al anexo \ref{sec:registrationforms},
+por lo que recogería una parte de la finalidad para la que será creada nuestra aplicación web,
+aunque, como es evidente, los contextos son muy distintos, pues nuestro proyecto consistirá
+en la creación de una aplicación web, no android. \\
+
+
+\section{Sistemas de Información Geográfica}
+Otra de las herramientas más utilizadas para la documentación arqueológica son los
+\textbf{Sistemas de Información Geográfica (SIG)} \cite{gis}. Principalmente se utilizan
+para localizar en el espacio el yacimiento y toda la información referente al mismo.
+Básicamente consiste en una base de datos donde se va almacenando toda la información de una
+excavación para posteriormente formar un mapa a partir de dicha información. \\
+
+Al igual que las aplicaciones anteriores, los SIG sirven como base para la posterior
+documentación de las excavaciones, pudiendo contener grandes cantidades de información
+que, posteriormente será utilizada para documentar de forma espacial la excavación. Este
+tipo de herramientas se utilizan a nivel de escritorio, es decir, son aplicaciones que
+se instalan en un ordenador propio y funcionan sobre el mismo, al igual que Piedrac.\\
+
+En la actualidad, el Sistema de Información Geográfica más utilizado por empresas es
+\href{https://www.qgis.org/es/site/}{QGIS}. Es una herramienta que al igual que Piedrac
+es portable entre distintos sistemas operativos (Windows, Linux, MacOS), y que es libre
+y de código abierto, lo que hace que vaya evolucionando continuamente por la comunidad.
+
+\section{MyFindings, nuestro proyecto}
+Como hemos podido observar en los puntos anteriores, realmente esta disciplina no ha pasado
+por una fase de digitalización, al menos hasta el momento, y las soluciones software que hay
+disponibles en el mercado, o no solucionan el problema o se quedan obsoletas. Este hecho
+hace que nuestra aplicación tome un punto estratégico en el mercado, proporcionando al
+cliente servicios nunca antes ofrecidos por otras aplicaciones. Por ejemplo, en las
+aplicaciones anteriormente descritas, se han percibido las siguientes limitaciones:
+
+    \begin{itemize}
+        \item \textbf{Ejecución en local}: a pesar de ser aplicaciones portables entre
+        distintos sistemas operativos (a excepción de la aplicación android), que se
+        ejecuten localmente puede derivar en distintos problemas como puede ser pérdida
+        de información por un fallo del mismo. Por ejemplo, que deje de funcionar el
+        dispositivo, que se desinstale la aplicación por equivocación, que se borren los
+        datos vinculados, etc.
+        
+        \item \textbf{Aplicaciones que no son multiusuario}: las aplicaciones que se
+        ejecutan en el ordenador propio, no son multiusuario, es decir, no se puede
+        acceder a la misma desde otro ordenador. Esto provoca que en una misma excavación
+        no puedan participar varios arqueólogos simultáneamente, y si lo hacen, no tendrán
+        la información de la excavación sincronizada, resultando en inconsistencias de
+        información.
+    \end{itemize}
+
+Las dos limitaciones anteriores son muy importantes ya que afectan directamente a la
+escalabilidad de la aplicación. Myfindings solucionaría estos problemas ya que tiene como
+finalidad que múltiples usuarios puedan trabajar en una misma excavación y además ayudar a
+la documentación de las mismas. En concreto, la idea es que presente las siguientes
+características:
+
+    \begin{itemize}
+        \item Ayuda a la \textbf{documentación} de excavaciones arqueológicas.
+        \item Aplicación web \textbf{multiusuario}, donde los usuarios podrán trabajar
+        simultáneamente en varias excavaciones.
+        \item \textbf{Generación automática de informes} a partir de la información 
+        disponible en la base de datos.
+        \item Open source, distribuido bajo la licencia \textbf{GNU GPLv3}, haciendo que
+        el software siga en mantenimiento e incluyendo nuevas funcionalidades por la
+        comunidad.
+    \end{itemize}
+
+Con estas características ofreceríamos a los usuarios una forma única y nueva en el
+mercado para la toma y gestión de datos en excavaciones.
