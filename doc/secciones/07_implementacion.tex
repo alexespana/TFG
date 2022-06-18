@@ -2070,7 +2070,7 @@ de Log y cómo hemos llevado a cabo su implementación en nuestra aplicación. \
 Un \textbf{Sistema de Log} \cite{log-system} es una herramienta que nos permite registrar los principales
 eventos que suceden en nuestra aplicación, desde operaciones relacionadas con la base de
 datos hasta errores que se producen en el sistema. Normalmente, un registro en el Sistema
-de Log se corresponde con una cadena de texto, lo que de forma técnica de denomina
+de Log se corresponde con una cadena de texto, lo que de forma técnica se denomina
 \textbf{registro de log} (\textbf{log entry}). Estos registros de log se suelen
 almacenar en ficheros de texto especiales (con extensión \textbf{.log}), pero también
 se pueden almacenar en bases de datos o imprimir directamente a través de una terminal
@@ -2344,7 +2344,7 @@ se define como el proceso de llevar una aplicación a producción, es decir, hac
 forma que la aplicación sea accesible para los clientes finales. Hasta el momento, hemos
 trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se ejecuta en el
 \textbf{entorno} de una máquina u ordenador concreto.} que Django nos ha proporcionado
-con su configutación por defecto. Dicho servidor de desarrollo nos ha servido para
+con su configuración por defecto. Dicho servidor de desarrollo nos ha servido para
 realizar el desarrollo completo de nuestra aplicación y realizar pruebas en un entorno
 local, como puede ser nuestro ordenador. Muy resumidamente, necesitamos que nuestra
 aplicación se ejecute en un entorno que no sea nuestro propio ordenador. \\
@@ -2419,7 +2419,7 @@ Finalmente, se decidió usar Heroku \cite{heroku}, una plataforma como servicio
 para realizar despliegues de aplicaciones y que posee un plan gratuito.\\
 
 Además de todas las ventajas que poseen las plataformas como servicio (no conllevan
-complicaciones de infraestructura, de adminsitración de servidores, bases de datos y
+complicaciones de infraestructura, de administración de servidores, bases de datos y
 seguridad), Heroku tiene las siguientes características \cite{heroku-features}:
 
     \begin{itemize}
@@ -2509,11 +2509,11 @@ Heroku trabaja sobre el \textbf{directorio raíz} del proyecto, es decir, realiz
 despliegue trabajando sobre el directorio principal del proyecto, por lo que si no le
 indicamos nada, no funcionará, ya que en el \href{https://github.com/alexespana/TFG}
 {repositorio de Github} tenemos la documentación por un lado y el código fuente por
-otro. Para corregir este inconveniente, deberemos agregar siguientes \textbf{buildpacks}
-(se encargan de transformar el código que queremos desplegar a un slug \footnote{Parte
-\textbf{final} de la URL que \textbf{identifica} a una determinada página en un sitio
-web.}, que luego puede ser ejecutado en un contenedor, en un \textbf{dyno}) a nuestra
-aplicación:
+otro. Para corregir este inconveniente, deberemos agregar los siguientes
+\textbf{buildpacks} (se encargan de transformar el código que queremos desplegar a un
+slug \footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una determinada
+página en un sitio web.}, que luego puede ser ejecutado en un contenedor, en un
+\textbf{dyno}) a nuestra aplicación:
 
     \begin{enumerate}
         \item \href{https://elements.heroku.com/buildpacks/timanovsky/subdir-heroku-buildpack}
@@ -2535,7 +2535,7 @@ Dicho esto, deberemos ejecutar los siguientes comandos:
     \end{figure}
 
 Como vemos, es necesario especificar con la opción -a el nombre de la aplicación a la que
-queremos añadir los cambios. En la siguiente imagen, podemos ver cómo se especifíca el
+queremos añadir los cambios. En la siguiente imagen, podemos ver cómo se especifica el
 subdirectorio de trabajo para Heroku, en este caso \textbf{code/app}.
 
     \begin{figure}[H]
@@ -2569,7 +2569,7 @@ que la misma tendrá un mínimo de calidad para los clientes finales.\\
 En nuestro caso, hemos creado una rama específica en Github para realizar el despliegue de
 la aplicación, llamada \textbf{deployment}. Para realizar el primer despliegue de la misma,
 deberemos hacerlo de \textbf{forma manual}, ya que en este caso teníamos todos los cambios
-necesarios en la rama (no hacía falta volver a subir neuvos cambios, push).\\
+necesarios en la rama (no hacía falta volver a subir nuevos cambios, push).\\
 
     \begin{figure}[H]
         \centering
@@ -2581,12 +2581,12 @@ necesarios en la rama (no hacía falta volver a subir neuvos cambios, push).\\
 Como vemos, el primer despliegue se ha realizado correctamente.\\
 
 
-Una vez tenemos hecho el primer depliegue, tendríamos que hacernos las siguientes
+Una vez tenemos hecho el primer despliegue, tendríamos que hacernos las siguientes
 preguntas: \textbf{¿qué base de datos estamos usando ahora?}, \textbf{¿cómo aplico las
 migraciones para la base de datos?} En este caso, Heroku nos proporciona una base de
 datos como servicio basada en PostgreSQL. Esta base de datos es la llamada
 \href{https://elements.heroku.com/addons/heroku-postgresql}{\textbf{Hobby Dev}}, la única
-con un plan gratuito. Procedemos a su creació mediante el siguiente comando:
+con un plan gratuito. Procedemos a su creación mediante el siguiente comando:
 
     \begin{figure}[H]
         \centering
@@ -2616,7 +2616,7 @@ una \textbf{variable de entorno}, ya que esta fue creada automáticamente con la
 del comando anterior.\\
 
 Ahora sí podremos aplicar las migraciones necesarias para la aplicación y crear el
-usuario adminsitrador del sistema. Mediante el comando \textbf{heroku run <argumentos>},
+usuario administrador del sistema. Mediante el comando \textbf{heroku run <argumentos>},
 podremos ejecutar el comando deseado dentro del contenedor en el que se ejecuta la
 aplicación, que como mencionamos anteriormente recibe el nombre de \textbf{dyno}:
 
