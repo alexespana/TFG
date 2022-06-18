@@ -1,2 +1,42 @@
-\chapter{Conclusiones}
+\chapter{Conclusiones y trabajos futuros}
+Tras unos meses de duro trabajo, hemos conseguido implementar una aplicación web totalmente
+funcional para los arqueólogos de la Universidad de Granada. A lo largo del proyecto, se han
+ido teniendo reuniones periódicas con el tutor académico y con el arqueólogo, añadiendo
+nuevas sugerencias y solucionando problemas que se han ido encontrando en la aplicación. De
+esta forma, hemos conseguido realizar una aplicación a media y gusto de nuestros clientes
+potenciales. \\
 
+Sin duda alguna, la realización de una aplicación web, no es una tarea fácil, pues se deben
+tener en cuenta muchas de las decisiones que se toman y las repercusiones que tendrán sobre
+el proyecto, como por ejemplo, el uso de tecnologías modernas, el uso de herramientas de
+desarrollo, el uso de lenguajes de programación, soluciones para poder ejecutar la aplicación
+de manera sencilla en un ambiente de desarrollo, soluciones en la nube actuales para la
+fase de despliegue, comprobación de la calidad del software mediante test unitarios, etc. \\
+
+Actualmente, la aplicación se encuentra en una versión temprana del desarrollo, teniendo
+previsto para futuros trabajos la incorporación de nuevas funcionalidades como pueden ser
+las siguientes:
+
+    \begin{itemize}
+        \item Registo en la aplicación a través de otras aplicaciones como podrían ser
+        \textbf{Facebook} o \textbf{Google}. Para ello, podría utilizarse el paquete
+        \href{https://python-social-auth.readthedocs.io/en/latest/configuration/django.html}
+        {social-auth-app-django}, que tiene soporte para ambos.
+
+        \item Permitir exportar los informes de excavaciones en un mayor número de formatos,
+        como podrían ser PDF, Microsoft Excel, HTML, etc.
+
+        \item Encontrar un servicio de almacenamiento gratuito con más capacidad de
+        almacenamiento que \href{https://cloudinary.com/}{Cloudinary}. Este servicio se
+        utiliza para las imágenes subidas por usuarios de la aplicación (normalmente
+        referidas como \textbf{media files}).
+
+        \item Incoporación de mejoras en la aplicación a través de nuevas sugerencias que
+        pueden llegar por parte de los arqueólogos durante su uso o de la comunidad, ya que
+        se trata de un proyecto de código abierto (\textbf{open source}) y distribuido bajo
+        la licencia \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU General Public
+        License v3.0}.
+    \end{itemize}
+
+Todos estos cambios, pueden ir añadiéndose a la aplicación en los próximos meses, realizando
+un nuevo despliegue de la misma que incluya dichas mejoras.
