@@ -188,7 +188,7 @@ entre las disintas alternativas.
             independientemente de la base de datos elegida mediante un \textbf{Object
             Relational Mapping} (ORM).
             \item Que incluya una fácil creación de la API para la posible comunicación
-            con la App android.
+            con la App Android.
         \end{enumerate}
 
     Tras tantear los distintos frameworks para el desarrollo de aplicaciones web disponibles
@@ -385,13 +385,13 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     Cada uno de estos formularios pedirá al usuario los datos completos de cada elemento del
     que se trate, por supuesto, con la posibilidad de dejar algún campo en blanco, aunque
     no sería lo más normal ya que en el servidor web la idea es rellenar de forma completa
-    la información que se recopile en el registro de campo con la aplicación android, además
+    la información que se recopile en el registro de campo con la aplicación Android, además
     de añadir otra información.
 
     \subsubsection{Sobre la aplicación}
     En esta página de la web se hace alusión brevemente a cuál es la principal motivación
     de crear este proyecto y cuales son las principales características que posee la
-    aplicación: \textit{sincronización en tiempo real con la aplicación android, fácil
+    aplicación: \textit{sincronización en tiempo real con la aplicación Android, fácil
     adición, edición y eliminación de información de los distintos elementos, generación
     de informes a partir de la información de la base de datos, etc}.\\
 
@@ -416,7 +416,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     Alejandro España Sánchez}\\
     
     Por supuesto, ambos hacemos funciones totalmente distintas, por un lado la aplicación
-    android y por otro la aplicación web, sobre lo que nos centraremos en este proyecto.
+    Android y por otro la aplicación web, sobre lo que nos centraremos en este proyecto.
     Ambos componentes son diferentes, pero en su conjunto forman \textbf{MyFindings},
     un proyecto completamente funcional. La página quedaría tal que así:
 
@@ -487,7 +487,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{\textit{de calidad}} y \textbf{\textit{fácil de transmitir}}.\\
 
     Para realizar dicho diseño, se ha hecho conjuntamente con \textit{Joaquín García 
-    Venegas}, ya que para la aplicación android también será necesario tener el diseño de la
+    Venegas}, ya que para la aplicación Android también será necesario tener el diseño de la
     BD. Este modelo deberá:
 
         \begin{enumerate}
@@ -752,7 +752,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
     quedando el modelo de la siguiente forma:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     class Excavacion(models.Model):
@@ -797,7 +797,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
     candidate key:
     
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     class Excavacion(models.Model):
@@ -816,7 +816,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         únicos. Vamos a hacer el ejemplo con el modelo Hecho, ya que es el único que tiene
         una clave candidata compuesta:
         
-    % DESCOMENTAR
+    
     \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
         frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     class Excavacion(models.Model):
@@ -834,7 +834,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
         del modelo quedaría así:
         
-    % DESCOMENTAR
+    
     \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
         frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     class Excavacion(models.Model):
@@ -901,6 +901,74 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \end{enumerate}
 
     Esta sería una visión global de la implementación utilizando el ORM que nos ofrece Django.
+
+\subsubsection{Generación de informes}
+Una de las funcionalidades más prácticas de nuestra aplicación es la \textbf{generación
+automática de informes}. A través de esta funcionalidad, podemos generar informes a partir
+de la información almacenada de una determinada excavación en la base de datos. \\
+
+Por ahora, el formato de salida disponible es \textbf{docx}, el formato por defecto de
+Microsoft Word, aunque en el futuro no se descarta la posibilidad de generar informes
+en otros formatos. Principalmente hemos elegido este formato porque es más flexible,
+permitiendo la edición del documento y la posterior transformación a PDF desde el propio
+editor. \\
+
+Para la implementación de esta funcionalidad, se ha utilizado una biblioteca de Python
+llamada \href{https://python-docx.readthedocs.io/en/latest/}{\textbf{python-docx}}, que nos
+permite generar documentos mediante instancias de la clase \textbf{docx.Document}. A
+través de una instancia de esta clase, se van añadiendo los párrafos, títulos, tablas,
+imágenes, etc, que se deseen, y finalmente se guarda mediante el método \textbf{save}.
+Pongamos un ejemplo sencillo (se han añadido comentarios en el propio código para una mejor
+comprensión):
+
+
+\begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
+    import io
+    from docx import Document
+    .
+    .
+    # Crear instancia
+    document = Document()
+    # Añadir nuevo párrafo
+    document.add_pparagraph('Hola')
+    # Variable que contendrá los bytes del archivo
+    document_data = io.BytesIO()
+    # Se guarda el contenido en la variable document_data
+    document.save(document_data)
+    # Dar una respuesta HTTP para descargar el fichero
+    response = HttpResponse(document_data.getvalue())
+    # Darle nombre al fichero
+    response["Content-Disposition"] = 'attachment;
+                        filename = "Informe de excavación.docx"'
+    # Para codificar los datos
+    response["Content-Encoding"] = "UTF-8"
+\end{minted}
+
+Con este ejemplo, tendríamos como resultado un documento con \textbf{extensión .docx}
+conteniendo un párrafo con el texto \textit{Hola}. Este sería un ejemplo sencillo, pero
+puede verse una ejemplo más complejo y completo en el código fuente de la aplicación
+(\href{https://github.com/alexespana/TFG/blob/master/code/app/myFindings/views.py}
+{\textbf{archivo views.py de la rama master}}). \\
+
+El resultado de esta implementación en la aplicación sería el siguiente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{imagenes/report-generator1.png}
+        \caption{Generación de informes (Parte 1)}
+        \label{fig:report-generator1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{imagenes/report-generator2.png}
+        \caption{Generación de informes (Parte 2)}
+        \label{fig:report-generator2}
+    \end{figure}
+
+Así mismo, si en dicha excavación los hechos tuviesen fotografías asociadas, las mismas
+se incluirían en el documento.
 
 \subsection{Autenticación}
 En este milestone del proyecto se ha trabajado sobre la autenticación y autorización de
@@ -988,7 +1056,7 @@ la aplicación:
         en la aplicación.
     \end{enumerate}
 
-\subsubsection{Envío de correos}} 
+\subsubsection{Envío de correos} 
 El envío de correos electrónicos es una parte importante de la aplicación, ya que se
 utiliza para enviar correos de recuperación de contraseña, para activar usuarios, para
 confirmar las activaciones, etc.\\
@@ -1013,7 +1081,7 @@ pudiera autenticarse.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.40]{imagenes/apps-access.png}
+        \includegraphics[scale=0.47]{imagenes/apps-access.png}
         \caption{Acceso de aplicaciones menos seguras}
         \label{fig:apps-access}
     \end{figure}
@@ -1025,7 +1093,7 @@ que estará en una variable de entorno junto al correo de la cuenta.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.35]{imagenes/apps-pass.png}
+        \includegraphics[scale=0.50]{imagenes/apps-pass.png}
         \caption{Contraseñas de aplicaciones}
         \label{fig:apps-pass}
     \end{figure}
@@ -1040,7 +1108,7 @@ realizar acciones sobre excavaciones tendríamos:
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
         vistas.
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
            frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     @login_required
@@ -1056,7 +1124,7 @@ realizar acciones sobre excavaciones tendríamos:
 
         \item \textbf{Añadir}: controlar qué usuarios pueden añadir excavaciones
         desde las vistas.
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
            frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     @login_required
@@ -1082,7 +1150,7 @@ realizar acciones sobre excavaciones tendríamos:
 
         \item \textbf{Modificar}: controlar qué usuarios pueden modificar excavaciones
         desde las vistas.
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
            frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     @login_required
@@ -1107,9 +1175,9 @@ realizar acciones sobre excavaciones tendríamos:
         return render(request, 'modify_excavation.html', data)
     \end{minted}
 
-        \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
+        \newpage \item \textbf{Eliminar}: controlar qué usuarios pueden eliminar excavaciones
         desde las vistas.
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
            frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     @login_required
@@ -1142,13 +1210,13 @@ requerida (\textbf{?next=/add\_excavation/}).
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.25]{imagenes/login-required.png}
+        \includegraphics[scale=0.26]{imagenes/login-required.png}
         \caption{Login requerido}
         \label{fig:login-required}
     \end{figure}
 
 
-Una vez autenticado, se pasará al segundo decorador, que comprobará que tenga el permiso
+\newpage Una vez autenticado, se pasará al segundo decorador, que comprobará que tenga el permiso
 correspondiente y en caso contrario mostrará un mensaje de \textbf{403 Forbidden}
 
     \begin{figure}[H]
@@ -1357,7 +1425,7 @@ forma:
         buscar los tests.
         \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
         ya que hereda de la clase TestCase de Django:
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     class TestListingViews(TestCase):
@@ -1443,7 +1511,6 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
     escogido Circle CI sin problema), es muy potente y además, como es obvio, permite ver los
     resultados de CI directamente en la interfaz de Github.
 
-\newpage
 \subsubsection{Flujos de trabajo}
 En este apartado, explicaremos qué son los \textbf{flujos de trabajo o workflows} y cuáles
 hemos añadido a nuestro proyecto.\\
@@ -1625,7 +1692,7 @@ hemos implementado en nuestra aplicación web.\\
 Una \textbf{API \cite{api} (Application Programming Interface o Interfaz de programación
 de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e integrar el
 software de las aplicaciones, es decir, establecen cómo se han de comunicar dos
-aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\
+aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\ \\
 
 La creación de una API permite que los servicios o recursos que utiliza una aplicación
 puedan ser accedidos desde cualquier otro servicio o aplicación, sin necesidad de
@@ -1655,7 +1722,7 @@ que use la API, podemos distinguir dos tipos:
         Este tipo de API, en su versión más extendida (es la que usamos en nuestro proyecto)
         pasa a considerarse \textbf{RESTful}, con la peculiaridad de usar los verbos de
         \href{https://developer.mozilla.org/es/docs/Web/HTTP/Methods}{HTTP} para las
-        llamadas desde el cliente (aplicación android) al servidor, asociándolos a
+        llamadas desde el cliente (aplicación Android) al servidor, asociándolos a
         operaciones \textbf{CRUD} (Create, Read, Update, Delete) de los recursos. En
         concreto, las API se consideran RESTful cuando siguen los siguientes cuatro
         principios:
@@ -1729,7 +1796,7 @@ siguientes elementos:
         Framework que nos permitirá definir la ruta correspondiente al \textbf{endpoint}
         que queremos implementar. Por ejemplo, en el caso de las excavaciones se haría del
         siguiente modo:
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     from rest_framework import routers
@@ -1750,7 +1817,7 @@ siguientes elementos:
         de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
         Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
         las excavaciones tendríamos la siguiente implementación:
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     from rest_framework import serializers
@@ -1772,7 +1839,7 @@ siguientes elementos:
         parcialmente y eliminar, teniendo solo que definir al menos dos atributos en la
         clase que son el \textbf{queryset} y el \textbf{serializer}. Por ejemplo, para las
         excavaciones, tendría la siguiente implementación:
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     from .serializers import ExcavationSerializer
@@ -2024,7 +2091,7 @@ tenemos un usuario en la aplicación al que sólo le hemos dado permiso para añ
 y no modificarlas, en la API debe ser exactamente igual. Con la siguiente configuración en
 \textbf{settings.py} podremos indicar que se usen los mismos permisos:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     REST_FRAMEWORK = {
@@ -2174,7 +2241,7 @@ administradores del sistema. Por cuestiones de seguridad y privacidad, hemos dec
 darle valor a esta variable a través de variables de entorno definidas en un archivo
 \textbf{.env}. Quedando algo así:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                 frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     ADMINS = [
@@ -2222,7 +2289,7 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
         ello, desde la documentación de Django se recomienda crear una variable de módulo
         para el logger:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     # views.py
@@ -2275,7 +2342,7 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
                 ruta por defecto, aunque también podría modificarse a través de una
                 variable de entorno. Quedando el manejador con la siguiente configuración:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     .
@@ -2302,7 +2369,7 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
                 (\textbf{log level}) INFO o superior. Su configuración quedaría de la
                 siguiente forma:
 
-    % DESCOMENTAR
+    
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     .
@@ -2601,7 +2668,7 @@ ya que antes, como bien sabemos, utilizábamos una \textbf{base de datos local} 
 contenedor donde se ejecutaba la aplicación. Para ello, deberemos cambiar la configuración
 de la base de datos con las siguientes líneas de código:
 
-% DESCOMENTAR
+
 \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     DATABASES = {
