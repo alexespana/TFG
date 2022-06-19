@@ -1,8 +1,8 @@
 # Trabajo de Fin de Grado: *Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas*
 
 
-### Autor(a): Joaquín Alejandro España Sánchez
-### Tutor(a)(es): Daniel Sánchez Fernández
+### Autor: Joaquín Alejandro España Sánchez
+### Tutor: Daniel Sánchez Fernández
 ___
 <p align="center"> 
 <a href="https://github.com/alexespana/TFG/actions/workflows/docs.yml"><img src="https://github.com/alexespana/TFG/actions/workflows/docs.yml/badge.svg" alt="Build Docs"></a>
