@@ -1,67 +1,67 @@
 \chapter{Diseño} \label{ch:design}
-En un proyecto software, antes de comenzar a escribir código fuente, se debe realizar una
-previa \textbf{elección de modelos en el diseño}, es decir, una elección de los distintos 
-tipos/modelos de elementos que se quieren usar en la aplicación. Esta elección nos ayudará
-en gran medida a la posterior elección de herramientas, explicada en el apartado
+En un proyecto \textit{software}, antes de comenzar a escribir código fuente, se debe
+realizar una previa \textbf{elección de modelos en el diseño}, es decir, una elección de
+los distintos tipos/modelos de elementos que se quieren usar en la aplicación. Esta elección
+nos ayudará en gran medida a la posterior elección de herramientas, explicada en el apartado
 \ref{sec:tools}.\\
 
-En los siguientes apartados, se explica y debaten las distintas posibilidades que habría en
+En los siguientes apartados, se explican y debaten las distintas posibilidades que habría en
 la actualidad y por qué usar una u otra. Se desarrollarán los siguientes puntos:
 
     \begin{enumerate}
-        \item Lenguaje nativo o framework web (\ref{sec:language-webframework}).
+        \item Lenguaje nativo o \textit{framework} web (\ref{sec:language-webframework}).
         \item Patrones arquitectónicos de programación (\ref{sec:architectural-patterns}).
-        \item Lenguaje CSS nativo o framework CSS (\ref{sec:css-frameworkcss}).
+        \item Lenguaje CSS nativo o \textit{framework} CSS (\ref{sec:css-frameworkcss}).
         \item Base de datos SQL o base de datos noSQL (\ref{sec:sql-nosql}).
     \end{enumerate}
 
-\section{Lenguaje nativo o framework web} \label{sec:language-webframework}
-Antes de nada, vamos a explicar brevemente qué es un framework. Un \textbf{framework} es
-un entorno o marco de trabajo que nos ofrece una estructura base con la que podemos
-comenzar a elaborar un proyecto. Es una especie de plantilla incial con la que podremos
-comenzar y organizar nuestro proyecto software. Además, éste permite agilizar mucho
-el desarrollo, ya que se omiten tareas comunes o repetitivas.\\
+\section{Lenguaje nativo o \textit{framework} web} \label{sec:language-webframework}
+Antes de nada, vamos a explicar brevemente qué es un \textit{framework}. Un
+\textbf{\textit{framework}} es un entorno o marco de trabajo que nos ofrece una estructura
+base con la que podemos comenzar a elaborar un proyecto. Es una especie de plantilla incial
+con la que podremos comenzar y organizar nuestro proyecto \textit{software}. Además, este
+permite agilizar mucho el desarrollo, ya que se omiten tareas comunes o repetitivas.\\
 
 Normalmente, cuando se tiene cierta experiencia programando, se van guardando códigos que
-crees que pueden serte útiles en un futuro para ser \textbf{reutilizados}. Por ejemplo, un
-sistema de login o de registro para una aplicación, ciertas funciones que verifican estados
-concretos, etc. Dicho de forma coloquial, estos códigos que vamos creando y guardando son
-nuestros \textbf{propios frameworks}. Este tipo de frameworks es lo que llamamos código
-puro, o dicho metafóricamente, escribir código a pelo, código escrito directamente sin
-ayuda de ninguna herramienta. Con esto en mente, ¿por qué debería usar un framework para
-el desarrollo web? ¿por qué no podría usar mis propios frameworks simplemente? Pues bien,
-las razones son sencillas:
+se cree que pueden ser útiles en un futuro para ser \textbf{reutilizados}. Por ejemplo, un
+sistema de \textit{login} o de registro para una aplicación, ciertas funciones que verifican
+estados concretos, etc. Dicho de forma coloquial, estos códigos que vamos creando y
+guardando son nuestros \textbf{propios \textit{frameworks}}. Este tipo de \textit{frameworks}
+es lo que llamamos código puro, o dicho metafóricamente, escribir código \textit{a pelo},
+código escrito directamente sin ayuda de ninguna herramienta. Con esto en mente, ¿por qué
+deberíamos usar un \textit{framework} para el desarrollo web? ¿por qué no podríamos usar
+nuestros propios \textit{frameworks} simplemente? Pues bien, las razones son sencillas:
 
     \begin{itemize}
-        \item Tu código propio te puede servir a ti, pero...¿y a una \textbf{tercera persona}
-        que tenga que trabajar en el mismo proyecto?
+        \item Nuestro código propio nos puede servir a nosotros, pero...¿y a una
+        \textbf{tercera persona} que tenga que trabajar en el mismo proyecto?
         \item Si en el proyecto participasen varios programadores y cada uno aportara
-        funcionalidades de sus frameworks propios, sería muy difícil hacer que todo
+        funcionalidades de sus \textit{frameworks} propios, sería muy difícil hacer que todo
         funcionase \textbf{conjuntamente}.
-        \item Normalmente, si desarrollas tu propia aplicación sin frameworks, debes
-        tener muchas más consideraciones acerca de la seguridad y probablemente puedas
-        tener algún \textbf{agujero de seguridad} en tu código.
+        \item Normalmente, si desarrollamos nuestra propia aplicación sin \textit{frameworks},
+        debemos tener en cuenta muchas más consideraciones acerca de la seguridad y
+        probablemente tengamos algún \textbf{agujero de seguridad} en nuestro código.
     \end{itemize}
 
-Digamos que un framework web es un lugar de trabajo común donde muchos programadores
+Digamos que un \textit{framework} web es un lugar de trabajo común donde muchos programadores
 trabajan en conjunto. Esta es la principal razón por la que muchas empresas buscan
-programadores que estén especializados en un framework determinado, para que
-\textit{"hablen el mismo idioma"} y puedan resolver tareas y dudas comunes.\\
+programadores que estén especializados en un \textit{framework} determinado, para que
+\textit{hablen el mismo idioma} y puedan resolver tareas y dudas comunes.\\
 
-Como aspectos negativos de usar un framework web hay muy pocos, aunque puede mencionarse
-que normalmente suele haber modas en las que se usan determinados frameworks más que otros,
-que pasan a caer en desuso.\\
+Como aspectos negativos de usar un \textit{framework} web hay muy pocos, aunque puede
+mencionarse que normalmente suele haber modas en las que se usan determinados
+\textit{frameworks} más que otros, que pasan a caer en desuso.\\
 
 
 \section{Patrones arquitectónicos de programación} \label{sec:architectural-patterns}
 En la actualidad, existen multitud de patrones arquitectónicos para el desarrollo de
-software. Dichos patrones definen una forma concreta en la que los componentes principales
-de una aplicación se comunican entre sí. Dado que nuestra aplicación tiene una parte de
-desarrollo destinada al usuario (\textbf{UI, User Interface}), nos centraremos en el patrón
-\textbf{Modelo-Vista-Controlador}.
+\textit{software}. Dichos patrones definen una forma concreta en la que los componentes
+principales de una aplicación se comunican entre sí. Dado que nuestra aplicación tiene una
+parte de desarrollo destinada al usuario (\textbf{UI, User Interface}), nos centraremos en
+el patrón \textbf{Modelo-Vista-Controlador}.
 
 \subsection{Modelo-Vista-Controlador} \label{sec:mvc}
-Es el patrón más común entre los frameworks, éste se divide en tres bloques:
+Es el patrón más común entre los \textit{frameworks}, este se divide en tres bloques:
 
     \begin{itemize}
         \item \textbf{Modelo}: contiene toda la lógica relacionada con los datos.
@@ -69,13 +69,13 @@ Es el patrón más común entre los frameworks, éste se divide en tres bloques:
         \textbf{selección}, \textbf{inserción}, \textbf{actualización} y \textbf{eliminación}.
         Se comunica con el controlador.
         \item \textbf{Vista}: es la parte visible de la aplicación, es decir, la 
-        \textbf{interfaz gráfica} visible al usuario y con la que éste interacciona.
-        Normalmente está formada por código html, css y javascript, y se comunica con el
+        \textbf{interfaz gráfica} visible al usuario y con la que este interacciona.
+        Normalmente está formada por código HTML, CSS y Javascript, y se comunica con el
         controlador.
-        \item \textbf{Controlador}: es el punto de unión entre el modelo y la vista. Éste
-        procesa las \textbf{peticiones (requests)} que el usuario realiza a través de las
-        vistas y las envía al modelo para que éste realice las operaciones necesarias y
-        genere los datos correspondientes.
+        \item \textbf{Controlador}: es el punto de unión entre el modelo y la vista. Este
+        procesa las \textbf{peticiones (\textit{requests})} que el usuario realiza a través
+        de las vistas y las envía al modelo para que este realice las operaciones necesarias
+        y genere los datos correspondientes.
     \end{itemize}
 
 El flujo de comunicación entre estos tres bloques es el siguiente:
@@ -99,57 +99,57 @@ El flujo de comunicación entre estos tres bloques es el siguiente:
         \label{fig:mvc}
     \end{figure}
 
-Dado que vamos a utilizar un framework web para el desarrollo de la aplicación, y la gran
-mayoría de ellos usan un \textbf{modelo MVC}, será el modelo que utilizaremos. Además, es el
-patrón con el que más familiarizado estamos.
+Dado que vamos a utilizar un \textit{framework} web para el desarrollo de la aplicación, y
+la gran mayoría de ellos usan un \textbf{modelo MVC} (\textit{Model-View-Controller}), será
+el modelo que utilizaremos. Además, es el patrón con el que más familiarizado estamos.
 
-\section{Lenguaje CSS nativo o framework CSS} \label{sec:css-frameworkcss}
-Hoy en día, suele haber soluciones software para casi todo, y el diseño para la interfaces
-de usuario no iba a ser una excepción. Una de las principales razones para usar un framework
-CSS es el \textbf{incremento de la productividad} durante el desarrollo de software, ya que,
-al igual que los frameworks web, nos proporcionan gran cantidad de elementos ya definidos
-como pueden ser componentes, estilos, formularios, etc. Entre las ventajas de usar un
-framework CSS se encuentran:
+\section{Lenguaje CSS nativo o \textit{framework} CSS} \label{sec:css-frameworkcss}
+Hoy en día, suele haber soluciones \textit{software} para casi todo, y el diseño para la
+interfaces de usuario no iba a ser una excepción. Una de las principales razones para usar
+un \textit{framework} CSS es el \textbf{incremento de la productividad} durante el desarrollo
+de \textit{software}, ya que, al igual que los \textit{frameworks} web, nos proporcionan gran
+cantidad de elementos ya definidos como pueden ser componentes, estilos, formularios, etc.
+Entre las ventajas de usar un \textit{framework} CSS se encuentran:
 
     \begin{itemize}
-        \item Acelera la realización de diseños y con ello la productividad.
-        \item Posibilita el trabajo colaborativo, ya que todos los programadores
+        \item Acelerar la realización de diseños y con ello la productividad.
+        \item Posibilitar el trabajo colaborativo, ya que todos los programadores
         trabajan en un mismo marco de trabajo.
-        \item Permite generar un código más limpio y ordenado.
-        \item Asegura la compatibilidad del código fuente entre navegadores.
+        \item Permitir generar un código más limpio y ordenado.
+        \item Asegurar la compatibilidad del código fuente entre navegadores.
     \end{itemize}
 
 A pesar de tener muchas cosas buenas, también tiene algunas desventajas, entre las que
-podemos mencionar las siguiente:
+podemos mencionar las siguientes:
 
     \begin{itemize}
-        \item Los principios de desacoplamiento entre código html y css se están perdiendo.
-        \item En la mayoría de ocasiones, el framework carga gran cantidad de código CSS
-        que no se utilizará nunca.
-        \item En ocasiones, el usarlo puede llevarte a desaprender conceptos de CSS que sí
-        conocías anteriormente.
-        \item Al ser frameworks usados por miles de usuarios, pueden encontrarse páginas
-        muy similares a la desarrollada.
+        \item Los principios de desacoplamiento entre código HTML y CSS se están perdiendo.
+        \item En la mayoría de ocasiones, el \textit{framework} carga gran cantidad de
+        código CSS que no se utilizará nunca.
+        \item En ocasiones, el usarlo puede llevarnos a desaprender conceptos de CSS que sí
+        conocíamos anteriormente.
+        \item Al ser \textit{frameworks} usados por miles de usuarios, pueden encontrarse
+        páginas muy similares a la desarrollada.
     \end{itemize}
 
 Dadas las ventajas y desventajas que se mencionan, se propone usar código \textbf{CSS nativo}
-en combinación con un \textbf{framework CSS}, así evitamos algunos de los inconvenientes como
-que la página pueda parecerse a otras en la web o que se desaprendan conceptos de CSS,
-generando así un balance positivo de su uso.
+en combinación con un \textbf{\textit{framework} CSS}, así evitamos algunos de los
+inconvenientes como que la página pueda parecerse a otras en la web o que se desaprendan
+conceptos de CSS, generando así un balance positivo de su uso.
 
 \section{Base de datos SQL o base de datos noSQL} \label{sec:sql-nosql}
 Antes de pasar a la elección de la Base de Datos concreta que vamos a utilizar, necesitamos
 tener claro qué \textbf{tipo de base de datos} necesitamos, es decir, usar una base de datos
-SQL o una base de datos noSQL. Comenzemos dando una breve definición de ambas:
+SQL o una base de datos noSQL. Comencemos dando una breve definición de ambas:
     
     \begin{itemize}
-        \item \textbf{Bases de Datos relacionales}: son aquellas que utilizan el lenguaje SQL
-        (\textit{Structure Query Languaje}), un lenguaje de consulta estructurado. En este tipo
-        de bases de datos los elementos se organizan en tablas. Cada fila hace referencia a un
-        registro, es decir, a una instancia de esa tabla, mientras que las columnas representan
-        campos de esos registros, teniendo un determinado tipo de dato cada una. En la
-        actualidad, son el tipo de bases de datos más estándarizado y usado.
-        \item \textbf{Base de Datos noSQL}: son aquellas bases de datos diseñadas para
+        \item \textbf{Bases de datos relacionales}: son aquellas que utilizan el lenguaje
+        SQL (\textit{Structure Query Languaje}), un lenguaje de consulta estructurado. En
+        este tipo de bases de datos los elementos se organizan en tablas. Cada fila hace
+        referencia a un registro, es decir, a una instancia de esa tabla, mientras que las
+        columnas representan campos de esos registros, teniendo un determinado tipo de dato
+        cada una. En la actualidad, son el tipo de bases de datos más estándarizado y usado.
+        \item \textbf{Base de datos noSQL}: son aquellas bases de datos diseñadas para
         permitir grandes cantidades de datos, tipos de datos complejos, más índices,
         distintos tipos de consulta, etc. En este caso, no existen tablas donde se van
         almacenando los datos, sino que suelen utilizar un esquema clave-valor, documental,
@@ -159,7 +159,7 @@ SQL o una base de datos noSQL. Comenzemos dando una breve definición de ambas:
         consultas.
     \end{itemize}
 
-En la siguiente tabla, se realiza una breve comparación entre ambos tipos: 
+En la siguiente tabla se realiza una breve comparación entre ambos tipos: 
 
     \begin{table}[H]
         \begin{center}
@@ -173,7 +173,7 @@ En la siguiente tabla, se realiza una breve comparación entre ambos tipos:
                 Arquitectura centralizada & Arquitectura distribuida \\
                 Consistencia & Dinamicidad \\ \hline
             \end{tabular}
-            \caption{tabla con la comparativa entre SQL y noSQL}
+            \caption{Tabla con la comparativa entre SQL y noSQL}
             \label{tab:databases}
         \end{center}
     \end{table}

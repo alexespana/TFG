@@ -6,26 +6,28 @@ elección de las herramientas es un proceso mucho más sencillo, ya que hemos es
 los criterios que nos ayudarán a escoger aquella que se adapte mejor a las necesidades
 de nuestro proyecto (en este caso de la aplicación web).
 
-\subsection{Framework para desarrollo web}
+\subsection{\textit{Framework} para desarrollo web}
 
     \subsubsection{Ruby on Rails}
-    \textbf{Ruby on Rails} (también conocido como Rails) \cite{ruby-on-rails} es un framework
-    para la creación de aplicaciones web escrito en Ruby. Sigue una arquitectura
-    (Model-View-Controller) y diseño RESTfull\footnote{Un servicio es RESTfull cuando cumple
-    con la \textbf{arquitectura REST}, es decir, facilita el acceso a recursos remotos y
-    además define las operaciones típicas por medio de URIs (listar, crear, leer, actualizar
-    y borrar).}. Está diseñado para facilitar la programación web al hacer una estimación
-    de los componentes principales que se necesitan para comenzar.\\
+    \textbf{Ruby on Rails} (también conocido como Rails) \cite{ruby-on-rails} es un
+    \textit{framework} para la creación de aplicaciones web escrito en Ruby. Sigue una
+    arquitectura \textit{Model-View-Controller} y diseño RESTfull \footnote{Un servicio
+    es RESTfull cuando cumple con la \textbf{arquitectura REST}, es decir, facilita el
+    acceso a recursos remotos y, además define las operaciones típicas por medio de URIs
+    (listar, crear, leer, actualizar y borrar).}. Está diseñado para facilitar la
+    programación web al hacer una estimación de los componentes principales que se
+    necesitan para comenzar.\\
 
-    Este software asume que hay una mejor forma de hacer las cosas y está diseñado para
-    ello, por lo que es un código muy optimizado y hecho para aumentar la productividad
-    si se hace el desarrollo de la forma "The Rails Way".
+    Este \textit{software} asume que hay una mejor forma de hacer las cosas y está diseñado
+    para ello, por lo que es un código muy optimizado y hecho para aumentar la productividad
+    si se hace el desarrollo de la forma <<The Rails Way>>.
 
     \subsubsection{Django}
-    \textbf{Django} \cite{django} es el framework para Python más usado, está enfocado a sitios
-    basados en bases de datos. Permite un desarrollo software muy rápido y limpio. Tiene una
-    arquitectura MTV (Model-Template-View), donde el View sería el equivalente a Controller
-    en MVC. El esquema básico de este patrón es el siguiente:
+    \textbf{Django} \cite{django} es el \textit{framework} para Python más usado, está
+    enfocado a sitios basados en bases de datos. Permite un desarrollo \textit{software}
+    muy rápido y limpio. Tiene una arquitectura MTV (Model-Template-View), donde el View
+    sería el equivalente a Controller en MVC. El esquema básico de este patrón es el
+    siguiente:
 
         \begin{figure}[H]
             \centering
@@ -37,54 +39,56 @@ de nuestro proyecto (en este caso de la aplicación web).
     Como vemos, el flujo de comunicación entre estos tres bloques sería el siguiente:
         
        \begin{enumerate}
-           \item El usuario interacciona con la interfaz, solicitando una url.
-           \item El framework de Django, a través de su archivo urls.py, se encarga de
-           decidir que \textbf{vista} se debe mostrar.
-           \item Si dicha vista obtiene datos de la base de datos, ésta se comunica con el 
+           \item El usuario interacciona con la interfaz al solicitar una url.
+           \item El \textit{framework} de Django, a través de su archivo urls.py, se encarga
+           de decidir qué \textbf{vista} se debe mostrar.
+           \item Si dicha vista obtiene datos de la base de datos, esta se comunica con el 
            \textbf{modelo}.
-           \item Finalmente, se devuelve la \textbf{plantilla} con los datos de la base de datos si
-           fuera necesario.
+           \item Finalmente, se devuelve la \textbf{plantilla} con los datos de la base de
+           datos si fuera necesario.
        \end{enumerate}
 
-    Al igual que el anterior framework mencionado, Django ha sido diseñado por programadores
-    experimentados, y se encarga de las partes más complejas del desarrollo web, permitiendo
-    que el programador se centre en escribir la aplicación sin necesidad de preocuparse
-    por otras cuestiones.
+    Al igual que el anterior \textit{framework} mencionado, Django ha sido diseñado por
+    programadores experimentados, y se encarga de las partes más complejas del desarrollo
+    web, permitiendo que el programador se centre en escribir la aplicación sin necesidad
+    de preocuparse por otras cuestiones.
 
     \subsubsection{Laravel}
-    \textbf{Laravel} \cite{laravel} es el mejor framework de PHP para desarrollar aplicaciones
-    y servicios web con PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue una arquitectura 
-    MVC, por lo que es sencillo relacionar las distintas componentes de la aplicación.\\
+    \textbf{Laravel} \cite{laravel} es el mejor \textit{framework} de PHP para desarrollar
+    aplicaciones y servicios web con PHP5, PHP7 y PHP8. Al igual que Ruby on Rails, sigue
+    una arquitectura MVC, por lo que es sencillo relacionar los distintas componentes de la
+    aplicación.\\
 
-    Es un framework moderno que ofrece muchas utilidades a los desarrolladores y permiten un
-    desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la calidad del
-    código, el mantenimiento y la escalabilidad.
+    Es un \textit{framework} moderno que ofrece muchas utilidades a los desarrolladores y
+    permiten un desarrollo ágil de las aplicaciones web. Además, pone mucho interés en la
+    calidad del código, el mantenimiento y la escalabilidad.
 
     \subsubsection{Angular}
-    \textbf{Angular} \cite{angular} es un framework desarrollado en TypeScript para el
-    desarrollo de aplicaciones web. Está mantenido por Google, utilizado para crear y mantener
-    aplicaciones SPA (Single Page Application), es decir páginas web que interaccionan con el
-    usuario dinámicamente sobreescribiendo la página con información nueva.\\
+    \textbf{Angular} \cite{angular} es un \textit{framework} desarrollado en TypeScript para
+    el desarrollo de aplicaciones web. Está mantenido por Google, utilizado para crear y
+    mantener aplicaciones SPA (Single Page Application), es decir, páginas web que
+    interaccionan con el usuario dinámicamente sobreescribiendo la página con información
+    nueva.\\
 
-    Al contrario que los frameworks anteriormente mencionados, Angular no usa un modelo MVC
-    o MVT, sino que permite el desarrollo del front-end y el back-end de forma totalmente
-    independiente.
+    Al contrario que los \textit{frameworks} anteriormente mencionados, Angular no usa un
+    modelo MVC o MVT, sino que permite el desarrollo del front-end y el back-end de forma
+    totalmente independiente.
 
-\subsection{Framework CSS}
+\subsection{\textit{Framework} CSS}
 
     \subsubsection{Tailwind CSS}
-    \textbf{Tailwind CSS} \cite{tailwind-css} es un framework CSS que funciona escaneando los
-    archivos HTML, componentes Javascript y otros templates generando los correspondientes
-    estilos y escribiéndolos en un archivo CSS estático. No tiene muchos componentes, sino
-    clases de utilidad que pueden aplicarse directamente sobre el código HTML del proyecto.
-    Además de esto, permite una gran optimización del peso del código CSS mediante unos flujos
-    de desarrollo.
+    \textbf{Tailwind CSS} \cite{tailwind-css} es un \textit{framework} CSS que funciona
+    escaneando los archivos HTML, componentes Javascript y otros templates generando los
+    correspondientes estilos y escribiéndolos en un archivo CSS estático. No tiene muchos
+    componentes, sino clases de utilidad que pueden aplicarse directamente sobre el código
+    HTML del proyecto. Además de esto, permite una gran optimización del peso del código
+    CSS mediante unos flujos de desarrollo.
         
     \subsubsection{Bootstrap}
-    \textbf{Bootstrap} \cite{bootstrap} es uno de los frameworks más populares y usados para
-    el desarrollo de páginas web. Fue desarrollado por Twitter en 2010 para uso de la compañía
-    pero más tarde pasó a ser código abierto. Este framework combina CSS y Javascript. Entre
-    sus características fundamentales podemos encontrar:
+    \textbf{Bootstrap} \cite{bootstrap} es uno de los \textit{frameworks} más populares y
+    usados para el desarrollo de páginas web. Fue desarrollado por Twitter en 2010 para
+    uso de la compañía pero más tarde pasó a ser código abierto. Este \textit{framework}
+    combina CSS y Javascript. Entre sus características fundamentales podemos encontrar:
     
     % \begin{list}{\textbullet}{ 
         %     \addtolength{\labelsep}{1mm}    % Distancia hasta la etiqueta
@@ -93,21 +97,21 @@ de nuestro proyecto (en este caso de la aplicación web).
         % \end{list}
         
         \begin{itemize}
-            \item \textbf{Responsive design (diseño adaptativo)}: adaptación automática a
-            distintos dispositivos como móviles y tablets.
-            \item \textbf{Grid System (sistema de rejilla)}: posicionamiento de elementos en
-            la página.
-            \item \textbf{Interface UI (interfaz de usuario)}: incluye formularios, botones,
-            menús, etc.
+            \item \textbf{\textit{Responsive design} (diseño adaptativo)}: adaptación
+            automática a distintos dispositivos como móviles y tabletas.
+            \item \textbf{\textit{Grid System} (sistema de rejilla)}: posicionamiento de
+            elementos en la página.
+            \item \textbf{\textit{Interface UI} (interfaz de usuario)}: incluye formularios,
+            botones, menús, etc.
         \end{itemize}
         
         \subsubsection{Foundation}
         \textbf{Foundation} \cite{foundation} es el principal competidor de Bootstrap, es
-        un framework orientado al desarrollo de sitios web totalmente adaptativos bajo el
-        enfoque \textit{mobile first}, que es una metodología de desarrollo donde se tiene
-        en cuenta en primer lugar los dispositivos móviles. Esta metodología es totalmente
-        contraria a la que usa Bootstrap ya que en él se usa \textit{Responsive Web Design}
-        y en éste \textit{Mobile First Web Design}.\\
+        un \textit{framework} orientado al desarrollo de sitios web totalmente adaptativos
+        bajo el enfoque \textit{mobile first}, que es una metodología de desarrollo donde
+        se tienen en cuenta en primer lugar los dispositivos móviles. Esta metodología es
+        totalmente contraria a la que usa Bootstrap ya que en él se usa \textit{Responsive
+        Web Design} y en este \textit{Mobile First Web Design}.\\
         
         Además de su metodología de desarrollo, posee ciertas características muy interesantes:
         
@@ -117,9 +121,9 @@ de nuestro proyecto (en este caso de la aplicación web).
             \item \textbf{Semántico}: todo es semántico, permitiendo tener un lenguaje de
             marcado limpio sin sacrificar su funcionalidad y velocidad.
             \item \textbf{Off Canvas}: creación de menús dinámicos
-            \item \textbf{Customizable}: permite hacer diseño completamente personalizables,
+            \item \textbf{Customizable}: permite hacer diseños completamente personalizables,
             pudiendo eliminar elementos, definir el tamaño de las columnas, colores,
-            fondos, etc
+            fondos, etc.
         \end{itemize}
 
     \subsubsection{Materialize CSS}
@@ -131,39 +135,40 @@ de nuestro proyecto (en este caso de la aplicación web).
     Entre sus principales características se encuentran:
         
         \begin{itemize}
-            \item Al igual que otros frameworks mencionados, permite un diseño adaptativo.
+            \item Al igual que otros \textit{frameworks} mencionados, permite un diseño
+            adaptativo.
             \item Permite crear menús laterales desplegables o abiertos según la resolución
             del dispositivo.
-            \item Diseños utilizando la filosofía Material Design (colecciones, tarjetas,
-            barras de navegación, modales, toast, etc).
-            \item Añade utilidades como \textbf{Parallax} (técnica de diseño web en la que se crea
-            un efecto de profundidad al hacer scroll)
+            \item Diseños utilizando la filosofía \textit{Material Design} (colecciones,
+            tarjetas, barras de navegación, modales, toast, etc.).
+            \item Añade utilidades como \textbf{Parallax} (técnica de diseño web en la que
+            se crea un efecto de profundidad al hacer scroll)
         \end{itemize}
 
 \subsection{Base de Datos}
-Los distintos SGBD (Sistemas Gestores de Bases de Datos) datos que podemos encontrar son los
+Los distintos SGBD (Sistemas Gestores de Bases de Datos) que podemos encontrar son los
 siguientes:
 
     \subsubsection{MySQL}
     \textbf{MySQL} \cite{mysql} es un sistema de gestión de bases de datos relacionales de
-    código abierto (también conocido como RDBMS, Relational Database Management System). Es
-    una de las bases de datos más populares en la actualidad y usa un modelo
+    código abierto, también conocido como RDBMS (\textit{Relational Database Management
+    System}). Es una de las bases de datos más populares en la actualidad y usa un modelo
     cliente-servidor.
     
 
     \subsubsection{SQLite}
     \textbf{SQLite} \cite{sqlite} es un RDBMS de tamaño reducido (aproximadamente 275 kiB)
-    que a diferencia de otros RDBMS como mySQL, no usa un proceso cliente y un proceso
-    servidor(modelo cliente-servidor). En este caso, funciona como un servidor
+    que, a diferencia de otros RDBMS como mySQL, no usa un proceso cliente y un proceso
+    servidor (modelo cliente-servidor). En este caso, funciona como un servidor
     propio independiente, haciendo uso de llamadas a subrutinas y funciones integradas en el
     propio código fuente que eliminan la necesidad de hacer consultas entre procesos
     separados.
 
     \subsubsection{PostgreSQL}
     \textbf{PostgreSQL} \cite{postgresql} es un sistema de gestión de base de datos relacional
-    que está orientado a objetos, de código abierto y además gratuito. Este RDBMS posee tipos
+    que está orientado a objetos, de código abierto y, además, gratuito. Este RDBMS posee tipos
     de datos avanzados y permite optimizar de forma considerable el rendimiento, este tipo de
-    características por lo general solo se ofrecen en sistemas de bases de datos privativas.
+    características, por lo general, solo se ofrecen en sistemas de bases de datos privativas.
     Además de las características anteriormente mencionadas, permite un control de grandes
     volúmenes de datos y tiene soporte completo para \textbf{ACID} (\textit{Atomicity,
     Consistency, Isolation, Durability}).
@@ -173,8 +178,8 @@ Como se ha mencionado anteriormente, en cualquier elección de herramientas se d
 claramente las características que debe cumplir para así poder descartar con facilidad
 entre las disintas alternativas.
 
-    \subsubsection{Elección del Framework de Desarrollo Web}
-    El framework de Desarrollo Web debe cumplir con una serie de \textbf{requisitos} para
+    \subsubsection{Elección del \textit{Framework} de Desarrollo Web}
+    El \textit{framework} de Desarrollo Web debe cumplir con una serie de \textbf{requisitos} para
     su aceptación:
 
         \begin{enumerate}
@@ -185,21 +190,22 @@ entre las disintas alternativas.
             datos.
             \item Que posea un sistema de gestión de usuarios (\textbf{autenticación}).
             \item Que el manejo de los modelos de la base de datos pueda abstraerse
-            independientemente de la base de datos elegida mediante un \textbf{Object
-            Relational Mapping} (ORM).
-            \item Que incluya una fácil creación de la API para la posible comunicación
-            con la App Android.
+            independientemente de la base de datos elegida mediante un
+            \textbf{\textit{Object Relational Mapping}} (ORM).
+            \item Que incluya una fácil creación de la API (\textit{Application Programming
+            Interface} o interfaz de programación de aplicaciones) para la posible
+            comunicación con la App Android.
         \end{enumerate}
 
-    Tras tantear los distintos frameworks para el desarrollo de aplicaciones web disponibles
-    se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar para mí y
-    además cumple todos los requisitos anteriormente mencionados.\\
+    Tras tantear los distintos \textit{frameworks} para el desarrollo de aplicaciones web
+    disponibles, se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar
+    para mí y, además, cumple todos los requisitos anteriormente mencionados.\\
 
-    Dicho framework permite hacer lo siguiente:
+    Dicho \textit{framework} permite hacer lo siguiente:
         
         \begin{itemize}
             \item Crear la aplicación sin tener que preocuparnos de elementos para que
-            ésta funcione.
+            esta funcione.
             \item Configuración con distintas bases de datos, SQLite es la base de datos
             por defecto, pero además permite configurarlo para trabajar con mySQL y
             postgreSQL.
@@ -207,21 +213,21 @@ entre las disintas alternativas.
             registro e inicio de sesión de los mismos.
             \item Contiene un ORM que permite el manejo de modelos de la base de datos
             abstrayendo la base de datos utilizada.
-            \item A pesar de no venir incluido como tal, instalando la aplicación Django
-            REST framework, es posible realizar la configuración de la API de una forma
-            relativamente sencilla.
+            \item A pesar de no venir incluido como tal, instalando la aplicación
+            \textit{Django REST framework}, es posible realizar la configuración de la API
+            de una forma relativamente sencilla.
             \item Tiene una documentación realmente buena, clara y sencilla.
         \end{itemize}
     
-    Éstas son las razones por las que se ha decidido elegir Django para el desarrollo de
+    Estas son las razones por las que se ha decidido elegir Django para el desarrollo de
     nuestra aplicación web.
 
-    \subsubsection{Elección del Framework CSS}
-    Entre los requisitos que el framework CSS debe cumplir están los siguientes:
+    \subsubsection{Elección del \textit{Framework} CSS}
+    Entre los requisitos que el \textit{framework} CSS debe cumplir están los siguientes:
 
         \begin{enumerate}
             \item Que permita un diseño adaptativo de la página web.
-            \item Que siga la metodología Responsive Web Design.
+            \item Que siga la metodología \textit{Responsive Web Design}.
             \item Que sea fácil de usar.
             \item Que esté actualmente mantenido por la comunidad.
             \item Que posea una documentación simple y fácil de entender. 
@@ -229,13 +235,13 @@ entre las disintas alternativas.
 
     Siguiendo los requisitos de arriba, Foundation puede ser descartado ya que no cumple el
     segundo requisito, ya que nuestra aplicación web principalmente va a estar diseñada para
-    utilizarse en un ordenador (también podrá usarse en un smartphone, pero no es la
-    finalidad).\\
+    utilizarse en un ordenador (también podrá usarse en un \textit{smartphone}, pero no es
+    la finalidad).\\
 
-    Entre los tres frameworks restantes, podría utilizarse cualquiera de ellos ya que
-    cumplen con los requisitos, pero finalmente se ha decidido utilizar Bootstrap ya que
-    es probablemente el framework más popular y sencillo de usar que hay, además de seguir
-    siendo muy usado por la comunidad. 
+    Entre los tres \textit{frameworks} restantes, podría utilizarse cualquiera de ellos ya
+    que cumplen con los requisitos, pero finalmente se ha decidido utilizar Bootstrap, ya que
+    es probablemente el \textit{framework} más popular y sencillo de usar que hay, además
+    de seguir siendo muy usado por la comunidad. 
     
 
     \subsubsection{Elección de la Base de Datos}
@@ -244,12 +250,12 @@ entre las disintas alternativas.
 
         \begin{enumerate}
             \item Que sea una base de datos relacional.
-            \item Que sea open-source y gratuita.
+            \item Que sea \textit{open source} y gratuita.
             \item Que tenga soporte para la realización de transacciones seguras.
             \item Que haga un uso eficiente de los datos.
         \end{enumerate}
 
-    Por cuestiones de escalabilidad, utilizar SQLite se puede descartar ya que posee un
+    Por cuestiones de escalabilidad, utilizar SQLite se puede descartar, puesto que posee un
     reducido número de tipos de datos y más bien está pensada para utilizarse en dispositivos
     con poca capacidad de almacenamiento.\\
 
@@ -259,69 +265,71 @@ entre las disintas alternativas.
     
         \begin{itemize}
             \item MySQL es propiedad de Oracle y podría pasar a ser un producto comercial
-            (de pago), sin embargo, postgreSQL es \textbf{open source 100\%}.
+            (de pago), sin embargo, postgreSQL es \textbf{\textit{open source} 100\%}.
             \item PostgreSQL ofrece una mayor \textbf{integridad y fiabilidad} de los datos
             (principio ACID).
-            \item Gracias a funciones que lectura y escritura en paralelo, postgreSQL ofrece
+            \item Gracias a funciones de lectura y escritura en paralelo, postgreSQL ofrece
             una mayor \textbf{velocidad} frente a mySQL.
         \end{itemize}
     
     Por estas razones, finalmente se ha decidido usar postgreSQL como base de datos para
     nuestro servidor web.
 
-\section{Desarrollo basado en sprints} \label{sec:sprints}
+\section{Desarrollo basado en \textit{sprints}} \label{sec:sprints}
 Como mencionamos en el sub-apartado \ref{subsubsec:scrum}, se va a trabajar mediante
-\textbf{sprints}, concepto del marco de trabajo Scrum. Es por ello que el desarrollo del
-software se ha dividido en una serie de \textbf{hitos} (que en este caso serían nuestros
-sprints). Un hito, en el desarrollo de software, simboliza un logro, un aspecto del proyecto
-que se está cumpliendo conforme se planificó al comienzo del mismo, por tanto, éstos son los
-mejores indicadores del progreso del proyecto para alcanzar los objetivos finales.\\
+\textbf{\textit{sprints}}, concepto del marco de trabajo Scrum. Es por ello que el desarrollo del
+\textit{software} se ha dividido en una serie de \textbf{hitos} (que en este caso serían
+nuestros \textit{sprints}). Un hito, en el desarrollo de \textit{software}, simboliza un
+logro, un aspecto del proyecto que se está cumpliendo conforme se planificó al comienzo del
+mismo, por tanto, estos son los mejores indicadores del progreso del proyecto para alcanzar
+los objetivos finales.\\
 
-A cada uno de estos sprints se le irán asociando \textbf{issues} (tareas) que se deben realizar
-para alcanzar el objetivo del mismo. Dichas tareas pueden ser aspectos a mejorar del software,
-errores que se han encontrado, tareas referentes a documentación, etc.\\
+A cada uno de estos \textit{sprints} se le irán asociando \textbf{\textit{issues}} (tareas)
+que se deben realizar para alcanzar el objetivo del mismo. Dichas tareas pueden ser aspectos
+a mejorar del \textit{software}, errores que se han encontrado, tareas referentes a
+documentación, etc.\\
 
-Los hitos (\textbf{milestones}) del proyecto son los siguientes:
+Los hitos (\textbf{\textit{milestones}}) del proyecto son los siguientes:
 \begin{enumerate}
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/1}{[M1]. Website
-    creation (Creación del sitio web)}}: creación de la estructura principal de la
-    aplicación web, con las principales páginas y funcionalidades. Esta parte será
-    desarrollada en un entorno de desarrollo (servidor de desarrollo).
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/8}{[M2]. Database
-    creation (Creación de la Base de Datos)}}: creación de las principales tablas para
-    modelar el problema, junto con los correspondientes formularios para la recogida de
-    datos en la aplicación web.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/2}{[M3]. Authentication
-    (Autenticación)}}: gestión de usuarios del sitio web, signup, signout, login, logout,
-    cambiar contraseña e información de contacto para cada usuario así como third party
-    (social) account authentication. 
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/3}{[M4]. Test behavior
-    (Testear comportamiento)}}: realización de tests para comprobar el comportamiento
-    de la aplicación.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/4}{[M5]. Continuous
-    integration (Integración Continua)}}: el software desarrollado debe integrarse con el
-    posible software ya existente en el sitio web, asegurando el correcto funcionaminto
-    de ambos.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/6}{[M6]. API REST}}:
-    el diseño y posterior implementación de la API REST que permita gestionar los recursos
-    con los que trabaja la aplicación.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M7]. Log system
-    (Sistema de Log)}}: los eventos más importantes que ocurren en la aplicación deben ser
-    grabados a través del uso de un servicio de log. Es conveniente capturar errores en un
-    nivel superior de abstracción, evitando modificar código ya hecho.
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8]. Deployment
-    (Despliegue)}}: el despliegue de la aplicación web en la nube debe realizarse utilizando
-    un dominio público y un WSGI (Web Server Gateway Interface).
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/1}{[M1].
+    \textit{Website creation} (Creación del sitio web)}}: creación de la estructura
+    principal de la aplicación web, con las principales páginas y funcionalidades. Esta
+    parte será desarrollada en un entorno de desarrollo (servidor de desarrollo).
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/8}{[M2].
+    \textit{Database creation} (Creación de la Base de Datos)}}: creación de las principales
+    tablas para modelar el problema, junto con los correspondientes formularios para la
+    recogida de datos en la aplicación web.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/2}{[M3].
+    \textit{Authentication} (Autenticación)}}: gestión de usuarios del sitio web,
+    \textit{signup, signout, login, logout}, cambiar contraseña e información de contacto
+    para cada usuario así como \textit{third party} (social) \textit{account authentication}. 
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/3}{[M4].
+    \textit{Test behavior} (Testear comportamiento)}}: realización de tests para comprobar
+    el comportamiento de la aplicación.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/4}{[M5].
+    \textit{Continuous integration} (Integración Continua)}}: el \textit{software}
+    desarrollado debe integrarse con el posible \textit{software} ya existente en el sitio
+    web, asegurando el correcto funcionaminto de ambos.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/6}{[M6].
+    \textit{API REST}}}: el diseño y posterior implementación de la API REST que permita
+    gestionar los recursos con los que trabaja la aplicación.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M7].
+    \textit{Log system} (Sistema de Log)}}: los eventos más importantes que ocurren en la
+    aplicación deben ser grabados a través del uso de un servicio de log. Es conveniente
+    capturar errores en un nivel superior de abstracción, evitando modificar código ya hecho.
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8].
+    \textit{Deployment} (Despliegue)}}: el despliegue de la aplicación web en la nube debe
+    realizarse utilizando un dominio público y un WSGI (\textit{Web Server Gateway Interface}).
 \end{enumerate}
 
-Si desea tener una vista más general de los milestones, issues, commits, branches, etc del
-proyecto puede visitar los siguientes enlaces:
+Si desea tener una vista más general de los \textit{milestones}, \textit{issues},
+\textit{commits}, \textit{branches}, etc. del proyecto puede visitar los siguientes enlaces:
 
 \begin{itemize}
-    \item \textbf{\href{https://github.com/alexespana/TFG/milestones}{Milestones (Hitos)}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/issues}{Issues (Tareas)}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/branches}{Branches (Ramas)}}
-    \item \textbf{\href{https://github.com/alexespana/TFG/pulls}{Pull requests (Solicitudes
+    \item \textbf{\href{https://github.com/alexespana/TFG/milestones}{\textit{Milestones} (Hitos)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/issues}{\textit{Issues} (Tareas)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/branches}{\textit{Branches} (Ramas)}}
+    \item \textbf{\href{https://github.com/alexespana/TFG/pulls}{\textit{Pull requests} (Solicitudes
     de cambio)}}
 \end{itemize}
 
@@ -350,8 +358,8 @@ sería tal que así:\\
 El resto de plantillas de este diseño son las que se describen en las secciones siguientes.
 
     \subsubsection{Home}
-    Ésta es la página principal que se verá al entrar en la aplicación, prácticamente todo el
-    diseño de ésta tiene relación con un componente de bootstrap llamado \textbf{Carousel}, que
+    Esta es la página principal que se verá al entrar en la aplicación, prácticamente todo el
+    diseño de esta tiene relación con un componente de bootstrap llamado \textbf{Carousel}, que
     nos permite construir una especie de sliders en la vista con indicadores en la parte
     inferior. Además, cada uno de estos sliders puede tener texto asociado e imágenes de fondo,
     por lo que podemos ir cambiando el fondo completo de la página mediante el uso de javascript
@@ -430,7 +438,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     En este caso se ha utilizado una estructura de página muy parecida a la anterior, utilizando
     dos rows, el primero para el \textbf{headline} y el segundo para los \textbf{miembros} del
     proyecto. Cabe mencionar el uso de la clase \textbf{border-box} en numerosas ocasiones en 
-    el código, éste incorpora un border naranja al componente que lo posea.
+    el código, este incorpora un borde naranja al componente que lo posea.
 
     \subsubsection{Contacto}
     Finalmente, tenemos la página de contacto de la aplicación web, en ella podemos
@@ -449,7 +457,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     está destinada al \textbf{headline}, que como hemos visto, es común en otras páginas, 
     por lo que usan la misma clase de estilo CSS. La segunda a su vez está dividida en 
     dos partes utilizando cada una 6 columnas y finalmente la tercera fila ha sido
-    destinada para el \textbf{iframe} de google maps cuyo código html ha sido extraído
+    destinada para el \textbf{iframe} de google maps cuyo código HTML ha sido extraído
     directamente de la aplicación web y puesto sobre el código.
 
 \subsection{Creación de la base de datos}
@@ -458,7 +466,7 @@ la definición de la base de datos que se utilizará, que posteriormente nos per
 consultas apropiadas según las necesidades que busca el cliente, en este caso los arqueólogos.\\
 
 No prestarle atención a este hito sería un grave error, ya que si se realiza un mal diseño
-de la BD puede conducir a las siguientes consecuencias en el desarrollo de software:
+de la BD puede conducir a las siguientes consecuencias en el desarrollo de \textit{software}:
 
     \begin{itemize}
         \item El proyecto podría \textbf{fallar} al no soportar los requerimientos de la
@@ -491,8 +499,8 @@ relaciones. Todo esto, se verá en la sección siguiente.
     BD. Este modelo deberá:
 
         \begin{enumerate}
-            \item Reflejar fielmente las necesidades de información del proyecto. Ésto permite
-            partir de una base para el desarrollo del sistema.
+            \item Reflejar fielmente las necesidades de información del proyecto. Esto
+            permite partir de una base para el desarrollo del sistema.
             \item Ofrecer un diseño independiente a la forma en que los datos serán
             posteriormente almacenados y sus formas de acceso, permitiendo tomar decisiones
             objetivas sobre la implementación más idónea.
@@ -533,14 +541,14 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.32]{imagenes/E-R3.png}
+            \includegraphics[scale=0.40]{imagenes/E-R3.png}
             \caption{Modelo E/R: sección 3}
             \label{fig:e-rmodel3}
         \end{figure}
 
         \begin{figure}[H]
             \centering
-            \includegraphics{imagenes/E-R4.png}
+            \includegraphics[scale=0.50]{imagenes/E-R4.png}
             \caption{Modelo E/R: sección 4}
             \label{fig:e-rmodel4}
         \end{figure}
@@ -569,14 +577,14 @@ relaciones. Todo esto, se verá en la sección siguiente.
     además de los atributos necesarios que no son claves primarias o candidatas, lo siguiente:
 
     \begin{enumerate}
-        \item \textbf{Excavación}: ésta tendrá un identificador interno en la base de
-        datos que actuará como primary key, que será un valor numérico, y además una clave
+        \item \textbf{Excavación}: esta tendrá un identificador interno en la base de
+        datos que actuará como primary key, que será un valor numérico y, además, una clave
         candidata que será el \textbf{número de excavación}, un entero de tres dígitos
         (p.ej: 001, 043, 132, etc). Esta clave candidata será la visible al usuario, pudiendo
         introducir el número de excavación deseado.
 
         \item \textbf{Unidad Estratigráfica}: al igual que la anterior, tendremos un
-        identificador interno que será la primary key, y además, una clave candidata que
+        identificador interno que será la primary key y, además, una clave candidata que
         será el \textbf{código} de la unidad estratigráfica, que servirá para que el usuario
         pueda identificar dicha unidad. Dicho código debe estar formado por el
         \textbf{número de excavación} al que pertenece la unidad más el \textbf{número de orden}
@@ -586,7 +594,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
         \item \textbf{Hecho}: la forma que tiene el usuario de identificar a cada hecho es algo
         más compleja. Al igual que las dos entidades anteriores, también se tendrá un
-        identificador interno que actuará de primary key, y además, se tendrá una clave
+        identificador interno que actuará de primary key y, además, se tendrá una clave
         candidata compuesta, que estará formada por la \textbf{letra} (tipo de hecho) y un
         \textbf{número}. Para poder darle un valor coherente a este número, se elige una
         unidad estratigráfica perteneciente al hecho y el código de dicha unidad será el
@@ -597,11 +605,11 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
         \item \textbf{Estancia}: en este caso, al igual que las entidades anteriores,
         tendremos un identificador interno como primary key que solo se conocerá internamente
-        en el sistema, y además, tendremos un \textbf{número de estancia}, que será la clave
+        en el sistema y, además, tendremos un \textbf{número de estancia}, que será la clave
         candidata de la entidad, visible y reconocible para los usuarios de la aplicación. Al
         comienzo del diseño pensábamos que el número de estancia se formaba a partir del número
         de sector y el número de zona, como está reflejado en el anexo \ref{subsec: doubts},
-        pero finalmente éste esta formado por las letras ES seguidas de tres dígitos. Por ejemplo
+        pero finalmente este está formado por las letras ES seguidas de tres dígitos. Por ejemplo
         un posible identificador de estancia podría ser \textbf{ES001}.
 
         \item \textbf{Fotografía}: poseeremos un primary key interno para la entidad y una
@@ -648,7 +656,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \subsubsection{Herencia}
     Como podemos comprobar en el modelo E/R, existen claramente dos entidades que heredan de
     la entidad fuerte Unidad Estratigráfica, la \textbf{Sedimentaria} y la \textbf{Construida}.
-    Ambas heredarán todos los atributos de la entidad padre y además añadirán sus propios
+    Ambas heredarán todos los atributos de la entidad padre y, además, añadirán sus propios
     atributos. En las fichas de registro de campo completo \ref{sec:registrationforms} puede
     verse en la UE construida como existe un apartado material, sin embargo, en la sedimentaria
     no existe una sección como tal, la pregunta sería: \textbf{¿por qué las UE sedimentarias
@@ -723,10 +731,10 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \end{enumerate}
 
     Dicho todo esto, podemos comenzar a hablar sobre el ORM que utilizaremos para la
-    aplicación web, el \textbf{ORM de Django}. Éste nos permite diseñar nuestras tablas de 
+    aplicación web, el \textbf{ORM de Django}. Este nos permite diseñar nuestras tablas de 
     base de datos sin necesidad de escribir ninguna sentencia SQL, en este caso, en
     \textbf{PostgreSQL}. Un modelo es la fuente de información única y definitiva para los
-    datos, éste contendrá los campos y funcionalidades(comportamiento) correspondientes a
+    datos, este contendrá los campos y funcionalidades(comportamiento) correspondientes a
     la naturaleza de los datos que almacena. Normalmente, cada modelo se asigna a una sola
     tabla de base de datos, y cada uno de ellos:
 
@@ -976,7 +984,7 @@ usuarios en la aplicación web. A continuación se explicará todo lo que se ha
 implementado.\\
 
 Django cuenta con un \textbf{sistema de de autenticación} \cite{django-auth} de usuarios,
-éste puede manejar cuentas de usuario, grupos de usuario, permisos, sesiones de usuario
+este puede manejar cuentas de usuario, grupos de usuario, permisos, sesiones de usuario
 basadas en cookies, etc. Antes de nada debemos de tener claro qué significan los términos
 de autenticación y autorización:
 
@@ -985,7 +993,7 @@ de autenticación y autorización:
         es quién dice ser. Por ejemplo, una de las pruebas más comunes de autenticación
         es mediante la escritura de una contraseña.
         \item \textbf{Autorización}: en este caso, se determina lo que un usuario
-        autenticado puede hacer en el sistema, es decir, los permisos que éste posee. Por
+        autenticado puede hacer en el sistema, es decir, los permisos que este posee. Por
         ejemplo, en nuestro caso, si puede o no modificar una excavación.
     \end{itemize}
 
@@ -1071,7 +1079,7 @@ En esta ocasión, se ha decidido usar el servidor de correo de Google, ya que es
 más populares y seguros. Para ello, se han tenido que definir en la configuración de
 Django ajustes como el backend que se usará para enviar los correos, el host, el puerto,
 indicar si se usa una conexión segura con TLS, el usuario y la contraseña, por supuesto,
-éstos dos últimos almacenados siempre en \textbf{variables de entorno} por temas de
+estos dos últimos almacenados siempre en \textbf{variables de entorno} por temas de
 seguridad.\\
 
 En una primera aproximación a la solución final adoptada, Django se autenticaba con el
@@ -1236,7 +1244,7 @@ siguientes:
         \item \textbf{Staff}: es el usuario con permisos otorgados por el administrador
         del sistema. En nuestra aplicación corresponderá al arqueólogo con permisos
         privilegiados, que se encarga de aceptar o rechazar a los usuarios que se han
-        enviado la petición de registro. Éstos deberán poder d \textbf{añadir y eliminar}
+        enviado la petición de registro. Estos deberán poder d \textbf{añadir y eliminar}
         usuarios de los grupos de permisos ya definidos, además de \textbf{tener acceso a
         todos los modelos} definidos en el sistema: excavaciones, inclusiones, materiales, etc.
         \item \textbf{Usuario registrado}: es el usuario común de la aplicación, que tendrá
@@ -1248,7 +1256,7 @@ siguientes:
 En todo sitio web, existe un panel de administración desde el que un usuario o usuarios
 con privilegios pueden hacer acciones privilegiadas en la aplicación. Dado que Django
 tiene su propio panel de administración \cite{admin-panel}, con multitud de funcionalidades
-ya implementadas, se ha decidido reutilizar éste.\\
+ya implementadas, se ha decidido reutilizar este.\\
 
 Dicho panel será únicamente utilizado por el administrador del sistema, que en este caso
 sería el desarrollador de este proyecto. Además, se ha querido hacer más atractiva
@@ -1273,22 +1281,22 @@ cualquier objeto perteneciente a los modelos que hemos definido en la aplicació
 En este milestone explicaremos por qué es tan importante la realización de tests durante
 el proceso de desarrollo y cómo lo hemos llevado a cabo.\\
 
-Los errores humanos en el desarrollo del software son posibles y pueden causar fallos o
-defectos en cualquier fase del desarrollo del software. Dichos errores pueden ser algo
-trivial, \textbf{fácil} de solucionar, o algo más \textbf{complejo}, que pueda requerir
-tiempo y un coste elevado para solucionarlo. Dichos errores pueden evitarse con un
-correcto testeo durante la fase del desarrollo del software, ya que gracias a él
-podremos \cite{why-testing}:
+Los errores humanos en el desarrollo del \textit{software} son posibles y pueden causar
+fallos o defectos en cualquier fase del desarrollo del \textit{software}. Dichos errores
+pueden ser algo trivial, \textbf{fácil} de solucionar, o algo más \textbf{complejo}, que
+pueda requerir tiempo y un coste elevado para solucionarlo. Dichos errores pueden evitarse
+con un correcto testeo durante la fase del desarrollo del \textit{software}, ya que gracias
+a él podremos \cite{why-testing}:
 
     \begin{itemize}
-        \item \textbf{Detectar errores} durante el desarrollo del software.
-        \item Hacer que el software desarrollado tenga una \textbf{mayor calidad y
+        \item \textbf{Detectar errores} durante el desarrollo del \textit{software}.
+        \item Hacer que el \textit{software} desarrollado tenga una \textbf{mayor calidad y
         fiabilidad}.
         \item \textbf{Cumplir los requisitos} especificados por el cliente, y por lo tanto,
         que el cliente esté satisfecho.
         \item Obtener un funcionamiento \textbf{fiable y de alto rendimiento}.
         \item Evitar que en \textbf{releases}\footnote{\textbf{Lanzamiento} (publicación)
-        de una versión definitiva del software} puedan introducirse errores.
+        de una versión definitiva del \textit{software}} puedan introducirse errores.
     \end{itemize}
 
 Poniendo un ejemplo, supongamos que queremos enviar una cantidad de dinero a través de
@@ -1320,7 +1328,7 @@ aplicación:
 Como podemos observar, la clase padre de la que el resto hereda todas sus funcionalidades
 es la clase \textbf{TestCase}, que se encuentra en el módulo \textbf{unittest} de la
 biblioteca estándar de Python. A continuación, vamos a explicar brevemente las subclases
-que implementa el framework de test de Django:
+que implementa el \textit{framework} de test de Django:
 
     \begin{itemize}
         \item \textbf{SimpleTestCase}: esta clase añade numerosas funcionalidades a la
@@ -1361,10 +1369,10 @@ migraciones, tests, etc. Veamos un sencillo ejemplo de lanzamiento de tests:
         \label{fig:db-test}
     \end{figure}
 
-Debemos recordar que nosotros al inicio del desarrollo del software, decidimos lanzar el
-proyecto usando \textbf{docker} \cite{docker} y \textbf{docker-compose} \cite{docker-compose},
-es decir, dockerizándolo, por esta razón lanzamos el contenedor antes para lanzar los
-tests.\\
+Debemos recordar que nosotros al inicio del desarrollo del \textit{software}, decidimos
+lanzar el proyecto usando \textbf{docker} \cite{docker} y \textbf{docker-compose}
+\cite{docker-compose}, es decir, dockerizándolo, por esta razón lanzamos el contenedor
+antes para lanzar los tests.\\
 
 Como vemos, lo primero que se hace es crear la base de datos para testing, posteriormente
 se ejecutan los tests (cada punto indica la ejecución correcta de un test) y finalmente se
@@ -1461,9 +1469,9 @@ la integración continua \cite{continuous-integration}:
 
     \begin{itemize}
         \item La \textbf{integración continua} o \textbf{CI} es una práctica de desarrollo
-        del software que nos permite controlar que en proyectos donde trabajan uno o varios
-        desarrolladores el código siga funcionando adecuadamente mediante la automatización
-        de pruebas de test, compilado, ejecución, etc.
+        del \textit{software} que nos permite controlar que en proyectos donde trabajan uno
+        o varios desarrolladores el código siga funcionando adecuadamente mediante la
+        automatización de pruebas de test, compilado, ejecución, etc.
     \end{itemize}
 
 Imaginemos que estamos trabajando colaborativamente en un proyecto y hasta el momento todo
@@ -1491,10 +1499,10 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
 
     \begin{itemize}
         \item \textbf{Travis CI} \cite{travis-ci}: si atendemos a la facilidad de uso y lo
-        estándar que es el sistema, quizás éste sea el más recomendado de usar, sin embargo,
+        estándar que es el sistema, quizás este sea el más recomendado de usar, sin embargo,
         requiere introducir tarjeta de crédito, por lo que lo hemos descartado como opción.
         \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente es el más
-        popular en la actualidad. Sin embargo, éste no es solo un sistema de CI, por lo
+        popular en la actualidad. Sin embargo, este no es solo un sistema de CI, por lo
         que muchas de sus características no las usaríamos.
         \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
         proporcionado por Github y tiene la ventaja de poder usar otras Github Actions ya
@@ -1508,7 +1516,7 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
     Mencionados los sistemas de CI más relevantes (hay muchos más), hemos decidido usar las
     Github Actions de Github, ya que permiten una configuración sencilla, es un servicio
     gratuito, es la herramienta con la que más familiarizados estamos (aunque se podría haber
-    escogido Circle CI sin problema), es muy potente y además, como es obvio, permite ver los
+    escogido Circle CI sin problema), es muy potente y, además, como es obvio, permite ver los
     resultados de CI directamente en la interfaz de Github.
 
 \subsubsection{Flujos de trabajo}
@@ -1632,7 +1640,7 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
                         se han ejecutado durante los tests, además de generar un informe que
                         será utilizado por el paso siguiente. Por lo tanto, cuanto más
                         elevado sea ese porcentaje, mayor muestra de código de calidad
-                        tendremos. Éste sería el resultado de la ejecución:
+                        tendremos. Este sería el resultado de la ejecución:
 
                                 \begin{figure}[H]
                                     \centering
@@ -1642,7 +1650,7 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
                                 \end{figure}
                         
                         Como vemos, se ha testeado el 92 por ciento del código por ahora, lo
-                        cual es un resultado bastante bueno, y además se ha escrito el
+                        cual es un resultado bastante bueno y, además se ha escrito el
                         informe en el archivo \textbf{coverage.xml}.
                         
                         \item \textbf{Codecov}: este último paso utiliza una Github Action
@@ -1656,12 +1664,12 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
             \end{enumerate}
     \end{enumerate}
 
-Éstos son los flujos de trabajo o workflows que se ejecutarán automáticamente en nuestro
+Estos son los flujos de trabajo o workflows que se ejecutarán automáticamente en nuestro
 proyecto cada vez que se produzca uno de los eventos descritos.
 
 \subsubsection{Insignias de estado}
-Una buena práctica en un proyecto software donde se practique integración continua, es la
-inclusión de \textbf{insignias de estado}, o \textbf{badges}. Antes de nada, vamos a
+Una buena práctica en un proyecto \textit{software} donde se practique integración continua,
+es la inclusión de \textbf{insignias de estado}, o \textbf{badges}. Antes de nada, vamos a
 explicar qué es una insignia de estado: una insignia de estado es simplemente un elemento
 gráfico que indica si un flujo de trabajo falla o pasa actualmente. Con esto en mente,
 nosotros podríamos incluir cuatro insignias de estado: \textbf{una por cada flujo de
@@ -1680,18 +1688,18 @@ repositorio sería el siguiente:
     \end{figure}
 
 Como vemos, todas ellas indican que las pruebas automatizadas de integración continua han
-pasado con éxito y además, tenemos el porcentaje de codecov añadido, para el cual se ha
+pasado con éxito y, además, tenemos el porcentaje de codecov añadido, para el cual se ha
 obtenido el badge desde Codecov web. Adicionalmente, se ha añadido el badge de la
 \textbf{licencia} de código que estamos usando, \textbf{gplv3}.
 
 \subsection{API REST}
-En este milestone del desarrollo software, vamos a explicar en qué consiste una API, los
-distintos tipos que nos podemos encontrar, por qué son necesarias y sobre todo, cómo la
-hemos implementado en nuestra aplicación web.\\
+En este milestone del desarrollo \textit{software}, vamos a explicar en qué consiste una
+API, los distintos tipos que nos podemos encontrar, por qué son necesarias y sobre todo,
+cómo la hemos implementado en nuestra aplicación web.\\
 
 Una \textbf{API \cite{api} (Application Programming Interface o Interfaz de programación
 de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e integrar el
-software de las aplicaciones, es decir, establecen cómo se han de comunicar dos
+\textit{software} de las aplicaciones, es decir, establecen cómo se han de comunicar dos
 aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\ \\
 
 La creación de una API permite que los servicios o recursos que utiliza una aplicación
@@ -1709,8 +1717,9 @@ que use la API, podemos distinguir dos tipos:
         escritas en distintos lenguajes se hace más sencilla. En la actualidad, su uso es
         reducido, ya que normalmente se usan para transacciones complejas que requieren
         alta seguridad, como pasarelas de pago, ERPS \footnote{\textbf{Sistemas de
-        planificación de recursos empresariales}: software de gestión empresarial compuesto
-        por módulos que gestionan y automatizan tareas internas de la empresa.}, etc.
+        planificación de recursos empresariales}: \textit{software} de gestión empresarial
+        compuesto por módulos que gestionan y automatizan tareas internas de la empresa.},
+        etc.
 
         \item \textbf{REST}: este tipo de API, conocida como \textbf{Representational State
         Transfer o Transferencia de Estado Representacional}, es una interfaz simple que
@@ -1793,9 +1802,9 @@ siguientes elementos:
 
     \begin{itemize}
         \item \textbf{Router}: es una clase ya incluida en el módulo de Django REST
-        Framework que nos permitirá definir la ruta correspondiente al \textbf{endpoint}
-        que queremos implementar. Por ejemplo, en el caso de las excavaciones se haría del
-        siguiente modo:
+        Framework que nos permitirá definir la ruta correspondiente al
+        \textbf{endpoint} que queremos implementar. Por ejemplo, en el caso de las
+        excavaciones se haría del siguiente modo:
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
@@ -2004,7 +2013,7 @@ A continuación, vamos a describir el procedimiento de utilización de la API, t
 punto de vista gráfico mediante la \textbf{interfaz web} como desde la simulación del envío
 de peticiones a través de un \textbf{cliente móvil}.\\
 
-Ésta sería la interfaz gráfica de la API, donde tenemos una pestaña de \textbf{login} para
+Esta sería la interfaz gráfica de la API, donde tenemos una pestaña de \textbf{login} para
 autenticarse en ella, las distintas opciones (OPTIONS) y métodos HTTP (GET, etc), y
 finalmente las distintas rutas definidas en la API para el manejo de los recursos del
 servidor, junto a las cabeceras HTTP que se usan en cada petición.
@@ -2131,8 +2140,8 @@ Como vemos, no nos ha permitido modificar la excavación, lo cuál es correcto, 
 tenemos permisos para modificar excavaciones.
 
 \subsection{Sistema de Log}
-En este milestone del desarrollo software nos centraremos en explicar qué es un Sistema
-de Log y cómo hemos llevado a cabo su implementación en nuestra aplicación. \\
+En este milestone del desarrollo \textit{software} nos centraremos en explicar qué es un
+Sistema de Log y cómo hemos llevado a cabo su implementación en nuestra aplicación. \\
 
 Un \textbf{Sistema de Log} \cite{log-system} es una herramienta que nos permite registrar los principales
 eventos que suceden en nuestra aplicación, desde operaciones relacionadas con la base de
@@ -2363,7 +2372,7 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
                 aplicación. \\
 
                 Como hemos mencionado anterioremente, el logger de las vistas se
-                identifica con el nombre \textbf{myFindings.views}, por lo que éste
+                identifica con el nombre \textbf{myFindings.views}, por lo que este
                 será el nombre de nuestro logger. Además, usará el handler especificado
                 en el punto anterior y sólo controlará mensajes que tengan un nivel de log
                 (\textbf{log level}) INFO o superior. Su configuración quedaría de la
@@ -2385,7 +2394,7 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
 
         \item Finalmente, deberemos crear la ruta correspondiente para la vista de logs
         que podrá ver un arqueólogo administrador. Para ello, definimos la correspondiente
-        ruta en el archivo \textbf{urls.py}, creamos el template (html) correspondiente
+        ruta en el archivo \textbf{urls.py}, creamos el template (HTML) correspondiente
         que se renderizará, y la vista que manejará la petición. Dicha vista hará uso
         de la función \href{https://docs.python.org/3/library/functions.html#open}{open}
         de Python para abrir el archivo de logs y procesarlo línea por línea, creando una
@@ -2402,17 +2411,17 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
     \end{enumerate}
 
 \subsection{Despliegue}
-En este punto del desarrollo software, vamos a llevar a cabo el despliegue de
+En este punto del desarrollo \textit{software}, vamos a llevar a cabo el despliegue de
 nuestra aplicación web. Explicaremos cómo y por qué hemos tomado ciertas decisiones
 y cómo las hemos llevado a cabo. \\
 
-En desarrollo de software, el término \textbf{deploy} (desplegar o lanzar) \cite{deploy} 
-se define como el proceso de llevar una aplicación a producción, es decir, hacer de alguna
-forma que la aplicación sea accesible para los clientes finales. Hasta el momento, hemos
-trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se ejecuta en el
-\textbf{entorno} de una máquina u ordenador concreto.} que Django nos ha proporcionado
-con su configuración por defecto. Dicho servidor de desarrollo nos ha servido para
-realizar el desarrollo completo de nuestra aplicación y realizar pruebas en un entorno
+En desarrollo de \textit{software}, el término \textbf{deploy} (desplegar o lanzar)
+\cite{deploy} se define como el proceso de llevar una aplicación a producción, es decir,
+hacer de alguna forma que la aplicación sea accesible para los clientes finales. Hasta el
+momento, hemos trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se
+ejecuta en el \textbf{entorno} de una máquina u ordenador concreto.} que Django nos ha
+proporcionado con su configuración por defecto. Dicho servidor de desarrollo nos ha servido
+para realizar el desarrollo completo de nuestra aplicación y realizar pruebas en un entorno
 local, como puede ser nuestro ordenador. Muy resumidamente, necesitamos que nuestra
 aplicación se ejecute en un entorno que no sea nuestro propio ordenador. \\
 
@@ -2521,7 +2530,7 @@ lugar, descargar el cliente, \href{https://shorturl.at/emHJY} {\textbf{Heroku CL
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.47]{imagenes/heroku-cli.png}
-        \caption{Heroky CLI}
+        \caption{Heroku CLI}
         \label{fig:heroku-cli}
     \end{figure}
 
@@ -2570,7 +2579,7 @@ Como vemos en la imagen anterior, existen distintos métodos para hacer el deplo
 
 En nuestro caso, como es evidente, lo haremos \textbf{a partir de una rama} de un
 repositorio de Github, concretamente del repositorio en el que venimos trabajando
-para el desarrollo de todo el proyecto software.\\
+para el desarrollo de todo el proyecto \textit{software}.\\
 
 Heroku trabaja sobre el \textbf{directorio raíz} del proyecto, es decir, realiza el
 despliegue trabajando sobre el directorio principal del proyecto, por lo que si no le
