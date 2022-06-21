@@ -344,3 +344,6 @@ dmypy.json
 
 # Avoid adding information from PostgreSQL 
 /code/db/
+
+# Exclude the log file required for production
+!code/app/myFindings.log
