@@ -1,4 +1,4 @@
-# Trabajo de Fin de Grado: *Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas*
+<center> <h1>Trabajo de Fin de Grado <br> <i>Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas</i></h1> </center>
 
 
 ### Autor: Joaquín Alejandro España Sánchez
@@ -20,24 +20,16 @@ nuestra distribución.
 
 Una vez instalada, tan solo deberemos situarnos en el directorio `doc` y ejecutar:
 
-`
-$ pdflatex proyecto.tex
-`
+    pdflatex -shell-escape proyecto.tex
 
-Seguido por
+seguido por
 
     bibtex proyecto
     
-y de nuevo
+y de nuevo (2 veces)
 
-    pdflatex proyecto.tex
+    pdflatex -shell-escape proyecto.tex
 
 O directamente
 
     make
-    
-(que habrá que editar si el nombre del archivo del proyecto cambia)
-
-# INSTRUCCIONES
-
-Lee [INSTALL.md](INSTALL.md) para las instrucciones de uso.
