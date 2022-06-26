@@ -63,8 +63,7 @@ que sea posteriormente modificable por el/la arqueólogo/a.
 
 \section{3º Reunión (01/03/22): diseño del modelo Entidad/Relación}
 Una parte muy importante de la aplicación es la correcta modelización de la base de datos.
-Para ello, \textit{Joaquín García Venegas} y yo hicimos un diseño inicial del modelo
-E/R.
+Para ello, Joaquín García Venegas y yo hicimos un diseño inicial del modelo E/R.
 
     \subsection{Entidades del modelo E/R}
 
@@ -94,7 +93,7 @@ E/R.
 
     \subsection{Dudas sobre el modelo} \label{subsec: doubts}
     Tras realizar el modelo, surgieron una serie de dudas acerca de las posibles relacionales
-    y los datos de las fichas(tipos de datos y significado), lo cuál es normal ya que no
+    y los datos de las fichas(tipos de datos y significado), lo cuál es normal, ya que no
     dominamos los términos que se usan en arqueología con precisión. Las dudas que surgieron
     fueron las siguientes:
 
@@ -125,36 +124,36 @@ del modelo E/R. las correspondientes dudas junto a sus soluciones son las siguie
 
     \begin{enumerate}
         \item ¿Es el mismo material el de la ficha reducida que el de las unidades
-        construidas? \textit{"No, el material de la ficha reducida corresponde a las
+        construidas? \textit{<<No, el material de la ficha reducida corresponde a las
         unidades estratigráficas sedimentarias, mientras que el material de las
         construidas solo pertenece a éstas, además de ser único (es decir, una unidad
-        construida no puede estar formada por distintos materiales)"}.
+        construida no puede estar formada por distintos materiales)>>}.
         \item En la ficha de las estancias, no sabemos qué es el primer recuadro para
-        dibujar. \textit{"Este recuadro se corresponde con \textbf{la matriz de Harris}},
+        dibujar. \textit{<<Este recuadro se corresponde con \textbf{la matriz de Harris},
         dicha matriz se forma a partir de las UE en relación y los hechos en relación,
-        colocando los distintos elementos correspondientemente en el recuadro".
+        colocando los distintos elementos correspondientemente en el recuadro>>}.
         \item Problema de identificación de las estancias: en el pdf de metodologías, 
         se dice que se codifica con la palabra Estancia y tres dígitos (el primero
         indica la zona y los dos siguientes el nº de sector). Aparece un nº de sector,
-        ¿es este el nº de orden? \textit{"No, la zona y el sector siempre se rellenan,
+        ¿es este el nº de orden? \textit{<<No, la zona y el sector siempre se rellenan,
         pero no forman parten de la identificación de la estancia. El nº de estancia
         no se forma a partir del númer de zona y el número de sector, un ejemplo podría
-        ser por ejemplo con \textbf{ES001}, sin vinculación con el hecho"}.
+        ser por ejemplo con \textbf{ES001}, sin vinculación con el hecho>>}.
         \item ¿Son realmente importantes los atributos Plano nº, Seccion nº, Elevacion
-        nº? \textit{"Es simplemente documentación, son números que indican información
-        de la Unidad Estratigráfica"}.
-        \item ¿Una excavación puede pertenecer a varias UE? \textit{"No, normalmente una
-        UE está asociada a una única excavación"}.
-        \item ¿El TPQ, TAQ y la fase en qué formato van, números, fechas, palabras, ..?
-        \textit{"El TPQ Y TAQ son números y la fase es un código ya definido que indica
-        la época de la pieza (os tengo que pasar los códigos)"}.
-        \item ¿La ficha completa se rellena a partir de la ficha de campo? \textit{"Sí,
+        nº? \textit{<<Es simplemente documentación, son números que indican información
+        de la Unidad Estratigráfica>>}.
+        \item ¿Una excavación puede pertenecer a varias UE? \textit{<<No, normalmente una
+        UE está asociada a una única excavación>>}.
+        \item ¿El TPQ, TAQ y la fase en qué formato van, números, fechas, palabras...?
+        \textit{<<El TPQ Y TAQ son números y la fase es un código ya definido que indica
+        la época de la pieza (os tengo que pasar los códigos)>>}.
+        \item ¿La ficha completa se rellena a partir de la ficha de campo? \textit{<<Sí,
         solo que hay que buscar la equivalencia entre algunos campos de la ficha
-        reducida y la completa ya que cambian un poco"}.
-        \item Las cotas, ¿van relacionadas con las pendientes? \textit{"Sí, la idea es
+        reducida y la completa, ya que cambian un poco>>}.
+        \item Las cotas, ¿van relacionadas con las pendientes? \textit{<<Sí, la idea es
         que las zonas indiques la distancia que hay con respecto a un punto de referencia
         y luego las pendientes indican hacia donde está orientada la pieza: Norte-Sur,
-        Suroeste-Este, etc, indican puntos de cardinalidad"}.
+        Suroeste-Este, etc., indican puntos de cardinalidad>>}.
     \end{enumerate}
 
 Tras esta reunión, se aclararon gran cantidad de dudas, lo que nos permitirá hacer un
@@ -170,7 +169,7 @@ las anotaciones más relevantes destacan las siguientes:
         \item Es importante distinguir entre la elección de modelos en el diseño del problema
         y la elección de herramientas. Por ejemplo, elegir entre una base de datos relacional
         o noSQL sería una elección de diseño, mientras que elegir qué SGBD escoger (MySQL,
-        SQLite, PostgreSQL, etc) sería una elección de herramientas.
+        SQLite, PostgreSQL, etc.) sería una elección de herramientas.
         \item Incluir las citas desde las cuales se consulta la información.
         \item Comprobar que las imágenes usadas en la aplicación sean libres, o cambiarlas
         por imágenes de uso libre de repositorios como \href{https://pixabay.com/}{Pixabay} o
