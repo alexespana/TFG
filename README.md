@@ -1,4 +1,4 @@
-<center> <h1>Trabajo de Fin de Grado <br> <i>Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas</i></h1> </center>
+<h1 align="center">Trabajo de Fin de Grado <br> <i>Sistema de Información para la toma y gestión de datos en excavaciones arqueológicas</i></h1>
 
 
 ### Autor: Joaquín Alejandro España Sánchez

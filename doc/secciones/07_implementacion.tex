@@ -39,7 +39,7 @@ de nuestro proyecto (en este caso de la aplicación web).
     Como vemos, el flujo de comunicación entre estos tres bloques sería el siguiente:
         
        \begin{enumerate}
-           \item El usuario interacciona con la interfaz al solicitar una url.
+           \item El usuario interacciona con la interfaz al solicitar una URL.
            \item El \textit{framework} de Django, a través de su archivo urls.py, se encarga
            de decidir qué \textbf{vista} se debe mostrar.
            \item Si dicha vista obtiene datos de la base de datos, esta se comunica con el 
@@ -78,7 +78,7 @@ de nuestro proyecto (en este caso de la aplicación web).
 
     \subsubsection{Tailwind CSS}
     \textbf{Tailwind CSS} \cite{tailwind-css} es un \textit{framework} CSS que funciona
-    escaneando los archivos HTML, componentes JavaScript y otros templates generando los
+    escaneando los archivos HTML, componentes JavaScript y otros \textit{templates} generando los
     correspondientes estilos y escribiéndolos en un archivo CSS estático. No tiene muchos
     componentes, sino clases de utilidad que pueden aplicarse directamente sobre el código
     HTML del proyecto. Además de esto, permite una gran optimización del peso del código
@@ -314,9 +314,10 @@ Los hitos (\textbf{\textit{milestones}}) del proyecto son los siguientes:
     \textit{API REST}}}: el diseño y posterior implementación de la API REST que permita
     gestionar los recursos con los que trabaja la aplicación.
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/5}{[M7].
-    \textit{Log system} (Sistema de Log)}}: los eventos más importantes que ocurren en la
-    aplicación deben ser grabados a través del uso de un servicio de log. Es conveniente
-    capturar errores en un nivel superior de abstracción, evitando modificar código ya hecho.
+    \textit{Log system} (Sistema de \textit{Log})}}: los eventos más importantes que
+    ocurren en la aplicación deben ser grabados a través del uso de un servicio de
+    \textit{log}. Es conveniente capturar errores en un nivel superior de abstracción,
+    evitando modificar código ya hecho.
     \item \textbf{\href{https://github.com/alexespana/TFG/milestone/7}{[M8].
     \textit{Deployment} (Despliegue)}}: el despliegue de la aplicación web en la nube debe
     realizarse utilizando un dominio público y un WSGI (\textit{Web Server Gateway Interface}).
@@ -350,7 +351,7 @@ sería tal que así:\\
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.25]{imagenes/base.png}
+        \includegraphics[scale=0.24]{imagenes/base.png}
         \caption{Plantilla base}
         \label{fig:base}
     \end{figure}
@@ -408,7 +409,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
         
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.20]{imagenes/about.png}
+            \includegraphics[scale=0.23]{imagenes/about.png}
             \caption[Sobre la aplicación]{Sobre la aplicación. Fuente \cite{petra-ad-deir}}
             \label{fig:about}
         \end{figure}
@@ -430,7 +431,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.25]{imagenes/team.png}
+            \includegraphics[scale=0.23]{imagenes/team.png}
             \caption{Equipo de MyFindings}
             \label{fig:team}
         \end{figure}
@@ -461,9 +462,10 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     extraído directamente de la aplicación web y puesto sobre el código.
 
 \subsection{Creación de la base de datos}
-Este milestone es uno de los más importantes del proyecto, ya que tiene como principal objetivo
-la definición de la base de datos que se utilizará, que posteriormente nos permitirá hacer las
-consultas apropiadas según las necesidades que busca el cliente, en este caso los arqueólogos.\\
+Este \textit{milestone} es uno de los más importantes del proyecto, ya que tiene como
+principal objetivo la definición de la base de datos que se utilizará, que posteriormente
+nos permitirá hacer las consultas apropiadas según las necesidades que busca el cliente,
+en este caso los arqueólogos.\\
 
 No prestarle atención a este hito sería un grave error, ya que si se realiza un mal diseño
 de la BD puede conducir a las siguientes consecuencias en el desarrollo de \textit{software}:
@@ -574,27 +576,28 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
     \subsubsection{Entidades fuertes}
     Como podemos observar, hay siete entidades fuertes, entre las que podemos destacar,
-    además de los atributos necesarios que no son claves primarias o candidatas, lo siguiente:
+    además de los atributos necesarios que no son claves primarias o candidatas,
+    lo siguiente (algunas entidades tienen enlaces a sus definiciones, clicar encima):
 
     \begin{enumerate}
         \item \textbf{Excavación}: esta tendrá un identificador interno en la base de
-        datos que actuará como primary key, que será un valor numérico y, además, una clave
-        candidata que será el \textbf{número de excavación}, un entero de tres dígitos
+        datos que actuará como \textit{primary key}, que será un valor numérico y, además,
+        una clave candidata que será el \textbf{número de excavación}, un entero de tres dígitos
         (p.ej: 001, 043, 132, etc.). Esta clave candidata será la visible al usuario, pudiendo
         introducir el número de excavación deseado.
 
-        \item \textbf{Unidad Estratigráfica}: al igual que la anterior, tendremos un
-        identificador interno que será la primary key y, además, una clave candidata que
-        será el \textbf{código} de la unidad estratigráfica, que servirá para que el usuario
-        pueda identificar dicha unidad. Dicho código debe estar formado por el
+        \item \textbf{\gls{UE}}: al igual que la anterior, tendremos un
+        identificador interno que será la \textit{primary key} y, además, una clave candidata
+        que será el \textbf{código} de la unidad estratigráfica, que servirá para que el
+        usuario pueda identificar dicha unidad. Dicho código debe estar formado por el
         \textbf{número de excavación} al que pertenece la unidad más el \textbf{número de orden}
         de la unidad en la excavación. Por ejemplo, si la unidad pertenece a la excavación
         \textbf{001} y es la unidad número 32 encontrada en la excavación (\textbf{032}), el
         código que identificaría a la unidad sería el \textbf{001032}.
 
-        \item \textbf{Hecho}: la forma que tiene el usuario de identificar a cada hecho es algo
+        \item \textbf{\gls{Hecho}}: la forma que tiene el usuario de identificar a cada hecho es algo
         más compleja. Al igual que las dos entidades anteriores, también se tendrá un
-        identificador interno que actuará de primary key y, además, se tendrá una clave
+        identificador interno que actuará de \textit{primary key} y, además, se tendrá una clave
         candidata compuesta, que estará formada por la \textbf{letra} (tipo de hecho) y un
         \textbf{número}. Para poder darle un valor coherente a este número, se elige una
         unidad estratigráfica perteneciente al hecho y el código de dicha unidad será el
@@ -603,16 +606,16 @@ relaciones. Todo esto, se verá en la sección siguiente.
         para identificar al hecho de tipo muro (\textbf{MR}) la clave candidata del hecho
         sería \textbf{MR001032}.
 
-        \item \textbf{Estancia}: en este caso, al igual que las entidades anteriores,
-        tendremos un identificador interno como primary key que solo se conocerá internamente
-        en el sistema y, además, tendremos un \textbf{número de estancia}, que será la clave
-        candidata de la entidad, visible y reconocible para los usuarios de la aplicación. Al
-        comienzo del diseño pensábamos que el número de estancia se formaba a partir del número
+        \item \textbf{\gls{Estancia}}: en este caso, al igual que las entidades anteriores,
+        tendremos un identificador interno como \textit{primary key} que solo se conocerá
+        internamente en el sistema y, además, tendremos un \textbf{número de estancia}, que será
+        la clave candidata de la entidad, visible y reconocible para los usuarios de la aplicación.
+        Al comienzo del diseño pensábamos que el número de estancia se formaba a partir del número
         de sector y el número de zona, como está reflejado en el anexo \ref{subsec: doubts},
         pero finalmente este está formado por las letras ES seguidas de tres dígitos. Por ejemplo
         un posible identificador de estancia podría ser \textbf{ES001}.
 
-        \item \textbf{Fotografía}: poseeremos un primary key interno para la entidad y una
+        \item \textbf{Fotografía}: poseeremos un \textit{primary key} interno para la entidad y una
         clave candidata que será el \textbf{número} de la fotografía. Las fotografías están
         relacionadas tanto con las unidades estratigráficas como con las estancias, y es que 
         ambas pueden tener fotografías concretas.
@@ -629,10 +632,10 @@ relaciones. Todo esto, se verá en la sección siguiente.
         con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
         de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
         que muchas unidades estratigráficas construidas pueden estar asociadas. Tiendo esto
-        en cuenta, esta vez no tendremos un primary key interno, sino que el \textbf{nombre}
-        del material será la primary key. Por ejemplo: el material \textbf{Piedra} pudiese
-        formar parte de 50 unidades construidas, siendo únicamente necesario el 
-        \textbf{nombre} del material para identificar a uno.
+        en cuenta, esta vez no tendremos un \textit{primary key} interno, sino que el
+        \textbf{nombre} del material será la \textit{primary key}. Por ejemplo: el material
+        \textbf{Piedra} pudiese formar parte de 50 unidades construidas, siendo únicamente
+        necesario el \textbf{nombre} del material para identificar a uno.
         
         \item \textbf{Material sedimentario}: esta entidad, al igual que la anterior, surge
         porque una unidad estratigráfica sedimentaria puede estar construida con 
@@ -648,7 +651,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
         de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
         que muchas unidades estratigráficas sedimentarias pueden estar asociadas. Igual que el
-        anterior, la primary key sería el \textbf{nombre} del material. Por ejemplo: el
+        anterior, la \textit{primary key} sería el \textbf{nombre} del material. Por ejemplo: el
         material \textbf{Metal} pudiese formar parte de 10 unidades sedimentarias, siendo
         únicamente necesario el \textbf{nombre} del material para identificar a uno. 
     \end{enumerate}
@@ -662,16 +665,16 @@ relaciones. Todo esto, se verá en la sección siguiente.
     no existe una sección como tal, la pregunta sería: \textbf{¿por qué las UE sedimentarias
     tienen un material distinto entonces?} Tras numerosas entrevistas con el arqueólogo al
     final se dedujo que los materiales de la primera hoja de \ref{sec:registrationforms}
-    correspondian a materiales que sólo las UE's sedimentarias podían tener, por esta razón
+    correspondian a materiales que solo las UE's sedimentarias podían tener, por esta razón
     se incorporaron.
 
     \subsubsection{Entidades débiles}
-    La única entidad débil del modelo E/R es la \textbf{Inclusión}. Dicha entidad surge porque
-    una inclusión posee distintos atributos como la \textbf{frecuencia}, el \textbf{grosor} y
-    el \textbf{tipo}, por lo que habría que modelarlos como una entidad que recogiese todos
-    estos datos, además de que una unidad sedimentaria podría tener varias de ellas. En este
-    caso, sí tiene sentido reflejarla como una \textbf{entidad débil}, ya que las inclusiones
-    son propias de cada UE y no se comparten con otras unidades sedimentarias.\\
+    La única entidad débil del modelo E/R es la \textbf{\gls{Inclusion}}. Dicha entidad surge
+    porque una inclusión posee distintos atributos como la \textbf{frecuencia}, el \textbf{grosor}
+    y el \textbf{tipo}, por lo que habría que modelarlos como una entidad que recogiese todos estos
+    datos, además de que una unidad sedimentaria podría tener varias de ellas. En este caso, sí
+    tiene sentido reflejarla como una \textbf{entidad débil}, ya que las inclusiones son propias de
+    cada UE y no se comparten con otras unidades sedimentarias.\\
 
     Por lo tanto, estaría identificada por el \textbf{identificador} de la unidad estratigráfica
     sedimentaria y el atributo discriminador de la entidad débil que en este caso es el
@@ -713,8 +716,8 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \begin{enumerate}
             \item Hacen que el proceso de desarrollo sea más rápido.
             \item No se necesita tener \textbf{conocimiento de SQL} para usar el ORM. Esto
-            hace que la complejidad del DML se reduzca, evitando tener que hacer joins,
-            multi-inserciones, sub-selecciones, etc.
+            hace que la complejidad del DML se reduzca, evitando tener que hacer
+            \textit{joins}, multiinserciones, subselecciones, etc.
             \item El ORM asegura la consulta para cualquier tipo de ataque.
         \end{enumerate}
 
@@ -724,22 +727,22 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \begin{enumerate}
             \item Los ORMS generan una consulta y la pasan a la base de datos. En ocasiones
             estas consultas devuelven una matriz con un formato complejo con
-            \textbf{colecciones}(objetos) que tienen información no relevante para nosotros
+            \textbf{colecciones} (objetos) que tienen información no relevante para nosotros
             \item Cuando la lógica de negocio de la aplicación se vuelve compleja, a veces
             no se puede representar mediante un ORM, aunque sí pueda ser manejable a nivel
-            de consulta
+            de consulta.
         \end{enumerate}
 
     Dicho todo esto, podemos comenzar a hablar sobre el ORM que utilizaremos para la
     aplicación web, el \textbf{ORM de Django}. Este nos permite diseñar nuestras tablas de 
     base de datos sin necesidad de escribir ninguna sentencia SQL, en este caso, en
     \textbf{PostgreSQL}. Un modelo es la fuente de información única y definitiva para los
-    datos, este contendrá los campos y funcionalidades(comportamiento) correspondientes a
+    datos, este contendrá los campos y funcionalidades (comportamiento) correspondientes a
     la naturaleza de los datos que almacena. Normalmente, cada modelo se asigna a una sola
     tabla de base de datos, y cada uno de ellos:
 
         \begin{itemize}
-            \item Es una clase de python que hereda de la clase \textbf{django.db.models.Model}.
+            \item Es una clase de Python que hereda de la clase \textbf{django.db.models.Model}.
             \item Cada atributo de la clase representa un campo (columna) de la base de datos.
             \item Al corresponderse cada entidad a una clase, Django proporciona automáticamente
             una \textbf{API de abstracción de bases de datos} que nos permite realizar las
@@ -752,9 +755,9 @@ relaciones. Todo esto, se verá en la sección siguiente.
     trata de un método especial que devuelve una representación en forma de \textbf{string} de
     cualquier objeto y que Python y Django utilizarán cada vez que una instancia de un 
     modelo necesite ser mostrada como una cadena, como puede ser en el caso de la consola
-    interactiva, en la vista de administrador, en un display de una tabla, etc.\\
+    interactiva, en la vista de administrador, en un \textit{display} de una tabla, etc.\\
 
-    Pongamos un ejemplo, si la unidad estratigráfica posee un \textbf{ForeignKey} que es
+    Pongamos un ejemplo, si la unidad estratigráfica posee una \textbf{clave externa} que es
     la \textbf{excavación} a la que pertenece, dicha instancia de excavación se mostraría
     para el usuario como el \textbf{número de excavación}, ya que en el modelo de la
     excavación existirá un método str que devolvería el \textbf{n\_excavacion},
@@ -763,12 +766,23 @@ relaciones. Todo esto, se verá en la sección siguiente.
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                    frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
-    class Excavacion(models.Model):
-        n_excavacion = models.PositiveIntegerField(unique=True, 
-                        verbose_name='Número de excavación')
-        latitud = models.FloatField()
-        longitud = models.FloatField()
-        altura = models.PositiveSmallIntegerField()
+    class Excavation(models.Model):
+        class Meta:
+            verbose_name = 'excavación'
+            verbose_name_plural = 'excavaciones'
+
+        nombre = models.CharField(max_length=100,
+                    verbose_name='Nombre de la excavación',
+                    blank=True, null=True)
+
+        # Ej. 001, 002, 003, etc
+        n_excavacion = models.CharField(max_length=3,
+                        verbose_name='Número de excavación',
+                        help_text='Ej. 001, 002, 003, etc', 
+                        validators=[validate_number], unique=True)      
+        latitud = models.FloatField(blank=True, null=True)
+        longitud = models.FloatField(blank=True, null=True)
+        altura = models.PositiveSmallIntegerField(blank=True, null=True)
 
         def __str__(self):
             return str(self.n_excavacion)
@@ -784,26 +798,26 @@ relaciones. Todo esto, se verá en la sección siguiente.
     proyecto.\\
 
     Lo siguiente va a ser explicar cómo representar en los modelos las \textbf{primary keys},
-    \textbf{candidate keys} y \textbf{relationships}.\\
+    \textbf{\textit{candidate keys}} y \textbf{\textit{relationships}}.\\
     
     \paragraph{Claves primarias} \underline{}
     \newline En los atributos de los modelos, en los tipos de campo, existe un parámetro llamado
     \textbf{primary\underline{ }key}, si se indica a True, entonces dicho campo será la clave
-    primaria del modelo, pero si no se indica el primary key en ningún campo del modelo,
-    entonces django automáticamente añadirá un campo \textbf{id} para guardar la clave primaria.
+    primaria del modelo, pero si no se indica el \textit{primary key} en ningún campo del modelo,
+    entonces Django automáticamente añadirá un campo \textbf{id} para guardar la clave primaria.
     Dicho atributo será un campo de tipo \textbf{models.BigAutoField}, que nos permite números
     desde el 1 hasta el 9223372036854775807, por lo que no habrá ningún tipo de problema con
     la generación de los id's. Por supuesto, si en algún campo se declara \textbf{explícitamente}
-    la clave primaria, django no generará el campo id y el campo que hayamos elegido pasará a
+    la clave primaria, Django no generará el campo id y el campo que hayamos elegido pasará a
     ser clave primaria. En nuestro modelo E/R, las claves primarias que se generarán
-    automáticamente por django en los modelos serán las de \textbf{Excavacion, UE, Hecho,
+    automáticamente por Django en los modelos serán las de \textbf{Excavacion, UE, Hecho,
     Estancia y Fotografia}. 
     
     \paragraph{Claves candidatas} \underline{}
     \newline Para las \textbf{claves candidatas simples} únicamente hay que indicar en el campo
     correspondiente al argumento \textbf{unique} a True. Por ejemplo, en el modelo
     \textbf{Excavación} mostrado anteriormente el campo del número de excavación es
-    candidate key:
+    \textit{candidate key}:
     
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -836,11 +850,11 @@ relaciones. Todo esto, se verá en la sección siguiente.
             unique_together = ('letra', 'numero',)
     \end{minted}
 
-        \item La forma anterior, sin embargo, no es del todo aconsejable por django ya
+        \item La forma anterior, sin embargo, no es del todo aconsejable por Django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
         ya que la opción de \verb|unique_together| ofrece menor funcionalidad y puede
-        estar deprecated en un futuro. Con esta nueva forma, la clase de metadatos
-        del modelo quedaría así:
+        estar obsoleto (\textit{deprecated}) en un futuro. Con esta nueva forma, la clase
+        de metadatos del modelo quedaría así:
         
     
     \begin{minted}[linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -891,21 +905,20 @@ relaciones. Todo esto, se verá en la sección siguiente.
     relaciones que se dan en nuestro modelo:
 
         \begin{enumerate}
-            \item El \textbf{Hecho} tiene una clave externa referenciando a la estancia a la
-            que está asociado.
-            \item La \textbf{UE}(unidad estratigráfica) tiene dos claves externas, una
+            \item El \textbf{hecho} tiene una clave externa referenciando a la estancia a
+            la que está asociado.
+            \item La \textbf{unidad estratigráfica} tiene dos claves externas, una
             referenciando a la excavación con la que está asociada y otra referenciando al
             hecho al que pertenece.
-            \item La \textbf{Fotografia} tiene también dos claves externas, una referenciando
-            a la unidad estratigráfica asociada y otra referenciando a la estancia.
-            \item La \textbf{Inclusion} tiene una clave externa referenciando la unidad
+            \item La \textbf{fotografía} tiene también dos claves externas, una
+            referenciando a la unidad estratigráfica asociada y otra referenciando a la
+            estancia.
+            \item La \textbf{inclusión} tiene una clave externa referenciando la unidad
             estratigráfica sedimentaria a la que pertenece.
-            \item La \textbf{UESedimentaria} tiene un campo ManyToManyField referenciando a
-            los materiales sedimentarios (\textbf{MaterialSedimentaria}) por los que está
-            formada.
-            \item La \textbf{UEConstruida} tiene un campo ManyToManyField referenciando a
-            los materiales construidos (\textbf{MaterialConstruida}) por los que está
-            formada.
+            \item La \textbf{unidad sedimentaria} tiene un campo ManyToManyField
+            referenciando a los materiales sedimentarios por los que está formada.
+            \item La \textbf{unidad construida} tiene un campo ManyToManyField referenciando a
+            los materiales construidos por los que está formada.
         \end{enumerate}
 
     Esta sería una visión global de la implementación utilizando el ORM que nos ofrece Django.
@@ -925,7 +938,7 @@ Para la implementación de esta funcionalidad, se ha utilizado una biblioteca de
 llamada \href{https://python-docx.readthedocs.io/en/latest/}{\textbf{python-docx}}, que nos
 permite generar documentos mediante instancias de la clase \textbf{docx.Document}. A
 través de una instancia de esta clase, se van añadiendo los párrafos, títulos, tablas,
-imágenes, etc., que se deseen, y finalmente se guarda mediante el método \textbf{save}.
+imágenes, etc., que se deseen, y finalmente, se guarda mediante el método \textbf{save}.
 Pongamos un ejemplo sencillo (se han añadido comentarios en el propio código para una mejor
 comprensión):
 
@@ -975,17 +988,17 @@ El resultado de esta implementación en la aplicación sería el siguiente:
         \label{fig:report-generator2}
     \end{figure}
 
-Así mismo, si en dicha excavación los hechos tuviesen fotografías asociadas, las mismas
+Asimismo, si en dicha excavación los hechos tuviesen fotografías asociadas, las mismas
 se incluirían en el documento.
 
 \subsection{Autenticación}
-En este milestone del proyecto se ha trabajado sobre la autenticación y autorización de
-usuarios en la aplicación web. A continuación se explicará todo lo que se ha
-implementado.\\
+En este \textit{milestone} del proyecto se ha trabajado sobre la autenticación y
+autorización de usuarios en la aplicación web. A continuación se explicará todo lo que se
+ha implementado.\\
 
 Django cuenta con un \textbf{sistema de de autenticación} \cite{django-auth} de usuarios,
 este puede manejar cuentas de usuario, grupos de usuario, permisos, sesiones de usuario
-basadas en cookies, etc. Antes de nada debemos de tener claro qué significan los términos
+basadas en cookies, etc. Antes de nada, debemos de tener claro qué significan los términos
 de autenticación y autorización:
 
     \begin{itemize}
@@ -1005,44 +1018,45 @@ por ejemplo, poder ver una excavacion, poder editarla, etc., para ello se usa el
 
 \subsubsection{Vistas de autenticación}
 En Django hay dos formas de implementar la autenticación de la aplicación: mediante la
-definición de \textbf{tus propias vistas}, o utilizando las vistas \textbf{ya predefinidas}
-de Django. En nuestro caso hemos obtado por la última, ya que nos ofrece todo lo necesario
-para nuestro propósito y hace mucho más sencilla la implementación.\\
+definición de \textbf{tus propias vistas} o utilizando las vistas \textbf{ya predefinidas}
+de Django. En nuestro caso hemos obtado por la última opción, puesto que nos ofrece todo lo
+necesario para nuestro propósito y hace mucho más sencilla la implementación.\\
 
 Para aclarar un poco más esto último, si nos fijamos en la figura \ref{fig:mvt}, lo que
-estaríamos usando ya de forma predefinida por Django serían las urls (\textbf{URL}) y las
-vistas (\textbf{VIEW}), quedando a nuestro cargo la definición de los correspondientes
-\textbf{plantillas/templates} asociadas a cada una de las vistas y urls.\\
+estaríamos usando ya de forma predefinida por Django serían las URL (\textbf{URL}) y las
+vistas (\textbf{VIEW}), quedando a nuestro cargo la definición de las correspondientes
+\textbf{plantillas/\textit{templates}} asociadas a cada una de las vistas y URL.\\
 
 A continuación, se indican las rutas que se encuentran definidas en
 \textbf{django.contrib.auth.urls} junto a la descripción de las funcionalidades de las
-\textbf{plantillas/templates} que renderizan:
+\textbf{plantillas/\textit{templates}} que renderizan:
 
     \begin{itemize}
-        \item \textbf{accounts/login/}: es el template desde el que los usuarios pueden
-        loguearse en la aplicación, es decir, autenticarse.
-        \item \textbf{accounts/logout/}: cuando un usuario está logueado y accede a esta
-        url, se deslogueará automáticamente.
+        \item \textbf{accounts/login/}: es el \textit{template} desde el que los usuarios
+        pueden iniciar sesión en la aplicación, es decir, autenticarse.
+        \item \textbf{accounts/logout/}: cuando un usuario ya ha iniciado sesión y accede
+        a esta URL, se cerrará su sesión automáticamente.
         \item \textbf{accounts/password\underline{ }change/}: permite a un usuario
         autenticado cambiar su contraseña en la aplicación.
-        \item \textbf{accounts/password\underline{ }change/done/}: es el template que
-        muestra el resultado del cambio de contraseña.
+        \item \textbf{accounts/password\underline{ }change/done/}: es el \textit{template}
+        que muestra el resultado del cambio de contraseña.
         \item \textbf{accounts/password\underline{ }reset/}: en caso de olvido de contraseña,
-        este template permite a un usuario no logueado, introducir su correo para que se le
-        envíe un enlace de recuperación de contraseña.
+        este \textit{template} permite a un usuario no logueado, introducir su correo para
+        que se le envíe un enlace de recuperación de contraseña.
         \item \textbf{accounts/password\underline{ }reset/done/}: muestra el resultado de
         haber enviado el correo de recuperación de contraseña al usuario.
-        \item \textbf{accounts/reset/<uidb64>/<token>/}: en este caso, la url anterior
+        \item \textbf{accounts/reset/<uidb64>/<token>/}: en este caso, la URL anterior
         envía un enlace de recuperación de contraseña al usuario, este enlace tiene el
-        formato aquí indicado, un \textbf{uidb64}, que sería el id del usuario codificado
-        en base 64, y un \textbf{token}, que es un token de seguridad que se genera en
-        el momento de la creación del enlace y verifica que el password sea válido.
-        \item \textbf{accounts/reset/done/}: este template muestra un mensaje de confirmación
-        tras el cambio de contraseña.
+        formato aquí indicado, \textbf{uidb64}, que sería el id del usuario codificado
+        en base 64, y un \textbf{\textit{token}}, que es un \textit{token} de seguridad que
+        se genera en el momento de la creación del enlace y verifica que el password sea
+        válido.
+        \item \textbf{accounts/reset/done/}: este \textit{template} muestra un mensaje de
+        confirmación tras el cambio de contraseña.
     \end{itemize}
 
 \subsubsection{Registro de usuarios}
-En este punto, dado que Django no ofrece ninguna vista ni url ya definida para el registro
+En este punto, dado que Django no ofrece ninguna vista ni URL ya definida para el registro
 de usuarios, se ha procedido a incorporar a nuestra aplicación una ruta (register/),
 una vista (register) y una plantilla (register.html). Desde la plantilla, un usuario no
 registrado en el sistema podrá registrarse introduciendo su \textbf{nombre de usuario}, un
@@ -1055,13 +1069,13 @@ la aplicación:
     \begin{enumerate}
         \item Un usuario no registrado rellena el formulario de registro y lo envía. Ahora
         estaría registrado en el sistema, pero como un usuario \textbf{inactivo}, por lo
-        que no podrá loguearse en la aplicación.
+        que no podrá iniciar sesión en la aplicación.
         \item Al realizarse una solicitud de registro, se enviará un correo al administrador
         del sistema para que apruebe el registro del usuario.
         \item El administrador del sistema aprueba el registro del usuario, \textbf{activando}
-        al usuario desde su panel de administración.
-        \item Se le notifica al usuario mediante correo electrónico que ya puede hacer login
-        en la aplicación.
+        al usuario desde su panel de administración y dándole los permisos correspondientes.
+        \item Se le notifica al usuario mediante correo electrónico que ya puede iniciar
+        sesión en la aplicación.
     \end{enumerate}
 
 \subsubsection{Envío de correos} \label{subsubsec:send-mails}
@@ -1069,7 +1083,7 @@ El envío de correos electrónicos es una parte importante de la aplicación, ya
 utiliza para enviar correos de recuperación de contraseña, para activar usuarios, para
 confirmar las activaciones, etc.\\
 
-A pesar de que python tiene una interfaz para enviar correos en el módulo de
+A pesar de que Python tiene una interfaz para enviar correos en el módulo de
 \textbf{smtplib}, Django incorpora capas superiores para que el envío de los correos se
 haga de forma mas rápida y para dar soporte a las plataformas que no puedan usar SMTP
 \footnote{\textbf{Simple Mail Transfer Protocol} es un protocolo que utilizan los servidores
@@ -1110,8 +1124,8 @@ que estará en una variable de entorno junto al correo de la cuenta.
 Uno de los puntos más importantes de la aplicación es el manejo de permisos y roles de
 usuario. Para el control de ello, Django viene integrado con un sistema de permisos,
 que nos permite controlar qué usuarios pueden \textbf{ver}, \textbf{añadir}, \textbf{
-modificar} o \textbf{eliminar}. Por ejemplo, para el manejo de los usuarios que pueden
-realizar acciones sobre excavaciones tendríamos:
+modificar} o \textbf{eliminar} ciertos modelos de la aplicación. Por ejemplo, para el
+manejo de los usuarios que pueden realizar acciones sobre excavaciones tendríamos:
 
     \begin{itemize}
         \item \textbf{Ver}: controlar qué usuarios pueden ver excavaciones desde las
@@ -1203,16 +1217,16 @@ realizar acciones sobre excavaciones tendríamos:
     \end{itemize}
 
 Como vemos, en todas las vistas se hace uso de \textbf{decoradores} \cite{decorators},
-que nos permiten controlar el acceso a las vistas. En este caso, el decorador
+que nos permiten controlar el acceso a estas. En este caso, el decorador
 \textbf{@login\_required} nos permite controlar que el usuario esté autenticado,
 y el decorador \textbf{@permission\_required} nos permite controlar que el usuario
 tenga el permiso correspondiente.\\
 
 Esto hace mucho más segura la aplicación, ya que si un usuario no autenticado intenta
-acceder a alguna url a la que no tiene permiso \textbf{escribiéndola directamente en
+acceder a alguna URL a la que no tiene permiso \textbf{escribiéndola directamente en
 el navegador}, primero se comprobará que esté autenticado en el sistema, y en caso
-contrario se le redirigirá a la página de login. Como vemos en la siguiente imagen,
-el usuario ha intentado acceder a la página add\_excavation/ sin estar autenticado,
+contrario se le redirigirá a la página de inicio de sesión. Como vemos en la siguiente
+imagen, el usuario ha intentado acceder a la página add\_excavation/ sin estar autenticado,
 por lo que se le ha redirigido a la página de login para luego redirigirlo a la página
 requerida (\textbf{?next=/add\_excavation/}).
 
@@ -1225,7 +1239,7 @@ requerida (\textbf{?next=/add\_excavation/}).
 
 
 \newpage Una vez autenticado, se pasará al segundo decorador, que comprobará que tenga el permiso
-correspondiente y en caso contrario mostrará un mensaje de \textbf{403 Forbidden}
+correspondiente y en caso contrario, mostrará el mensaje \textbf{403 Forbidden}
 
     \begin{figure}[H]
         \centering
@@ -1238,18 +1252,24 @@ Otro de los temas importantes de la aplicación son los roles de usuario, que se
 siguientes:
 
     \begin{enumerate}
-        \item \textbf{Administrador}: es el usuario que tiene todos los permisos del
-        sistema, puede realizar cualquier acción dentro de él: eliminar modelos, eliminar
+        \item \textbf{Arqueólogo lector}: corresponde a un arqueólogo que únicamente tiene
+        permisos de lectura, es decir, que no puede añadir, modificar o eliminar
+        datos de excavaciones, aunque sí pueda verlos.
+
+        \item \textbf{Arqueólogo editor}: tiene todos los permisos necesarios para añadir,
+        modificar o eliminar excavaciones, hechos, unidades estratigráficas, etc. en la
+        aplicación.
+
+        \item \textbf{Arqueólogo administrador (Staff)}: en nuestra aplicación, corresponderá
+        al arqueólogo con permisos privilegiados, que se encargará de aceptar o rechazar a
+        los usuarios que envían peticiones de registro. Estos podrán \textbf{añadir y
+        eliminar} a usuarios de grupos de permisos ya definidos, además de \textbf{tener
+        acceso a todos los modelos} definidos en el sistema: excavaciones, inclusiones,
+        materiales, etc.
+
+        \item \textbf{Administrador del sistema}: es el usuario que tiene todos los permisos
+        del sistema, puede realizar cualquier acción dentro de él: eliminar modelos, eliminar
         usuarios, crear grupos, cambiar permisos a usuarios concretos, etc.
-        \item \textbf{Staff}: es el usuario con permisos otorgados por el administrador
-        del sistema. En nuestra aplicación corresponderá al arqueólogo con permisos
-        privilegiados, que se encarga de aceptar o rechazar a los usuarios que se han
-        enviado la petición de registro. Estos deberán poder d \textbf{añadir y eliminar}
-        usuarios de los grupos de permisos ya definidos, además de \textbf{tener acceso a
-        todos los modelos} definidos en el sistema: excavaciones, inclusiones, materiales, etc.
-        \item \textbf{Usuario registrado}: es el usuario común de la aplicación, que tendrá
-        los permisos otorgados por el arqueólogo administrador (staff), bien por añadirlo
-        a un \textbf{grupo de permisos} o por darle permisos específicos.
     \end{enumerate}
 
 \subsubsection{Panel de administración}
@@ -1278,15 +1298,15 @@ cualquier objeto perteneciente a los modelos que hemos definido en la aplicació
 
 
 \subsection{Testear comportamiento}
-En este milestone explicaremos por qué es tan importante la realización de tests durante
-el proceso de desarrollo y cómo lo hemos llevado a cabo.\\
+En este \textit{milestone} explicaremos por qué es tan importante realizar tests
+durante el proceso de desarrollo y cómo los hemos llevado a cabo.\\
 
 Los errores humanos en el desarrollo del \textit{software} son posibles y pueden causar
-fallos o defectos en cualquier fase del desarrollo del \textit{software}. Dichos errores
-pueden ser algo trivial, \textbf{fácil} de solucionar, o algo más \textbf{complejo}, que
-pueda requerir tiempo y un coste elevado para solucionarlo. Dichos errores pueden evitarse
-con un correcto testeo durante la fase del desarrollo del \textit{software}, ya que gracias
-a él podremos \cite{why-testing}:
+fallos o defectos en cualquier fase del desarrollo de este. Dichos errores pueden ser algo
+trivial, \textbf{fácil} de solucionar, o algo más \textbf{complejo}, que pueda requerir
+tiempo y un coste elevado para solucionarlo. Dichos errores pueden evitarse con un correcto
+testeo durante la fase del desarrollo del \textit{software}, ya que gracias a él
+podremos \cite{why-testing}:
 
     \begin{itemize}
         \item \textbf{Detectar errores} durante el desarrollo del \textit{software}.
@@ -1295,26 +1315,27 @@ a él podremos \cite{why-testing}:
         \item \textbf{Cumplir los requisitos} especificados por el cliente, y por lo tanto,
         que el cliente esté satisfecho.
         \item Obtener un funcionamiento \textbf{fiable y de alto rendimiento}.
-        \item Evitar que en \textbf{releases}\footnote{\textbf{Lanzamiento} (publicación)
-        de una versión definitiva del \textit{software}} puedan introducirse errores.
+        \item Evitar que en \textbf{\textit{releases}}\footnote{\textbf{Lanzamiento}
+        (publicación) de una versión definitiva del \textit{software}.} puedan introducirse
+        errores.
     \end{itemize}
 
 Poniendo un ejemplo, supongamos que queremos enviar una cantidad de dinero a través de
 Bizum a un amigo, se comienza la \textbf{transacción} y se le envía el dinero al
-destinatario, indicando finalmente un mensaje de confirmación. Sin embargo, nuestro amigo
+destinatario, finalmente se le envía un mensaje de confirmación. Sin embargo, nuestro amigo
 dice que no ha recibido ningún ingreso en su cuenta y nosotros tampoco vemos que en nuestra
 cuenta se haya anulado el envío del dinero. Esta situación nos generará molestia y no
-estaremos satisfechos con el servicio. ¿Por qué sucede esto? Esto sucede por un testeo
-incorrecto o inexistente antes de lanzar el producto (\textbf{release}).\\
+estaremos satisfechos con el servicio. ¿Por qué sucede esto? Sucede por un testeo
+incorrecto o inexistente antes de lanzar el producto (\textbf{\textit{release}}).\\
 
 El testeo de una aplicación web es una tarea difícil, ya que está compuesta por varias
 capas lógicas, que van desde el manejo de \textbf{solicitudes HTTP}, pasando por la
-\textbf{validación y procesamiento de formularios}, hasta la \textbf{renderización de las
+\textbf{validación y procesamiento de formularios}, hasta la \textbf{visualización de las
 plantillas}. Para realizar todas estas tareas, Django tiene un marco de ejecución de
-pruebas con el que se pueden simular solicitudes HTTP, insertar datos de prueba y en
+pruebas con el que se pueden simular solicitudes HTTP, insertar datos de prueba y, en
 general, comprobar que el código funciona como se espera.\\
 
-Antes de nada, vamos a explicar la jerarquía de clases que existen para el testeo de la
+Antes de nada, vamos a explicar la jerarquía de clases que existe para el testeo de la
 aplicación:
 
     \begin{figure}[H]
@@ -1332,20 +1353,20 @@ que implementa el \textit{framework} de test de Django:
 
     \begin{itemize}
         \item \textbf{SimpleTestCase}: esta clase añade numerosas funcionalidades a la
-        clase base del módulo de Python. Normalmente es utilizada cuando no se necesita
-        ninguna consulta a la base de datos.
+        clase base del módulo de Python. Normalmente, se utiliza cuando no se consulta a
+        la base de datos.
         \item \textbf{TransactionTestCase}: esta clase añade más funcionalidades a la
         clase SimpleTestCase. Esta clase y TestCase (siguiente punto) son idénticas
         excepto por la forma en que la base de datos se restablece.
         \item \textbf{TestCase}: esta clase es la más utilizada para escribir tests en
         Django. En nuestros tests, hemos utilizado esta clase, ya que nuestra aplicación
-        usa una base de datos y será por lo tanto necesaria.
+        usa una base de datos y será necesaria.
         \item \textbf{LiveServerTestCase}: esta clase es la más peculiar de todas, ya que
         hace lo mismo que TransactionTestCase, pero además, permite que se ejecuten
         \textbf{tests visuales}, es decir, tests en los que se abre un navegador y se
         se simulan acciones reales de un usuario, verificando que la página se comporta
-        como es debido, por ejemplo, al pulsar un botón, al loguearse, al ver las unidades
-        estratigráficas, etc.
+        como es debido, por ejemplo, al pulsar un botón, al iniciar sesión, al ver las
+        unidades estratigráficas, etc.
     \end{itemize}
 
 \subsubsection{Base de datos de tests}
@@ -1354,40 +1375,41 @@ funcionar (aquellos que heredan de \textbf{TestCase} de Django). Esta base de da
 ser la base de datos real, es decir, la de producción, ya que al finalizar los tests podría
 estar en un estado inválido o desconocido. Para ello, Django crea una base de datos nueva
 en el momento en que se ejecutan los tests, que tendrá la misma configuración que la
-indicada en el archivo \textbf{settings.py} del proyecto y que además, se eliminará al
+indicada en el archivo \textbf{settings.py} del proyecto y que, además, se eliminará al
 finalizar los tests.\\
 
 Para lanzar los tests en Django se tiene que usar el comando \textbf{test} de la utilidad
-\textbf{manage.py} de nuestro proyecto, que básicamente es un archivo ejecutable con el
+\textbf{manage.py} de nuestro proyecto que, básicamente, es un archivo ejecutable con el
 que se pueden ejecutar los comandos del proyecto Django, comandos relacionados con modelos,
 migraciones, tests, etc. Veamos un sencillo ejemplo de lanzamiento de tests:
 
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.40]{imagenes/db-test.png}
-        \caption{Base de datos para testing}
+        \caption{Base de datos para \textit{testing}}
         \label{fig:db-test}
     \end{figure}
 
-Debemos recordar que nosotros al inicio del desarrollo del \textit{software}, decidimos
-lanzar el proyecto usando \textbf{docker} \cite{docker} y \textbf{docker-compose}
-\cite{docker-compose}, es decir, dockerizándolo, por esta razón lanzamos el contenedor
-antes para lanzar los tests.\\
+Debemos recordar que nosotros, al inicio del desarrollo del \textit{software}, decidimos
+lanzar el proyecto usando \textbf{Docker} \cite{docker} y \textbf{Docker Compose}
+\cite{docker-compose}, es decir, \textit{dockerizándolo}, por esta razón lanzamos el
+contenedor antes para lanzar los tests.\\
 
-Como vemos, lo primero que se hace es crear la base de datos para testing, posteriormente
-se ejecutan los tests (cada punto indica la ejecución correcta de un test) y finalmente se
-destruye la base de datos creada al principio.\\
+Como vemos, lo primero que se hace es crear la base de datos para \textit{testing},
+posteriormente se ejecutan los tests (cada punto indica la ejecución correcta de un test)
+y finalmente se destruye la base de datos creada al principio.\\
 
 En este caso, si quisiéramos ver con más detalle lo que sucede, podríamos indicar en el
-comando la opción \textbf{-v <nivel>} (verbosity) en el que el nivel indica la profundidad
-de detalle (0,1,2,3). En este caso, dado que la salida es demasiado extensa, no se aporta
-la imagen. Si ejecutásemos los tests con un nivel dos o superior podríamos ver cómo Django,
-antes de lanzar los tests, realiza todas las \textbf{migraciones} de las base de datos,
-teniendo de esta forma un entorno independiente para el testeo de la aplicación y dejando
-la base de datos usada en producción en el mismo estado que al comienzo de los tests.\\
+comando la opción \textbf{-v <nivel>} (\textit{verbosity}) en el que el nivel indica la
+profundidad de detalle (0,1,2,3). En este caso, dado que la salida es demasiado extensa,
+no se aporta la imagen. Si ejecutásemos los tests con un nivel dos o superior podríamos
+ver cómo Django, antes de lanzar los tests, realiza todas las \textbf{migraciones} de las
+base de datos, teniendo de esta forma un entorno independiente para el testeo de la
+aplicación y dejando la base de datos usada en producción en el mismo estado que al
+comienzo de los tests.\\
 
 \subsubsection{Lanzamiento de tests}
-Por defecto, Django incorpora en su estructura base de proyecto, un archivo llamado
+Por defecto, Django incorpora en su estructura base de proyecto un archivo llamado
 \textbf{tests.py}, donde se podrán escribir todos los tests necesarios para el proyecto.
 Sin embargo, dado que nuestra aplicación tiene miles de líneas de código, se ha decidido
 crear un directorio llamado \textbf{tests} y dentro de él, todos los archivos (módulos) de
@@ -1397,13 +1419,14 @@ tests que sean necesarios. Concretamente, hemos creado los siguientes archivos:
         \item \textbf{tests/\underline{  }init\underline{  }.py}: este archivo es el
         encargado de importar todos los módulos de tests que se encuentren en el
         directorio \textbf{tests}.
-        \item \textbf{tests/test\_urls.py}: este archivo contiene los tests de las urls de la
-        aplicación. Comprueba que las urls de la aplicación estén vinculadas siempre a su
+        \item \textbf{tests/test\_urls.py}: este archivo contiene los tests de las URL de la
+        aplicación. Comprueba que las URL de la aplicación estén vinculadas siempre a su
         correpondiente vista.
-        \item \textbf{tests/test\_settings.py}: este archivo contiene los tests de los settings
-        de la aplicación. Comprueba que ciertas variables esenciales en la aplicación
-        estén correctamente declaradas. Por ejemplo, que la \textbf{SECRET\_KEY} de la
-        aplicación esté siemrpre declarada en una variable de entorno.
+        \item \textbf{tests/test\_settings.py}: este archivo contiene los tests de los
+        \textit{settings} de la aplicación. Comprueba que ciertas variables esenciales en
+        la aplicación estén correctamente declaradas. Por ejemplo, que la
+        \textbf{SECRET\_KEY} de la aplicación esté siempre declarada en una variable de
+        entorno.
         \item \textbf{tests/test\_models.py}: este archivo contiene los tests de los modelos
         de la aplicación. Principalmente testea que las operaciones de guardado de distintos
         modelos funcionen adecuadamente.
@@ -1420,16 +1443,16 @@ tests que sean necesarios. Concretamente, hemos creado los siguientes archivos:
 
 Gracias al descubrimiento de pruebas (\textbf{Test discovery}) basado en el módulo de
 unittest \cite{test-discovery}, se descubrirán tests que se encuentren en cualquier nombre
-de archivo que siga la expresión regular \textbf{test*.py}. Además tambien podemos indicar
-la ejecución de tests concretos mediante la adición de \textbf{etiquetas de test} (test
-labels). Por ejemplo, supongamos que queremos ejecutar un determinado método de test
-llamado \textbf{test\_list\_excavations\_GET}. Para ello, podemos indicarlo de la siguiente
-forma:
+de archivo que siga la expresión regular \textbf{test*.py}. Además, tambien podemos indicar
+la ejecución de tests concretos mediante la adición de \textbf{etiquetas de test}
+(\textit{test labels}). Por ejemplo, supongamos que queremos ejecutar un determinado método
+de test llamado \textbf{test\_list\_excavations\_GET}. Para ello, podemos indicarlo de la
+siguiente forma:
 
     \begin{enumerate}
         \item \textbf{myFindings.tests} es la ruta completa de puntos de Python hacia el
         paquete \textbf{tests}.
-        \item \textbf{test\_views} indica el módulo (arquivo Python) donde se quieren
+        \item \textbf{test\_views} indica el módulo (archivo Python) donde se quieren
         buscar los tests.
         \item \textbf{TestListingViews} indica el nombre de la \textbf{subclase de TestCase},
         ya que hereda de la clase TestCase de Django:
@@ -1451,9 +1474,9 @@ forma:
         \label{fig:one-test}
     \end{figure}
 
-Al terminar la realización de test (por ahora) en este milestone se han realizado un total de
-\textbf{142 tests}, intentando testear la máxima cantidad de código posible. La ejecución de
-los mismos se encuentra en la siguiente imagen:
+Al terminar la realización de test (por ahora) en este \textit{milestone} se han realizado
+un total de \textbf{142 tests}, intentando testear la máxima cantidad de código posible.
+La ejecución de los mismos se encuentra en la siguiente imagen:
 
     \begin{figure}[H]
         \centering
@@ -1463,9 +1486,9 @@ los mismos se encuentra en la siguiente imagen:
     \end{figure}
 
 \subsection{Integración continua}
-En este milestone del proyecto se va a explicar en qué consiste la integración continua y
-cómo se ha llevado a cabo en este proyecto. Antes de nada, vamos a explicar en qué consiste
-la integración continua \cite{continuous-integration}:
+En este \textit{milestone} del proyecto se va a explicar en qué consiste la integración
+continua y cómo se ha llevado a cabo en este proyecto. Antes de nada, vamos a explicar en
+qué consiste la integración continua \cite{continuous-integration}:
 
     \begin{itemize}
         \item La \textbf{integración continua} o \textbf{CI} es una práctica de desarrollo
@@ -1484,15 +1507,15 @@ automáticamente. Este tipo de \textbf{pruebas automatizadas} es lo que se conoc
 integración continua.\\
 
 Entre los principales requisitos que debe tener el sistema de integración continua que
-usemos, se encuentran:
+usemos se encuentran:
 
     \begin{itemize}
         \item Que sea sencillo de configurar, tanto para la ejecución de tests como para
         cualquier otra tarea.
         \item Que no requiera introducir tarjeta de crédito o pagar por mensualidad, es
         decir, que sea gratuito.
-        \item Que sea fácil de integrar con Github, es decir, ver fácilmente el resultado
-        de la integración continua ejecutada.
+        \item Que sea fácil de integrar con Github, es decir, que permita ver fácilmente el
+        resultado de la integración continua ejecutada.
     \end{itemize}
 
 En la actualidad, existen numerosos sistemas de CI, entre los que podemos encontrar:
@@ -1502,11 +1525,11 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
         estándar que es el sistema, quizás este sea el más recomendado de usar, sin embargo,
         requiere introducir tarjeta de crédito, por lo que lo hemos descartado como opción.
         \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente es el más
-        popular en la actualidad. Sin embargo, este no es solo un sistema de CI, por lo
+        popular en la actualidad. Sin embargo, no es solo un sistema de CI, por lo
         que muchas de sus características no las usaríamos.
         \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
         proporcionado por Github y tiene la ventaja de poder usar otras Github Actions ya
-        implementadas, además de que permite automatizar, customizar y ejecutar flujos de
+        implementadas, además de que permite automatizar, personalizar y ejecutar flujos de
         trabajo (explicados más adelante) directamente desde el repositorio de Github.
         \item \textbf{Circle CI} \cite{circle-ci}: este sistema de CI es muy completo y
         sencillo de utilizar. Además, permite visualizar los resultados de las pruebas de la
@@ -1517,34 +1540,35 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
     Github Actions de Github, ya que permiten una configuración sencilla, es un servicio
     gratuito, es la herramienta con la que más familiarizados estamos (aunque se podría haber
     escogido Circle CI sin problema), es muy potente y, además, como es obvio, permite ver los
-    resultados de CI directamente en la interfaz de Github.
+    resultados de CI directamente en la interfaz de esta.
 
 \subsubsection{Flujos de trabajo}
-En este apartado, explicaremos qué son los \textbf{flujos de trabajo o workflows} y cuáles
-hemos añadido a nuestro proyecto.\\
+En este apartado, explicaremos qué son los \textbf{flujos de trabajo o \textit{workflows}} y
+cuáles hemos añadido a nuestro proyecto.\\
 
 Un flujo de trabajo es un proceso automatizado que ejecutará uno o más \textbf{trabajos}
-(job), siendo un job una tarea que se ejecuta en un entorno determinado y donde existen una
-serie de pasos (steps). Dichos flujos de trabajo se definen en archivos que siguen el formato
-YAML (Yet Another Markup Language), un formato de serialización de datos de alto nivel
-(comprensible por humanos).\\
+(\textit{job}), siendo un \textit{job} una tarea que se ejecuta en un entorno determinado y
+donde existen una serie de pasos (\textit{steps}). Dichos flujos de trabajo se definen en
+archivos que siguen el formato YAML (\textit{Yet Another Markup Language}), un formato de
+serialización de datos de alto nivel (comprensible por humanos).\\
 
-Estos workflows se definen en la carpeta \textbf{.github/workflows} en el directorio raíz
-del repositorio y puede haber tantos workflows como se desee, normalmente uno por archivo.
-Cada workflow debe tener los siguientes tres componentes:
+Estos \textit{workflows} se definen en la carpeta \textbf{.github/workflows} en el directorio
+raíz del repositorio. Puede haber tantos \textit{workflows} como se desee, normalmente uno
+por archivo. Cada \textit{workflow} debe tener los siguientes tres componentes:
 
     \begin{enumerate}
-        \item El evento que hace que se ejecute el workflow (\textbf{trigger}).
+        \item El evento que hace que se ejecute el \textit{workflow} (\textbf{\textit{trigger}}).
         \item Uno o más trabajos (\textbf{jobs}), cada uno de los cuales estará ejecutado en
         un entorno a elegir (máquina virtual, contenedor, etc.) y ejecutará una serie de
-        pasos (\textbf{steps}).
-        \item Cada step podrá ejecutar un script que hayamos definido nosotros mismos, un
-        comando del entorno donde estemos ejecutando el job, o bien usar una github action
-        predefinida que podamos encontrar en el
+        pasos (\textbf{\textit{steps}}).
+        \item Cada \textit{step} podrá ejecutar un script que hayamos definido nosotros
+        mismos, un comando del entorno donde estemos ejecutando el \textit{job}, o bien usar
+        una Github Action predefinida que podamos encontrar en
         \href{https://github.com/marketplace?type=actions}{GitHub Marketplace}.
     \end{enumerate}
 
-En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
+En nuestro proyecto, hemos definido tres flujos de trabajo o \textit{workflows}, llamados
+de la siguiente forma:
 
     \begin{enumerate}
         \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/docs.yml}
@@ -1552,19 +1576,21 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
         la documentación del proyecto pueda construirse correctamente. Procedemos a
         explicar sus partes principales:
             \begin{enumerate}
-                \item \textbf{Trigger}: este flujo de trabajo se ejecutará cuando se haga
-                push\footnote{Subida de cambios desde el repositorio local al remoto,
-                normalmente con el comando \textbf{git push} o similar.} al repositorio,
-                siempre y cuando los archivos modificados sean el propio archivo
-                donde se define el workflow (\textbf{docs.yml}) o cualquier archivo latex de
-                la documentación.
-                \item \textbf{Job}: existe un único job llamado \textbf{build-latex} que se
-                ejecutará en la última versión de ubuntu (\textbf{ubuntu-latest}) y que
-                tendrá una serie de steps que se encargarán de compilar el código latex.
-                \item \textbf{Steps}: el job build-latex se compone de dos pasos:
+                \item \textbf{\textit{Trigger}}: este flujo de trabajo se ejecutará cuando
+                se haga \textit{push}\footnote{Subida de cambios desde el repositorio local
+                al remoto, normalmente con el comando \textbf{git push} o similar.} al
+                repositorio, siempre y cuando los archivos modificados sean el propio
+                archivo donde se define el \textit{workflow} (\textbf{docs.yml}) o cualquier
+                archivo latex de la documentación.
+                \item \textbf{\textit{Job}}: existe un único \textit{job} llamado
+                \textbf{build-latex} que se ejecutará en la última versión de ubuntu
+                (\textbf{ubuntu-latest}) y que tendrá una serie de \textit{steps} que se
+                encargarán de compilar el código latex.
+                \item \textbf{\textit{Steps}}: el \textit{job} build-latex se compone de dos
+                pasos:
                     \begin{enumerate}
-                        \item \textbf{Checkout}: acción muy típica en Github Actions, se baja
-                        todos los archivos del repositorio para poder trabaar con ellos. En
+                        \item \textbf{Checkout}: acción muy típica en Github Actions. Se baja
+                        todos los archivos del repositorio para poder trabajar con ellos. En
                         él se ha usado una Github Action predefinida llamada
                         \href{https://github.com/marketplace/actions/checkout}{Checkout}.
                         \item \textbf{Compile LaTeX document}: este paso compila todos los
@@ -1577,22 +1603,25 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
 
         \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/build.yml}
         {Build images}}: como ya mencionamos en secciones anteriores, nosotros hemos decidido
-        ejecutar nuestra aplicación utilizando docker y docker-compose, por lo que este flujo
+        ejecutar nuestra aplicación utilizando Docker y Docker Compose, por lo que este flujo
         de trabajo se encargará de comprobar que las imágenes que deben crearse se creen
         correctamente. Entre sus principales partes tenemos:
             \begin{enumerate}
-                \item \textbf{Trigger}: este flujo de trabajo se ejecutará cuando se haga
-                push al repositorio, siempre y cuando los archivos modificados sean el propio
-                archivo donde se define el workflow (\textbf{build.yml}) o cualquier archivo
-                que se encuentre en el primer nivel de la carpeta \textbf{code}, es decir, los
-                archivos \textit{docker-compose.yml, Dockerfile y requirements.txt}.
-                \item \textbf{Job}: existe un único job llamado \textbf{build-images} que se
-                ejecutará en la última versión de ubuntu (\textbf{ubuntu-latest}) y que
-                tendrá una serie de steps que se encargarán de construir las imágenes.
-                \item \textbf{Steps}: el job build-images se compone únicamente de dos pasos:
+                \item \textbf{\textit{Trigger}}: este flujo de trabajo se ejecutará cuando
+                se haga \textit{push} al repositorio, siempre y cuando los archivos
+                modificados sean el propio archivo donde se define el \textit{workflow}
+                (\textbf{build.yml}) o cualquier archivo que se encuentre en el primer nivel
+                de la carpeta \textbf{code}, es decir, los archivos
+                \textit{docker-compose.yml, Dockerfile y requirements.txt}.
+                \item \textbf{\textit{Job}}: existe un único \textit{job} llamado
+                \textbf{build-images} que se ejecutará en la última versión de ubuntu
+                (\textbf{ubuntu-latest}) y que tendrá una serie de \textit{steps} que se
+                encargarán de construir las imágenes.
+                \item \textbf{\textit{Steps}}: el \textit{job} build-images se compone
+                únicamente de dos pasos:
                     \begin{enumerate}
                         \item \textbf{Checkout}: es exactamente el mismo paso descrito para
-                        el workflow anterior.
+                        el \textit{workflow} anterior.
                         \item \textbf{Build images}: en este paso se construyen las
                         imágenes. Para ello, desde la carpeta code se ejecuta el comando
                         \textbf{docker-compose build} para construir las imágenes.
@@ -1603,35 +1632,36 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
         {Tests}}: este flujo de trabajo es algo más complejo que los anteriores y se encargará
         de ejecutar automáticamente las pruebas de tests. Procedamos a explicar sus componentes:
             \begin{enumerate}
-                \item \textbf{Trigger}: al igual que en workflows anteriores, este flujo se
-                ejecutará cuando se haga push al repositorio, siempre y cuando los archivos
-                modificados sean el propio archivo donde se define el workflow
-                (\textbf{tests.yml}) o cualquier archivo python del proyecto de Django.
-                \item \textbf{Job}: en este caso también hay un único job, llamado
-                \textbf{run-tests} y que se ejecutará en la última versión de ubuntu
-                (\textbf{ubuntu-latest}).
+                \item \textbf{\textit{Trigger}}: al igual que en \textit{workflows}
+                anteriores, este flujo se ejecutará cuando se haga \textit{push} al
+                repositorio, siempre y cuando los archivos modificados sean el propio
+                archivo donde se define el \textit{workflow} (\textbf{tests.yml}) o
+                cualquier archivo Python del proyecto de Django.
+                \item \textbf{\textit{Job}}: en este caso también hay un único \textit{job},
+                llamado \textbf{run-tests} y que se ejecutará en la última versión de
+                ubuntu (\textbf{ubuntu-latest}).
                 \item \textbf{Services}: dado que debemos ejecutar los tests utilizando un
                 servicio para la base de datos, ha sido necesario definir dentro del ejecutor
                 del flujo (ubuntu-latest) un servicio de postgres. De esta forma,
                 podremos crear la base de datos para test.              
-                \item \textbf{Steps}: este job tiene un total de cinco pasos, que son los
-                siguientes:
+                \item \textbf{\textit{Steps}}: este \textit{job} tiene un total de cinco
+                pasos, que son los siguientes:
                     \begin{enumerate}
                         \item \textbf{Checkout}: es exactamente el mismo paso descrito para
-                        el workflow anterior.
+                        el \textit{workflow} anterior.
                         \item \textbf{Set up Python}: en este paso inicializamos el entorno
-                        con una \textbf{versión de python}, en concreto con la versión 3.10.
+                        con una \textbf{versión de Python}, en concreto con la versión 3.10.
                         Para ello, se ha utilizado la Github Action predefinida
                         \href{https://github.com/marketplace/actions/setup-python}{Setup
                         Python}.
                         \item \textbf{Install dependencies}: instalación de las dependencias
                         necesarias para que el proyecto funcione. Dichas dependencias se
-                        encuentran en el archivo \textbf{requires.txt}.
+                        encuentran en el archivo \textbf{requirements.txt}.
                         \item \textbf{Run tests}: ejecución de los tests. Para ello, se han
                         tenido que definir varias variables de entorno. Estas variables de
-                        entorno se almacenan en los \textbf{secrets} de Github, variables
-                        secretas que se definen en el repositorio y que luego son accesibles
-                        desde el entorno de los workflow.\\
+                        entorno se almacenan en los \textbf{\textit{secrets}} de Github,
+                        variables secretas que se definen en el repositorio y que luego son
+                        accesibles desde el entorno de los \textit{workflows}.\\
                         
                         Dicho esto, cabe destacar que para la ejecución de los tests, se ha
                         utilizado la herramienta \href{https://pypi.org/project/coverage/}
@@ -1644,12 +1674,12 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
 
                                 \begin{figure}[H]
                                     \centering
-                                    \includegraphics[scale=0.40]{imagenes/codecov-report.png}
+                                    \includegraphics[scale=0.41]{imagenes/codecov-report.png}
                                     \caption{Informe de Codecov}
                                     \label{fig:codecov-report}
                                 \end{figure}
                         
-                        Como vemos, se ha testeado el 92 por ciento del código por ahora, lo
+                        Como vemos, se ha testeado el 97 por ciento del código por ahora, lo
                         cual es un resultado bastante bueno y, además se ha escrito el
                         informe en el archivo \textbf{coverage.xml}.
                         
@@ -1664,15 +1694,15 @@ En nuestro proyecto, hemos definido tres flujos de trabajo o workflows:
             \end{enumerate}
     \end{enumerate}
 
-Estos son los flujos de trabajo o workflows que se ejecutarán automáticamente en nuestro
-proyecto cada vez que se produzca uno de los eventos descritos.
+Estos son los flujos de trabajo o \textit{workflows} que se ejecutarán automáticamente en
+nuestro proyecto cada vez que se produzca uno de los eventos descritos.
 
 \subsubsection{Insignias de estado}
 Una buena práctica en un proyecto \textit{software} donde se practique integración continua,
-es la inclusión de \textbf{insignias de estado}, o \textbf{badges}. Antes de nada, vamos a
-explicar qué es una insignia de estado: una insignia de estado es simplemente un elemento
-gráfico que indica si un flujo de trabajo falla o pasa actualmente. Con esto en mente,
-nosotros podríamos incluir cuatro insignias de estado: \textbf{una por cada flujo de
+es la inclusión de \textbf{insignias de estado}, o \textbf{\textit{badges}}. Antes de nada,
+vamos a explicar qué es una insignia de estado: una insignia de estado es simplemente un
+elemento gráfico que indica si un flujo de trabajo falla o pasa actualmente. Con esto en
+mente, nosotros podríamos incluir cuatro insignias de estado: \textbf{una por cada flujo de
 trabajo de CI} y otra adicional mostrando el \textbf{porcentaje de código testeado}.\\
 
 Normalmente dichas insignias se incluyen en la página principal del proyecto, es decir, en
@@ -1688,19 +1718,19 @@ repositorio sería el siguiente:
     \end{figure}
 
 Como vemos, todas ellas indican que las pruebas automatizadas de integración continua han
-pasado con éxito y, además, tenemos el porcentaje de codecov añadido, para el cual se ha
-obtenido el badge desde Codecov web. Adicionalmente, se ha añadido el badge de la
-\textbf{licencia} de código que estamos usando, \textbf{gplv3}.
+pasado con éxito y, además, tenemos el porcentaje de Codecov añadido, para el cual se ha
+obtenido el \textit{badge} desde Codecov web. Adicionalmente, se ha añadido el
+\textit{badge} de la \textbf{licencia} de código que estamos usando, \textbf{gplv3}.
 
 \subsection{API REST}
-En este milestone del desarrollo \textit{software}, vamos a explicar en qué consiste una
-API, los distintos tipos que nos podemos encontrar, por qué son necesarias y sobre todo,
-cómo la hemos implementado en nuestra aplicación web.\\
+En este \textit{milestone} del desarrollo \textit{software}, vamos a explicar en qué
+consiste una API, los distintos tipos que nos podemos encontrar, por qué son necesarias y,
+sobre todo, cómo la hemos implementado en nuestra aplicación web.\\
 
-Una \textbf{API \cite{api} (Application Programming Interface o Interfaz de programación
-de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e integrar el
-\textit{software} de las aplicaciones, es decir, establecen cómo se han de comunicar dos
-aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\ \\
+Una \textbf{API \cite{api} (\textit{Application Programming Interface} o Interfaz de
+programación de aplicaciones)} es un conjunto de protocolos y estándares para desarrollar e
+integrar el \textit{software} de las aplicaciones, es decir, establecen cómo se han de
+comunicar dos aplicaciones e intercambiar datos en internet mediante un conjunto de reglas.\\ \\
 
 La creación de una API permite que los servicios o recursos que utiliza una aplicación
 puedan ser accedidos desde cualquier otro servicio o aplicación, sin necesidad de
@@ -1710,8 +1740,8 @@ que use la API, podemos distinguir dos tipos:
     \begin{itemize}
         \item \textbf{SOAP}: este tipo de API, conocida como \textbf{Protocolo de Acceso a
         Objetos Simples}, surgió como consecuencia del creciente uso de las APIs y para
-        permitir una estandarización en el intercambio de la información. Utilizan el XML
-        como el lenguaje de programación de intercambio de datos, y pueden usar el HTTP,
+        permitir una estandarización en el intercambio de la información. Utilizan XML
+        como lenguaje de programación de intercambio de datos y, pueden usar HTTP,
         FTP, SMTP, etc. como protocolo de comunicación. Con este tipo de protocolo, la
         comunicación entre aplicaciones que se encuentren en entornos distintos o que estén
         escritas en distintos lenguajes se hace más sencilla. En la actualidad, su uso es
@@ -1721,12 +1751,13 @@ que use la API, podemos distinguir dos tipos:
         compuesto por módulos que gestionan y automatizan tareas internas de la empresa.},
         etc.
 
-        \item \textbf{REST}: este tipo de API, conocida como \textbf{Representational State
-        Transfer o Transferencia de Estado Representacional}, es una interfaz simple que
-        solo usa HTTP y JSON o XML en la respuesta. Una de sus principales características
-        es que se basan en una sintaxis universal para el acceso a los recursos, utilizando
-        las \textbf{Uniform Resource Identifiers (URI)}, que son una secuencia de caracteres
-        que identifican un recurso lógico o físico en una aplicación.\\
+        \item \textbf{REST}: este tipo de API, conocida como \textbf{\textit{Representational
+        State Transfer} o Transferencia de Estado Representacional}, es una interfaz simple
+        que solo usa HTTP y JSON o XML en la respuesta. Una de sus principales
+        características es que se basa en una sintaxis universal para el acceso a los
+        recursos, utilizando las \textbf{\textit{Uniform Resource Identifier} (URI)}, que
+        son una secuencia de caracteres que identifican un recurso lógico o físico en una
+        aplicación.\\
         
         Este tipo de API, en su versión más extendida (es la que usamos en nuestro proyecto)
         pasa a considerarse \textbf{RESTful}, con la peculiaridad de usar los verbos de
@@ -1738,8 +1769,8 @@ que use la API, podemos distinguir dos tipos:
 
             \begin{enumerate}
                 \item \textbf{Usar explícitamente los verbos HTTP}: las llamadas a la API
-                deben ser usando los verbos o métodos HTTP, teniendo por lo tanto los
-                siguientes (asociándolos a operaciones CRUD):
+                deben ser usando los verbos o métodos HTTP, teniendo los siguientes
+                (asociándolos a operaciones CRUD):
                     
                     \begin{itemize}
                         \item \textbf{GET}: para obtener un recurso (Read).
@@ -1750,21 +1781,21 @@ que use la API, podemos distinguir dos tipos:
                         \item \textbf{DELETE}: para eliminar un recurso (Delete).
                     \end{itemize}
 
-                \item \textbf{Ser sin estado (stateless)}: que el resultado de la llamadas
-                no dependa de otras llamadas anteriores, es decir, que sea
+                \item \textbf{Ser sin estado (\textit{stateless})}: que el resultado de la
+                llamadas no dependa de otras llamadas anteriores, es decir, que sea
                 \textbf{idempotente}.
-                \item \textbf{Usar URIs con estilo path}: que las URIs sigan un formato
+                \item \textbf{Usar URIs con estilo \textit{path}}: que las URIs sigan un formato
                 estándar, es decir, que sean legibles por humanos y pueda identificarse
                 claramente el recurso que se solicita. Por ejemplo, si solicitamos Una
                 excavación que la URI no sea así: \textbf{/info\_excavacion?id=1}, y que
-                sea algo asi: \textbf{/excavaciones/1}. Estos paths son los llamados
-                \textbf{endpoints}.
+                sea algo asi: \textbf{/excavaciones/1}. Estos \textit{paths} son los
+                llamados \textbf{\textit{endpoints}}.
                 \item \textbf{Devolver en la respuesta JSON o XML}: como hemos mencionado
                 anteriormente, las respuestas deben ser en formato XML o JSON,
                 devolviendo correspondientemente el
-                \href{https://developer.mozilla.org/es/docs/Web/HTTP/Status}{status code}
-                correspondiente, es decir, el código de estado HTTP que indica cómo ha
-                sido el resultado de la petición.
+                \href{https://developer.mozilla.org/es/docs/Web/HTTP/Status}
+                {\textit{status code}} correspondiente, es decir, el código de estado HTTP
+                que indica cuál es el resultado de la petición.
             \end{enumerate}
     \end{itemize}
 
@@ -1789,21 +1820,22 @@ necesarias para la implementación de la API de nuestro proyecto. Funcionalidade
         interpretados en formato JSON o XML.
         \item \textbf{Cache}: para que la API no sea consultada varias veces para la
         solicitud de un mismo recurso.
-        \item \textbf{Routing}: para que la API se pueda acceder a través de una URI.
+        \item \textbf{\textit{Routing}}: para que la API se pueda acceder a través de una
+        URI.
         \item \textbf{Paginación}: para que la API devuelva páginas de resultados.
     \end{itemize}
 
 Como vemos, entre ellas se encuentran algunos de los requisitos necesarios para poder
-considerar una API como RESTful como que permita almacenar información en la memoria
+considerar una API como RESTful, como que permita almacenar información en la memoria
 caché o que las respuestas sean en JSON o XML.\\
 
 Para la creación de cualquier ruta en la API que sea funcional, son necesarios los
 siguientes elementos:
 
     \begin{itemize}
-        \item \textbf{Router}: es una clase ya incluida en el módulo de Django REST
+        \item \textbf{\textit{Router}}: es una clase ya incluida en el módulo de Django REST
         Framework que nos permitirá definir la ruta correspondiente al
-        \textbf{endpoint} que queremos implementar. Por ejemplo, en el caso de las
+        \textbf{\textit{endpoint}} que queremos implementar. Por ejemplo, en el caso de las
         excavaciones se haría del siguiente modo:
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -1819,11 +1851,11 @@ siguientes elementos:
         .
     \end{minted}
 
-        \item \textbf{Serializer}: es una clase que hereda de \textbf{ModelSerializer}
-        y que se encargará de serializar automáticamente los datos correspondientes a
-        un modelo dado, es decir, poder transformarlo a formato JSON o XML, además
-        de generar los validadores correspondientes para el serializador, siendo capaz
-        de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
+        \item \textbf{\textit{Serializer}}: es una clase que hereda de
+        \textbf{ModelSerializer} y que se encargará de serializar automáticamente los datos
+        correspondientes a un modelo dado, es decir, poder transformarlo a formato JSON o
+        XML, además de generar los validadores correspondientes para el serializador, siendo
+        capaz de crear hasta validadores de claves compuestas (\textbf{unique\_together}).
         Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
         las excavaciones tendríamos la siguiente implementación:
     
@@ -1841,13 +1873,13 @@ siguientes elementos:
         .
     \end{minted}
 
-        \item \textbf{Viewset}: es una clase que hereda de \textbf{ModelViewSet} y que
-        será la vista asociada a una URI concreta. Además de esto, cabe mencionar que
+        \item \textbf{\textit{Viewset}}: es una clase que hereda de \textbf{ModelViewSet} y
+        que será la vista asociada a una URI concreta. Además de esto, cabe mencionar que
         la clase ModelViewSet hereda de la clase \textbf{GenericAPIView}, por lo que
         incluye ya implementadas acciones como listar, recuperar, actualizar, actualizar
         parcialmente y eliminar, teniendo solo que definir al menos dos atributos en la
         clase que son el \textbf{queryset} y el \textbf{serializer}. Por ejemplo, para las
-        excavaciones, tendría la siguiente implementación:
+        excavaciones, tendríamos la siguiente implementación:
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
@@ -1868,7 +1900,7 @@ siguientes elementos:
         excavación.
     \end{itemize}
 
-Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{endpoints}:
+Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{\textit{endpoints}}:
 
 \begin{longtable}[H]{|l|l|l|}
     \hline
@@ -1980,15 +2012,15 @@ Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{endp
     \label{tab:endpoints}
 \end{longtable}
 
-Como podemos observar, existen bastantes endpoints para la API. Cabe nombrar que los
-términos que aparecen entre corchetes serían los parámetros que reciben los endpoints,
-donde \textbf{pk} (primary key o clave primaria) es el id interno que se genera
-automáticamente en la base de datos y consiste en un número entero, y el \textbf{codigo}
-para las unidades estratigráficas es el identificador formado por la excavación a la
-que pertenece la unidad y el número de orden de la unidad. Por ejemplo, si la unidad
-pertenece a la excavación \textbf{1} y es la segunda unidad de la excavación, el código
-sería \textbf{001002} y el endpoint para obtener dicha unidad estratigráfica (supongamos
-que es una unidad construida) sería:
+Como podemos observar, existen bastantes \textit{endpoints} para la API. Cabe nombrar que
+los términos que aparecen entre corchetes serían los parámetros que reciben los
+\textit{endpoints}, donde \textbf{pk} (\textit{primary key} o clave primaria) es el id
+interno que se genera automáticamente en la base de datos y consiste en un número entero y,
+el \textbf{codigo} para las unidades estratigráficas es el identificador formado por la
+excavación a la que pertenece la unidad y el número de orden de esta. Por ejemplo, si
+la unidad pertenece a la excavación \textbf{1} y es la segunda unidad de la excavación, el
+código sería \textbf{001002} y el \textit{endpoint} para obtener dicha unidad estratigráfica
+(supongamos que es una unidad construida) sería:
 
             \begin{center} \textbf{api/builtue/001002} \end{center}
 
@@ -1997,13 +2029,15 @@ Otro de los puntos a tener en cuenta es la autenticación en la API, ya que no c
 usuario puede tener acceso a ella y realizar cualquier acción sobre los recursos de la
 aplicación. Para ello, se debe elegir un sistema de autenticación adecuado. Dado que
 nuestro proyecto es un servidor web al que una aplicación móvil debe hacer peticiones,
-el esquema \textbf{Autenticación mediante Token} es el más apropiado. Para usar este
-esquema de \textbf{TokenAuthentication}, se necesita incluir \textbf{rest\_framework.authtoken}
-en la configuración de aplicaciones instaladas de la aplicación.\\
+el esquema \textbf{Autenticación mediante \textit{Token}} es el más apropiado. Para usar
+este esquema de \textbf{TokenAuthentication}, se necesita incluir
+\textbf{rest\_framework.authtoken} en la configuración de aplicaciones instaladas de la
+aplicación.\\
 
 Teniendo en cuenta lo anteriormente mencionado, los clientes podrán autenticar a los usuarios
-pasando en el cuerpo de la petición un token vinculado a un usuario determinado. Para
-ello, el token deberá estar incluido en la cabecera HTTP de autorización. Por ejemplo:
+pasando en el cuerpo de la petición un \textit{token} vinculado a un usuario determinado.
+Para ello, el \textit{token} deberá estar incluido en la cabecera HTTP de autorización. Por
+ejemplo:
 
 \begin{center}
     \textbf{Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b}
@@ -2013,10 +2047,10 @@ A continuación, vamos a describir el procedimiento de utilización de la API, t
 punto de vista gráfico mediante la \textbf{interfaz web} como desde la simulación del envío
 de peticiones a través de un \textbf{cliente móvil}.\\
 
-Esta sería la interfaz gráfica de la API, donde tenemos una pestaña de \textbf{login} para
-autenticarse en ella, las distintas opciones (OPTIONS) y métodos HTTP (GET, etc.), y
-finalmente las distintas rutas definidas en la API para el manejo de los recursos del
-servidor, junto a las cabeceras HTTP que se usan en cada petición.
+Esta sería la interfaz gráfica de la API, donde tenemos una pestaña de
+\textbf{\textit{login}} para autenticarse en ella, las distintas opciones (OPTIONS) y
+métodos HTTP (GET, etc.), y finalmente las distintas rutas definidas en la API para el
+manejo de los recursos del servidor, junto a las cabeceras HTTP que se usan en cada petición.
 
         \begin{figure}[H]
             \centering
@@ -2027,8 +2061,8 @@ servidor, junto a las cabeceras HTTP que se usan en cada petición.
 
 Si un usuario no autenticado intentase acceder a cualquier enlace de la misma, obtendría el
 siguiente mensaje, que indica que no se proveyeron las credenciales del usuario, ya que al
-añadir el login para la API, es necesario que los usuarios estén autenticados para poder
-usarla.
+añadir el \textit{login} para la API, es necesario que los usuarios estén autenticados para
+poder usarla.
 
         \begin{figure}[H]
             \centering
@@ -2037,9 +2071,9 @@ usarla.
             \label{fig:unauthorized}
         \end{figure}
 
-Una vez ingresadas nuestras credenciales (en este caso hemos creado un usuario ficticio que
-se llama \textbf{Alex} y tiene de password \textbf{inventado1234}) podríamos ver la lista
-con las excavaciones disponibles en la aplicación.
+Una vez ingresadas nuestras credenciales en el inicio de sesión (en este caso hemos creado
+un usuario ficticio que se llama \textbf{Alex} y tiene de password \textbf{inventado1234})
+podríamos ver la lista con las excavaciones disponibles en la aplicación.
 
         \begin{figure}[H]
             \centering
@@ -2051,25 +2085,25 @@ con las excavaciones disponibles en la aplicación.
 Ahora vamos a proceder a realizar una sencilla simulación del flujo de acciones que tendría
 que realizar un cliente para poder utilizar la API. Para ello, hemos utilizado
 \href{https://www.postman.com/}{POSTMAN}, una herramienta que nos permite realizar
-simulaciones de peticiones a través de una interfaz muy simple y fácil de usar.\\
+peticiones a través de una interfaz muy simple y fácil de usar.\\
 
-Lo primero de todo sería obtener el \textbf{token de autenticación} para poder autenticarse.
-Para ello, haría una petición \textbf{POST} a una ruta concreta, en este caso
-\textbf{api-token-auth/}, enviando en el cuerpo de la petición el \textbf{nombre} y
-\textbf{password} del usuario:
+Lo primero de todo, sería obtener el \textbf{\textit{token} de autenticación} para poder
+autenticarse en la aplicación. Para ello, haría una petición \textbf{POST} a una ruta
+concreta, en este caso \textbf{api-token-auth/}, enviando en el cuerpo de la petición el
+\textbf{nombre} y \textbf{password} del usuario (inicio de sesión):
 
         \begin{figure}[H]
             \centering
             \includegraphics[scale=0.25]{imagenes/get-token.png}
-            \caption{Obtención del token de autenticación}
+            \caption{Obtención del \textit{token} de autenticación}
             \label{fig:get-token}
         \end{figure}
 
-Como vemos, el servidor web ha devuelto un token vinculado al usuario. Dicho token será
-almacenado para realizar peticiones a la API, enviando el token en la cabecera de
-autorización de la petición. Si por ejemplo intentamos obtener todas las excavaciones
-disponibles sin mandar el token de autenticación, obtendremos el siguiente mensaje, que es
-mismo que obteníamos anteriormente en la interfaz web:
+Como vemos, el servidor web ha devuelto un \textit{token} vinculado al usuario. Dicho
+\textit{token} será almacenado para realizar peticiones a la API, enviando el \textit{token}
+en la cabecera de autorización de la petición. Si por ejemplo intentamos obtener todas las
+excavaciones disponibles sin mandar el \textit{token} de autenticación, obtendremos el
+siguiente mensaje, que es el mismo que obteníamos anteriormente en la interfaz web:
 
     \begin{figure}[H]
         \centering
@@ -2078,14 +2112,14 @@ mismo que obteníamos anteriormente en la interfaz web:
         \label{fig:unauthorized2}
     \end{figure}
 
-Esto se debe a que el cliente no ha enviado el token obtenido anteriormente en la
+Esto se debe a que el cliente no ha enviado el \textit{token} obtenido anteriormente en la
 cabecera de autorización de la petición. Para ello, deberá hacerlo de la siguiente
 forma:
 
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.38]{imagenes/token-auth.png}
-        \caption{Autenticación mediante token}
+        \caption{Autenticación mediante \textit{token}}
         \label{fig:token-auth}
     \end{figure}
 
@@ -2096,7 +2130,7 @@ Finalmente, podríamos hacernos una pregunta, \textbf{¿y los permisos de los us
 API, se mantienen igual que los otorgados en la aplicación web?} La respuesta es sí, siempre
 y cuando se haga la configuración correspondiente. Para ello, debemos indicar que se usen
 los mismos permisos que se han otorgado en los modelos de la aplicación web. Es decir, si
-tenemos un usuario en la aplicación al que sólo le hemos dado permiso para añadir excavaciones
+tenemos un usuario en la aplicación al que solo le hemos dado permiso para añadir excavaciones
 y no modificarlas, en la API debe ser exactamente igual. Con la siguiente configuración en
 \textbf{settings.py} podremos indicar que se usen los mismos permisos:
 
@@ -2139,18 +2173,19 @@ petición los datos que queremos modificar:
 Como vemos, no nos ha permitido modificar la excavación, lo cuál es correcto, ya que no
 tenemos permisos para modificar excavaciones.
 
-\subsection{Sistema de Log}
-En este milestone del desarrollo \textit{software} nos centraremos en explicar qué es un
-Sistema de Log y cómo hemos llevado a cabo su implementación en nuestra aplicación. \\
+\subsection{Sistema de \textit{Log}}
+En este \textit{milestone} del desarrollo \textit{software} nos centraremos en explicar qué
+es un Sistema de \textit{Log} y cómo hemos llevado a cabo su implementación en nuestra
+aplicación. \\
 
-Un \textbf{Sistema de Log} \cite{log-system} es una herramienta que nos permite registrar los principales
-eventos que suceden en nuestra aplicación, desde operaciones relacionadas con la base de
-datos hasta errores que se producen en el sistema. Normalmente, un registro en el Sistema
-de Log se corresponde con una cadena de texto, lo que de forma técnica se denomina
-\textbf{registro de log} (\textbf{log entry}). Estos registros de log se suelen
-almacenar en ficheros de texto especiales (con extensión \textbf{.log}), pero también
-se pueden almacenar en bases de datos o imprimir directamente a través de una terminal
-o consola.\\
+Un \textbf{Sistema de \textit{Log}} \cite{log-system} es una herramienta que nos permite
+registrar los principales eventos que suceden en nuestra aplicación, desde operaciones
+relacionadas con la base de datos hasta errores que se producen en el sistema. Normalmente,
+un registro en el Sistema de \textit{Log} se corresponde con una cadena de texto, lo que de
+forma técnica se denomina \textbf{registro de \textit{log}} (\textbf{\textit{log entry}}).
+Estos registros de \textit{log} se suelen almacenar en ficheros de texto especiales (con
+extensión \textbf{.log}), pero también se pueden almacenar en bases de datos o imprimir
+directamente a través de una terminal o consola.\\
 
 En ocasiones, al construir aplicaciones, este punto se olvida o no se implementa
 adecuadamente, lo que hace que ante un error en el sistema o ante una acción extraña, sea
@@ -2166,18 +2201,19 @@ mismo, provocando problemas como los siguientes:
         consecuencias directamente negativas en la calidad de servicio.
     \end{itemize}
 
-Para el Sistema de Log, Django usa y extiende el módulo \textbf{logging}
-\cite{python-logging} de Python, el cuál es muy extenso y carece de sentido explicar a
+Para el Sistema de \textit{Log}, Django usa y extiende el módulo \textbf{logging}
+\cite{python-logging} de Python, el cual es muy extenso y carece de sentido explicar a
 fondo en esta sección. Sin embargo, vamos a explicar las partes principales que son
-necesarias para nuestra aplicación. Toda configuración Python para logging consta de
-cuatro partes (usaremos preferentemente los términos ingleses, ya que es lo más común al
-hablar sobre logging):
+necesarias para nuestra aplicación. Toda configuración Python para \textit{logging} consta
+de cuatro partes (usaremos preferentemente los términos ingleses, ya que es lo más común al
+hablar sobre \textit{logging}):
 
     \begin{enumerate}
-        \item \textbf{Loggers (registradores)}: es el punto de entrada inicial del Sistema
-        de Log (instancia de la clase \textbf{logging.Logger}). Cada logger tiene
-        configurado un \textbf{log level} que indicará a partir de qué nivel los mensajes
-        serán procesados. Python define los siguientes log levels:
+        \item \textbf{\textit{Loggers} (registradores)}: es el punto de entrada inicial del
+        Sistema de \textit{Log} (instancia de la clase \textbf{logging.Logger}). Cada
+        \textit{logger} tiene configurado un \textbf{\textit{log level}} que indicará a
+        partir de qué nivel los mensajes serán procesados. Python define los siguientes
+        \textit{log levels}:
 
             \begin{itemize}
                 \item \textbf{DEBUG}: nivel más bajo de registro, normalmente se usa para
@@ -2185,49 +2221,53 @@ hablar sobre logging):
                 \item \textbf{INFO}: información general del sistema.
                 \item \textbf{WARNING}: mensaje que indica que se ha producido un error
                 que no debería ocurrir, pero que es de poca importancia.
-                \item \textbf{ERROR}: información describiendo un error importante que se
+                \item \textbf{ERROR}: información que describe un error importante que se
                 ha producido.
                 \item \textbf{CRITICAL}: mensaje que describe un error crítico que se
                 ha producido.
             \end{itemize}
 
-        Cada mensaje que es escrito en el logger es un \textbf{registro de log} (que hemos
-        mencionado anteriormente). Cada registro de log contiene un \textbf{nivel de log}
-        indicando la severidad del mensaje. Cada vez que un mensaje es enviado al log se
-        comprueba si el nivel del mensaje es mayor o igual que el nivel de log del logger,
-        si es así, se escribe el mensaje en el log.
+        Cada mensaje que es escrito en el \textit{logger} es un \textbf{registro de
+        \textit{log}} (que hemos mencionado anteriormente). Cada registro de \textit{log}
+        contiene un \textbf{nivel de \textit{log}} indicando la severidad del mensaje. Cada
+        vez que un mensaje es enviado al \textit{log} se comprueba si el nivel del mensaje
+        es mayor o igual que el nivel de \textit{log} del \textit{logger}, si es así, se
+        escribe el mensaje en el \textit{log}.
 
-        \item \textbf{Handlers (manejadores)}: los manejadores determinan qué sucede con
-        cada mensaje escrito en un logger. Describen un comportamiento específico para
-        el logging, como puede ser escribir el mensaje en un fichero, en una pantalla,
-        en consola, etc.
+        \item \textbf{\textit{Handlers} (manejadores)}: los manejadores determinan qué sucede con
+        cada mensaje escrito en un \textit{logger}. Describen un comportamiento específico
+        para el \textit{logging}, como puede ser escribir el mensaje en un fichero, en una
+        pantalla, en consola, etc.
 
-        Al igual que los loggers, también poseen un nivel de log (log level) que determina
-        qué mensajes de los que el logger le envía serán procesados, según el criterio
-        anteriormente descrito. Esto hace posible que un logger pueda tener asociados
-        \textbf{varios handlers}, por ejemplo, uno que registre mensajes \textbf{ERROR} y
-        \textbf{CRITICAL} en un fichero y otro que registre mensajes de cualquier nivel.
+        Al igual que los \textit{loggers}, también poseen un nivel de \textit{log}
+        (\textit{log level}) que determina qué mensajes de los que el \textit{logger} le
+        envía serán procesados, según el criterio anteriormente descrito. Esto hace posible
+        que un \textit{logger} pueda tener asociados \textbf{varios \textit{handlers}}, por
+        ejemplo, uno que registre mensajes \textbf{ERROR} y \textbf{CRITICAL} en un fichero
+        y otro que registre mensajes de cualquier nivel.
 
-        \item \textbf{Filters (filtros)}: normalmente, todo mensaje que cumpla con el
-        nivel de log establecido en el logger será pasado del logger al manejador. Sin
-        embargo, se pueden definir filtros para añadir criterios adicionales para que un
-        mensaje pase del logger al handler, como puede ser por ejemplo los que provengan
-        de una fuente determinada. En nuestra aplicación web, estos no serán necesarios.
+        \item \textbf{\textit{Filters} (filtros)}: normalmente, todo mensaje que cumpla con
+        el nivel de \textit{log} establecido en el \textit{logger} será pasado del
+        \textit{logger} al manejador. Sin embargo, se pueden definir filtros para añadir
+        criterios adicionales para que un mensaje pase del \textit{logger} al
+        \textit{handler}, como puede ser por ejemplo los que provengan de una fuente
+        determinada. En nuestra aplicación web, estos no serán necesarios.
 
-        \item \textbf{Formatters (formateadores)}: como hemos mencionado anteriormente,
-        cada registro de log se renderiza (representa) como una cadena de texto. Dicha
-        cadena de texto tendrá uno u otro formato, para lo que se usan los formateadores.
+        \item \textbf{\textit{Formatters} (formateadores)}: como hemos mencionado
+        anteriormente, cada registro de \textit{log} se renderiza (representa) como una
+        cadena de texto. Dicha cadena de texto tendrá uno u otro formato, para lo que se
+        usan los formateadores.
         
-        Cada registro de log tiene una 
+        Cada registro de \textit{log} tiene una 
         \href{https://docs.python.org/3/library/logging.html#logrecord-attributes}{serie
         de atributos}  que se podrán indicar en el formateador, de modo que la cadena de
         texto tenga dicho formato. Por ejemplo, podríamos mostrar información como el
-        nivel del mensaje, la fecha y hora, el nombre del logger, la traza del mensaje,
-        el número de línea donde se produjo, etc.
+        nivel del mensaje, la fecha y hora, el nombre del \textit{logger}, la traza del
+        mensaje, el número de línea donde se produjo, etc.
     \end{enumerate}
 
 Una vez hemos explicado brevemente las partes principales para la configuración de un
-Sistema de Log, vamos a proceder a explicar cómo lo hemos implementado en nuestra
+Sistema de \textit{Log}, vamos a proceder a explicar cómo lo hemos implementado en nuestra
 aplicación web.
 
 \subsubsection{Notificación a administradores}
@@ -2248,7 +2288,7 @@ Para que funcione correctamente, primero debemos incorporar a nuestro archivo de
 configuración \textbf{settings.py} la variable \textbf{ADMINS}, que contiene la lista de
 administradores del sistema. Por cuestiones de seguridad y privacidad, hemos decidido
 darle valor a esta variable a través de variables de entorno definidas en un archivo
-\textbf{.env}. Quedando algo así:
+\textbf{.env}, quedando algo así:
 
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -2261,12 +2301,13 @@ darle valor a esta variable a través de variables de entorno definidas en un ar
     ]
     \end{minted}
 
-Además, deberemos hacer la correspondiente configuración del logging, para ello añadimos
-la variable \textbf{LOGGING} a nuestro archivo de configuración \textbf{settings.py} y
-añadimos las distintas \textbf{claves}: \textbf{formatters, filters, handlers y loggers},
-con sus correspondientes configuraciones. Mencionamos la palabra clave porque dicha
-variable tiene formato de \textbf{diccionario}, al igual que se usa para el logging de
-Python, por lo que tendrá parejas de \textbf{clave-valor} separadas por dos puntos (:). \\
+Además, deberemos hacer la correspondiente configuración del \textit{logging}, para ello
+añadimos la variable \textbf{LOGGING} a nuestro archivo de configuración \textbf{settings.py}
+y añadimos las distintas \textbf{claves}: \textbf{\textit{formatters}, \textit{filters},
+\textit{handlers} y \textit{loggers}}, con sus correspondientes configuraciones. Mencionamos
+la palabra clave porque dicha variable tiene formato de \textbf{diccionario}, al igual que
+se usa para el \textit{logging} de Python, por lo que tendrá parejas de \textbf{clave:valor}
+separadas por dos puntos (:). \\
 
 De esta forma, los administradores podrán localizar de forma automática los errores
 que se produzcan en la aplicación a través de los correos electrónicos que recibirán. Por
@@ -2276,27 +2317,26 @@ fallo y toda la configuración de la aplicación que se habría mostrado si nues
 \textbf{DEBUG} de settings.py estuviera a \textbf{True}.
 
 
-\subsubsection{Página de logs}
+\subsubsection{Página de \textit{logs}}
 Toda la configuración anteriormente descrita es útil solo para administradores del sistema,
 pero necesitamos también que arqueólogos administradores puedan saber las acciones que se
 realizan en la aplicación. Por ejemplo, imaginemos que tenemos una excavación almacenada en
 la aplicación y de repente es eliminada por otro arqueólogo sin nuestro consentimiento.
 Necesitaríamos saber qué arqueólogo en concreto eliminó dicha excavación, para lo que haría
-falta realizar un registro de logs específico de las acciones que se realizan en la
-aplicación web. \\
+falta poseer un registro de las acciones que se han realizado en la aplicación web. \\
 
 Esto trae algunos inconvenientes a la hora de la implementación, ya que normalmente los
-logs se almacenan en archivos de texto, por lo que tendríamos que hacer visibles dichos
-logs en algún template de la aplicación, que sería una página a la que sólo el arqueólogo
-administrador tendría acceso. \\
+\textit{logs} se almacenan en archivos de texto, por lo que tendríamos que hacer visibles
+dichos \textit{logs} en algún \textit{template} de la aplicación, que sería una página a la
+que solo el arqueólogo administrador tendría acceso. \\
 
-Procedamos a explicar la implementación necesaria para esta página de logs:
+Procedamos a explicar la implementación necesaria para esta página de \textit{logs}:
 
     \begin{enumerate}
         \item Primero, se han registrado en las vistas todas las operaciones útiles
         relacionadas con la base de datos: añadir, modificar o eliminar registros. Para
         ello, desde la documentación de Django se recomienda crear una variable de módulo
-        para el logger:
+        para el \textit{logger}:
 
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -2310,33 +2350,33 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
 
         Dicha variable será una instancia de la clase \textbf{logging.Logger} con la que
         registraremos todas las acciones realizadas en las vistas. En este caso, la variable
-        \textbf{\_name\_} será el nombre que identificará al logger,
+        \textbf{\_name\_} será el nombre que identificará al \textit{logger},
         proporcionando el nombre del módulo de Python donde se encuentre, en este caso
         \textbf{myFindings.views}.
         
-        \item El siguiente paso, será realizar la correspondiente configuración del logging
-        en la variable \textbf{LOGGING} del archivo settings.py. Para ello, se han
-        definido las siguientes partes:
+        \item El siguiente paso, será realizar la correspondiente configuración del
+        \textit{logging} en la variable \textbf{LOGGING} del archivo settings.py. Para
+        ello, se han definido las siguientes partes:
 
             \begin{itemize}
-                \item \textbf{Formatter}: dado que necesitamos que los logs sean legibles
-                por humanos, debemos definir un formato sencillo y descriptivo de la
-                acción, como puede ser el siguiente:
+                \item \textbf{\textit{Formatter}}: dado que necesitamos que los \textit{logs}
+                sean legibles por humanos, debemos definir un formato sencillo y
+                descriptivo de la acción, como puede ser el siguiente:
                 \begin{center}
                     \textbf{[ Fecha, Hora ] => Usuario y acción que realiza} 
                 \end{center}
 
-                \item \textbf{Handler}: necesitamos un manejador que almacene los logs en
-                un archivo de texto para su posterior lectura. Siguiendo buenas prácticas
-                de programación, los archivos de log nunca deben incluirse como código
-                fuente de la aplicación, por lo que deberemos almacenarlos en un archivo
-                que se encuentre fuera del directorio raíz de la aplicación y donde
-                tengamos permisos de lectura y escritura. \\
+                \item \textbf{\textit{Handler}}: necesitamos un manejador que almacene los
+                \textit{logs} en un archivo de texto para su posterior lectura. Siguiendo
+                buenas prácticas de programación, los archivos de \textit{log} nunca deben
+                incluirse como código fuente de la aplicación, por lo que deberemos
+                almacenarlos en un archivo que se encuentre fuera del directorio raíz de la
+                aplicación y donde tengamos permisos de lectura y escritura. \\
                 
                 Si hacemos memoria, recordaremos que para la ejecución de nuestra
-                aplicación hacemos uso de \textbf{docker} con \textbf{docker-compose}, por
+                aplicación hacemos uso de \textbf{Docker} con \textbf{Docker Compose}, por
                 lo que tendremos una estructura de directorios dentro del contenedor
-                disponible, donde podremos almacenar el archivo de logs. 
+                disponible, donde podremos almacenar el archivo de \textit{logs}. 
                 
                     \begin{figure}[H]
                         \centering
@@ -2345,11 +2385,12 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
                         \label{fig:docker-structure}
                     \end{figure}
                 
-                Tenemos que prevenir que ante una posible caída de la aplicación los logs
-                se pierdan, por lo que estos se almacenarán en la carpeta \textbf{/var/log/}
-                y el archivo que los contendrá será \textbf{myFindings.log}. Esta sería la
-                ruta por defecto, aunque también podría modificarse a través de una
-                variable de entorno. Quedando el manejador con la siguiente configuración:
+                Tenemos que prevenir que ante una posible caída de la aplicación los
+                \textit{logs} se pierdan, por lo que estos se almacenarán en la carpeta
+                \textbf{/var/log/} y el archivo que los contendrá será
+                \textbf{myFindings.log}. Esta sería la ruta por defecto, aunque también
+                podría modificarse a través de una variable de entorno. La configuración
+                del manejador quedaría de la siguiente forma:
 
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -2367,16 +2408,16 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
     .
     \end{minted}
 
-                \item \textbf{Logger}: finalmente, queda la configuración del logger
-                que recogerá los logs que proceden desde el archivo views.py de la
-                aplicación. \\
+                \item \textbf{\textit{Logger}}: finalmente, queda la configuración del
+                \textit{logger} que recogerá los \textit{logs} que proceden desde el
+                archivo views.py de la aplicación. \\
 
-                Como hemos mencionado anterioremente, el logger de las vistas se
+                Como hemos mencionado anterioremente, el \textit{logger} de las vistas se
                 identifica con el nombre \textbf{myFindings.views}, por lo que este
-                será el nombre de nuestro logger. Además, usará el handler especificado
-                en el punto anterior y sólo controlará mensajes que tengan un nivel de log
-                (\textbf{log level}) INFO o superior. Su configuración quedaría de la
-                siguiente forma:
+                será el nombre de nuestro \textit{logger}. Además, usará el \textit{handler}
+                especificado en el punto anterior y solo controlará mensajes que tengan un
+                nivel de \textit{log} (\textbf{\textit{log level}}) INFO o superior. Su
+                configuración quedaría de la siguiente forma:
 
     
     \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
@@ -2392,19 +2433,20 @@ Procedamos a explicar la implementación necesaria para esta página de logs:
     \end{minted}
             \end{itemize}
 
-        \item Finalmente, deberemos crear la ruta correspondiente para la vista de logs
-        que podrá ver un arqueólogo administrador. Para ello, definimos la correspondiente
-        ruta en el archivo \textbf{urls.py}, creamos el template (HTML) correspondiente
-        que se renderizará, y la vista que manejará la petición. Dicha vista hará uso
-        de la función \href{https://docs.python.org/3/library/functions.html#open}{open}
-        de Python para abrir el archivo de logs y procesarlo línea por línea, creando una
-        lista que luego será enviada como un parámetro al template. Un ejemplo de la vista
-        de logs es el siguiente:
+        \item Finalmente, deberemos crear la ruta correspondiente para la vista de
+        \textit{logs} que podrá ver un arqueólogo administrador. Para ello, definimos la
+        correspondiente ruta en el archivo \textbf{urls.py}, creamos el \textit{template}
+        (HTML) correspondiente que se visualizará, y la vista que manejará la petición.
+        Dicha vista hará uso de la función
+        \href{https://docs.python.org/3/library/functions.html#open}{open} de Python para
+        abrir el archivo de \textit{logs} y procesarlo línea por línea, creando una lista
+        que luego será enviada como un parámetro al \textit{template}. Un ejemplo de la
+        vista de \textit{logs} es el siguiente:
         
             \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.20]{imagenes/logs.png}
-                \caption{Página de logs}
+                \caption{Página de \textit{logs}}
                 \label{fig:log-template}
             \end{figure}
 
@@ -2415,7 +2457,7 @@ En este punto del desarrollo \textit{software}, vamos a llevar a cabo el desplie
 nuestra aplicación web. Explicaremos cómo y por qué hemos tomado ciertas decisiones
 y cómo las hemos llevado a cabo. \\
 
-En desarrollo de \textit{software}, el término \textbf{deploy} (desplegar o lanzar)
+En desarrollo de \textit{software}, el término \textbf{\textit{deploy}} (desplegar o lanzar)
 \cite{deploy} se define como el proceso de llevar una aplicación a producción, es decir,
 hacer de alguna forma que la aplicación sea accesible para los clientes finales. Hasta el
 momento, hemos trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se
@@ -2432,8 +2474,8 @@ web a los distintos usuarios. Sin embargo, es fácil deducir que esta no es la m
 los siquientes motivos:
 
     \begin{itemize}
-        \item A pesar de utilizar un entorno de ejecución aislado (usando \textbf{docker
-        con docker-compose}), la mejor o peor ejecución del mismo dependerá de los
+        \item A pesar de utilizar un entorno de ejecución aislado (usando \textbf{Docker
+        con Docker Compose}), la mejor o peor ejecución del mismo dependerá de los
         \textbf{recursos hardware} que su ordenador posea.
         \item Necesitaría tener el ordenador \textbf{siempre encendido} para poder servir
         la aplicación web, afectando directamente a la disponibilidad del sitio web.
@@ -2464,8 +2506,8 @@ local, entre las más importantes se encuentran:
         \item Los riesgos de \textbf{seguridad} son relativamente bajos, ya que se aplican
         diversos mecanismos para garantizarla.
         \item Normalmente, los proveedores están al corriente de las últimas
-        \textbf{innovaciones} en cloud computing, por lo que no deberemos preocuparnos por
-        el uso de últimas tecnologías en el mercado o similar.
+        \textbf{innovaciones} en \textit{cloud computing}, por lo que no deberemos
+        preocuparnos por el uso de últimas tecnologías en el mercado o similar.
         \item No es necesario preocuparse por la \textbf{infraestructura} subyacente que
         utilice el servicio.
     \end{itemize}
@@ -2480,19 +2522,19 @@ al menos los siguientes requisitos:
         \item Que nos ofrezca una buena \textbf{integración con Django}.
         \item Que nos proporcione una \textbf{base de datos gratuita} para la aplicación.
         \item Si puede ser posible, que nos permita hacer el despliegue de la
-        aplicación de una manera secilla, como puede ser mediante el despliegue de un
+        aplicación de una manera sencilla, como puede ser mediante el despliegue de un
         \textbf{repositorio git} o una \textbf{rama} concreta de Github. 
     \end{itemize}
 
 Tras una larga y exhaustiva búsqueda por encontrar un servicio gratuito para el
-despliegue de la aplicación, se tantearon soluciones como las que ofrecía
+despliegue de la aplicación, se plantearon soluciones como las que ofrecía
 \href{https://docs.digitalocean.com/tutorials/app-deploy-django-app/}{DigitalOcean}
 o \href{https://www.linode.com/docs/products/tools/marketplace/guides/django/}{Linode},
-sin embargo, estos son de pago y por tanto fueron descartados.\\
+sin embargo, estos son de pago y, por tanto, fueron descartados.\\
 
 Finalmente, se decidió usar Heroku \cite{heroku}, una plataforma como servicio
-(\textbf{Product as a service, PaaS}), que actualmente es una de las más utilizadas
-para realizar despliegues de aplicaciones y que posee un plan gratuito.\\
+(\textbf{\textit{Product as a service}, PaaS}), que actualmente es una de las más
+utilizadas para realizar despliegues de aplicaciones y que posee un plan gratuito.\\
 
 Además de todas las ventajas que poseen las plataformas como servicio (no conllevan
 complicaciones de infraestructura, de administración de servidores, bases de datos y
@@ -2509,12 +2551,12 @@ seguridad), Heroku tiene las siguientes características \cite{heroku-features}:
         identidad de un sitio web, habilitando una conexión cifrada con el mismo).
     \end{itemize}
 
-Dicho esto, procedamos a explicar el proceso de despliegue de nuestra aplicación.
+Dicho esto, procedamos a explicar el proceso de despliegue de nuestra aplicación con Heroku.
 
 \subsubsection{Django con Heroku}
 En este subapartado explicaremos el proceso \cite{heroku-with-django} que hemos tenido que
 realizar para poder desplegar nuestra aplicación de Django en Heroku. Para ello, lo primero
-que deberemos de hacer es crearnos una \href{https://id.heroku.com/login}{cuenta} en Heroku,
+que deberemos hacer es crearnos una \href{https://id.heroku.com/login}{cuenta} en Heroku,
 como en cualquier otro servicio que usemos.\\
 
 A la hora de realizar este proceso, podemos escoger entre dos opciones, bien a través de la
@@ -2534,8 +2576,8 @@ lugar, descargar el cliente, \href{https://shorturl.at/emHJY} {\textbf{Heroku CL
         \label{fig:heroku-cli}
     \end{figure}
 
-Una vez descargado el cliente, comprobamos que se ha instalado correctamente comprobando
-la versión y posteriormente procedemos a \textbf{iniciar sesión}.
+Una vez descargado el cliente, comprobamos que se ha instalado correctamente. Para ello,
+comprobamos la versión instalada y, posteriormente, procedemos a \textbf{iniciar sesión}.
 
     \begin{figure}[H]
         \centering
@@ -2544,7 +2586,7 @@ la versión y posteriormente procedemos a \textbf{iniciar sesión}.
         \label{fig:heroku-version-login}
     \end{figure}
 
-Tras este comando se nos abrirá un navegador con la página de inicio de sesión de Heroku
+Tras este comando, se nos abrirá un navegador con la página de inicio de sesión de Heroku
 para que introduzcamos nuestras credenciales (las de la cuenta creada previamente).\\
 
 Una vez hayamos iniciado sesión en el cliente, el siguiente paso será crear nuestra
@@ -2567,7 +2609,7 @@ integración con Github, lo cuál en este se cumple:
         \label{fig:deployment-method}
     \end{figure}
 
-Como vemos en la imagen anterior, existen distintos métodos para hacer el deploy:
+Como vemos en la imagen anterior, existen distintos métodos para hacer el \textit{deploy}:
 
     \begin{itemize}
         \item \textbf{Heroku Git}: mediante un repositorio de Git subido directamente
@@ -2586,14 +2628,14 @@ despliegue trabajando sobre el directorio principal del proyecto, por lo que si 
 indicamos nada, no funcionará, ya que en el \href{https://github.com/alexespana/TFG}
 {repositorio de Github} tenemos la documentación por un lado y el código fuente por
 otro. Para corregir este inconveniente, deberemos agregar los siguientes
-\textbf{buildpacks} (se encargan de transformar el código que queremos desplegar a un
-slug \footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una determinada
-página en un sitio web.}, que luego puede ser ejecutado en un contenedor, en un
-\textbf{dyno}) a nuestra aplicación:
+\textbf{\textit{buildpacks}} (se encargan de transformar el código que queremos desplegar
+a un slug \footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una
+determinada página en un sitio web.}, que luego puede ser ejecutado en un contenedor, en
+un \textbf{dyno}) a nuestra aplicación:
 
     \begin{enumerate}
         \item \href{https://elements.heroku.com/buildpacks/timanovsky/subdir-heroku-buildpack}
-        {subdir-heroku-buildpack}: permite poder especificar un subdirectorio de trabajo
+        {subdir-heroku-buildpack}: permite especificar un subdirectorio de trabajo
         para el proyecto.
         \item \href{https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-python}
         {heroku-buildpack-python}: permite crear un entorno para aplicaciones Python,
@@ -2626,10 +2668,10 @@ entorno, \textbf{PROJECT\_PATH}, que será tomada por Heroku al comenzar el desp
 la aplicación.\\
 
 Heroku incluye funcionalidades muy interesantes como la de poder hacer despliegues
-automáticos al \textbf{aplicar cambios} (push) a una determinada rama de Github. Por
-ejemplo, si creamos una rama llamada \textbf{deployment} donde hacemos todos los cambios
-necesarios para el despliegue y queremos que heroku los aplique directamente al dominio
-que tenemos ya funcionando, únicamente tendremos que habilitar la siguiente opción:
+automáticos al \textbf{aplicar cambios} (\textit{push}) a una determinada rama de Github.
+Por ejemplo, si creamos una rama llamada \textbf{deployment} donde hacemos todos los
+cambios necesarios para el despliegue y queremos que heroku los aplique directamente al
+dominio que tenemos ya funcionando, únicamente tendremos que habilitar la siguiente opción:
 
     \begin{figure}[H]
         \centering
@@ -2645,7 +2687,7 @@ que la misma tendrá un mínimo de calidad para los clientes finales.\\
 En nuestro caso, hemos creado una rama específica en Github para realizar el despliegue de
 la aplicación, llamada \textbf{deployment}. Para realizar el primer despliegue de la misma,
 deberemos hacerlo de \textbf{forma manual}, ya que en este caso teníamos todos los cambios
-necesarios en la rama (no hacía falta volver a subir nuevos cambios, push).\\
+necesarios en la rama (no hacía falta volver a subir nuevos cambios, \textit{push}).\\
 
     \begin{figure}[H]
         \centering
@@ -2687,7 +2729,7 @@ de la base de datos con las siguientes líneas de código:
     }
 \end{minted}
 
-En estas líneas, indicamos la url que tendrá la base de datos recogiendo su valor mediante
+En estas líneas, indicamos la URL que tendrá la base de datos recogiendo su valor mediante
 una \textbf{variable de entorno}, ya que esta fue creada automáticamente con la ejecución
 del comando anterior.\\
 
