@@ -11,7 +11,7 @@ de nuestro proyecto (en este caso de la aplicación web).
     \subsubsection{Ruby on Rails}
     \textbf{Ruby on Rails} (también conocido como Rails) \cite{ruby-on-rails} es un
     \textit{framework} para la creación de aplicaciones web escrito en Ruby. Sigue una
-    arquitectura \textit{Model-View-Controller} y diseño RESTfull \footnote{Un servicio
+    arquitectura \textit{Model-View-Controller} y diseño RESTfull\footnote{Un servicio
     es RESTfull cuando cumple con la \textbf{arquitectura REST}, es decir, facilita el
     acceso a recursos remotos y, además define las operaciones típicas por medio de URIs
     (listar, crear, leer, actualizar y borrar).}. Está diseñado para facilitar la
@@ -194,12 +194,12 @@ entre las disintas alternativas.
             \textbf{\textit{Object Relational Mapping}} (ORM).
             \item Que incluya una fácil creación de la API (\textit{Application Programming
             Interface} o interfaz de programación de aplicaciones) para la posible
-            comunicación con la App Android.
+            comunicación con la app Android.
         \end{enumerate}
 
     Tras tantear los distintos \textit{frameworks} para el desarrollo de aplicaciones web
     disponibles, se ha decidido utilizar Django, ya que está hecho en un lenguaje familiar
-    para mí y, además, cumple todos los requisitos anteriormente mencionados.\\
+    para nosotros y, además, cumple todos los requisitos anteriormente mencionados.\\
 
     Dicho \textit{framework} permite hacer lo siguiente:
         
@@ -386,7 +386,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     residentes en la base de datos que, como dijimos en la sección de análisis, va a ser
     PostgreSQL. Esta parte de la implementación se explicará en secciones posteriores.
 
-    \subsubsection{Añadir}
+    \newpage \subsubsection{Añadir}
     Esta sección de la página web corresponderá a las distintas vistas (formularios) que
     servirán para añadir los distintos componentes relacionados con las excavaciones:
     excavaciones, estancias, hechos, unidades estratigráficas (sedimentarias y construidas),
@@ -401,9 +401,9 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     \subsubsection{Sobre la aplicación}
     En esta página de la web se hace alusión brevemente a cuál es la principal motivación
     de crear este proyecto y cuáles son las principales características que posee la
-    aplicación: \textit{sincronización en tiempo real con la aplicación Android, fácil
+    aplicación: sincronización en tiempo real con la aplicación Android, fácil
     adición, edición y eliminación de información de los distintos elementos, generación
-    de informes a partir de la información de la base de datos, etc}.\\
+    de informes a partir de la información de la base de datos, etc.\\
 
     Dicha página quedaría de la siguiente forma:
         
@@ -414,7 +414,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
             \label{fig:about}
         \end{figure}
 
-    Como puede observarse, el contenido principal de la página está dividido en dos filas
+    \newpage Como puede observarse, el contenido principal de la página está dividido en dos filas
     o \textbf{\textit{rows}} (normalmente se usa la terminología inglesa), la primera, que
     se corresponde con el título o \textbf{\textit{headline}} (común en muchas páginas) y la
     segunda, que está dividida en dos partes que usan 6 columnas de Bootstrap cada una,
@@ -475,7 +475,7 @@ de la BD puede conducir a las siguientes consecuencias en el desarrollo de \text
         aplicación.
         \item Si hay un diseño muy complejo, el costo de desarrollo se verá
         \textbf{incrementado}, ya que habrá que implementar más código para solucionar las
-        distintas dificultades de la DB.
+        distintas dificultades de la BD.
         \item Una base de datos compleja puede tener \textbf{gran cantidad de tablas} que 
         provocan código innecesario y complejo de entender.
         \item Posibles relaciones erróneas entre los datos que pueden llegar a provocar
@@ -486,15 +486,15 @@ de la BD puede conducir a las siguientes consecuencias en el desarrollo de \text
 En este caso, necesitamos utilizar una \textbf{base de datos relacional}, ya que gran número
 de tablas están relacionadas entre sí, existiendo claves externas e incluso claves
 candidatas que se forman a partir de claves primarias y atributos discriminadores de
-relaciones. Todo esto, se verá en la sección siguiente.
+relaciones. Todo esto se verá en la sección siguiente.
 
     \subsubsection{Modelo E/R}
     El modelo E/R es la técnica de modelado de datos más extendida para el diseño
     conceptual, ya que posee una gran capacidad expresiva (a simple vista se pueden
     distinguir las distintas entidades con sus atributos y relaciones), es rigurosa, simple
     y fácil de emplear. Nos permite especificar las necesidades de información de nuestro
-    proyecto permitiéndonos hacer un diseño \textbf{\textit{apropiado}},
-    \textbf{\textit{de calidad}} y \textbf{\textit{fácil de transmitir}}.\\
+    proyecto permitiéndonos hacer un diseño \textbf{apropiado},
+    \textbf{de calidad} y \textbf{fácil de transmitir}.\\
 
     Para realizar dicho diseño, se ha hecho conjuntamente con Joaquín García Venegas,
     ya que para la aplicación Android también será necesario tener el diseño de la BD.
@@ -520,7 +520,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
             \label{fig:e-rmodel}
         \end{figure}
 
-    Por cuestiones de comodidad, se ha dividido la imagen en secciones que se pueden ver
+    Por cuestiones de comodidad se ha dividido la imagen en secciones que se pueden ver
     ampliadas en las páginas siguientes. Si se desea ir directamente a una sección, pulse
     sobre la sección deseada: sección 1 (\textbf{\ref{fig:e-rmodel1}}), sección 2
     (\textbf{\ref{fig:e-rmodel2}}), sección 3 (\textbf{\ref{fig:e-rmodel3}}), sección 4
@@ -571,8 +571,8 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
 
     Vamos a comenzar justificando las elecciones más importantes que se han ido tomando
-    sobre el modelo, para ello seguiré el siguiente orden: \textbf{entidades fuertes},
-    \textbf{herencia}, \textbf{entidades débiles} y \textbf{relaciones}.\\
+    sobre el modelo, para ello seguiremos el siguiente orden: \textbf{entidades fuertes},
+    \textbf{herencia}, \textbf{entidades débiles} y \textbf{relaciones}.
 
     \subsubsection{Entidades fuertes}
     Como podemos observar, hay siete entidades fuertes, entre las que podemos destacar,
@@ -628,7 +628,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         Al comienzo podría pensarse que el material es una entidad débil de la unidad
         construida, pero esto traería problemas, ya que para identificar a un material sería
         necesario el identificador de la unidad estratigráfica y el atributo discriminador de
-        la entidad débil. Esto carecería de sentido, ya que podría haber dos UE's construidas
+        la entidad débil. Esto carecería de sentido, ya que podría haber dos UE construidas
         con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
         de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
         que muchas unidades estratigráficas construidas pueden estar asociadas. Tiendo esto
@@ -647,7 +647,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         sedimentaria, pero esto también traería problemas, ya que para identificar a un material
         sería necesario el identificador de la unidad sedimentaria y el atributo discriminador
         de la entidad débil, que en este caso sería el \textbf{nombre}. Como hemos mencionado
-        anteriormente, no tiene sentido, ya que podría haber dos UE's sedimentarias hechas
+        anteriormente, no tiene sentido, ya que podría haber dos UE sedimentarias hechas
         con el mismo material, pero cada uno se identificaría de una forma distinta, a pesar
         de ser el mismo material. Por esta razón se consideró como una entidad fuerte, a la
         que muchas unidades estratigráficas sedimentarias pueden estar asociadas. Igual que el
@@ -661,11 +661,11 @@ relaciones. Todo esto, se verá en la sección siguiente.
     la entidad fuerte Unidad Estratigráfica, la \textbf{Sedimentaria} y la \textbf{Construida}.
     Ambas heredarán todos los atributos de la entidad padre y, además, añadirán sus propios
     atributos. En las fichas de registro de campo completo \ref{sec:registrationforms} puede
-    verse en la UE construida como existe un apartado material, sin embargo, en la sedimentaria
+    verse en la UE construida cómo existe un apartado material, sin embargo, en la sedimentaria
     no existe una sección como tal, la pregunta sería: \textbf{¿por qué las UE sedimentarias
     tienen un material distinto entonces?} Tras numerosas entrevistas con el arqueólogo al
     final se dedujo que los materiales de la primera hoja de \ref{sec:registrationforms}
-    correspondian a materiales que solo las UE's sedimentarias podían tener, por esta razón
+    correspondian a materiales que solo las UE sedimentarias podían tener, por esta razón
     se incorporaron.
 
     \subsubsection{Entidades débiles}
@@ -681,7 +681,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \textbf{tipo} (que puede ser cenizas, carbones, huesos, adobe, etc.).
 
     \subsubsection{Relaciones}
-    Finalizando con las relaciones, voy a enumerar las distintas relaciones identificando las
+    Finalizando con las relaciones, vamos a enumerar las distintas relaciones identificando las
     entidades implicadas:
 
         \begin{enumerate}
@@ -705,11 +705,11 @@ relaciones. Todo esto, se verá en la sección siguiente.
     de representar el modelo E/R en nuestra aplicación \textbf{Django}.\\
 
     \paragraph{¿Qué es un ORM?} \underline{}                                            
-    \newline Antes de nada, vamos a explicar qué es un \textbf{ORM (Object Relational Mapping)}, ya
-    que será un concepto clave para entender lo posteriormente explicado. Un ORM es un modelo
-    de programación que nos permite mapear las estructuras de una base de datos relacional
-    sobre unas estructuras lógicas en el código (por ejemplo objetos), es decir, nos permite
-    convertir los objetos de nuestra aplicación en un formato adecuado (SQL) para ser
+    \newline Antes de nada, vamos a explicar qué es un \textbf{ORM (\textit{Object Relational
+    Mapping})}, ya que será un concepto clave para entender lo posteriormente explicado. Un ORM
+    es un modelo de programación que nos permite mapear las estructuras de una base de datos
+    relacional sobre unas estructuras lógicas en el código (por ejemplo objetos), es decir, nos
+    permite convertir los objetos de nuestra aplicación en un formato adecuado (SQL) para ser
     almacenado en la base de datos. Como todo en la vida, esto tiene unas ventajas y unas
     desventajas, comencemos por las ventajas:
 
@@ -725,9 +725,9 @@ relaciones. Todo esto, se verá en la sección siguiente.
     considerarse pequeñas desventajas:
 
         \begin{enumerate}
-            \item Los ORMS generan una consulta y la pasan a la base de datos. En ocasiones
+            \item Los ORM generan una consulta y la pasan a la base de datos. En ocasiones
             estas consultas devuelven una matriz con un formato complejo con
-            \textbf{colecciones} (objetos) que tienen información no relevante para nosotros
+            \textbf{colecciones} (objetos) que tienen información no relevante para nosotros.
             \item Cuando la lógica de negocio de la aplicación se vuelve compleja, a veces
             no se puede representar mediante un ORM, aunque sí pueda ser manejable a nivel
             de consulta.
@@ -792,13 +792,14 @@ relaciones. Todo esto, se verá en la sección siguiente.
     razón se usa la función str en el return. Además, Django nos proporciona \textbf{gran
     variedad de tipos posibles} para los campos de los modelos, por lo que nos podemos
     ahorrar hacer algunas comprobaciones en los formularios de recogida de datos, aunque
-    algunas serán necesariamente obligatorias. Aquellos campos que necesiten ser positivos
+    algunas serán necesarias. Aquellos campos que necesiten ser positivos
     utilizarán campos de tipo \textbf{PositiveSmallIntegerField}, que nos permite introducir
     enteros desde el 0 hasta el 32767, cantidades suficientes para el contexto de nuestro
     proyecto.\\
 
-    Lo siguiente va a ser explicar cómo representar en los modelos las \textbf{primary keys},
-    \textbf{\textit{candidate keys}} y \textbf{\textit{relationships}}.\\
+    Lo siguiente va a ser explicar cómo representar en los modelos las
+    \textbf{\textit{primary keys}}, \textbf{\textit{candidate keys}} y
+    \textbf{\textit{relationships}}.\\
     
     \paragraph{Claves primarias} \underline{}
     \newline En los atributos de los modelos, en los tipos de campo, existe un parámetro llamado
@@ -807,7 +808,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     entonces Django automáticamente añadirá un campo \textbf{id} para guardar la clave primaria.
     Dicho atributo será un campo de tipo \textbf{models.BigAutoField}, que nos permite números
     desde el 1 hasta el 9223372036854775807, por lo que no habrá ningún tipo de problema con
-    la generación de los id's. Por supuesto, si en algún campo se declara \textbf{explícitamente}
+    la generación de los id. Por supuesto, si en algún campo se declara \textbf{explícitamente}
     la clave primaria, Django no generará el campo id y el campo que hayamos elegido pasará a
     ser clave primaria. En nuestro modelo E/R, las claves primarias que se generarán
     automáticamente por Django en los modelos serán las de \textbf{Excavacion, UE, Hecho,
@@ -830,7 +831,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
     \end{minted}
 
     ¿Cómo se representaría una clave candidata compuesta? En Django, esto se puede hacer de
-    dos formas posibles:
+    dos formas:
 
     \begin{enumerate}
         \item Mediante la opción \textbf{unique\underline{ }together}, que incluye la lista
@@ -853,7 +854,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
         \item La forma anterior, sin embargo, no es del todo aconsejable por Django ya
         que sugiere utilizar \textbf{UniqueConstraint} con la opción \textbf{constraint},
         ya que la opción de \verb|unique_together| ofrece menor funcionalidad y puede
-        estar obsoleto (\textit{deprecated}) en un futuro. Con esta nueva forma, la clase
+        estar obsoleta (\textit{deprecated}) en un futuro. Con esta nueva forma, la clase
         de metadatos del modelo quedaría así:
         
     
@@ -894,14 +895,14 @@ relaciones. Todo esto, se verá en la sección siguiente.
             \textbf{convención}) con el dato de tipo ManyToManyField, que recibe como parámetro
             únicamente el nombre del modelo con el que se relaciona.
 
-            Por ejemplo, tengamos los modelos Pizza y Topping, ¿qué se entiende mejor?
-            \textbf{¿que una pizza pueda tener muchos toppings?}, \textbf{¿o que un
-            topping pueda estar en muchas pizzas?} La primera de las opciones es más
-            intuitiva y por tanto el modelo Pizza tendría un campo toppings de tipo
-            ManyToManyField.
+            Por ejemplo, tengamos los modelos \textit{Pizza} y \textit{Topping}, ¿qué se
+            entiende mejor? \textbf{¿que una \textit{pizza} pueda tener muchos
+            \textit{toppings}?}, \textbf{¿o que un \textit{topping} pueda estar en muchas
+            \textit{pizzas}?} La primera de las opciones es más intuitiva y por tanto el
+            modelo \textit{Pizza} tendría un campo \textit{toppings} de tipo ManyToManyField.
         \end{itemize}
 
-    Explicadas las formas de representar las relaciones en Django, voy a mencionar las
+    Explicadas las formas de representar las relaciones en Django, vamos a mencionar las
     relaciones que se dan en nuestro modelo:
 
         \begin{enumerate}
@@ -923,7 +924,7 @@ relaciones. Todo esto, se verá en la sección siguiente.
 
     Esta sería una visión global de la implementación utilizando el ORM que nos ofrece Django.
 
-\subsubsection{Generación de informes}
+\newpage \subsubsection{Generación de informes}
 Una de las funcionalidades más prácticas de nuestra aplicación es la \textbf{generación
 automática de informes}. A través de esta funcionalidad, podemos generar informes a partir
 de la información almacenada de una determinada excavación en la base de datos. \\
@@ -976,14 +977,14 @@ El resultado de esta implementación en la aplicación sería el siguiente:
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.55]{imagenes/report-generator1.png}
+        \includegraphics[scale=0.54]{imagenes/report-generator1.png}
         \caption{Generación de informes (Parte 1)}
         \label{fig:report-generator1}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.55]{imagenes/report-generator2.png}
+        \includegraphics[scale=0.54]{imagenes/report-generator2.png}
         \caption{Generación de informes (Parte 2)}
         \label{fig:report-generator2}
     \end{figure}
@@ -998,8 +999,8 @@ ha implementado.\\
 
 Django cuenta con un \textbf{sistema de de autenticación} \cite{django-auth} de usuarios,
 este puede manejar cuentas de usuario, grupos de usuario, permisos, sesiones de usuario
-basadas en cookies, etc. Antes de nada, debemos de tener claro qué significan los términos
-de autenticación y autorización:
+basadas en \textit{cookies}, etc. Antes de nada, debemos de tener claro qué significan los
+términos de autenticación y autorización:
 
     \begin{itemize}
         \item \textbf{Autenticación}: es un proceso en el que se verifica que un usuario
@@ -1019,7 +1020,7 @@ por ejemplo, poder ver una excavacion, poder editarla, etc., para ello se usa el
 \subsubsection{Vistas de autenticación}
 En Django hay dos formas de implementar la autenticación de la aplicación: mediante la
 definición de \textbf{tus propias vistas} o utilizando las vistas \textbf{ya predefinidas}
-de Django. En nuestro caso hemos obtado por la última opción, puesto que nos ofrece todo lo
+de Django. En nuestro caso hemos optado por la última opción, puesto que nos ofrece todo lo
 necesario para nuestro propósito y hace mucho más sencilla la implementación.\\
 
 Para aclarar un poco más esto último, si nos fijamos en la figura \ref{fig:mvt}, lo que
@@ -1049,8 +1050,8 @@ A continuación, se indican las rutas que se encuentran definidas en
         envía un enlace de recuperación de contraseña al usuario, este enlace tiene el
         formato aquí indicado, \textbf{uidb64}, que sería el id del usuario codificado
         en base 64, y un \textbf{\textit{token}}, que es un \textit{token} de seguridad que
-        se genera en el momento de la creación del enlace y verifica que el password sea
-        válido.
+        se genera en el momento de la creación del enlace y verifica que la constraseña sea
+        válida.
         \item \textbf{accounts/reset/done/}: este \textit{template} muestra un mensaje de
         confirmación tras el cambio de contraseña.
     \end{itemize}
@@ -1086,8 +1087,8 @@ confirmar las activaciones, etc.\\
 A pesar de que Python tiene una interfaz para enviar correos en el módulo de
 \textbf{smtplib}, Django incorpora capas superiores para que el envío de los correos se
 haga de forma mas rápida y para dar soporte a las plataformas que no puedan usar SMTP
-\footnote{\textbf{Simple Mail Transfer Protocol} es un protocolo que utilizan los servidores
-de correo electrónico para enviar y recibir emails.}.\\
+\footnote{\textbf{\textit{Simple Mail Transfer Protocol}} es un protocolo que utilizan los servidores
+de correo electrónico para enviar y recibir \textit{emails}.}.\\
 
 En esta ocasión, se ha decidido usar el servidor de correo de Google, ya que es uno de los
 más populares y seguros. Para ello, se han tenido que definir en la configuración de
@@ -1103,7 +1104,7 @@ pudiera autenticarse.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.47]{imagenes/apps-access.png}
+        \includegraphics[scale=0.38]{imagenes/apps-access.png}
         \caption{Acceso de aplicaciones menos seguras}
         \label{fig:apps-access}
     \end{figure}
@@ -1115,7 +1116,7 @@ que estará en una variable de entorno junto al correo de la cuenta.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.50]{imagenes/apps-pass.png}
+        \includegraphics[scale=0.38]{imagenes/apps-pass.png}
         \caption{Contraseñas de aplicaciones}
         \label{fig:apps-pass}
     \end{figure}
@@ -1260,12 +1261,12 @@ siguientes:
         modificar o eliminar excavaciones, hechos, unidades estratigráficas, etc. en la
         aplicación.
 
-        \item \textbf{Arqueólogo administrador (Staff)}: en nuestra aplicación, corresponderá
-        al arqueólogo con permisos privilegiados, que se encargará de aceptar o rechazar a
-        los usuarios que envían peticiones de registro. Estos podrán \textbf{añadir y
-        eliminar} a usuarios de grupos de permisos ya definidos, además de \textbf{tener
-        acceso a todos los modelos} definidos en el sistema: excavaciones, inclusiones,
-        materiales, etc.
+        \item \textbf{Arqueólogo administrador (\textit{Staff})}: en nuestra aplicación,
+        corresponderá al arqueólogo con permisos privilegiados, que se encargará de aceptar
+        o rechazar a los usuarios que envían peticiones de registro. Estos podrán
+        \textbf{añadir y eliminar} a usuarios de grupos de permisos ya definidos, además de
+        \textbf{tener acceso a todos los modelos} definidos en el sistema: excavaciones,
+        inclusiones, materiales, etc.
 
         \item \textbf{Administrador del sistema}: es el usuario que tiene todos los permisos
         del sistema, puede realizar cualquier acción dentro de él: eliminar modelos, eliminar
@@ -1364,8 +1365,8 @@ que implementa el \textit{framework} de test de Django:
         \item \textbf{LiveServerTestCase}: esta clase es la más peculiar de todas, ya que
         hace lo mismo que TransactionTestCase, pero además, permite que se ejecuten
         \textbf{tests visuales}, es decir, tests en los que se abre un navegador y se
-        se simulan acciones reales de un usuario, verificando que la página se comporta
-        como es debido, por ejemplo, al pulsar un botón, al iniciar sesión, al ver las
+        simulan acciones reales de un usuario, verificando que la página se comporta
+        como es debido. Por ejemplo, al pulsar un botón, al iniciar sesión, al ver las
         unidades estratigráficas, etc.
     \end{itemize}
 
@@ -1373,7 +1374,7 @@ que implementa el \textit{framework} de test de Django:
 Como hemos comentado anteriormente, existen tests que requerirán una base de datos para
 funcionar (aquellos que heredan de \textbf{TestCase} de Django). Esta base de datos no debe
 ser la base de datos real, es decir, la de producción, ya que al finalizar los tests podría
-estar en un estado inválido o desconocido. Para ello, Django crea una base de datos nueva
+quedar en un estado inválido o desconocido. Para ello, Django crea una base de datos nueva
 en el momento en que se ejecutan los tests, que tendrá la misma configuración que la
 indicada en el archivo \textbf{settings.py} del proyecto y que, además, se eliminará al
 finalizar los tests.\\
@@ -1392,12 +1393,12 @@ migraciones, tests, etc. Veamos un sencillo ejemplo de lanzamiento de tests:
 
 Debemos recordar que nosotros, al inicio del desarrollo del \textit{software}, decidimos
 lanzar el proyecto usando \textbf{Docker} \cite{docker} y \textbf{Docker Compose}
-\cite{docker-compose}, es decir, \textit{dockerizándolo}, por esta razón lanzamos el
-contenedor antes para lanzar los tests.\\
+\cite{docker-compose}, es decir, \textit{dockerizándolo}, por esta razón lanzamos
+los tests desde el contenedor.\\
 
 Como vemos, lo primero que se hace es crear la base de datos para \textit{testing},
 posteriormente se ejecutan los tests (cada punto indica la ejecución correcta de un test)
-y finalmente se destruye la base de datos creada al principio.\\
+y finalmente, se destruye la base de datos creada al principio.\\
 
 En este caso, si quisiéramos ver con más detalle lo que sucede, podríamos indicar en el
 comando la opción \textbf{-v <nivel>} (\textit{verbosity}) en el que el nivel indica la
@@ -1420,8 +1421,8 @@ tests que sean necesarios. Concretamente, hemos creado los siguientes archivos:
         encargado de importar todos los módulos de tests que se encuentren en el
         directorio \textbf{tests}.
         \item \textbf{tests/test\_urls.py}: este archivo contiene los tests de las URL de la
-        aplicación. Comprueba que las URL de la aplicación estén vinculadas siempre a su
-        correpondiente vista.
+        aplicación. Comprueba que las URL de la aplicación estén vinculadas siempre a sus
+        correpondientes vistas.
         \item \textbf{tests/test\_settings.py}: este archivo contiene los tests de los
         \textit{settings} de la aplicación. Comprueba que ciertas variables esenciales en
         la aplicación estén correctamente declaradas. Por ejemplo, que la
@@ -1441,8 +1442,8 @@ tests que sean necesarios. Concretamente, hemos creado los siguientes archivos:
         eliminar se ejecuten correctamente sobre los modelos.
     \end{itemize}
 
-Gracias al descubrimiento de pruebas (\textbf{Test discovery}) basado en el módulo de
-unittest \cite{test-discovery}, se descubrirán tests que se encuentren en cualquier nombre
+Gracias al descubrimiento de pruebas (\textbf{\textit{Test discovery}}) basado en el módulo
+de unittest \cite{test-discovery}, se descubrirán tests que se encuentren en cualquier nombre
 de archivo que siga la expresión regular \textbf{test*.py}. Además, tambien podemos indicar
 la ejecución de tests concretos mediante la adición de \textbf{etiquetas de test}
 (\textit{test labels}). Por ejemplo, supongamos que queremos ejecutar un determinado método
@@ -1463,7 +1464,7 @@ siguiente forma:
         .
         .
     \end{minted}
-        \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
+        \newpage \item \textbf{test\_list\_excavations\_GET} indica el método de test que se quiere
         ejecutar.
     \end{enumerate}
 
@@ -1506,7 +1507,7 @@ evitado si antes de añadir dicho código al proyecto base se hubiesen ejecutado
 automáticamente. Este tipo de \textbf{pruebas automatizadas} es lo que se conoce como
 integración continua.\\
 
-Entre los principales requisitos que debe tener el sistema de integración continua que
+\newpage Entre los principales requisitos que debe tener el sistema de integración continua que
 usemos se encuentran:
 
     \begin{itemize}
@@ -1524,7 +1525,7 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
         \item \textbf{Travis CI} \cite{travis-ci}: si atendemos a la facilidad de uso y lo
         estándar que es el sistema, quizás este sea el más recomendado de usar, sin embargo,
         requiere introducir tarjeta de crédito, por lo que lo hemos descartado como opción.
-        \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente es el más
+        \item \textbf{Jenkins} \cite{jenkins}: este sistema de CI probablemente sea el más
         popular en la actualidad. Sin embargo, no es solo un sistema de CI, por lo
         que muchas de sus características no las usaríamos.
         \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
@@ -1604,8 +1605,8 @@ de la siguiente forma:
         \item \textbf{\href{https://github.com/alexespana/TFG/actions/workflows/build.yml}
         {Build images}}: como ya mencionamos en secciones anteriores, nosotros hemos decidido
         ejecutar nuestra aplicación utilizando Docker y Docker Compose, por lo que este flujo
-        de trabajo se encargará de comprobar que las imágenes que deben crearse se creen
-        correctamente. Entre sus principales partes tenemos:
+        de trabajo se encargará de comprobar que las imágenes se creen correctamente. Entre
+        sus principales partes tenemos:
             \begin{enumerate}
                 \item \textbf{\textit{Trigger}}: este flujo de trabajo se ejecutará cuando
                 se haga \textit{push} al repositorio, siempre y cuando los archivos
@@ -1640,10 +1641,10 @@ de la siguiente forma:
                 \item \textbf{\textit{Job}}: en este caso también hay un único \textit{job},
                 llamado \textbf{run-tests} y que se ejecutará en la última versión de
                 ubuntu (\textbf{ubuntu-latest}).
-                \item \textbf{Services}: dado que debemos ejecutar los tests utilizando un
-                servicio para la base de datos, ha sido necesario definir dentro del ejecutor
-                del flujo (ubuntu-latest) un servicio de postgres. De esta forma,
-                podremos crear la base de datos para test.              
+                \item \textbf{\textit{Services}}: dado que debemos ejecutar los tests
+                utilizando un servicio para la base de datos, ha sido necesario definir
+                dentro del ejecutor del flujo (ubuntu-latest) un servicio de Postgres. De
+                esta forma, podremos crear la base de datos para test.              
                 \item \textbf{\textit{Steps}}: este \textit{job} tiene un total de cinco
                 pasos, que son los siguientes:
                     \begin{enumerate}
@@ -1665,7 +1666,7 @@ de la siguiente forma:
                         
                         Dicho esto, cabe destacar que para la ejecución de los tests, se ha
                         utilizado la herramienta \href{https://pypi.org/project/coverage/}
-                        {coverage}, que mide la \textbf{cobertura del código}, es decir,
+                        {Coverage}, que mide la \textbf{cobertura del código}, es decir,
                         determina qué porcentaje de líneas de código del total del proyecto
                         se han ejecutado durante los tests, además de generar un informe que
                         será utilizado por el paso siguiente. Por lo tanto, cuanto más
@@ -1679,8 +1680,8 @@ de la siguiente forma:
                                     \label{fig:codecov-report}
                                 \end{figure}
                         
-                        Como vemos, se ha testeado el 97 por ciento del código por ahora, lo
-                        cual es un resultado bastante bueno y, además se ha escrito el
+                        Como vemos, se ha testeado el 97\% del código por ahora, lo
+                        cual es un resultado bastante bueno y, además, se ha escrito el
                         informe en el archivo \textbf{coverage.xml}.
                         
                         \item \textbf{Codecov}: este último paso utiliza una Github Action
@@ -1694,7 +1695,7 @@ de la siguiente forma:
             \end{enumerate}
     \end{enumerate}
 
-Estos son los flujos de trabajo o \textit{workflows} que se ejecutarán automáticamente en
+\newpage Estos son los flujos de trabajo o \textit{workflows} que se ejecutarán automáticamente en
 nuestro proyecto cada vez que se produzca uno de los eventos descritos.
 
 \subsubsection{Insignias de estado}
@@ -1720,9 +1721,10 @@ repositorio sería el siguiente:
 Como vemos, todas ellas indican que las pruebas automatizadas de integración continua han
 pasado con éxito y, además, tenemos el porcentaje de Codecov añadido, para el cual se ha
 obtenido el \textit{badge} desde Codecov web. Adicionalmente, se ha añadido el
-\textit{badge} de la \textbf{licencia} de código que estamos usando, \textbf{gplv3}.
+\textit{badge} de la \textbf{licencia} de código que estamos usando, \textbf{GNU GPLv3}
+\cite{gplv3}.
 
-\subsection{API REST}
+\newpage \subsection{API REST}
 En este \textit{milestone} del desarrollo \textit{software}, vamos a explicar en qué
 consiste una API, los distintos tipos que nos podemos encontrar, por qué son necesarias y,
 sobre todo, cómo la hemos implementado en nuestra aplicación web.\\
@@ -1746,7 +1748,7 @@ que use la API, podemos distinguir dos tipos:
         comunicación entre aplicaciones que se encuentren en entornos distintos o que estén
         escritas en distintos lenguajes se hace más sencilla. En la actualidad, su uso es
         reducido, ya que normalmente se usan para transacciones complejas que requieren
-        alta seguridad, como pasarelas de pago, ERPS \footnote{\textbf{Sistemas de
+        alta seguridad, como pasarelas de pago, ERPS\footnote{\textbf{Sistemas de
         planificación de recursos empresariales}: \textit{software} de gestión empresarial
         compuesto por módulos que gestionan y automatizan tareas internas de la empresa.},
         etc.
@@ -1763,8 +1765,8 @@ que use la API, podemos distinguir dos tipos:
         pasa a considerarse \textbf{RESTful}, con la peculiaridad de usar los verbos de
         \href{https://developer.mozilla.org/es/docs/Web/HTTP/Methods}{HTTP} para las
         llamadas desde el cliente (aplicación Android) al servidor, asociándolos a
-        operaciones \textbf{CRUD} (Create, Read, Update, Delete) de los recursos. En
-        concreto, las API se consideran RESTful cuando siguen los siguientes cuatro
+        operaciones \textbf{CRUD} (\textit{Create, Read, Update, Delete}) de los recursos.
+        En concreto, las API se consideran RESTful cuando siguen los siguientes cuatro
         principios:
 
             \begin{enumerate}
@@ -1773,27 +1775,26 @@ que use la API, podemos distinguir dos tipos:
                 (asociándolos a operaciones CRUD):
                     
                     \begin{itemize}
-                        \item \textbf{GET}: para obtener un recurso (Read).
-                        \item \textbf{POST}: para crear un recurso (Create).
-                        \item \textbf{PUT}: para actualizar un recurso (Update).
+                        \item \textbf{GET}: para obtener un recurso (\textit{Read}).
+                        \item \textbf{POST}: para crear un recurso (\textit{Create}).
+                        \item \textbf{PUT}: para actualizar un recurso (\textit{Update}).
                         \item \textbf{PATCH}: para actualizar parcialmente un
-                        recurso (Update).
-                        \item \textbf{DELETE}: para eliminar un recurso (Delete).
+                        recurso (\textit{Update}).
+                        \item \textbf{DELETE}: para eliminar un recurso (\textit{Delete}).
                     \end{itemize}
 
-                \item \textbf{Ser sin estado (\textit{stateless})}: que el resultado de la
+                \item \textbf{Ser sin estado (\textit{stateless})}: que el resultado de las
                 llamadas no dependa de otras llamadas anteriores, es decir, que sea
                 \textbf{idempotente}.
-                \item \textbf{Usar URIs con estilo \textit{path}}: que las URIs sigan un formato
+                \item \textbf{Usar URI con estilo \textit{path}}: que las URI sigan un formato
                 estándar, es decir, que sean legibles por humanos y pueda identificarse
-                claramente el recurso que se solicita. Por ejemplo, si solicitamos Una
-                excavación que la URI no sea así: \textbf{/info\_excavacion?id=1}, y que
-                sea algo asi: \textbf{/excavaciones/1}. Estos \textit{paths} son los
+                claramente el recurso que se solicita. Por ejemplo, si solicitamos una
+                excavación, que la URI no sea así: \textbf{/info\_excavacion?id=1}, y que
+                sea algo así: \textbf{/excavaciones/1}. Estos \textit{paths} son los
                 llamados \textbf{\textit{endpoints}}.
                 \item \textbf{Devolver en la respuesta JSON o XML}: como hemos mencionado
                 anteriormente, las respuestas deben ser en formato XML o JSON,
-                devolviendo correspondientemente el
-                \href{https://developer.mozilla.org/es/docs/Web/HTTP/Status}
+                devolviendo el \href{https://developer.mozilla.org/es/docs/Web/HTTP/Status}
                 {\textit{status code}} correspondiente, es decir, el código de estado HTTP
                 que indica cuál es el resultado de la petición.
             \end{enumerate}
@@ -1802,7 +1803,7 @@ que use la API, podemos distinguir dos tipos:
 \subsubsection{Django REST Framework}
 En esta sección explicaremos con detalle  en qué consiste \textbf{Django REST Framework}
 \cite{djangorestframework} y cómo se ha utilizado en nuestro proyecto para la
-implementación de la API \textbf{RESTful}.\\
+implementación de la \textbf{API RESTful}.\\
 
 Django de por sí no trae un mecanismo para implementar APIs web, por lo que se ha tenido
 que añadir a las dependencias y, por tanto, añadir como aplicación instalada al proyecto,
@@ -1820,14 +1821,14 @@ necesarias para la implementación de la API de nuestro proyecto. Funcionalidade
         interpretados en formato JSON o XML.
         \item \textbf{Cache}: para que la API no sea consultada varias veces para la
         solicitud de un mismo recurso.
-        \item \textbf{\textit{Routing}}: para que la API se pueda acceder a través de una
-        URI.
+        \item \textbf{\textit{Routing}}: para que se pueda acceder a la API  a través de
+        una URI.
         \item \textbf{Paginación}: para que la API devuelva páginas de resultados.
     \end{itemize}
 
 Como vemos, entre ellas se encuentran algunos de los requisitos necesarios para poder
-considerar una API como RESTful, como que permita almacenar información en la memoria
-caché o que las respuestas sean en JSON o XML.\\
+considerar una API como RESTful, como por ejemplo, que permita almacenar información en
+la memoria caché o que las respuestas sean en JSON o XML.\\
 
 Para la creación de cualquier ruta en la API que sea funcional, son necesarios los
 siguientes elementos:
@@ -1859,7 +1860,7 @@ siguientes elementos:
         Gracias a ellos podremos controlar la salida de las respuestas. Igualmente, para
         las excavaciones tendríamos la siguiente implementación:
     
-    \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
+    \newpage \begin{minted}[mathescape, linenos,numbersep=5pt,bgcolor=lightgray,gobble=2,
                     frame=lines,fontsize=\footnotesize,framesep=2mm]{python}
     from rest_framework import serializers
     from .models import Excavation
@@ -1904,14 +1905,14 @@ Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{\tex
 
 \begin{longtable}[H]{|l|l|l|}
     \hline
-    \textbf{Método} & \textbf{EndPoint} & \textbf{Descripción} \\
+    \textbf{Método} & \textbf{\textit{EndPoint}} & \textbf{Descripción} \\
     \hline
     \endfirsthead
    
     \hline
     \multicolumn{3}{|c|}{Continuación de la tabla \ref{tab:endpoints}}\\
     \hline
-    \textbf{Método} & \textbf{EndPoint} & \textbf{Descripción} \\
+    \textbf{Método} & \textbf{\textit{EndPoint}} & \textbf{Descripción} \\
     \hline
     \hline
     \endhead
@@ -1977,7 +1978,7 @@ Teniendo esto en cuenta, nuestra aplicación tendrá los siguientes \textbf{\tex
     &  & material sedimentario \\
     DELETE & api/sedimentarymaterial/\{pk\} & Elimina un material sedimentario \\
     \hline\hline
-    \multicolumn{3}{|l|}{\textbf{Materiales construidos}} \\
+    \newpage \multicolumn{3}{|l|}{\textbf{Materiales construidos}} \\
     \hline
     GET & api/builtmaterial & Lista de materiales construidos \\
     GET & api/builtmaterial/\{pk\} & Recupera un material construido \\
@@ -2024,7 +2025,7 @@ código sería \textbf{001002} y el \textit{endpoint} para obtener dicha unidad 
 
             \begin{center} \textbf{api/builtue/001002} \end{center}
 
-\subsubsection{Autenticación}
+\newpage \subsubsection{Autenticación}
 Otro de los puntos a tener en cuenta es la autenticación en la API, ya que no cualquier
 usuario puede tener acceso a ella y realizar cualquier acción sobre los recursos de la
 aplicación. Para ello, se debe elegir un sistema de autenticación adecuado. Dado que
@@ -2049,7 +2050,7 @@ de peticiones a través de un \textbf{cliente móvil}.\\
 
 Esta sería la interfaz gráfica de la API, donde tenemos una pestaña de
 \textbf{\textit{login}} para autenticarse en ella, las distintas opciones (OPTIONS) y
-métodos HTTP (GET, etc.), y finalmente las distintas rutas definidas en la API para el
+métodos HTTP (GET, etc.) y, finalmente, las distintas rutas definidas en la API para el
 manejo de los recursos del servidor, junto a las cabeceras HTTP que se usan en cada petición.
 
         \begin{figure}[H]
@@ -2059,7 +2060,7 @@ manejo de los recursos del servidor, junto a las cabeceras HTTP que se usan en c
             \label{fig:root-api}
         \end{figure}
 
-Si un usuario no autenticado intentase acceder a cualquier enlace de la misma, obtendría el
+\newpage Si un usuario no autenticado intentase acceder a cualquier enlace de la misma, obtendría el
 siguiente mensaje, que indica que no se proveyeron las credenciales del usuario, ya que al
 añadir el \textit{login} para la API, es necesario que los usuarios estén autenticados para
 poder usarla.
@@ -2072,7 +2073,7 @@ poder usarla.
         \end{figure}
 
 Una vez ingresadas nuestras credenciales en el inicio de sesión (en este caso hemos creado
-un usuario ficticio que se llama \textbf{Alex} y tiene de password \textbf{inventado1234})
+un usuario ficticio que se llama \textbf{Alex} y tiene de constraseña \textbf{inventado1234}),
 podríamos ver la lista con las excavaciones disponibles en la aplicación.
 
         \begin{figure}[H]
@@ -2090,7 +2091,7 @@ peticiones a través de una interfaz muy simple y fácil de usar.\\
 Lo primero de todo, sería obtener el \textbf{\textit{token} de autenticación} para poder
 autenticarse en la aplicación. Para ello, haría una petición \textbf{POST} a una ruta
 concreta, en este caso \textbf{api-token-auth/}, enviando en el cuerpo de la petición el
-\textbf{nombre} y \textbf{password} del usuario (inicio de sesión):
+\textbf{nombre} y \textbf{\textit{password}} del usuario (inicio de sesión):
 
         \begin{figure}[H]
             \centering
@@ -2189,7 +2190,7 @@ directamente a través de una terminal o consola.\\
 
 En ocasiones, al construir aplicaciones, este punto se olvida o no se implementa
 adecuadamente, lo que hace que ante un error en el sistema o ante una acción extraña, sea
-muy complicado averiguar la \textbf{traza} \footnote{\textbf{Origen},
+muy complicado averiguar la \textbf{traza}\footnote{\textbf{Origen},
 \textbf{lugar de procedencia} o \textbf{rastro} que deja el error en el sistema.} del
 mismo, provocando problemas como los siguientes:
 
@@ -2301,7 +2302,7 @@ darle valor a esta variable a través de variables de entorno definidas en un ar
     ]
     \end{minted}
 
-Además, deberemos hacer la correspondiente configuración del \textit{logging}, para ello
+Además, deberemos hacer la correspondiente configuración del \textit{logging}. Para ello,
 añadimos la variable \textbf{LOGGING} a nuestro archivo de configuración \textbf{settings.py}
 y añadimos las distintas \textbf{claves}: \textbf{\textit{formatters}, \textit{filters},
 \textit{handlers} y \textit{loggers}}, con sus correspondientes configuraciones. Mencionamos
@@ -2408,8 +2409,8 @@ Procedamos a explicar la implementación necesaria para esta página de \textit{
     .
     \end{minted}
 
-                \item \textbf{\textit{Logger}}: finalmente, queda la configuración del
-                \textit{logger} que recogerá los \textit{logs} que proceden desde el
+                \newpage \item \textbf{\textit{Logger}}: finalmente, queda la configuración
+                del \textit{logger} que recogerá los \textit{logs} que proceden desde el
                 archivo views.py de la aplicación. \\
 
                 Como hemos mencionado anterioremente, el \textit{logger} de las vistas se
@@ -2460,7 +2461,7 @@ y cómo las hemos llevado a cabo. \\
 En desarrollo de \textit{software}, el término \textbf{\textit{deploy}} (desplegar o lanzar)
 \cite{deploy} se define como el proceso de llevar una aplicación a producción, es decir,
 hacer de alguna forma que la aplicación sea accesible para los clientes finales. Hasta el
-momento, hemos trabajado con un servidor web de desarrollo \textbf{local} \footnote{Que se
+momento, hemos trabajado con un servidor web de desarrollo \textbf{local}\footnote{Que se
 ejecuta en el \textbf{entorno} de una máquina u ordenador concreto.} que Django nos ha
 proporcionado con su configuración por defecto. Dicho servidor de desarrollo nos ha servido
 para realizar el desarrollo completo de nuestra aplicación y realizar pruebas en un entorno
@@ -2600,7 +2601,7 @@ aplicación en Heroku. Para ello, ejecutamos el siguiente comando:
     \end{figure}
 
 Otro de los requisitos que estábamos buscando en el servicio en la nube era que tuviera
-integración con Github, lo cuál en este se cumple:
+integración con Github, lo cuál en este se cumple: \\
 
     \begin{figure}[H]
         \centering
@@ -2609,7 +2610,8 @@ integración con Github, lo cuál en este se cumple:
         \label{fig:deployment-method}
     \end{figure}
 
-Como vemos en la imagen anterior, existen distintos métodos para hacer el \textit{deploy}:
+\newpage Como vemos en la imagen anterior, existen distintos métodos para hacer el
+\textit{deploy}:
 
     \begin{itemize}
         \item \textbf{Heroku Git}: mediante un repositorio de Git subido directamente
@@ -2629,7 +2631,7 @@ indicamos nada, no funcionará, ya que en el \href{https://github.com/alexespana
 {repositorio de Github} tenemos la documentación por un lado y el código fuente por
 otro. Para corregir este inconveniente, deberemos agregar los siguientes
 \textbf{\textit{buildpacks}} (se encargan de transformar el código que queremos desplegar
-a un slug \footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una
+a un slug\footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una
 determinada página en un sitio web.}, que luego puede ser ejecutado en un contenedor, en
 un \textbf{dyno}) a nuestra aplicación:
 
