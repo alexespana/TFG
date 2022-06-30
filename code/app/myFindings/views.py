@@ -1,6 +1,7 @@
-import os, io, logging, requests
+import os, io, requests
 from docx import Document
 from docx.shared import Pt, Inches
+from datetime import datetime
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
@@ -8,13 +9,14 @@ from .forms import BuiltMaterialForm, BuiltUEForm, ExcavationForm, FactForm, \
                    PhotoForm, CustomUserCreationForm, CustomUserChangeForm, \
                    InclusionUpdateForm, FactUpdateForm, SedimentaryUEUpdateForm, BuiltUEUpdateForm
 from .models import Excavation, Photo, Fact, Inclusion, Room, BuiltMaterial, \
-                    SedimentaryMaterial, BuiltUE, SedimentaryUE, UE
+                    SedimentaryMaterial, BuiltUE, SedimentaryUE, UE, Log
 from django.conf import settings
 from django.template.loader import get_template
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.utils import timezone
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
@@ -29,9 +31,6 @@ from rest_framework.response import Response
 from .serializers import ExcavationSerializer, PhotoSerializer,SedimentaryMaterialSerializer,\
                          BuiltMaterialSerializer, SedimentaryUESerializer, BuiltUESerializer,\
                          InclusionSerializer, RoomSerializer, FactSerializer
-
-# Module variable
-logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -83,7 +82,8 @@ def add_excavation(request):
 
             # Send a message to the user
             messages.success(request, 'Excavación creada correctamente.')
-            logger.info('El usuario %s ha creado la excavación %s.' % (request.user, form.instance.n_excavacion))
+            Log.objects.create(description='El usuario %s ha creado la excavación %s.' % (request.user, form.instance.n_excavacion),
+                               date_and_time=datetime.now(tz=timezone.utc).strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of excavations
             return redirect(to='excavations')
@@ -112,7 +112,8 @@ def modify_excavation(request, id):
 
             # Send a message to the user
             messages.success(request, 'Excavación modificada correctamente.')
-            logger.info('El usuario %s ha modificado la excavación %s.' % (request.user, excavation.n_excavacion))
+            Log.objects.create(description='El usuario %s ha modificado la excavación %s.' % (request.user, excavation.n_excavacion),
+                    date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="excavations")
 
@@ -131,7 +132,8 @@ def delete_excavation(request, id):
 
     # Send a message to the user
     messages.success(request, 'Excavación eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la excavación %s.' % (request.user, excavation.n_excavacion))
+    Log.objects.create(description='El usuario %s ha eliminado la excavación %s.' % (request.user, excavation.n_excavacion),
+            date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="excavations")    
 
@@ -172,7 +174,8 @@ def add_sedimentaryue(request):
 
             # Send a message to the user
             messages.success(request, 'Unidad sedimentaria creada correctamente.')
-            logger.info('El usuario %s ha creado la unidad sedimentaria UE%s.' % (request.user, form.instance.codigo))
+            Log.objects.create(description='El usuario %s ha creado la unidad sedimentaria UE%s.' % (request.user, form.instance.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of excavations
             return redirect(to='sedimentaryues')
@@ -196,7 +199,8 @@ def modify_sedimentaryue(request, id):
 
             # Send a message to the user
             messages.success(request, 'Unidad sedimentaria modificada correctamente.')
-            logger.info('El usuario %s ha modificado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo))
+            Log.objects.create(description='El usuario %s ha modificado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="sedimentaryues")
 
@@ -215,7 +219,8 @@ def delete_sedimentaryue(request, id):
 
     # Send a message to the user
     messages.success(request, 'Unidad sedimentaria eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo))
+    Log.objects.create(description='El usuario %s ha eliminado la unidad sedimentaria UE%s.' % (request.user, sedimentaryue.codigo),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="sedimentaryues")   
 
@@ -257,7 +262,8 @@ def add_builtue(request):
 
             # Send a message to the user
             messages.success(request, 'Unidad construida creada correctamente.')
-            logger.info('El usuario %s ha creado la unidad construida UE%s.' % (request.user, form.instance.codigo))
+            Log.objects.create(description='El usuario %s ha creado la unidad construida UE%s.' % (request.user, form.instance.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of excavations
             return redirect(to='builtues')
@@ -281,7 +287,8 @@ def modify_builtue(request, id):
 
             # Send a message to the user
             messages.success(request, 'Unidad construida modificada correctamente.')
-            logger.info('El usuario %s ha modificado la unidad construida UE%s.' % (request.user, builtue.codigo))
+            Log.objects.create(description='El usuario %s ha modificado la unidad construida UE%s.' % (request.user, builtue.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="builtues")
 
@@ -300,7 +307,8 @@ def delete_builtue(request, id):
 
     # Send a message to the user
     messages.success(request, 'Unidad construida eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la unidad construida UE%s.' % (request.user, builtue.codigo))
+    Log.objects.create(description='El usuario %s ha eliminado la unidad construida UE%s.' % (request.user, builtue.codigo),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="builtues")
 
@@ -343,7 +351,8 @@ def add_fact(request):
 
             # Send a message to the user
             messages.success(request, 'Hecho creado correctamente.')
-            logger.info('El usuario %s ha creado el hecho %s%s.' % (request.user, form.instance.letra, form.instance.numero))
+            Log.objects.create(description='El usuario %s ha creado el hecho %s%s.' % (request.user, form.instance.letra, form.instance.numero),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='facts')
@@ -367,7 +376,8 @@ def modify_fact(request, id):
 
             # Send a message to the user
             messages.success(request, 'Hecho modificado correctamente.')
-            logger.info('El usuario %s ha modificado el hecho %s%s.' % (request.user, fact.letra, fact.numero))
+            Log.objects.create(description='El usuario %s ha modificado el hecho %s%s.' % (request.user, fact.letra, fact.numero),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="facts")
 
@@ -386,7 +396,8 @@ def delete_fact(request, id):
 
     # Send a message to the user
     messages.success(request, 'Hecho eliminado correctamente.')
-    logger.info('El usuario %s ha eliminado el hecho %s%s.' % (request.user, fact.letra, fact.numero))
+    Log.objects.create(description='El usuario %s ha eliminado el hecho %s%s.' % (request.user, fact.letra, fact.numero),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="facts")  
 
@@ -427,7 +438,8 @@ def add_room(request):
 
             # Send a message to the user
             messages.success(request, 'Estancia creada correctamente.')
-            logger.info('El usuario %s ha creado la estancia %s.' % (request.user, form.instance.n_estancia))
+            Log.objects.create(description='El usuario %s ha creado la estancia %s.' % (request.user, form.instance.n_estancia),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='rooms')
@@ -456,7 +468,8 @@ def modify_room(request, id):
 
             # Send a message to the user
             messages.success(request, 'Estancia modificada correctamente.')
-            logger.info('El usuario %s ha modificado la estancia %s.' % (request.user, room.n_estancia))
+            Log.objects.create(description='El usuario %s ha modificado la estancia %s.' % (request.user, room.n_estancia),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="rooms")
 
@@ -475,7 +488,8 @@ def delete_room(request, id):
 
     # Send a message to the user
     messages.success(request, 'Estancia eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la estancia %s.' % (request.user, room.n_estancia))
+    Log.objects.create(description='El usuario %s ha eliminado la estancia %s.' % (request.user, room.n_estancia),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="rooms") 
 
@@ -516,7 +530,8 @@ def add_photo(request):
 
             # Send a message to the user
             messages.success(request, 'Foto creada correctamente.')
-            logger.info('El usuario %s ha creado la foto %s.' % (request.user, form.instance.numero))
+            Log.objects.create(description='El usuario %s ha creado la foto %s.' % (request.user, form.instance.numero),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='photos')
@@ -545,7 +560,8 @@ def modify_photo(request, id):
 
             # Send a message to the user
             messages.success(request, 'Foto modificada correctamente.')
-            logger.info('El usuario %s ha modificado la foto %s.' % (request.user, photo.numero))
+            Log.objects.create(description='El usuario %s ha modificado la foto %s.' % (request.user, photo.numero),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="photos")
 
@@ -564,7 +580,8 @@ def delete_photo(request, id):
 
     # Send a message to the user
     messages.success(request, 'Foto eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la foto %s.' % (request.user, photo.numero))
+    Log.objects.create(description='El usuario %s ha eliminado la foto %s.' % (request.user, photo.numero),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="photos") 
 
@@ -605,7 +622,8 @@ def add_inclusion(request):
 
             # Send a message to the user
             messages.success(request, 'Inclusion creada correctamente.')
-            logger.info('El usuario %s ha creado la inclusión %s para UE%s.' % (request.user, form.instance.tipo, form.instance.uesedimentaria.codigo))
+            Log.objects.create(description='El usuario %s ha creado la inclusión %s para UE%s.' % (request.user, form.instance.tipo, form.instance.uesedimentaria.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='inclusions')
@@ -629,7 +647,8 @@ def modify_inclusion(request, id):
 
             # Send a message to the user
             messages.success(request, 'Inclusion modificada correctamente.')
-            logger.info('El usuario %s ha modificado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo))
+            Log.objects.create(description='El usuario %s ha modificado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             return redirect(to="inclusions")
 
@@ -648,7 +667,8 @@ def delete_inclusion(request, id):
 
     # Send a message to the user
     messages.success(request, 'Inclusion eliminada correctamente.')
-    logger.info('El usuario %s ha eliminado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo))
+    Log.objects.create(description='El usuario %s ha eliminado la inclusión %s para UE%s.' % (request.user, inclusion.tipo, inclusion.uesedimentaria.codigo),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="inclusions")
 
@@ -689,7 +709,8 @@ def add_sedimentarymaterial(request):
 
             # Send a message to the user
             messages.success(request, 'Material sedimentario creado correctamente.')
-            logger.info('El usuario %s ha creado el material sedimentario %s.' % (request.user, form.instance.nombre))
+            Log.objects.create(description='El usuario %s ha creado el material sedimentario %s.' % (request.user, form.instance.nombre),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='sedimentarymaterials')
@@ -709,7 +730,8 @@ def delete_sedimentarymaterial(request, nombre):
 
     # Send a message to the user
     messages.success(request, 'Material sedimentario eliminado correctamente.')
-    logger.info('El usuario %s ha eliminado el material sedimentario %s.' % (request.user, nombre))
+    Log.objects.create(description='El usuario %s ha eliminado el material sedimentario %s.' % (request.user, nombre),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="sedimentarymaterials")
 
@@ -750,7 +772,8 @@ def add_builtmaterial(request):
 
             # Send a message to the user
             messages.success(request, 'Material construido creado correctamente.')
-            logger.info('El usuario %s ha creado el material construido %s.' % (request.user, form.instance.nombre))
+            Log.objects.create(description='El usuario %s ha creado el material construido %s.' % (request.user, form.instance.nombre),
+                date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             # Redirect to the list of facts
             return redirect(to='builtmaterials')
@@ -770,7 +793,8 @@ def delete_builtmaterial(request, nombre):
 
     # Send a message to the user
     messages.success(request, 'Material construido eliminado correctamente.')
-    logger.info('El usuario %s ha eliminado el material construido %s.' % (request.user, nombre))
+    Log.objects.create(description='El usuario %s ha eliminado el material construido %s.' % (request.user, nombre),
+        date_and_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     return redirect(to="builtmaterials")
 
@@ -1335,12 +1359,7 @@ class CustomAuthToken(ObtainAuthToken):
 @group_required('Staff')
 def process_logs(request):
 
-    try:
-        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
-        logs = file.readlines()
-        logs.reverse()
-    except:
-        return HttpResponse(status=500)
+    logs = Log.objects.get_queryset().order_by('-date_and_time')
 
     page = request.GET.get('page', 1)
     try:
@@ -1359,13 +1378,11 @@ def process_logs(request):
 @login_required
 @group_required('Staff')
 def download_logs(request):
+    logs = []
+    logssaved = Log.objects.get_queryset().order_by('-date_and_time')
 
-    try:
-        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r', encoding='utf-8')
-        logs = file.readlines()
-        logs.reverse()
-    except:
-        return HttpResponse(status=500)
+    for log in logssaved:
+        logs.append('[ ' + str(log.date_and_time) + ' ] => ' + log.description) 
 
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename="myFindings.txt"'

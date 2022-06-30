@@ -2,7 +2,7 @@ import os, math
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from myFindings.models import Excavation, Photo, Fact, Room, Inclusion, \
+from myFindings.models import Excavation, Log, Photo, Fact, Room, Inclusion, \
                               BuiltMaterial, SedimentaryMaterial, SedimentaryUE, BuiltUE
 from django.contrib.auth.models import Group
 from django.http import Http404
@@ -197,8 +197,8 @@ class TestListingViews(TestCase):
         self.assertTemplateUsed(response, 'logs.html')
 
     def test_logs_raise_pagenotfound(self):
-        file = open(os.environ.get('LOG_FILE_PATH', '/var/log/myFindings.log'), 'r')
-        num_pages = math.ceil((len(file.readlines()) / 7) + 1)
+        num_logs = Log.objects.count()
+        num_pages = math.ceil(( num_logs / 7) + 2)
         response = self.client.get('/system_logs/?page=' + str(num_pages))
         self.assertEqual(response.status_code, 404)
 
