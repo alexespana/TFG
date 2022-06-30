@@ -413,3 +413,13 @@ class Inclusion(models.Model):
 
     def __str__(self):
         return self.tipo + ' - ' + self.uesedimentaria.codigo
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# SYSTEM LOGS         ~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Log(models.Model):
+    description = models.CharField(max_length=100)
+    date_and_time = models.DateTimeField()
+
+    def __str__(self):
+        return '[ ' + str(self.date_and_time) + ' ] => ' + self.description
