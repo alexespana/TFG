@@ -1,28 +1,80 @@
-\chapter{Documentación adicional}
-\section{Fichas de registro} \label{sec:registrationforms}
-En este documento se sitúan todos los campos necesarios para la recogida de datos de campo
-y de registro completo. Así, en él se reflejan las \textbf{UE reducidas}, \textbf{UE
-estratigráficas de registro completo},  \textbf{hechos}, \textbf{estancias}, el
-\textbf{inventario fotográfico}, \textbf{mobiliario}, \textbf{cerámica} y \textbf{tipología},
-aunque estos tres últimos no los abarcaremos ene este proyecto.
+\chapter{Manual de instalación}
+En este manual de instalación, describiremos los pasos a seguir para poner en marcha la
+aplicación web en una distribución Linux.
 
-Este documento que se adjunta en primer lugar en la página siguiente \textbf{NO es de
-autoría propia} y fue un documento proporcionado por el arqueólogo como apoyo documental.
 
-\section{Metodología de registro}
-En este documento, la parte principal y más importante describe \textbf{cómo se identifican
-las entidades}, indicando el tipo de campos a los que se corresponden, enteros, palabras ya
-previamente definidas como la letra identificativa de los Hechos junto con la numeración. Esta
-información será de gran utilidad a la hora de elaborar el modelo E/R y tener claro qué
-atributos forman la clave primaria y posibles claves candidatas de las entidades.
+\section{Instalar Docker y Docker Compose}
+Como hemos venido mencionando en el proyecto, para la ejecución de nuestra aplicación,
+hemos usado \textbf{Docker} y \textbf{Docker Compose}, por lo que necesitaremos tener
+ambos instalados en nuestro sistema. Para ello, se pueden seguir los siguientes tutoriales
+de instalación, \href{https://docs.docker.com/engine/install/ubuntu/}{Docker} y
+\href{https://docs.docker.com/compose/install/}{Docker Compose}, respectivamente. \\
 
-Este documento se adjunta en segundo lugar, después de \ref{sec:registrationforms}, e
-igual que el anterior, \textbf{NO es de autoría propia} y fue un documento proporcionado por
-el arqueólogo como apoyo documental.
+\section{Definir variables de entorno}
+Una vez completada la sección anterior, nos situamos sobre la rama de desarrollo
+(\textit{development}) del proyecto, creamos un archivo llamado \textbf{.env} en
+el directorio \textbf{code} y definimos las siguientes variables de entorno:
+    \begin{enumerate}
+        \item \textbf{DEBUG}: define si estamos en modo depuración o no. Como en este caso
+        nos encontramos en un ambiente de desarrollo, deberemos darle valor \textbf{True}.
 
-% Fichas de recogida de datos, tanto de campo como completas
-\includepdf[pages=1-7]{info/FichasRegistroCampoCompleto.pdf}
+        \item \textbf{SECRET\_KEY}: define la clave secreta de nuestra aplicación. Realmente
+        no es necesario darle valor, ya que se genera una clave aleatoria cada vez que se
+        inicia la aplicación, sin embargo, es aconsejable darle un valor fijo, puesto que
+        al generar una clave secreta cada vez, puede hacer que usuarios que estaban
+        \textit{logueados} se \textit{deslogueen} de forma inesperada de la aplicación.
 
-% Jerarquía entre los elementos e identificación de ellos
-\includepdf[pages=2-3]{info/MetodologiaFichasRegistro.pdf}
+        \item \textbf{EMAIL\_HOST\_USER}: indica el correo electrónico a través del cuál la
+        aplicación se conectará a través de SMTP para recibir las peticiones de registro y
+        notificar a los usuarios cuando se les conceda permiso para \textit{loguearse} en
+        el sistema.
 
+        \item \textbf{EMAIL\_HOST\_PASSWORD}: clave de aplicación creada para permitir la
+        conexión de Django con el correo electrónico. Será necesario realizar lo indicado
+        en la sección \ref{subsubsec:send-mails} del proyecto.
+    \end{enumerate}
+
+\section{Crear imágenes y ejecutar contenedores}
+Para la creación de las imágenes que necesita la aplicación, ejecutamos el siguiente comando
+sobre el directorio \textbf{code}:
+
+\begin{center}
+    \textbf{docker-compose build}
+\end{center}
+
+Una vez finalizada la creación de las imágenes correspondientes (\textit{code\_web},
+\textit{postgres} y \textit{adminer}), pasamos a ejecutar los contenedores mediante
+el siguiente comando (también en el directorio code):
+
+\begin{center}
+    \textbf{docker-compose up}
+\end{center}
+
+Con este último comando tendríamos a los tres contenedores ejecutándose.
+
+\section{Realizar migraciones y crear superusuario}
+Finalmente, únicamente nos quedará realizar las migraciones de la base de datos. Para
+ello, ejecutamos el siguiente comando:
+
+\begin{center}
+    \textbf{docker-compose run web python manage.py migrate}
+\end{center}
+
+Al ejecutar este comando, todas las tablas de la aplicación se crearán en la base de datos
+y, además, los materiales predefinidos de las unidades estratigráficas se
+añadirán. \\
+
+Normalmente, al ejecutar la aplicación, necesitaremos crear un superusuario, puesto que se
+utilizan permisos y roles en la aplicación. Si no tenemos ningún permiso no podremos
+realizar ninguna acción sobre excavaciones, unidades, hechos, estancias, fotografías, etc.
+Para ello, ejecutamos el siguiente comando y rellenamos los datos que se nos solicitan
+(usuario, correo, contraseña y confirmación de contraseña):
+
+\begin{center}
+    \textbf{docker-compose run web python manage.py createsuperuser}
+\end{center}
+
+Con estos pasos, ya podríamos acceder a la aplicación a través del enlace
+\url{http://localhost:8000/} o \url{http://127.0.0.1:8000/}. Además, podremos
+\textit{loguearnos} con la cuenta de superusuario y realizar cualquier acción en la
+aplicación.

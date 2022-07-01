@@ -1,12 +1,12 @@
 \chapter{Informe de tutorías} \label{ch:meetings}
 \section{1º Reunión (02/02/22): planteamiento general del TFG}
-El proyecto consistirá en dos piezas fundamentales: una \textit{Aplicación Android} y un 
-\textit{Servidor Web}. En este proyecto nos vamos a centrar en el Servidor Web, aunque en
-fases posteriores será preciso hablar un poco de la aplicación android para el establecimiento
-de la comunicación entre la aplicación y el servidor, ya que será necesario un mutuo acuerdo
+El proyecto consistirá en dos piezas fundamentales: una aplicación Android y una 
+aplicación web. En este proyecto, nos vamos a centrar en la aplicación web, aunque en
+fases posteriores será preciso hablar un poco de la aplicación Android para el establecimiento
+de la comunicación entre el cliente y el servidor, ya que será necesario un mutuo acuerdo
 entre ambas partes.
 
-    \subsection{Servidor Web}
+    \subsection{Aplicación web}
 
         \begin{enumerate}
             \item Almacenamiento de información en el formato correspondiente.
@@ -30,8 +30,8 @@ entre ambas partes.
         \end{enumerate}
 
     \subsection{Aspectos a tener en cuenta}
-    Para la realización de este proceso es necesario aplicar la Ingeniería del Software,
-    realizando los \textit{diagramas de actividad} y \textit{diagramas relacionales} necesarios.
+    Para la realización de este proceso, es necesario aplicar la Ingeniería del Software,
+    realizando los diagramas de actividad y diagramas relacionales necesarios.
     Además sería interesante incluir un manual de uso para el usuario.
 
 \section{2º Reunión (15/02/22): jerarquización de los elementos}
@@ -49,22 +49,15 @@ al diseño de la base de datos, ya que pudimos deducir lo siguiente:
         con un identificador interno.
     \end{enumerate}
 
-Además de esto, se habló de la toma de imágenes y del marcado de puntos en las mismas en el
-registro de campos (\textit{Croquis Planta} y \textit{Croquis sección}). Para ello, la
-aplicación android tendría que enviar a la aplicación web los puntos de la imagen junto con
-la imagen, luego, desde la aplicación web se tendrían que poder modificar dichos puntos mediante
-alguna interfaz. 
-
-Quedó pendiente por parte del arqueólogo la realización de un template de un posible informe
+Quedó pendiente por parte del arqueólogo la realización de una plantilla de un posible informe
 que se podría generar de una excavación. Para dicha generación, se cogerían los datos
-que hay almacenados en la base de datos y se generaría un archivo word o un archivo similar,
+que hay almacenados en la base de datos y se generaría un archivo Word o un archivo similar,
 que sea posteriormente modificable por el/la arqueólogo/a.
 
 
-\section{3º Reunión (01/03/22): Diseño del modelo Entidad/Relación}
+\section{3º Reunión (01/03/22): diseño del modelo Entidad/Relación}
 Una parte muy importante de la aplicación es la correcta modelización de la base de datos.
-Para ello, \textit{Joaquín García Venegas} y yo hicimos un diseño inicial del modelo
-E/R.
+Para ello, Joaquín García Venegas y yo hicimos un diseño inicial del modelo E/R.
 
     \subsection{Entidades del modelo E/R}
 
@@ -94,7 +87,7 @@ E/R.
 
     \subsection{Dudas sobre el modelo} \label{subsec: doubts}
     Tras realizar el modelo, surgieron una serie de dudas acerca de las posibles relacionales
-    y los datos de las fichas(tipos de datos y significado), lo cuál es normal ya que no
+    y los datos de las fichas (tipos de datos y significado), lo cuál es normal, ya que no
     dominamos los términos que se usan en arqueología con precisión. Las dudas que surgieron
     fueron las siguientes:
 
@@ -106,7 +99,7 @@ E/R.
             \item Problema de identificación de las estancias: en el pdf de metodologías, 
             se dice que se codifica con la palabra Estancia y tres dígitos (el primero
             indica la zona y los dos siguientes el nº de sector). Aparece un nº de sector,
-            ¿es éste el nº de orden?
+            ¿es este el nº de orden?
             \item ¿Son realmente importantes los atributos Plano nº, Seccion nº, Elevacion
             nº?
             \item ¿Una excavación puede pertenecer a varias UE?
@@ -119,67 +112,91 @@ E/R.
     Brao Gonzalez en una reunión que se concertará posteriormente junto con el tutor,
     Daniel Sánchez Fernández.
 
-\section{4º Reunión (07/03/22): Resolución de dudas}
+\section{4º Reunión (07/03/22): resolución de dudas}
 En esta reunión se han resulto las dudas planteadas en la reunión anterior sobre el diseño
 del modelo E/R. las correspondientes dudas junto a sus soluciones son las siguientes:
 
     \begin{enumerate}
         \item ¿Es el mismo material el de la ficha reducida que el de las unidades
-        construidas? \textit{"No, el material de la ficha reducida corresponde a las
+        construidas? \textit{<<No, el material de la ficha reducida corresponde a las
         unidades estratigráficas sedimentarias, mientras que el material de las
         construidas solo pertenece a éstas, además de ser único (es decir, una unidad
-        construida no puede estar formada por distintos materiales)"}.
+        construida no puede estar formada por distintos materiales)>>}.
         \item En la ficha de las estancias, no sabemos qué es el primer recuadro para
-        dibujar. \textit{"Este recuadro se corresponde con \textbf{la matriz de Harris}},
+        dibujar. \textit{<<Este recuadro se corresponde con \textbf{la matriz de Harris},
         dicha matriz se forma a partir de las UE en relación y los hechos en relación,
-        colocando los distintos elementos correspondientemente en el recuadro".
+        colocando los distintos elementos correspondientemente en el recuadro>>}.
         \item Problema de identificación de las estancias: en el pdf de metodologías, 
         se dice que se codifica con la palabra Estancia y tres dígitos (el primero
         indica la zona y los dos siguientes el nº de sector). Aparece un nº de sector,
-        ¿es éste el nº de orden? \textit{"No, la zona y el sector siempre se rellenan,
+        ¿es este el nº de orden? \textit{<<No, la zona y el sector siempre se rellenan,
         pero no forman parten de la identificación de la estancia. El nº de estancia
         no se forma a partir del númer de zona y el número de sector, un ejemplo podría
-        ser por ejemplo con \textbf{ES001}, sin vinculación con el hecho"}.
+        ser por ejemplo con \textbf{ES001}, sin vinculación con el hecho>>}.
         \item ¿Son realmente importantes los atributos Plano nº, Seccion nº, Elevacion
-        nº? \textit{"Es simplemente documentación, son números que indican información
-        de la Unidad Estratigráfica"}.
-        \item ¿Una excavación puede pertenecer a varias UE? \textit{"No, normalmente una
-        UE está asociada a una única excavación"}.
-        \item ¿El TPQ, TAQ y la fase en qué formato van, números, fechas, palabras, ..?
-        \textit{"El TPQ Y TAQ son números y la fase es un código ya definido que indica
-        la época de la pieza (os tengo que pasar los códigos)"}.
-        \item ¿La ficha completa se rellena a partir de la ficha de campo? \textit{"Sí,
+        nº? \textit{<<Es simplemente documentación, son números que indican información
+        de la Unidad Estratigráfica>>}.
+        \item ¿Una excavación puede pertenecer a varias UE? \textit{<<No, normalmente una
+        UE está asociada a una única excavación>>}.
+        \item ¿El TPQ, TAQ y la fase en qué formato van, números, fechas, palabras...?
+        \textit{<<El TPQ Y TAQ son números y la fase es un código ya definido que indica
+        la época de la pieza (os tengo que pasar los códigos)>>}.
+        \item ¿La ficha completa se rellena a partir de la ficha de campo? \textit{<<Sí,
         solo que hay que buscar la equivalencia entre algunos campos de la ficha
-        reducida y la completa ya que cambian un poco"}.
-        \item Las cotas, ¿van relacionadas con las pendientes? \textit{"Sí, la idea es
+        reducida y la completa, ya que cambian un poco>>}.
+        \item Las cotas, ¿van relacionadas con las pendientes? \textit{<<Sí, la idea es
         que las zonas indiques la distancia que hay con respecto a un punto de referencia
         y luego las pendientes indican hacia donde está orientada la pieza: Norte-Sur,
-        Suroeste-Este, etc, indican puntos de cardinalidad"}.
+        Suroeste-Este, etc., indican puntos de cardinalidad>>}.
     \end{enumerate}
 
 Tras esta reunión, se aclararon gran cantidad de dudas, lo que nos permitirá hacer un
 correcto diseño del modelo E/R para su posterior paso a tablas y finalmente fusión, logrando
 que el diseño de la base de datos sea correcto.
 
-\section{5º Reunión (30/03/22): Corrección de memoria}
+\section{5º Reunión (30/03/22): corrección de memoria}
 Tras el envío de la memoria de prácticas al tutor \textit{Daniel Sánchez Fernández}, se
-han anotado una serie de recomendaciones a tener en cuenta en la memoria del proyecto. Entre
-las anotaciones más relevantes destacan las siguientes:
+han anotado una serie de recomendaciones a tener en cuenta en esta. Entre las anotaciones
+más relevantes destacan las siguientes:
 
     \begin{itemize}
         \item Es importante distinguir entre la elección de modelos en el diseño del problema
         y la elección de herramientas. Por ejemplo, elegir entre una base de datos relacional
         o noSQL sería una elección de diseño, mientras que elegir qué SGBD escoger (MySQL,
-        SQLite, PostgreSQL, etc) sería una elección de herramientas.
+        SQLite, PostgreSQL, etc.) sería una elección de herramientas.
         \item Incluir las citas desde las cuales se consulta la información.
         \item Comprobar que las imágenes usadas en la aplicación sean libres, o cambiarlas
         por imágenes de uso libre de repositorios como \href{https://pixabay.com/}{Pixabay} o
         \href{https://stock.adobe.com/es/}{Adobe Stock}.
-        \item Dejar siempre claro la autoría de los archivos e imágenes incluidas en la memoria
-        mediante una nota en la parte inferior de la misma o similar.
+        \item Dejar siempre claro la autoría de los archivos e imágenes incluidas en la
+        memoria mediante una nota en la parte inferior de la misma o similar.
     \end{itemize}
 
 Mencionadas estas anotaciones, se procede a modificar la estructura anterior de la memoria,
 incluyendo un apartado nuevo dedicado al diseño. La sección de elección de herramientas
 \ref{sec:tools} irá incluida en el capítulo de implementación, que recogerá la discusión de
 herramientas elegidas y cómo se ha llevado a cabo la implementación de la aplicación.
+
+\section{6º Reunión (16/05/22): prueba funcional de la aplicación}
+Transcurridos más de dos meses desde el comienzo de la implementación del proyecto, se ha
+vuelto a tener una reunión física con el tutor \textit{Daniel Sánchez Fernández} y el
+arqueólogo \textit{Francisco Javier Brao Gonzalez}.\\
+
+El principal objetivo de la misma es mostrar el funcionamiento de la aplicación al cliente, y
+ver qué puntos le gustaría añadir o en qué puntos podría mejorar de cara a la entrega del
+producto final. Tras esta reunión se propusieron los siguientes cambios al proyecto:
+
+    \begin{enumerate}
+        \item Es necesario mostrar el identificador de las unidades estratigráficas
+        \textbf{precedido de las letras \textit{UE}}, para una mejor identificación de los
+        elementos.
+        \item Añadir un campo que sea el \textbf{nombre} de la excavación en las
+        excavaciones.
+        \item Añadir las \textbf{relaciones entre unidades estratigráficas}, es decir, en una
+        unidad estratigráfica: la que está por encima y por debajo de la misma.
+        \item Añadir si es posible un \textbf{sistema de log} en la aplicación para recoger
+        todas las acciones realizadas por los usuarios. Estos logs podrán ser vistos por
+        usuarios \textbf{\textit{staff}} de la aplicación, es decir, arqueólogos con privilegios.
+    \end{enumerate}
+
+Estos cambios necesitarán ser añadidos a la entrega final del proyecto.
