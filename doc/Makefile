@@ -12,8 +12,4 @@ all: proyecto.pdf
 
 clean:
 	rm  proyecto.pdf *.aux *.blg *.log *.bbl *.toc *.out *.glg \
-					 *.glo *.gls *.ist *.lof *.lot
-
-
-
-
+					 *.glo *.gls *.ist *.lof *.lot *.fls *.fdb_latexmk
