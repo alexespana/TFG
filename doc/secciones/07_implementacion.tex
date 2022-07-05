@@ -444,7 +444,7 @@ El resto de plantillas de este diseño son las que se describen en las secciones
     \subsubsection{Contacto}
     Finalmente, tenemos la página de contacto de la aplicación web, en ella podemos
     encontrar datos como el correo electrónico del desarrollador y su página de
-    \href{https://github.com/alexespana/}{Github} o un mapa del lugar de residencia del
+    \href{https://github.com/alexespana/}{GitHub} o un mapa del lugar de residencia del
     programador, en este caso Granada.\\
 
         \begin{figure}[H]
@@ -1515,7 +1515,7 @@ usemos se encuentran:
         cualquier otra tarea.
         \item Que no requiera introducir tarjeta de crédito o pagar por mensualidad, es
         decir, que sea gratuito.
-        \item Que sea fácil de integrar con Github, es decir, que permita ver fácilmente el
+        \item Que sea fácil de integrar con GitHub, es decir, que permita ver fácilmente el
         resultado de la integración continua ejecutada.
     \end{itemize}
 
@@ -1529,16 +1529,16 @@ En la actualidad, existen numerosos sistemas de CI, entre los que podemos encont
         popular en la actualidad. Sin embargo, no es solo un sistema de CI, por lo
         que muchas de sus características no las usaríamos.
         \item \textbf{GitHub Actions} \cite{github-actions}: este sistema de CI viene
-        proporcionado por Github y tiene la ventaja de poder usar otras Github Actions ya
+        proporcionado por GitHub y tiene la ventaja de poder usar otras GitHub Actions ya
         implementadas, además de que permite automatizar, personalizar y ejecutar flujos de
-        trabajo (explicados más adelante) directamente desde el repositorio de Github.
+        trabajo (explicados más adelante) directamente desde el repositorio de GitHub.
         \item \textbf{Circle CI} \cite{circle-ci}: este sistema de CI es muy completo y
         sencillo de utilizar. Además, permite visualizar los resultados de las pruebas de la
-        integración continua habilitando el Github Checks.
+        integración continua habilitando el GitHub Checks.
     \end{itemize}
 
     Mencionados los sistemas de CI más relevantes (hay muchos más), hemos decidido usar las
-    Github Actions de Github, ya que permiten una configuración sencilla, es un servicio
+    GitHub Actions de GitHub, ya que permiten una configuración sencilla, es un servicio
     gratuito, es la herramienta con la que más familiarizados estamos (aunque se podría haber
     escogido Circle CI sin problema), es muy potente y, además, como es obvio, permite ver los
     resultados de CI directamente en la interfaz de esta.
@@ -1564,7 +1564,7 @@ por archivo. Cada \textit{workflow} debe tener los siguientes tres componentes:
         pasos (\textbf{\textit{steps}}).
         \item Cada \textit{step} podrá ejecutar un script que hayamos definido nosotros
         mismos, un comando del entorno donde estemos ejecutando el \textit{job}, o bien usar
-        una Github Action predefinida que podamos encontrar en
+        una GitHub Action predefinida que podamos encontrar en
         \href{https://github.com/marketplace?type=actions}{GitHub Marketplace}.
     \end{enumerate}
 
@@ -1590,15 +1590,15 @@ de la siguiente forma:
                 \item \textbf{\textit{Steps}}: el \textit{job} build-latex se compone de dos
                 pasos:
                     \begin{enumerate}
-                        \item \textbf{Checkout}: acción muy típica en Github Actions. Se baja
+                        \item \textbf{Checkout}: acción muy típica en GitHub Actions. Se baja
                         todos los archivos del repositorio para poder trabajar con ellos. En
-                        él se ha usado una Github Action predefinida llamada
+                        él se ha usado una GitHub Action predefinida llamada
                         \href{https://github.com/marketplace/actions/checkout}{Checkout}.
                         \item \textbf{Compile LaTeX document}: este paso compila todos los
                         archivos latex y construye un pdf de salida. En él también se ha
-                        usado una Github Action predefinida llamada
+                        usado una GitHub Action predefinida llamada
                         \href{https://github.com/marketplace/actions/github-action-for-latex}
-                        {Github Action for LaTeX}
+                        {GitHub Action for LaTeX}
                     \end{enumerate}
             \end{enumerate}
 
@@ -1652,7 +1652,7 @@ de la siguiente forma:
                         el \textit{workflow} anterior.
                         \item \textbf{Set up Python}: en este paso inicializamos el entorno
                         con una \textbf{versión de Python}, en concreto con la versión 3.10.
-                        Para ello, se ha utilizado la Github Action predefinida
+                        Para ello, se ha utilizado la GitHub Action predefinida
                         \href{https://github.com/marketplace/actions/setup-python}{Setup
                         Python}.
                         \item \textbf{Install dependencies}: instalación de las dependencias
@@ -1660,7 +1660,7 @@ de la siguiente forma:
                         encuentran en el archivo \textbf{requirements.txt}.
                         \item \textbf{Run tests}: ejecución de los tests. Para ello, se han
                         tenido que definir varias variables de entorno. Estas variables de
-                        entorno se almacenan en los \textbf{\textit{secrets}} de Github,
+                        entorno se almacenan en los \textbf{\textit{secrets}} de GitHub,
                         variables secretas que se definen en el repositorio y que luego son
                         accesibles desde el entorno de los \textit{workflows}.\\
                         
@@ -1684,7 +1684,7 @@ de la siguiente forma:
                         cual es un resultado bastante bueno y, además, se ha escrito el
                         informe en el archivo \textbf{coverage.xml}.
                         
-                        \item \textbf{Codecov}: este último paso utiliza una Github Action
+                        \item \textbf{Codecov}: este último paso utiliza una GitHub Action
                         predefinida llamada
                         \href{https://github.com/marketplace/actions/codecov}{Codecov GitHub
                         Action}, que se encarga de subir los resultados del informe del paso
@@ -2524,7 +2524,7 @@ al menos los siguientes requisitos:
         \item Que nos proporcione una \textbf{base de datos gratuita} para la aplicación.
         \item Si puede ser posible, que nos permita hacer el despliegue de la
         aplicación de una manera sencilla, como puede ser mediante el despliegue de un
-        \textbf{repositorio git} o una \textbf{rama} concreta de Github. 
+        \textbf{repositorio git} o una \textbf{rama} concreta de GitHub. 
     \end{itemize}
 
 Tras una larga y exhaustiva búsqueda por encontrar un servicio gratuito para el
@@ -2601,7 +2601,7 @@ aplicación en Heroku. Para ello, ejecutamos el siguiente comando:
     \end{figure}
 
 Otro de los requisitos que estábamos buscando en el servicio en la nube era que tuviera
-integración con Github, lo cuál en este se cumple: \\
+integración con GitHub, lo cuál en este se cumple: \\
 
     \begin{figure}[H]
         \centering
@@ -2616,19 +2616,19 @@ integración con Github, lo cuál en este se cumple: \\
     \begin{itemize}
         \item \textbf{Heroku Git}: mediante un repositorio de Git subido directamente
         al proyecto.
-        \item \textbf{Github}: con el despliegue de una rama concreta de un repositorio
-        de Github.
+        \item \textbf{GitHub}: con el despliegue de una rama concreta de un repositorio
+        de GitHub.
         \item \textbf{Container Registry}: mediante un repositorio de Docker Hub.
     \end{itemize}
 
 En nuestro caso, como es evidente, lo haremos \textbf{a partir de una rama} de un
-repositorio de Github, concretamente del repositorio en el que venimos trabajando
+repositorio de GitHub, concretamente del repositorio en el que venimos trabajando
 para el desarrollo de todo el proyecto \textit{software}.\\
 
 Heroku trabaja sobre el \textbf{directorio raíz} del proyecto, es decir, realiza el
 despliegue trabajando sobre el directorio principal del proyecto, por lo que si no le
 indicamos nada, no funcionará, ya que en el \href{https://github.com/alexespana/TFG}
-{repositorio de Github} tenemos la documentación por un lado y el código fuente por
+{repositorio de GitHub} tenemos la documentación por un lado y el código fuente por
 otro. Para corregir este inconveniente, deberemos agregar los siguientes
 \textbf{\textit{buildpacks}} (se encargan de transformar el código que queremos desplegar
 a un slug\footnote{Parte \textbf{final} de la URL que \textbf{identifica} a una
@@ -2670,7 +2670,7 @@ entorno, \textbf{PROJECT\_PATH}, que será tomada por Heroku al comenzar el desp
 la aplicación.\\
 
 Heroku incluye funcionalidades muy interesantes como la de poder hacer despliegues
-automáticos al \textbf{aplicar cambios} (\textit{push}) a una determinada rama de Github.
+automáticos al \textbf{aplicar cambios} (\textit{push}) a una determinada rama de GitHub.
 Por ejemplo, si creamos una rama llamada \textbf{deployment} donde hacemos todos los
 cambios necesarios para el despliegue y queremos que heroku los aplique directamente al
 dominio que tenemos ya funcionando, únicamente tendremos que habilitar la siguiente opción:
@@ -2686,7 +2686,7 @@ Además, como vemos, nos permite realizarlos únicamente si se han pasado todos 
 de integración continua que posea la rama (como por ejemplo \textbf{tests}), asegurándonos
 que la misma tendrá un mínimo de calidad para los clientes finales.\\
 
-En nuestro caso, hemos creado una rama específica en Github para realizar el despliegue de
+En nuestro caso, hemos creado una rama específica en GitHub para realizar el despliegue de
 la aplicación, llamada \textbf{deployment}. Para realizar el primer despliegue de la misma,
 deberemos hacerlo de \textbf{forma manual}, ya que en este caso teníamos todos los cambios
 necesarios en la rama (no hacía falta volver a subir nuevos cambios, \textit{push}).\\
